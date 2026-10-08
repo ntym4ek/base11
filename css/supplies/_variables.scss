@@ -1,0 +1,10 @@
+// SCSS-алиасы для обратной совместимости
+$brand-primary: var(--brand-primary) !default;
+$brand-danger: var(--brand-danger) !default;
+$text-color: var(--text-color) !default;
+$text-muted: var(--text-muted) !default;
+$page-bg: var(--page-bg) !default;
+
+$input-border-radius: var(--control-radius-md) !default;
+$input-border-color: var(--border-color) !default;
+$input-bg-color: var(--surface-card) !default;

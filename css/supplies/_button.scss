@@ -1,0 +1,58 @@
+@import "tokens";
+@import "mixins";
+
+.button,
+a.button,
+input[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: var(--control-border-width) solid transparent;
+  background-color: var(--brand-primary);
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+
+  // Базовый размер (md) по умолчанию
+  @include control-size(
+      var(--control-height-md),
+      var(--control-padding-y-md),
+      var(--control-padding-x-md),
+      var(--control-font-size-md),
+      var(--control-radius-md)
+  );
+
+  &:hover {
+    background-color: var(--brand-primary-hover);
+    color: #ffffff;
+  }
+
+  // Размеры
+  &--sm,
+  &--small {
+    @include control-size(
+        var(--control-height-sm),
+        var(--control-padding-y-sm),
+        var(--control-padding-x-sm),
+        var(--control-font-size-sm),
+        var(--control-radius-sm)
+    );
+  }
+
+  &--lg,
+  &--large {
+    @include control-size(
+        var(--control-height-lg),
+        var(--control-padding-y-lg),
+        var(--control-padding-x-lg),
+        var(--control-font-size-lg),
+        var(--control-radius-lg)
+    );
+  }
+}

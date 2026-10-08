@@ -1,0 +1,90 @@
+// === CSS Design Tokens (base11) ===
+:root {
+  // --- 1. Геометрия и отступы страницы ---
+  --page-max-width: 1320px;
+  --page-gap-x: 1rem;          // Отступ от краев экрана до контента (мобильные)
+  --grid-gap-x: 1rem;          // Горизонтальный межколоночный разрыв сетки (мобильные)
+  --block-gap-y: 2rem;         // Вертикальный разрыв между блоками/секциями (мобильные)
+
+  // --- 2. Единая система контролов (Формы, Кнопки, Селекты) ---
+  // Small (Компактные элементы)
+  --control-height-sm: 2.25rem;       // 36px
+  --control-padding-y-sm: 0.375rem;   // 6px
+  --control-padding-x-sm: 0.875rem;   // 14px
+  --control-font-size-sm: 0.875rem;   // 14px
+  --control-radius-sm: 0.25rem;       // 4px
+
+  // Medium (Базовый стандарт WCAG)
+  --control-height-md: 2.75rem;       // 44px
+  --control-padding-y-md: 0.5rem;     // 8px
+  --control-padding-x-md: 1.25rem;    // 20px
+  --control-font-size-md: 1rem;       // 16px
+  --control-radius-md: 0.375rem;     // 6px
+
+  // Large (Крупные акцентные элементы)
+  --control-height-lg: 3.25rem;       // 52px
+  --control-padding-y-lg: 0.75rem;    // 12px
+  --control-padding-x-lg: 1.75rem;    // 28px
+  --control-font-size-lg: 1.125rem;   // 18px
+  --control-radius-lg: 0.5rem;        // 8px
+
+  // Общие константы контролов
+  --control-line-height: 1.5;
+  --control-border-width: 1px;
+
+  // Лейблы форм
+  --label-color: var(--text-color);
+  --label-weight: 600;
+  --label-gap-y: 0.375rem;
+
+  // --- 3. Цветовые роли и поверхности ---
+  --brand-primary: #213a6e;
+  --brand-info: #5bc0de;
+  --brand-success: #36aa3d;
+  --brand-warning: #f08200;
+  --brand-danger: #cc1335;
+
+  --brand-primary-hover: color-mix(in srgb, var(--brand-primary), black 12%);
+  --brand-primary-active: color-mix(in srgb, var(--brand-primary), black 20%);
+
+  --page-bg: #f8f7f4;
+  --surface-card: #ffffff;
+  --text-color: #333333;
+  --text-muted: #606060;
+  --border-color: #cccccc;
+
+  // --- 4. Доступность (A11y Focus Ring) ---
+  --focus-ring-color: var(--brand-primary);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
+  // --- 5. Шапка, Подвал и Z-Index ---
+  --header-height: 5rem;
+  --header-bg: transparent;
+  --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  --footer-bg: #1e1e1c;
+  --footer-color: #ffffff;
+
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal: 1050;
+}
+
+// === Адаптивные отступы на брекпоинтах ===
+@media (min-width: 768px) {
+  :root {
+    --page-gap-x: 1.5rem;
+    --grid-gap-x: 1.25rem;
+    --block-gap-y: 2.5rem;
+  }
+}
+
+@media (min-width: 1366px) {
+  :root {
+    --page-gap-x: 2rem;
+    --grid-gap-x: 1.5rem;
+    --block-gap-y: 4rem;
+  }
+}

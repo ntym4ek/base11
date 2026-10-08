@@ -1,0 +1,17 @@
+/**
+ * @file
+ * Visual styles for menu.
+ */
+
+.menu-item--expanded {
+  list-style-type: circle;
+  list-style-image: url(../../images/icons/menu-expanded.png);
+}
+.menu-item--collapsed {
+  list-style-type: disc;
+  list-style-image: url(../../images/icons/menu-collapsed.png); /* LTR */
+}
+.menu-item {
+  margin: 0;
+  padding-top: 0.2em;
+}

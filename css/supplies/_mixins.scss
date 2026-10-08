@@ -1,0 +1,17 @@
+// Миксин единого габарита контрола
+@mixin control-size($height, $py, $px, $font-size, $radius) {
+  min-height: $height;
+  padding: $py $px;
+  font-size: $font-size;
+  line-height: var(--control-line-height);
+  border-radius: $radius;
+  box-sizing: border-box;
+}
+
+// Миксин фокуса доступности (WCAG 2.1)
+@mixin focus-ring {
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+}

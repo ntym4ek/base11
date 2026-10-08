@@ -1,0 +1,37 @@
+@import "tokens";
+@import "mixins";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--page-bg);
+  color: var(--text-color);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+// Доступность фокуса для всех интерактивных элементов
+a, button, input, select, textarea {
+  @include focus-ring;
+}
+
+// Типографика
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700; line-height: 1.2; text-wrap: balance;
+  margin-top: 0; margin-bottom: 0.5em;
+}
+
+a {
+  color: var(--brand-primary);
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--brand-primary-hover);
+  }
+}

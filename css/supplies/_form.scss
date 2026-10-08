@@ -1,0 +1,49 @@
+@import "tokens";
+@import "mixins";
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  label {
+    margin-bottom: var(--label-gap-y);
+    font-weight: var(--label-weight);
+    color: var(--label-color);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  select {
+    width: 100%;
+    background-color: var(--surface-card);
+    border: var(--control-border-width) solid var(--border-color);
+    color: var(--text-color);
+
+    // Точное соответствие габаритов кнопкам
+    @include control-size(
+        var(--control-height-md),
+        var(--control-padding-y-md),
+        var(--control-padding-x-md),
+        var(--control-font-size-md),
+        var(--control-radius-md)
+    );
+
+    &:focus {
+      border-color: var(--brand-primary);
+    }
+  }
+
+  textarea {
+    width: 100%;
+    padding: var(--control-padding-y-md) var(--control-padding-x-md);
+    font-size: var(--control-font-size-md);
+    border-radius: var(--control-radius-md);
+    border: var(--control-border-width) solid var(--border-color);
+    background-color: var(--surface-card);
+  }
+}

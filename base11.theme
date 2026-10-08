@@ -1,0 +1,136 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming.
+ */
+
+use Drupal\Core\Extension\ThemeSettingsProvider;
+use Drupal\image\Entity\ImageStyle;
+
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function base11_preprocess_html(&$vars)
+{
+  // -- настройки темы
+    // сторона расположения меню (умолчанию слева)
+  $vars['attributes']['class'][] = 'page-offside-' . (\Drupal::service(ThemeSettingsProvider::class)->getSetting('page-offside-position') ?? 'left');
+    // ширина экрана при которой мобильное меню заменяется на десктопное
+  $vars['#attached']['drupalSettings']['theme'] = [
+    'page_offside_hide_width' => \Drupal::service(ThemeSettingsProvider::class)->getSetting('page-offside-hide-width') ?? '1024',
+  ];
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function base11_preprocess_page(array &$vars): void
+{
+  // - Load the site name out of configuration.
+  $config = \Drupal::config('system.site');
+  $vars['site']['name'] = $config->get('name');
+
+  // - Логотипы
+  $path_theme = \Drupal::service('extension.path.resolver')->getPath('theme', 'base9');
+  $vars['site']['logo']['standart'] = \Drupal::service('file_url_generator')->generateString($path_theme . '/images/logo/logo.png');
+  $vars['site']['logo']['transparent'] = \Drupal::service('file_url_generator')->generateString($path_theme . '/images/logo/logo_t.png');
+
+  // - Copyright в подвале
+  $vars['site']['copyright'] = '© ' . date('Y') . ' KCCC GROUP';
+
+  // - Можно отключить шапку
+  $vars['is_header_on'] = true;
+
+  // - Можно отключить заголовок
+  $vars['is_title_on'] = true;
+
+  // - Баннер с заголовком в начале страницы
+  $banner = [];
+
+  // Вывод баннера, если в папке page-banners есть изображение с именем, аналогичным пути.
+  // Проверка наличия файла выполняется по всей цепочке пути, от самой длинной до короткой.
+  // Для главной страницы проверяется наличие баннера с именем "front".
+  $banner_uri = '';
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
+    $paths = ['front'];
+  } else {
+    $current_path = \Drupal::service('path.current')->getPath();
+    $current_alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
+
+    $current_path = ltrim($current_path, '/');
+    $current_alias = ltrim($current_alias, '/');
+
+    $paths = [$current_path];
+    if ($current_path !== $current_alias) {
+      $paths[] = $current_alias;
+    }
+  }
+  foreach($paths as $path) {
+    if ($chunks = explode('/', $path)) {
+      do {
+        $filename = implode('--', $chunks);
+        foreach(['jpg', 'png'] as $ext) {
+          $uri = 'public://images/page-banners/' . $filename . '.' . $ext;
+          if (file_exists($uri)) {
+            $banner_uri = $uri;
+            break;
+          }
+        }
+        array_pop($chunks);
+      } while (count($chunks));
+    }
+  }
+  if ($banner_uri) {
+    $vars['is_title_on'] = false;
+    // можно задать текст или любой html для баннера
+//    $banner['title'] = [
+//      'prefix' => '',
+//      'suffix' => '',
+//      'text' => '',
+//    ];
+
+    // ширина экрана, до которой выводится мобильная версия баннера
+    $banner['break'] = \Drupal::service(ThemeSettingsProvider::class)->getSetting('nav-mobile-hide-width') ?? '1024';
+    $banner['image']['url'] = \Drupal::service('file_url_generator')->generateString($banner_uri);
+
+    // если стиля для мобильного баннера не существует, создать его
+    if (!ImageStyle::load('banner_mobile')) {
+      $image_style = ImageStyle::create([
+        'name' => 'banner_mobile',
+        'label' => 'Мобильный размер баннера (1080х1080)',
+      ]);
+      $image_style->save();
+      $image_style->addImageEffect([
+        'id' => 'image_scale',
+        'weight' => 0,
+        'data' => [
+          'width' => 1080,
+          'height' => 1080,
+          'upscale' => false,
+        ],
+      ]);
+      $image_style->save();
+    }
+    // версия баннера для мобильных
+    $banner['image']['mobile_url'] = ImageStyle::load('banner_mobile')->buildUrl($banner_uri);
+
+    $vars['banner'] = $banner;
+  }
+}
+
+/**
+ * Implements hook_preprocess_image_widget().
+ */
+function base11_preprocess_image_widget(array &$vars): void
+{
+  $data = &$vars['data'];
+  // This prevents image widget templates from rendering preview container HTML
+  // to users that do not have permission to access these previews.
+  // @todo revisit in https://drupal.org/node/953034
+  // @todo revisit in https://drupal.org/node/3114318
+  if (isset($data['preview']['#access']) && $data['preview']['#access'] === FALSE) {
+    unset($data['preview']);
+  }
+}

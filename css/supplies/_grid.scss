@@ -1,0 +1,33 @@
+@import "tokens";
+
+.container,
+.container-fluid {
+  width: 100%;
+  padding-left: var(--page-gap-x);
+  padding-right: var(--page-gap-x);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  max-width: var(--page-max-width);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(var(--grid-gap-x) / -2);
+  margin-right: calc(var(--grid-gap-x) / -2);
+}
+
+[class*="col-"] {
+  padding-left: calc(var(--grid-gap-x) / 2);
+  padding-right: calc(var(--grid-gap-x) / 2);
+}
+
+// Вертикальный отступ меж блоками на странице
+.block,
+.region-content > div,
+.page-section {
+  margin-bottom: var(--block-gap-y);
+}
