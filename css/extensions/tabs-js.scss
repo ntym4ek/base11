@@ -1,0 +1,46 @@
+
+.tabs-js {
+  display: flex; flex-direction: column;
+  width: 100%;
+
+  &__nav {
+    display: grid; grid-template-columns: min-content; grid-auto-flow: column;
+    gap: 1rem;
+    justify-content: start;
+  }
+
+  &__link {
+    display: block;
+    cursor: pointer;
+  }
+
+  // Обычный режим
+  &__content {
+    display: none;
+    &--visible { display: block; }
+  }
+
+  // Режим одинаковой высоты (плоский HTML)
+  &--equal-height {
+    display: grid; grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr; // 1-я строка: меню, 2-я строка: вкладки
+
+    .tabs-js__nav {
+      grid-row: 1; grid-column: 1;
+    }
+
+    .tabs-js__content {
+      // Все вкладки принудительно сажаются во вторую строку и первую колонку
+      grid-row: 2; grid-column: 1;
+
+      display: block;
+      visibility: hidden; opacity: 0;
+      pointer-events: none;
+
+      &--visible {
+        visibility: visible; opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+}

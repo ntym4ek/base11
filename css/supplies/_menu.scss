@@ -1,0 +1,151 @@
+// === Menu Styles (base11) ===
+
+.menu {
+  margin: 0;
+  padding: 0;
+  list-style: none outside;
+  text-align: left;
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+.page-header {
+  .menu-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+    .region-primary-menu {
+      display: flex;
+      justify-content: flex-start;
+      flex: 1 1 auto;
+    }
+
+    .region-secondary-menu {
+      display: flex;
+      justify-content: flex-end;
+      flex: 0 0 auto;
+    }
+
+    .menu {
+      a {
+        display: inline-block;
+        padding: 0.7rem 1rem;
+        text-decoration: none;
+        transition: color var(--transition-fast, 150ms);
+      }
+
+      // Верхний уровень меню
+      > .menu-item {
+        display: inline-block;
+        position: relative;
+        > a {
+          color: var(--text-color);
+          white-space: nowrap;
+          &:hover {
+            color: var(--brand-primary);
+          }
+          &.is-active,
+          &:focus {
+            color: var(--brand-primary);
+          }
+        }
+        &.first a,
+        &:first-child a {
+          padding-left: 0; // выровнять первый пункт меню по сетке
+        }
+      }
+
+      // Вложенные меню (выпадающие)
+      .menu-item--expanded {
+        .menu {
+          visibility: hidden;
+          opacity: 0;
+          position: absolute;
+          z-index: var(--z-dropdown, 1000);
+          background-color: var(--surface-card, #ffffff);
+          min-width: 220px;
+          padding: 0.5rem 0;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          border-radius: var(--control-radius-sm, 4px);
+          transition: opacity var(--transition-fast), visibility var(--transition-fast);
+
+          a {
+            color: var(--text-color);
+            width: 100%;
+          }
+
+          > .menu-item {
+            display: block;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            &:hover,
+            &:focus {
+              background: var(--page-bg, #f8f7f4);
+              & > .menu {
+                visibility: visible;
+                opacity: 1;
+              }
+              > a {
+                color: var(--brand-primary);
+              }
+            }
+          }
+        }
+
+        &:hover,
+        &:focus {
+          & > .menu {
+            visibility: visible;
+            opacity: 1;
+          }
+        }
+
+        // Третий уровень и глубже
+        .menu-item--expanded .menu {
+          left: 90%;
+          top: 10px;
+        }
+      }
+    }
+
+    // Выпадающее меню
+    .menu .menu {
+      .region-primary-menu & { left: 0; }
+      .region-secondary-menu & { right: 0; }
+    }
+  }
+}
+
+.page-footer {
+  a {
+    color: var(--footer-color, #ffffff);
+    transition: color var(--transition-fast, 150ms);
+    &:hover {
+      color: var(--footer-hover-color, #ffffff);
+    }
+  }
+
+  .menu {
+    > .menu-item {
+      &:hover {
+        > a {
+          color: var(--footer-hover-color, #ffffff);
+        }
+      }
+      > a {
+        color: var(--footer-color, #ffffff);
+      }
+    }
+  }
+}

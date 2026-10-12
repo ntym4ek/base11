@@ -1,8 +1,9 @@
 name: Base11
 type: theme
 'base theme': stable9
-version: 1.0.0
+version: 1.1.0
 libraries:
+  - base11/font-montserrat
   - base11/base
   - base11/messages
   - core/normalize

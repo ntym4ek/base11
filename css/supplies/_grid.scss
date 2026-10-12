@@ -1,5 +1,11 @@
-@import "tokens";
+// === Grid System (base11) ===
+// Полная обратная совместимость по разметке с base9 (col-sm-*, col-pd-*, col-tb-*, col-lp-*, col-dt-*, col-wd-*)
+// Оптимизировано через CSS Custom Properties: адаптивные отступы --grid-gap-x и --page-gap-x
 
+@import "tokens";
+@import "grid-variables";
+
+// --- 1. Контейнеры ---
 .container,
 .container-fluid {
   width: 100%;
@@ -7,27 +13,158 @@
   padding-right: var(--page-gap-x);
   margin-left: auto;
   margin-right: auto;
+  box-sizing: border-box;
 }
 
 .container {
-  max-width: var(--page-max-width);
+  max-width: var(--page-max-width, 1320px);
 }
 
+// --- 2. Строка (Row) ---
 .row {
   display: flex;
   flex-wrap: wrap;
   margin-left: calc(var(--grid-gap-x) / -2);
   margin-right: calc(var(--grid-gap-x) / -2);
+  box-sizing: border-box;
+
+  &.reverse        { flex-direction: row-reverse; }
+  &.natural-height { align-items: flex-start; }
+  &.flex-column    { flex-direction: column; }
+  &.no-wrap        { flex-wrap: nowrap; }
 }
 
+// Строка без межколоночных отступов
+.row-no-gutter,
+.row.no-gutter {
+  margin-left: 0;
+  margin-right: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+// --- 3. Базовая колонка ---
+.col,
 [class*="col-"] {
+  box-sizing: border-box;
+  flex: 0 0 auto;
   padding-left: calc(var(--grid-gap-x) / 2);
   padding-right: calc(var(--grid-gap-x) / 2);
+  max-width: 100%;
+
+  &.reverse {
+    flex-direction: column-reverse;
+  }
 }
 
-// Вертикальный отступ меж блоками на странице
-.block,
-.region-content > div,
-.page-section {
-  margin-bottom: var(--block-gap-y);
+// Колонка без межколоночных отступов
+.col-no-gutter,
+[class*="col-"].col-no-gutter {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+// Порядковые классы общего назначения
+.first { order: -1; }
+.last  { order: 1; }
+
+// Выравнивание конкретного элемента
+.align-start    { align-self: flex-start; }
+.align-end      { align-self: flex-end; }
+.align-center   { align-self: center; }
+.align-baseline { align-self: baseline; }
+.align-stretch  { align-self: stretch; }
+
+// --- 4. Миксин генерации классов брейкпоинта ---
+@mixin make-grid-columns($prefix) {
+  // Автоматическая ширина
+  .col-#{$prefix} {
+    flex-grow: 0;
+    flex-basis: auto;
+    width: auto;
+    max-width: 100%;
+  }
+
+  // Заполнение всего свободного пространства
+  .col-#{$prefix}-fill {
+    flex-grow: 1;
+    flex-basis: 0;
+    max-width: 100%;
+  }
+
+  // Колонки от 1 до $grid-columns (12 или 10)
+  @for $i from 1 through $grid-columns {
+    .col-#{$prefix}-#{$i} {
+      flex: 0 0 calc(#{$i} / #{$grid-columns} * 100%);
+      max-width: calc(#{$i} / #{$grid-columns} * 100%);
+    }
+  }
+
+  // Смещения (Offset)
+  @for $i from 0 through ($grid-columns - 1) {
+    .col-#{$prefix}-offset-#{$i} {
+      margin-left: calc(#{$i} / #{$grid-columns} * 100%);
+    }
+  }
+
+  // Выравнивание по горизонтали и вертикали внутри строки
+  .start-#{$prefix}   { justify-content: flex-start; text-align: left; }
+  .center-#{$prefix}  { justify-content: center; text-align: center; }
+  .end-#{$prefix}    { justify-content: flex-end; text-align: right; }
+  .top-#{$prefix}     { align-items: flex-start; }
+  .middle-#{$prefix}  { align-items: center; }
+  .bottom-#{$prefix}  { align-items: flex-end; }
+  .around-#{$prefix}  { justify-content: space-around; }
+  .between-#{$prefix} { justify-content: space-between; }
+  .first-#{$prefix}   { order: -1; }
+  .last-#{$prefix}    { order: 1; }
+  .initial-#{$prefix} { order: 0; }
+
+  // Видимость
+  .show-#{$prefix}    { display: block !important; }
+  .hide-#{$prefix}    { display: none !important; }
+}
+
+// --- 5. Генерация колонок по брейкпоинтам ---
+
+// sm: базовый уровень (Mobile First)
+@include make-grid-columns("sm");
+
+// pd, tb, lp, dt, wd
+@each $prefix, $min-width in $grid-breakpoints {
+  @if $min-width > 0 {
+    @media (min-width: #{$min-width}) {
+      @include make-grid-columns($prefix);
+    }
+  }
+}
+
+// --- 6. Хелперы видимости для точных диапазонов (-only) ---
+@media #{$smart-only} {
+  .show-sm-only { display: block !important; }
+  .hide-sm-only { display: none !important; }
+}
+
+@media #{$pad-only} {
+  .show-pd-only { display: block !important; }
+  .hide-pd-only { display: none !important; }
+}
+
+@media #{$tablet-only} {
+  .show-tb-only { display: block !important; }
+  .hide-tb-only { display: none !important; }
+}
+
+@media #{$laptop-only} {
+  .show-lp-only { display: block !important; }
+  .hide-lp-only { display: none !important; }
+}
+
+@media #{$desktop-only} {
+  .show-dt-only { display: block !important; }
+  .hide-dt-only { display: none !important; }
 }

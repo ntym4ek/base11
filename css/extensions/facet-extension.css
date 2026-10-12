@@ -1,0 +1,184 @@
+.facet-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 250ms ease, visibility 250ms ease;
+}
+.facet-backdrop.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+@media (min-width: 1366px) {
+  .facet-backdrop {
+    display: none;
+  }
+}
+
+.ajax-progress,
+.ajax-progress-throbber,
+.ajax-progress-fullscreen {
+  z-index: 100000 !important;
+}
+
+.view .view-filters,
+.view .view-content {
+  min-width: 0;
+}
+
+@media (max-width: 767px), (min-width: 768px) and (max-width: 1023px), (min-width: 1024px) and (max-width: 1365px) {
+  .bef-exposed-form .ajax-progress-throbber {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .bef-exposed-form .ajax-progress-throbber .throbber {
+    margin: 0 !important;
+    padding: 0;
+  }
+  .bef-exposed-form .ajax-progress-throbber .message {
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-left: 1rem;
+  }
+  .bef-exposed-form .form--inline {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+  }
+  .bef-exposed-form .form--inline::-webkit-scrollbar {
+    display: none;
+  }
+  .bef-exposed-form fieldset {
+    border: none;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    float: none !important;
+  }
+  .bef-exposed-form fieldset .fieldset-wrapper {
+    display: none;
+  }
+  .bef-exposed-form fieldset legend {
+    border: 1px solid transparent;
+    scroll-snap-align: start;
+  }
+  .bef-exposed-form fieldset .facet__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .bef-exposed-form fieldset .facet__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #555;
+    border-radius: 9px;
+    color: #ffffff;
+    font-size: 0.7rem;
+    line-height: 1;
+    min-width: 1.2rem;
+    height: 1.2rem;
+    padding: 0 5px;
+  }
+  .bef-exposed-form fieldset.has-selected legend {
+    background-color: #eee;
+  }
+  .bef-exposed-form fieldset.open .fieldset-wrapper {
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    flex-direction: column;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: calc(100vw - 32px) !important;
+    max-width: 480px !important;
+    max-height: 75vh !important;
+    overflow-y: auto !important;
+    padding: 1.5rem !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28) !important;
+    z-index: 9999 !important;
+    box-sizing: border-box !important;
+  }
+  .bef-exposed-form fieldset .facet-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .bef-exposed-form fieldset .facet-modal-header .facet-modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+}
+@media (min-width: 1366px) {
+  .bef-exposed-form fieldset .fieldset-wrapper {
+    position: static !important;
+    transform: none !important;
+    width: auto !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .bef-exposed-form fieldset .facet__badge {
+    display: none;
+  }
+  .bef-exposed-form fieldset .facet-modal-header {
+    display: none;
+  }
+}
+
+.bef-exposed-form.ajax-progress-active fieldset .fieldset-wrapper,
+.bef-exposed-form:has(.ajax-progress) fieldset .fieldset-wrapper,
+body:has(.ajax-progress) .bef-exposed-form fieldset .fieldset-wrapper {
+  position: relative;
+  cursor: wait;
+}
+.bef-exposed-form.ajax-progress-active fieldset .fieldset-wrapper input,
+.bef-exposed-form.ajax-progress-active fieldset .fieldset-wrapper label,
+.bef-exposed-form.ajax-progress-active fieldset .fieldset-wrapper button,
+.bef-exposed-form:has(.ajax-progress) fieldset .fieldset-wrapper input,
+.bef-exposed-form:has(.ajax-progress) fieldset .fieldset-wrapper label,
+.bef-exposed-form:has(.ajax-progress) fieldset .fieldset-wrapper button,
+body:has(.ajax-progress) .bef-exposed-form fieldset .fieldset-wrapper input,
+body:has(.ajax-progress) .bef-exposed-form fieldset .fieldset-wrapper label,
+body:has(.ajax-progress) .bef-exposed-form fieldset .fieldset-wrapper button {
+  pointer-events: none;
+}
+.bef-exposed-form.ajax-progress-active fieldset .fieldset-wrapper::after,
+.bef-exposed-form:has(.ajax-progress) fieldset .fieldset-wrapper::after,
+body:has(.ajax-progress) .bef-exposed-form fieldset .fieldset-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.65);
+  border-radius: inherit;
+  z-index: 10;
+  pointer-events: all;
+  animation: fadeInOverlay 150ms ease forwards;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22facet-extension.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAGA;EACE;EAAiB;EAAQ;EAAS;EAClC;EAAc;EACd;EAAuC;EACvC;EAAY;EACZ;;AAEA;EACE;EAAY;;AAGd;EAXF;IAYI;;;;AAKJ;AAAA;AAAA;EAGE;;;AAIA;AAAA;EAKE;;;AAMF;EACE;IACE;IAA4B;IAAqB;IACjD;IACA;IACA;IACA;IACA;IAAe;IAAqB;IACpC;;EAEA;IACE;IAAsB;;EAGxB;IACE;IAAgB;IAAkB;IAClC;;EAIJ;IACE;IAAe;IAAmB;IAClC;IACA;IACA;IAEA;;EADA;IAAuB;;EAIzB;IACE;IACA;IACA;IACA;IACA;;EAEA;IAAoB;;EAEpB;IACE;IACA;;EAEF;IACE;IAAsB;IAAqB;;EAG7C;IACE;IAAsB;IAAqB;IAC3C;IAAwB;IACxB;IAAgB;IAAkB;IAClC;IAAmB;IACnB;;EAIF;IAAwB;;EAItB;IACE;IAAgC;IAChC;IAA0B;IAC1B;IAA4B;IAAqB;IACjD;IACA;IACA;IAA6B;IAC7B;IACA;IACA;IACA;IACA;;EAIJ;IACE;IAAe;IAAqB;IACpC;IAAuB;;EAEvB;IACE;IAAkB;IAClB;;;AAQR;EAEI;IACE;IACA;IACA;IACA;IACA;IACA;;EAIF;IAAgB;;EAShB;IAAsB;;;;AAS5B;AAAA;AAAA;EAGE;EACA;;AAGA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;EAGE;;AAIF;AAAA;AAAA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA%22,%22file%22:%22facet-extension.css%22%7D */

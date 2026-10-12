@@ -1,0 +1,26 @@
+// === Project Design Tokens ===
+:root {
+  // Шрифты (раскомментируйте для смены шрифта base11):
+  // --font-family-base: 'YourFont', sans-serif;
+  // --font-family-heading: var(--font-family-base);
+
+  // Фирменные цвета:
+  // --brand-primary: #213a6e;
+  // --brand-danger: #cc1335;
+
+  // Контролы (отступы, размеры и насыщенность шрифтов кнопок и полей ввода):
+  // --btn-padding-x-md: 2rem;
+  // --input-padding-x-md: 0.75rem;
+  // --btn-font-size-md: 1.25rem;       // 20px
+  // --input-font-size-md: 1rem;        // 16px
+  // --btn-font-weight: 600;
+  // --input-font-weight: 400;
+
+  // Рамки полей ввода (обычная и в фокусе):
+  // --input-border-color: #cccccc;
+  // --input-border-focus: var(--brand-primary);
+
+  // Состояния кнопок (Drupal 11+):
+  // --btn-bg-hover: ...;
+  // --btn-bg-active: ...;
+}

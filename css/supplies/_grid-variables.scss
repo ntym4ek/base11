@@ -1,0 +1,28 @@
+// === Grid & Breakpoint Variables (base11) ===
+
+// Количество колонок сетки
+$grid-columns: 12 !default;
+
+// Единый источник истины — карта брейкпоинтов
+$grid-breakpoints: (
+  "sm": 0,
+  "pd": 768px,
+  "tb": 1024px,
+  "lp": 1366px,
+  "dt": 1600px,
+  "wd": 1920px
+) !default;
+
+// Основные адаптивные медиавыражения (Mobile First: от указанной точки входа и выше)
+$pad:     "(min-width: 768px)";
+$tablet:  "(min-width: 1024px)";
+$laptop:  "(min-width: 1366px)";
+$desktop: "(min-width: 1600px)";
+$wide:    "(min-width: 1920px)";
+
+// Изолированные диапазоны устройств (-only)
+$smart-only:   "(max-width: 767px)";
+$pad-only:     "(min-width: 768px) and (max-width: 1023px)";
+$tablet-only:  "(min-width: 1024px) and (max-width: 1365px)";
+$laptop-only:  "(min-width: 1366px) and (max-width: 1599px)";
+$desktop-only: "(min-width: 1600px) and (max-width: 1919px)";

@@ -1,0 +1,182 @@
+@import "../supplies/grid-variables";
+
+// - фон
+.facet-backdrop {
+  position: fixed; top: 0; left: 0; z-index: 9998;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.55); backdrop-filter: blur(2px);
+  opacity: 0; visibility: hidden;
+  transition: opacity 250ms ease, visibility 250ms ease;
+
+  &.is-visible {
+    opacity: 1; visibility: visible;
+  }
+
+  @media #{$laptop} {
+    display: none;
+  }
+}
+
+// - меняем положение throbber
+.ajax-progress,
+.ajax-progress-throbber,
+.ajax-progress-fullscreen {
+  z-index: 100000 !important;
+}
+
+.view {
+  .view-filters,
+  .view-content {
+    // Сброс дефолтного min-width: auto
+    // Актуально для Grid- и Flex-элемента с переполнением по ширине
+    // Фильтры выстраиваются в строку и растягивают контейнер шире экрана,
+    min-width: 0;
+  }
+}
+
+.bef-exposed-form {
+  // Для мобильных и планшетов (до медиа-запроса laptop)
+  @media #{$smart-only}, #{$pad-only}, #{$tablet-only} {
+    .ajax-progress-throbber {
+      position: fixed !important; top: 50% !important; left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      background-color: rgba(0, 0, 0, 0.75);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+
+      .throbber {
+        margin: 0 !important; padding: 0;
+      }
+
+      .message {
+        color: #ffffff; font-size: .8rem; font-weight: 500;
+        margin-left: 1rem;
+      }
+    }
+
+    .form--inline {
+      display: flex; flex-wrap: nowrap; gap: .5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+      &::-webkit-scrollbar { display: none; }
+      padding-bottom: 8px;
+    }
+
+    fieldset {
+      border: none;
+      flex: 0 0 auto !important;  // Запрещает элементам сжиматься по ширине
+      width: auto !important;     // Сбрасывает десктопное width: 100%
+      margin: 0 !important;
+      float: none!important;
+
+      .fieldset-wrapper { display: none; }
+
+      legend {
+        border: 1px solid transparent;
+        scroll-snap-align: start;
+      }
+      .facet__title {
+        display: inline-flex; align-items: center; gap: .5rem;
+      }
+      // Метка-бейдж с числом выбранных пунктов
+      .facet__badge {
+        display: inline-flex; align-items: center; justify-content: center;
+        background-color: #555; border-radius: 9px;
+        color: #ffffff; font-size: .7rem; line-height: 1;
+        min-width: 1.2rem; height: 1.2rem;
+        padding: 0 5px;
+      }
+
+      // Подсветка кнопки-фильтра, если в ней есть выбранные чекбоксы
+      &.has-selected legend { background-color: #eee; }
+
+      &.open {
+        // Выравнивание модального окна строго по центру экрана
+        .fieldset-wrapper {
+          background: #ffffff !important; border-radius: 12px !important;
+          display: flex !important; flex-direction: column;
+          position: fixed !important; top: 50% !important; left: 50% !important;
+          transform: translate(-50%, -50%) !important;
+          width: calc(100vw - 32px) !important;
+          max-width: 480px !important; max-height: 75vh !important;
+          overflow-y: auto !important;
+          padding: 1.5rem !important;
+          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28) !important;
+          z-index: 9999 !important;
+          box-sizing: border-box !important;
+        }
+      }
+
+      .facet-modal-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding-bottom: .5rem; margin-bottom: 1rem;
+
+        .facet-modal-close {
+          background: none; border: none;
+          cursor: pointer;
+        }
+      }
+    }
+
+  }
+
+  // Десктоп: сбрасываем модальные стили в нормальный поток страницы
+  @media #{$laptop} {
+    fieldset {
+      .fieldset-wrapper {
+        position: static !important;
+        transform: none !important;
+        width: auto !important;
+        max-width: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+
+      // На десктопе бейдж можно скрыть или перекрасить в нейтральный цвет
+      .facet__badge { display: none; }
+      //.facet__badge {
+      //  display: inline-flex;
+      //  background-color: #6c757d;
+      //  border-radius: 10px;
+      //  color: #fff; font-size: 11px;
+      //  padding: 2px 6px; margin-left: 6px;
+      //}
+
+      .facet-modal-header { display: none; }
+    }
+  }
+}
+
+// Когда форма находится в состоянии AJAX-запроса
+// Отключаем клики на время загрузки
+// Состояние загрузки: окно полностью непроницаемо снаружи,
+// а внутри блокируются клики и накладывается белая вуаль
+.bef-exposed-form.ajax-progress-active fieldset .fieldset-wrapper,
+.bef-exposed-form:has(.ajax-progress) fieldset .fieldset-wrapper,
+body:has(.ajax-progress) .bef-exposed-form fieldset .fieldset-wrapper {
+  position: relative;
+  cursor: wait;
+
+  // 1. Блокируем клики по чекбоксам и полям ввода
+  input,
+  label,
+  button {
+    pointer-events: none;
+  }
+
+  // 2. Внутренний полупрозрачный слой поверх контента окна
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0; // top: 0, right: 0, bottom: 0, left: 0
+    background-color: rgba(255, 255, 255, 0.65);
+    border-radius: inherit;
+    z-index: 10;
+    pointer-events: all; // Ловит все клики на себя, не пробивая окно насквозь
+    animation: fadeInOverlay 150ms ease forwards;
+  }
+}
+

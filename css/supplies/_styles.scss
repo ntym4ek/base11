@@ -1,0 +1,28 @@
+// ==========================================================================
+// Base11 - Главный файл стилей темы
+// ==========================================================================
+
+// 1. Дизайн-токены, переменные и миксины
+@import "tokens";
+@import "grid-variables";
+@import "mixins";
+
+// 2. Базовые стили и сетка
+@import "base";
+@import "grid";
+@import "layout";
+
+// 3. Контролы (кнопки и формы)
+@import "button";
+@import "form";
+
+// 4. Навигация и системные элементы
+@import "menu";
+@import "menu-mobile";
+@import "breadcrumb";
+@import "message";
+
+// 5. Утилиты и вспомогательные стили
+@import "ajax";
+@import "helper";
+@import "print";

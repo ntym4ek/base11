@@ -1,17 +1,99 @@
-// Миксин единого габарита контрола
+// === Mixins (base11) ===
+
+// Миксин единого габарита контрола (кнопки, инпуты, селекты)
 @mixin control-size($height, $py, $px, $font-size, $radius) {
   min-height: $height;
   padding: $py $px;
   font-size: $font-size;
-  line-height: var(--control-line-height);
+  line-height: var(--control-line-height, 1.5);
   border-radius: $radius;
   box-sizing: border-box;
 }
 
-// Миксин фокуса доступности (WCAG 2.1)
+// Алиас для обратной совместимости вызовов button-size в подтемах
+@mixin button-size($padding-horizontal, $font-size, $line-height, $border-radius, $height) {
+  min-height: $height;
+  padding-left: $padding-horizontal;
+  padding-right: $padding-horizontal;
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: $border-radius;
+  box-sizing: border-box;
+}
+
+// Миксин видимого фокуса доступности (WCAG 2.1 & 2.2 Focus Visible)
 @mixin focus-ring {
   &:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, var(--brand-primary, #213a6e));
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+}
+
+// Растянуть блок на всю ширину экрана за рамки родительского контейнера
+@mixin screen-wide() {
+  position: relative;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+}
+
+// Базовые свойства кнопки
+@mixin btn() {
+  border: var(--control-border-width, 1px) solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: var(--btn-font-weight, 500);
+  text-align: center;
+  touch-action: manipulation;
+  transition: background-color var(--transition-base, 200ms),
+              border-color var(--transition-base, 200ms),
+              color var(--transition-base, 200ms),
+              box-shadow var(--transition-base, 200ms);
+  user-select: none;
+  position: relative;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-decoration: none;
+  @include focus-ring;
+}
+
+// Цветовые варианты кнопок
+@mixin button-variant($color, $bkg, $border, $color-h: null, $bkg-h: null, $border-h: null) {
+  color: $color;
+  background-color: $bkg;
+  border-color: $border;
+
+  &:hover {
+    @if $color-h { color: $color-h; }
+    @if $bkg-h { background-color: $bkg-h; }
+    @if $border-h { border-color: $border-h; }
+  }
+
+  &:focus-visible {
+    @if $color-h { color: $color-h; }
+    @if $bkg-h { background-color: $bkg-h; }
+    @if $border-h { border-color: $border-h; }
+  }
+
+  &:active,
+  &.active {
+    @if $bkg-h { background-color: $bkg-h; }
+    @if $border-h { border-color: $border-h; }
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+    &:hover,
+    &:focus-visible {
+      color: $color;
+      background-color: $bkg;
+      border-color: $border;
+    }
   }
 }

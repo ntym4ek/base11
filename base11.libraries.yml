@@ -47,121 +47,11 @@ base:
       css/components/ui-dialog.css:
         weight: -10
 
-helper:
-  version: VERSION
-  js:
-    js/helper.js: {}
-  dependencies:
-    - core/drupal
-
-click-to-copy:
+font-montserrat:
   version: VERSION
   css:
-    component:
-      css/extensions/click-to-copy.css: {}
-  js:
-    js/extensions/click-to-copy.js: {}
-  dependencies:
-    - core/drupal
-    - core/once
-
-back-to-top:
-  version: VERSION
-  css:
-    component:
-      css/extensions/back-to-top.css: {}
-  js:
-    js/extensions/back-to-top.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupal
-    - core/once
-
-input-dropdown-filter:
-  version: VERSION
-  css:
-    component:
-      css/extensions/input-dropdown-filter.css: { }
-  js:
-    js/diacritics.js: {}
-    js/extensions/input-dropdown-filter.js: {}
-  dependencies:
-    - core/drupal
-    - core/once
-
-menu-mobile:
-  version: VERSION
-  js:
-    js/menu-mobile.js: {}
-  dependencies:
-    - core/drupal
-    - core/once
-    - core/drupalSettings
-    - base9/swipe-events
-
-swiper-thumbs:
-  version: VERSION
-  js:
-    js/swiper-thumbs.js: {}
-  dependencies:
-    - core/drupal
-    - core/once
-    - swiper_formatter/local
-    - swiper_formatter/swiper_formatter
-
-tabs-js:
-  version: VERSION
-  css:
-    component:
-      css/extensions/tabs-js.css: {}
-  js:
-    js/extensions/tabs-js.js: {}
-  dependencies:
-    - core/drupal
-    - core/once
-
-modal-ui-widget-remove:
-  version: VERSION
-  js:
-    js/modal-ui-widget-remove.js: {}
-  dependencies:
-    - core/drupal
-    - core/once
-
-swipe-events:
-  version: VERSION
-  js:
-    js/swipe-events.js: {}
-  dependencies:
-    - core/drupal
-    - core/once
-    - core/drupalSettings
-
-facet-extension:
-  version: VERSION
-  css:
-    component:
-      css/extensions/facet-extension.css: { }
-  js:
-    js/extensions/facet-extension.js: { }
-  dependencies:
-    - core/drupal
-    - core/once
-
-facet-list-filter:
-  version: VERSION
-  js:
-    js/facet-list-filter.js: { }
-  dependencies:
-    - core/drupal
-    - core/once
-
-layout-kccc:
-  version: VERSION
-  css:
-    component:
-      css/extensions/layout-kccc.css:
-        weight: -10
+    base:
+      fonts/montserrat/montserrat.css: {}
 
 dialog:
   version: VERSION
@@ -232,3 +122,108 @@ user:
       css/components/user.css:
         weight: -10
 
+#
+# Собственные библиотеки
+#
+helper:
+  version: VERSION
+  js:
+    js/helper.js: {}
+  dependencies:
+    - core/drupal
+
+click-to-copy:
+  version: VERSION
+  css:
+    component:
+      css/extensions/click-to-copy.css: {}
+  js:
+    js/extensions/click-to-copy.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+back-to-top:
+  version: VERSION
+  css:
+    component:
+      css/extensions/back-to-top.css: {}
+  js:
+    js/extensions/back-to-top.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+menu-mobile:
+  version: VERSION
+  js:
+    js/menu-mobile.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupalSettings
+    - base11/swipe-events
+
+swiper-thumbs:
+  version: VERSION
+  js:
+    js/swiper-thumbs.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - swiper_formatter/local
+    - swiper_formatter/swiper_formatter
+
+tabs-js:
+  version: VERSION
+  css:
+    component:
+      css/extensions/tabs-js.css: {}
+  js:
+    js/extensions/tabs-js.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+modal-ui-widget-remove:
+  version: VERSION
+  js:
+    js/modal-ui-widget-remove.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+swipe-events:
+  version: VERSION
+  js:
+    js/swipe-events.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupalSettings
+
+facet-extension:
+  version: VERSION
+  css:
+    component:
+      css/extensions/facet-extension.css: { }
+  js:
+    js/extensions/facet-extension.js: { }
+  dependencies:
+    - core/drupal
+    - core/once
+
+facet-list-filter:
+  version: VERSION
+  js:
+    js/facet-list-filter.js: { }
+  dependencies:
+    - core/drupal
+    - core/once
+
+layout-kccc:
+  version: VERSION
+  css:
+    component:
+      css/extensions/layout-kccc.css:
+        weight: -10

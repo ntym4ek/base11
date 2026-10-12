@@ -1,0 +1,44 @@
+.tabs-js {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.tabs-js__nav {
+  display: grid;
+  grid-template-columns: min-content;
+  grid-auto-flow: column;
+  gap: 1rem;
+  justify-content: start;
+}
+.tabs-js__link {
+  display: block;
+  cursor: pointer;
+}
+.tabs-js__content {
+  display: none;
+}
+.tabs-js__content--visible {
+  display: block;
+}
+.tabs-js--equal-height {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+}
+.tabs-js--equal-height .tabs-js__nav {
+  grid-row: 1;
+  grid-column: 1;
+}
+.tabs-js--equal-height .tabs-js__content {
+  grid-row: 2;
+  grid-column: 1;
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.tabs-js--equal-height .tabs-js__content--visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}

@@ -1,0 +1,12 @@
+// === Project Theme Styles ===
+
+// Базовые стили темы base11 (сетка, миксины, сбросы, компоненты)
+@import "../../base11/css/supplies/styles";
+
+// Дизайн-токены проекта (переопределения :root)
+@import "tokens";
+
+// Специфичные стили текущей темы
+@import "base";
+@import "blocks";
+@import "pages";

@@ -1,0 +1,26 @@
+name: Project
+type: theme
+description: 'Тема проекта на основе базовой темы Base11'
+package: Core
+version: 1.0.0
+base theme: base11
+core_version_requirement: ^11
+
+libraries:
+  - base11/layout-kccc
+  - base11/back-to-top
+  - base11/menu-mobile
+  - project/styles
+
+regions:
+  header: Header
+  primary_menu: Primary menu
+  secondary_menu: Secondary menu
+  highlighted: Highlighted
+  breadcrumb: Breadcrumb
+  help: Help
+  sidebar_first: Left sidebar
+  content: Content
+  sidebar_second: Right sidebar
+  downlighted: Downlighted
+  footer: Footer

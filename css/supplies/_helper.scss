@@ -1,0 +1,33 @@
+// === Helper Utility Classes (base11) ===
+
+.full-height { height: 100%; }
+
+.text-center { text-align: center; }
+
+.screen-wide {
+  @include screen-wide();
+  overflow: hidden;
+}
+
+.text-white {
+  color: #ffffff;
+  a { color: inherit; }
+}
+
+.text-danger {
+  color: var(--brand-danger);
+  a { color: inherit; }
+}
+
+.text-success {
+  color: var(--brand-success);
+  a { color: inherit; }
+}
+
+.image.image-cover {
+  height: 100%; width: 100%;
+  img {
+    height: 100%; width: 100%;
+    object-fit: cover;
+  }
+}

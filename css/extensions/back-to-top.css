@@ -1,0 +1,54 @@
+.back-to-top {
+  background-color: rgba(51, 51, 51, 0.5215686275);
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 30px;
+  right: 6%;
+  z-index: 999;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+.back-to-top::before {
+  content: "";
+  background-color: #333333;
+  border-radius: 50%;
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  transition: background-color 0.2s ease;
+}
+.back-to-top__icon {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 55%;
+  height: 55%;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: translateY(-1px);
+}
+.back-to-top:hover {
+  transform: translateY(-2px);
+}
+.back-to-top:active {
+  transform: translateY(0);
+}
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22back-to-top.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AACA;EACE;EACA;EAAoB;EACpB;EAAe;EAAqB;EACpC;EAAiB;EAAc;EAAW;EAE1C;EAAa;EACb;EACA;EAAY;EACZ;EACA;;AAEA;EACE;EACA;EAA2B;EAC3B;EACA;EAAY;EACZ;;AAGF;EACE;EACA;EAAoB;EACpB;EAAY;EACZ;EACA;EAAiB;EAAmB;EAAuB;EAC3D;;AAGF;EAAU;;AACV;EAAW;;AAEX;EACE;EAAY;EACZ%22,%22file%22:%22back-to-top.css%22%7D */

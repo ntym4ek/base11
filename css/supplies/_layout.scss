@@ -1,0 +1,79 @@
+// === Layout Styles (base11) ===
+// Разметка страницы, прижатие подвала и мобильная шторка offside
+
+@import "tokens";
+@import "grid-variables";
+
+.page-wrapper {
+  overflow: hidden;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  position: relative;
+  transition: transform var(--transition-base, 200ms ease-in);
+}
+
+.page-offside {
+  background: var(--menu-mobile-bg);
+  position: fixed;
+  bottom: 0;
+  z-index: var(--z-fixed, 1030);
+  width: var(--menu-mobile-width);
+  height: 100%;
+  transition: transform var(--transition-base, 200ms ease-in), margin var(--transition-base, 200ms ease-in);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow-y: auto;
+
+  .page-offside-left & {
+    left: 0;
+    margin: 0 0 0 calc(-1 * var(--menu-mobile-width));
+  }
+
+  .page-offside-right & {
+    right: 0;
+    margin: 0 calc(-1 * var(--menu-mobile-width)) 0 0;
+  }
+
+  @media #{$laptop} {
+    display: none;
+  }
+}
+
+.page-offside-opened {
+  .page-offside {
+    margin: 0;
+  }
+
+  // Сдвиг страницы при открытом меню слева
+  &.page-offside-left .page {
+    transform: translate3d(var(--menu-mobile-width), 0, 0);
+  }
+
+  // Сдвиг страницы при открытом меню справа
+  &.page-offside-right .page {
+    transform: translate3d(calc(-1 * var(--menu-mobile-width)), 0, 0);
+  }
+}
+
+.page-content {
+  flex: 1 0 auto;
+}
+
+.page-footer {
+  background: var(--footer-bg);
+  color: var(--footer-color);
+
+  .container,
+  .container-fluid {
+    height: 100%;
+  }
+}
+
+.page-title {
+  margin-bottom: 2rem;
+}

@@ -33,7 +33,7 @@ function base11_preprocess_page(array &$vars): void
   $vars['site']['name'] = $config->get('name');
 
   // - Логотипы
-  $path_theme = \Drupal::service('extension.path.resolver')->getPath('theme', 'base9');
+  $path_theme = \Drupal::service('extension.path.resolver')->getPath('theme', 'base11');
   $vars['site']['logo']['standart'] = \Drupal::service('file_url_generator')->generateString($path_theme . '/images/logo/logo.png');
   $vars['site']['logo']['transparent'] = \Drupal::service('file_url_generator')->generateString($path_theme . '/images/logo/logo_t.png');
 

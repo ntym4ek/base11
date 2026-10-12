@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming.
+ */
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function project_preprocess_page(array &$vars): void
+{
+}

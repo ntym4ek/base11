@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Theme override for an 'input' #type form element.
+ *
+ * Available variables:
+ * - attributes: A list of HTML attributes for the input element.
+ * - children: Optional additional rendered elements.
+ *
+ * @see template_preprocess_input()
+ */
+#}
+{% apply spaceless %}
+<div class="input-dropdown-filter">
+  <input{{ attributes.addClass('input-dropdown-input')|without('size') }} />{{ children }}
+  <ul class="input-dropdown-menu" style="display:none;">
+    {% for key, value in element['#dropdown_options'] %}
+    <li class="input-dropdown-item" data-code="{{ key }}">
+      {{ value }}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endapply %}

@@ -1,0 +1,27 @@
+// === Breadcrumb Styles (base11) ===
+
+@import "tokens";
+
+.breadcrumb {
+  color: var(--text-muted);
+  font-size: var(--control-font-size-sm, 0.875rem);
+  margin: calc(var(--grid-gap-x, 1rem) * 1.5) 0;
+
+  a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--brand-primary);
+    }
+  }
+
+  li::before {
+    margin: 0 0.4rem;
+  }
+
+  li:last-child {
+    color: var(--text-color);
+  }
+}
