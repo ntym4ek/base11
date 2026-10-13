@@ -6,22 +6,15 @@ div.messages {
   position: relative;
 
   &:not(.inline) {
-    visibility: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: var(--z-toast, 1080);
-    border: none;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    margin: 0;
-    min-height: 60px;
+    border: none; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    margin: 0; min-height: 60px;
+    position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-toast, 1080);
     transform: translate(0, -100%);
     transition: transform var(--transition-base, 200ms), visibility var(--transition-base, 200ms);
+    visibility: hidden;
 
     &.visible {
-      transform: translate(0, 0);
-      visibility: visible;
+      transform: translate(0, 0); visibility: visible;
     }
 
     .admin-menu & {
@@ -36,23 +29,16 @@ div.messages {
   }
 
   .close {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    bottom: 0;
+    position: absolute; top: 1rem; right: 1rem; bottom: 0;
 
     span {
+      color: var(--text-muted); cursor: pointer;
       display: block;
-      cursor: pointer;
-      color: var(--text-muted);
-      font-weight: 500;
-      line-height: 1;
-      padding: 0 0.5rem 0.5rem;
+      font-weight: 500; line-height: 1;
+      padding: 0 .5rem .5rem;
       transition: color var(--transition-fast);
 
-      &:hover {
-        color: var(--text-color);
-      }
+      &:hover { color: var(--text-color); }
     }
   }
 }

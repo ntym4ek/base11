@@ -5,7 +5,9 @@
   --block-gap-y: 2rem;
   --font-family-base: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-family-heading: var(--font-family-base);
+  --font-size-sm: 0.889rem;
   --font-size-base: 1rem;
+  --font-size-lg: 1.222rem;
   --line-height-base: 1.15;
   --font-size-h1: 2.33rem;
   --font-size-h2: 1.667rem;
@@ -59,7 +61,7 @@
   --btn-font-size-sm: var(--control-font-size-sm);
   --btn-font-size-md: var(--control-font-size-md);
   --btn-font-size-lg: var(--control-font-size-lg);
-  --btn-font-weight: 500;
+  --btn-font-weight: 400;
   --btn-radius-sm: var(--control-radius-sm);
   --btn-radius-md: var(--control-radius-md);
   --btn-radius-lg: var(--control-radius-lg);
@@ -154,7 +156,7 @@
   :root {
     --page-gap-x: 1rem;
     --grid-gap-x: 2rem;
-    --block-gap-y: 3.5rem;
+    --block-gap-y: 3rem;
   }
 }
 .click-to-copy:hover ~ .click-to-copy__tooltip {
@@ -215,4 +217,4 @@
   border-color: black transparent transparent transparent;
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_tokens.scss%22,%22click-to-copy.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EAEE;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAIA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAEA;EACA;EAEA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAGA;EACA;;;AAKF;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AC3MF;EAAoC;EAAY;;AAChD;EACE;EACA;EACA;EACA;EAAoB;EACpB;EAAgB;EAChB;;AACA;EACE;EACA;;AACA;EAAyB;;AAE3B;EACE;EAAY;;AACZ;EAA8B;EAAqB;;AAGvD;EACE;EACA;EACA;EACA;EACA;EAAmB;EAAiB;EAAoB;EACxD;EACA;EACA;EAAoB;EAAY;EAAc;EAC9C;EACA;;AACA;EACE;EACA;EAAoB;EAAW;EAC/B;EACA;EAAmB;EAAqB%22,%22file%22:%22click-to-copy.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_tokens.scss%22,%22click-to-copy.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EAEE;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAIA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAEA;EACA;EAEA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAGA;EACA;;;AAKF;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AC7MF;EAAoC;EAAY;;AAChD;EACE;EACA;EACA;EACA;EAAoB;EACpB;EAAgB;EAChB;;AACA;EACE;EACA;;AACA;EAAyB;;AAE3B;EACE;EAAY;;AACZ;EAA8B;EAAqB;;AAGvD;EACE;EACA;EACA;EACA;EACA;EAAmB;EAAiB;EAAoB;EACxD;EACA;EACA;EAAoB;EAAY;EAAc;EAC9C;EACA;;AACA;EACE;EACA;EAAoB;EAAW;EAC/B;EACA;EAAmB;EAAqB%22,%22file%22:%22click-to-copy.css%22%7D */

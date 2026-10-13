@@ -162,7 +162,7 @@
     }
     .banner-title { font-size: 1.63rem; font-weight: 800; line-height: 1.1; }
     .banner-suffix {
-      font-size: 1.222rem; font-weight: 600; line-height: 1.4;
+      font-size: var(--font-size-lg, 1.222rem); font-weight: 600; line-height: 1.4;
       margin-top: 1rem;
     }
 
@@ -201,7 +201,7 @@
         color: var(--menu-mobile-color, #ffffff); text-align: center;
         margin: .5rem auto;
       }
-      .name { font-size: 1.222rem; font-weight: 500; }
+      .name { font-size: var(--font-size-lg, 1.222rem); font-weight: 500; }
       a { color: inherit; }
     }
   }

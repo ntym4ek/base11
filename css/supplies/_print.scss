@@ -9,10 +9,9 @@
   div:first-line,
   blockquote:first-line,
   li:first-line {
-    background: transparent !important;
+    background: transparent !important; box-shadow: none !important;
     color: #000 !important;
     text-shadow: none !important;
-    box-shadow: none !important;
   }
 
   .page-header,

@@ -12,7 +12,9 @@
   // --- 2. Типографика ---
   --font-family-base: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-family-heading: var(--font-family-base);
+  --font-size-sm: 0.889rem;
   --font-size-base: 1rem;
+  --font-size-lg: 1.222rem;
   --line-height-base: 1.15;
 
   // Шкала размеров заголовков
@@ -81,7 +83,7 @@
   --btn-font-size-sm: var(--control-font-size-sm);    // 14px
   --btn-font-size-md: var(--control-font-size-md);    // 16px
   --btn-font-size-lg: var(--control-font-size-lg);    // 18px
-  --btn-font-weight: 500;
+  --btn-font-weight: 400;
   --btn-radius-sm: var(--control-radius-sm);
   --btn-radius-md: var(--control-radius-md);
   --btn-radius-lg: var(--control-radius-lg);
@@ -205,6 +207,6 @@
   :root {
     --page-gap-x: 1rem;
     --grid-gap-x: 2rem;
-    --block-gap-y: 3.5rem;
+    --block-gap-y: 3rem;
   }
 }
