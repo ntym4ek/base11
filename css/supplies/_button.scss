@@ -196,54 +196,87 @@ input[type="reset"] {
   &.button--outline {
     background-color: transparent;
 
-    &.button--default {
-      border-color: var(--border-color);
-      color: var(--text-color);
-      &:hover {
-        background-color: var(--text-color);
-        border-color: var(--text-color);
-        color: #ffffff;
-      }
+    &:hover,
+    &.is-hover {
+      background-color: transparent;
     }
-    &.button--white {
-      border-color: #ffffff;
-      color: #ffffff;
-      &:hover {
-        background-color: #ffffff;
+
+    &.button--default {
+      border-color: var(--text-color);
+      color: var(--text-color);
+      &:hover,
+      &.is-hover {
+        background-color: transparent;
+        border-color: var(--brand-primary);
         color: var(--brand-primary);
       }
     }
-    &.button--brand,
-    &.button--primary {
-      border-color: var(--brand-primary);
-      color: var(--brand-primary);
-      &:hover {
-        background-color: var(--brand-primary);
-        color: #ffffff;
+
+    &.button--white {
+      border-color: #ffffff;
+      color: #ffffff;
+      &:hover,
+      &.is-hover {
+        background-color: transparent;
+        border-color: rgba(255, 255, 255, 0.7);
+        color: rgba(255, 255, 255, 0.9);
       }
     }
+
+    &.button--brand,
+    &.button--primary,
+    &.button--action {
+      border-color: var(--brand-primary);
+      color: var(--brand-primary);
+      &:hover,
+      &.is-hover {
+        background-color: transparent;
+        border-color: var(--brand-primary-hover);
+        color: var(--brand-primary-hover);
+      }
+    }
+
     &.button--success {
       border-color: var(--brand-success);
       color: var(--brand-success);
-      &:hover {
-        background-color: var(--brand-success);
-        color: #ffffff;
+      &:hover,
+      &.is-hover {
+        background-color: transparent;
+        border-color: color-mix(in srgb, var(--brand-success), black 12%);
+        color: color-mix(in srgb, var(--brand-success), black 12%);
       }
     }
+
     &.button--danger {
       border-color: var(--brand-danger);
       color: var(--brand-danger);
-      &:hover {
-        background-color: var(--brand-danger);
-        color: #ffffff;
+      &:hover,
+      &.is-hover {
+        background-color: transparent;
+        border-color: color-mix(in srgb, var(--brand-danger), black 12%);
+        color: color-mix(in srgb, var(--brand-danger), black 12%);
       }
     }
+
     &.button--warning {
       border-color: var(--brand-warning);
       color: var(--brand-warning);
-      &:hover {
-        background-color: var(--brand-warning);
-        color: #ffffff;
+      &:hover,
+      &.is-hover {
+        background-color: transparent;
+        border-color: color-mix(in srgb, var(--brand-warning), black 12%);
+        color: color-mix(in srgb, var(--brand-warning), black 12%);
+      }
+    }
+
+    &.button--info {
+      border-color: var(--brand-info);
+      color: var(--brand-info);
+      &:hover,
+      &.is-hover {
+        background-color: transparent;
+        border-color: color-mix(in srgb, var(--brand-info), black 12%);
+        color: color-mix(in srgb, var(--brand-info), black 12%);
       }
     }
   }

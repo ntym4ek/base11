@@ -50,7 +50,8 @@
   transition: background-color var(--transition-base, 200ms),
               border-color var(--transition-base, 200ms),
               color var(--transition-base, 200ms),
-              box-shadow var(--transition-base, 200ms);
+              box-shadow var(--transition-base, 200ms),
+              transform var(--transition-base, 200ms);
   user-select: none;
   position: relative;
   vertical-align: middle;

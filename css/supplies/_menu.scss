@@ -50,7 +50,7 @@
         display: inline-block;
         position: relative;
         > a {
-          color: var(--text-color);
+          color: var(--header-color);
           white-space: nowrap;
           &:hover {
             color: var(--brand-primary);
