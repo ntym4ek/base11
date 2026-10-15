@@ -1,9 +1,11 @@
 /**
  * @file
- * Подключение слайдера мобильного меню
+ * Подключение слайдера мобильного меню (Vanilla JS для Drupal 11).
  */
 
-(($, Drupal, once, drupalSettings) => {
+((Drupal, once, drupalSettings) => {
+  'use strict';
+
   /**
    * @type {Drupal~behavior}
    *
@@ -11,93 +13,120 @@
    */
   Drupal.behaviors.mobileMenu = {
     attach(context) {
-
-      // если < menuHide, то вывести боковое меню
-      // повесить обработчик свайпа
       function showMobileNav() {
-        $("body").data("page-offside-opened", true).addClass("page-offside-opened");
+        document.body.classList.add('page-offside-opened');
       }
+
       function hideMobileNav() {
-        $("body").data("page-offside-opened", false).removeClass("page-offside-opened");
+        document.body.classList.remove('page-offside-opened');
       }
+
       function toggleMobileNav() {
-        if ($("body").data("page-offside-opened")) {
-          hideMobileNav();
-        } else {
-          showMobileNav();
-        }
+        document.body.classList.toggle('page-offside-opened');
       }
 
-      once('page-offside-once', '.page-wrapper', context).forEach(
-        (element) => {
+      // 1. Инициализация управления мобильным меню (шторка и жесты)
+      once('page-offside-once', '.page-wrapper', context).forEach(() => {
+        const menuHideWidth = parseInt(drupalSettings.theme?.page_offside_hide_width, 10) || 1024;
 
-          // ширина экрана (обычно lg), начиная с которой убираем мобильное меню
-          const menuHideWidth = drupalSettings.theme?.page_offside_hide_width;
-          if ($(window).width() < menuHideWidth) {
-            // клик по иконке Меню
-            $(".page-offside-label").on("click", (e) => {
+        // Клик по иконке/кнопке Меню
+        document.querySelectorAll('.page-offside-label').forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            if (window.innerWidth < menuHideWidth) {
               toggleMobileNav();
               e.stopPropagation();
-            });
+            }
+          });
+        });
 
-            $(".page-offside-left .page, .page-offside-left .page-offside-label").on("swiped-right", (e) => {
-              // если свайп вправо на Свайпере или блоке с классом main-menu-disabled, то не показываем меню
-              let is_prohibited = $(e.target).closest(".page-offside-disabled, .swiper-container").length > 0;
-              if (!is_prohibited) {
-                showMobileNav();
-              }
-            });
-            $(".page-offside-right .page, .page-offside-right .page-offside-label").on("swiped-left", (e) => {
-              // если свайп вправо на Свайпере, то не показываем меню
-              let is_prohibited = $(e.target).closest(".page-offside-disabled, .swiper-container").length > 0;
-              if (!is_prohibited) {
-                showMobileNav();
-              }
-            });
-            $(".page-offside-left .page, .page-offside-left .page-offside, .page-offside-left .page-offside-label").on("swiped-left", () => {
+        // Закрытие при клике по контентной области страницы вне шторки
+        const pageArea = document.querySelector('.page');
+        if (pageArea) {
+          pageArea.addEventListener('click', () => {
+            if (document.body.classList.contains('page-offside-opened')) {
               hideMobileNav();
-            });
-            $(".page-offside-right .page, .page-offside-right .page-offside, .page-offside-right .page-offside-label").on("swiped-right", () => {
+            }
+          });
+        }
+
+        // Обработка свайп-жестов (от swipe-events.js)
+        document.addEventListener('swiped-right', (e) => {
+          if (window.innerWidth >= menuHideWidth) return;
+          const isLeftMenu = document.body.classList.contains('page-offside-left') ||
+            !document.body.classList.contains('page-offside-right');
+
+          if (isLeftMenu) {
+            // Меню слева: свайп вправо открывает меню
+            const isProhibited = e.target.closest('.page-offside-disabled, .swiper, .swiper-container');
+            if (!isProhibited && !document.body.classList.contains('page-offside-opened')) {
+              showMobileNav();
+            }
+          } else {
+            // Меню справа: свайп вправо закрывает меню
+            if (document.body.classList.contains('page-offside-opened')) {
               hideMobileNav();
-            });
-            $(".page").on("click", () => {
-              hideMobileNav();
-            });
+            }
           }
+        });
+
+        document.addEventListener('swiped-left', (e) => {
+          if (window.innerWidth >= menuHideWidth) return;
+          const isLeftMenu = document.body.classList.contains('page-offside-left') ||
+            !document.body.classList.contains('page-offside-right');
+
+          if (isLeftMenu) {
+            // Меню слева: свайп влево закрывает меню
+            if (document.body.classList.contains('page-offside-opened')) {
+              hideMobileNav();
+            }
+          } else {
+            // Меню справа: свайп влево открывает меню
+            const isProhibited = e.target.closest('.page-offside-disabled, .swiper, .swiper-container');
+            if (!isProhibited && !document.body.classList.contains('page-offside-opened')) {
+              showMobileNav();
+            }
+          }
+        });
+
+        // Закрытие шторки при увеличении ширины экрана
+        window.addEventListener('resize', () => {
+          if (window.innerWidth >= menuHideWidth && document.body.classList.contains('page-offside-opened')) {
+            hideMobileNav();
+          }
+        }, { passive: true });
       });
 
-      // раскрываемый список в мобильном меню
+      // 2. Раскрываемый список в мобильном меню (аккордеон подменю)
       once('menu-item--expanded-once', '.page-offside .menu-item--expanded', context).forEach(
         (element) => {
-          const $element = $(element);
-          const $submenu = $element.children('.menu');
+          const link = element.querySelector(':scope > a');
+          if (!link) return;
 
-          $element.children('a').on('click', function(event) {
+          link.addEventListener('click', (event) => {
             event.preventDefault();
 
-            const isOpen = $element.hasClass('open');
+            const isAlreadyOpen = element.classList.contains('open');
 
-            // Закрываем только соседние пункты того же уровня (аккордеон)
-            $element
-              .siblings('.menu-item--expanded.open')
-              .removeClass('open')
-              .children('.menu')
-              .slideUp(200);
+            // Закрываем соседние пункты того же уровня (поведение аккордеона)
+            const parentList = element.parentElement;
+            if (parentList) {
+              parentList.querySelectorAll(':scope > .menu-item--expanded.open').forEach((sibling) => {
+                if (sibling !== element) {
+                  sibling.classList.remove('open');
+                }
+              });
+            }
 
             // Переключаем текущий пункт
-            if (isOpen) {
-              $element.removeClass('open');
-              $submenu.slideUp(200);
+            if (isAlreadyOpen) {
+              element.classList.remove('open');
             } else {
-              $element.addClass('open');
-              $submenu.slideDown(200);
+              element.classList.add('open');
             }
           });
         }
       );
-
-
     },
   };
 
-})(jQuery, Drupal, once, drupalSettings);
+})(Drupal, once, drupalSettings);

@@ -1,16 +1,23 @@
 /**
  * @file
- * Всплывающее и исчезающее сообщение
+ * Всплывающее и исчезающее сообщение (Vanilla JS для Drupal 11).
  */
 
-(($, Drupal, settings, once) => {
+((Drupal, drupalSettings, once) => {
+  'use strict';
 
   function closeMessages() {
-    $("[data-drupal-messages] .messages").removeClass("visible");
+    const messages = document.querySelectorAll('[data-drupal-messages] .messages');
+    messages.forEach((msg) => msg.classList.remove('visible'));
+
     setTimeout(() => {
-      $("[data-drupal-messages]").remove();
+      const container = document.querySelector('[data-drupal-messages]');
+      if (container) {
+        container.remove();
+      }
     }, 500);
   }
+
   function setTimer(ms = 1000) {
     return setTimeout(() => {
       closeMessages();
@@ -30,28 +37,37 @@
     attach(context) {
       once('messages-once', '[data-drupal-messages] .messages', context).forEach(
         (element) => {
-          var closeTimer = null;
-          // если в настройках передан параметр messages.position = "inline"
+          let closeTimer = null;
+
+          // Если в настройках передан параметр messages.position = "inline"
           // вывести сообщения внутри формы на странице вместо плавающего окна
-          if (settings.messages !== undefined && settings.messages.position === 'inline') {
-            $(element).addClass("inline");
+          if (drupalSettings.messages !== undefined && drupalSettings.messages.position === 'inline') {
+            element.classList.add('inline');
           } else {
             closeTimer = setTimer(10000);
-            $(element).mouseover(() => {
+
+            element.addEventListener('mouseenter', () => {
               clearTimeout(closeTimer);
-            }).mouseleave(() => {
+            });
+
+            element.addEventListener('mouseleave', () => {
               closeTimer = setTimer(1000);
             });
+
             setTimeout(() => {
-              $(element).addClass("visible");
+              element.classList.add('visible');
             }, 500);
           }
-          $(element).find(".close").on("click", () => {
-            closeMessages();
-          });
+
+          const closeBtn = element.querySelector('.close');
+          if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+              closeMessages();
+            });
+          }
         }
       );
     },
   };
 
-})(jQuery, Drupal, drupalSettings, once);
+})(Drupal, drupalSettings, once);

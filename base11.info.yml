@@ -1,26 +1,38 @@
 name: Base11
 type: theme
+version: 1.1.2
+description: ''
 'base theme': stable9
-version: 1.1.1
+core_version_requirement: ^11
+generator: 'starterkit_theme:11.1.7'
+
 libraries:
   - base11/font-montserrat
   - base11/base
   - base11/messages
   - core/normalize
+
+libraries-override:
+  core/internal.jquery_ui:
+    css:
+      theme:
+        assets/vendor/jquery.ui/themes/base/theme.css: false
+  core/drupal.dialog:
+    css:
+      component:
+        assets/vendor/jquery.ui/themes/base/dialog.css: false
+        assets/vendor/jquery.ui/themes/base/button.css: false
+
 libraries-extend:
   user/drupal.user:
     - base11/user
   core/drupal.dropbutton:
     - base11/dropbutton
-  core/drupal.dialog:
-    - base11/dialog
   file/drupal.file:
     - base11/file
   core/drupal.progress:
     - base11/progress
-description: ''
-core_version_requirement: ^11
-generator: 'starterkit_theme:11.1.7'
+
 
 regions:
   header: Header

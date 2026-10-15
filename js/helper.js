@@ -10,7 +10,7 @@
   Drupal.isEmpty = function (value) {
     if (value == null) return true;
     if (value.jquery) { return value.length === 0; }
-    if (Array.isArray(value) || typeof value === 'string') return value.length === 0;
+    if (Array.isArray(value) || typeof value === 'string' || value instanceof NodeList || value instanceof HTMLCollection) return value.length === 0;
     if (value instanceof Map || value instanceof Set) return value.size === 0;
     if (typeof value === 'object') return Object.keys(value).length === 0;
     return false;

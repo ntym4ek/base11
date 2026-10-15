@@ -27,6 +27,7 @@
 
     .menu-item--expanded {
       > .menu { display: none; }
+      &.open > .menu { display: block; }
       & > a {
         cursor: pointer;
         display: flex; align-items: center;
