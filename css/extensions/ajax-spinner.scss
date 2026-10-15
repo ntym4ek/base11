@@ -1,0 +1,25 @@
+// --- Ajax Spinner ----------------------------------------------------
+
+.ajax-progress,
+.ajax-progress-throbber {
+  display: none !important;
+}
+
+.button:has(+ .ajax-progress),
+.button:has(.ajax-progress) {
+  color: transparent !important;
+  pointer-events: none; position: relative;
+
+  &::after {
+    animation: btnSpin .6s linear infinite;
+    border: 2px solid rgba(255, 255, 255, .35); border-top-color: #ffffff; border-radius: 50%;
+    content: '';
+    margin-top: -8px; margin-left: -8px;
+    position: absolute; top: 50%; left: 50%;
+    width: 16px; height: 16px;
+  }
+}
+
+@keyframes btnSpin {
+  to { transform: rotate(360deg); }
+}

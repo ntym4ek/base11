@@ -117,9 +117,11 @@ user:
       css/components/user.css:
         weight: -10
 
-#
-# Собственные библиотеки
-#
+# ==============================================================================
+# Собственные библиотеки темы Base11 (extensions & helpers)
+# ==============================================================================
+
+# Базовые JavaScript-утилиты и вспомогательные функции темы
 helper:
   version: VERSION
   js:
@@ -127,6 +129,7 @@ helper:
   dependencies:
     - core/drupal
 
+# Кнопка копирования текста / артикулов / промокодов в буфер обмена с уведомлением
 click-to-copy:
   version: VERSION
   css:
@@ -138,6 +141,7 @@ click-to-copy:
     - core/drupal
     - core/once
 
+# Плавающая кнопка «Наверх» с плавным скроллом и появлением при прокрутке страницы
 back-to-top:
   version: VERSION
   css:
@@ -149,6 +153,7 @@ back-to-top:
     - core/drupal
     - core/once
 
+# Адаптивное мобильное меню (шторка/панель) с поддержкой свайп-жестов
 menu-mobile:
   version: VERSION
   js:
@@ -159,6 +164,7 @@ menu-mobile:
     - core/drupalSettings
     - base11/swipe-events
 
+# Двусторонняя синхронизация основного слайдера Swiper с блоком миниатюр (превью)
 swiper-thumbs:
   version: VERSION
   js:
@@ -169,6 +175,7 @@ swiper-thumbs:
     - swiper_formatter/local
     - swiper_formatter/swiper_formatter
 
+# Переключаемые интерактивные вкладки (табы) на чистом Vanilla JS
 tabs-js:
   version: VERSION
   css:
@@ -180,6 +187,7 @@ tabs-js:
     - core/drupal
     - core/once
 
+# Библиотека распознавания touch-свайпов (влево, вправо, вверх, вниз) на сенсорных экранах
 swipe-events:
   version: VERSION
   js:
@@ -189,25 +197,28 @@ swipe-events:
     - core/once
     - core/drupalSettings
 
+# Мобильная подложка (backdrop), стили и поведение фасетных фильтров (модуль Facets)
 facet-extension:
   version: VERSION
   css:
     component:
-      css/extensions/facet-extension.css: { }
+      css/extensions/facet-extension.css: {}
   js:
-    js/extensions/facet-extension.js: { }
+    js/extensions/facet-extension.js: {}
   dependencies:
     - core/drupal
     - core/once
 
+# Живой поиск и фильтрация чекбоксов внутри длинных списков фасетов
 facet-list-filter:
   version: VERSION
   js:
-    js/facet-list-filter.js: { }
+    js/extensions/facet-list-filter.js: {}
   dependencies:
     - core/drupal
     - core/once
 
+# Базовая сетка и стили структуры страниц проектов KCCC
 layout-kccc:
   version: VERSION
   css:
@@ -215,6 +226,7 @@ layout-kccc:
       css/extensions/layout-kccc.css:
         weight: -10
 
+# Полноэкранный лайтбокс (GLightbox v3) с авто-синхронизацией со Swiper и подписями
 lightbox:
   version: 3.3.0
   css:
@@ -227,3 +239,10 @@ lightbox:
   dependencies:
     - core/drupal
     - core/once
+
+# Индикатор загрузки (спиннер) внутри нажатой кнопки при AJAX-запросах вместо дефолтного троббера
+ajax-spinner:
+  version: VERSION
+  css:
+    component:
+      css/extensions/ajax-spinner.css: {}
