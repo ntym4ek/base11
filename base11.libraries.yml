@@ -214,3 +214,16 @@ layout-kccc:
     component:
       css/extensions/layout-kccc.css:
         weight: -10
+
+lightbox:
+  version: 3.3.0
+  css:
+    component:
+      /libraries/glightbox/dist/css/glightbox.min.css: { minified: true }
+      css/extensions/lightbox.css: {}
+  js:
+    /libraries/glightbox/dist/js/glightbox.min.js: { minified: true }
+    js/extensions/lightbox.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

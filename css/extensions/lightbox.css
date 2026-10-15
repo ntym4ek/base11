@@ -1,0 +1,76 @@
+.glightbox-clean .gslide-description {
+  background: rgba(18, 18, 18, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: none;
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  transition: opacity 0.3s ease;
+}
+
+.glightbox-clean .gdesc-inner {
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+}
+
+.glightbox-clean .gslide-title {
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+
+.glightbox-clean .gslide-desc {
+  color: rgba(255, 255, 255, 0.88);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 400;
+  line-height: 1.45;
+  margin-bottom: 0;
+}
+
+.glightbox-clean .gslide-image img {
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.glightbox-clean .gprev,
+.glightbox-clean .gnext,
+.glightbox-clean .gclose {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glightbox-clean .gprev:hover,
+.glightbox-clean .gnext:hover,
+.glightbox-clean .gclose:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.08);
+}
+
+.glightbox-clean .gprev,
+.glightbox-clean .gnext {
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+}
+
+.glightbox-clean .gclose {
+  border-radius: 50%;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+}
+
+.ginner-container:not(:has(.gslide-description)) .gslide-image img {
+  border-radius: 0.5rem;
+}
