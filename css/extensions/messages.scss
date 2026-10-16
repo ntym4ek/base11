@@ -1,0 +1,73 @@
+// === Messages Extension (base11) ===
+
+@import "../supplies/tokens";
+
+// --- Базовая структура сообщения ----------------------------------------------
+div.messages,
+.messages {
+  border-radius: var(--control-radius, .5rem);
+  font-size: .889rem; font-weight: 500; line-height: 1.4;
+  padding: .875rem 2.5rem .875rem 1rem;
+  position: relative;
+
+  // Внутренний контейнер
+  .container {
+    margin: 0; max-width: 100%;
+    padding: 0;
+  }
+
+  // --- Режим всплывающего уведомления (Toast) на страницах --------------------
+  &:not(.inline) {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .12), 0 2px 8px rgba(0, 0, 0, .06);
+    left: 50%; top: 1.25rem; z-index: var(--z-toast, 1080);
+    max-width: 520px; width: calc(100% - 2rem);
+    position: fixed;
+    transform: translate(-50%, -150%);
+    transition: transform var(--transition-base, 200ms), visibility var(--transition-base, 200ms);
+    visibility: hidden;
+
+    &.visible {
+      transform: translate(-50%, 0);
+      visibility: visible;
+    }
+
+    body.toolbar-tray-open &,
+    .admin-menu & {
+      top: 4.5rem;
+    }
+  }
+
+  // --- Режим встроенного сообщения (в формах и внутри .ui-dialog) -------------
+  &.inline,
+  .ui-dialog & {
+    box-shadow: none;
+    margin: 0 0 1.25rem 0; width: 100%;
+    position: relative !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+
+  // --- Списки сообщений -------------------------------------------------------
+  .messages__list {
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+
+  .messages__item + .messages__item {
+    margin-top: .35rem;
+  }
+
+  // --- Кнопка закрытия --------------------------------------------------------
+  .close {
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    position: absolute; top: .65rem; right: .65rem;
+    width: 22px; height: 22px;
+
+    span {
+      display: inline-block;
+      font-size: 1.15rem; font-weight: 400; line-height: 1;
+      transition: color var(--transition-fast, 150ms);
+    }
+  }
+}

@@ -75,11 +75,13 @@ input[type="reset"] {
   }
 
   // Состояние загрузки / AJAX в Drupal
+  &:has(+ .ajax-progress),
+  &:has(.ajax-progress),
   &.is-loading,
   &.button--loading,
   &.is-ajax-waiting {
     cursor: wait;
-    opacity: var(--btn-loading-opacity, 0.7);
+    opacity: var(--btn-loading-opacity, .7);
     pointer-events: none;
   }
 

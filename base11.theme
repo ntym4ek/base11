@@ -134,3 +134,25 @@ function base11_preprocess_image_widget(array &$vars): void
     unset($data['preview']);
   }
 }
+
+/**
+ * Implements hook_preprocess_status_messages().
+ */
+function base11_preprocess_status_messages(array &$vars): void
+{
+  if (!empty($vars['message_list']['error'])) {
+    $current_lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $replacement = $current_lang === 'ru'
+      ? 'Пожалуйста, проверьте правильность заполнения полей.'
+      : t('Please check the highlighted fields for errors.');
+
+    foreach ($vars['message_list']['error'] as $key => $message) {
+      $message_str = (string) $message;
+      // Проверяем, является ли сообщение сводкой модуля inline_form_errors (содержит ссылки на поля формы href="#...")
+      if (str_contains($message_str, 'href="#') || str_contains($message_str, 'errors have been found') || str_contains($message_str, 'обнаружено') || str_contains($message_str, 'обнаружена')) {
+        $vars['message_list']['error'][$key] = $replacement;
+      }
+    }
+  }
+}
+

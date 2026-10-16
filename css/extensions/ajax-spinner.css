@@ -9,14 +9,18 @@
   pointer-events: none;
   position: relative;
 }
+.button:has(+ .ajax-progress):active,
+.button:has(.ajax-progress):active {
+  transform: scale(0.98);
+}
 
-.button:has(+ .ajax-progress)::after,
-.button:has(.ajax-progress)::after {
+.button:not(input):has(+ .ajax-progress)::after,
+.button:not(input):has(.ajax-progress)::after {
   animation: btnSpin 0.6s linear infinite;
   border: 2px solid rgba(255, 255, 255, 0.35);
   border-top-color: #ffffff;
   border-radius: 50%;
-  content: '';
+  content: "";
   margin-top: -8px;
   margin-left: -8px;
   position: absolute;
@@ -26,8 +30,19 @@
   height: 16px;
 }
 
+input.button:has(+ .ajax-progress),
+input[type=submit]:has(+ .ajax-progress),
+input[type=button]:has(+ .ajax-progress) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(255,255,255,.35)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
 @keyframes btnSpin {
   to {
     transform: rotate(360deg);
   }
 }
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22ajax-spinner.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAEA;AAAA;EAEE;;;AAIF;AAAA;EAEE;EACA;EAAsB;;AAEtB;AAAA;EACE;;;AAOF;AAAA;EACE;EACA;EAA4C;EAA2B;EACvE;EACA;EAAkB;EAClB;EAAoB;EAAU;EAC9B;EAAa;;;AAKjB;AAAA;AAAA;EAGE;EACA;EAA6B;EAA8B;;;AAG7D;EACE;IAAK%22,%22file%22:%22ajax-spinner.css%22%7D */
