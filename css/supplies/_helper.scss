@@ -6,7 +6,7 @@
 
 .screen-wide {
   @include screen-wide();
-  overflow: hidden;
+  //overflow: hidden;         // выяснить, нужен ли здесь overflow? убран для вывода тени под главным меню
 }
 
 .text-white {

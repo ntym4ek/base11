@@ -124,14 +124,6 @@
 
         <div class="page-main">
 
-          {% if is_title_on and title %}
-          <div class="page-title">
-            {% if title %} {{ title_prefix }} {% endif %}
-            {% if title %} <h1>{{ title }}</h1> {% endif %}
-            {% if title %} {{ title_suffix }} {% endif %}
-          </div>
-          {% endif %}
-
           <div class="row">
             {% if page.sidebar_first %}
             <aside class="col-sm-12 col-pd-4" role="complementary">

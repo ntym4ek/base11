@@ -43,9 +43,6 @@ function base11_preprocess_page(array &$vars): void
   // - Можно отключить шапку
   $vars['is_header_on'] = true;
 
-  // - Можно отключить заголовок
-  $vars['is_title_on'] = true;
-
   // - Баннер с заголовком в начале страницы
   $banner = [];
 
@@ -83,7 +80,6 @@ function base11_preprocess_page(array &$vars): void
     }
   }
   if ($banner_uri) {
-    $vars['is_title_on'] = false;
     // можно задать текст или любой html для баннера
 //    $banner['title'] = [
 //      'prefix' => '',
