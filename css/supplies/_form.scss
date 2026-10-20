@@ -20,7 +20,7 @@
     &.form-required::after {
       content: "*";
       color: var(--brand-danger);
-      margin-left: 0.25rem;
+      margin-left: .25rem;
     }
   }
 
@@ -36,20 +36,20 @@
   select {
     width: 100%;
     max-width: 100%;
-    background-color: var(--input-bg, var(--surface-card));
-    border: var(--input-border-width, var(--control-border-width, 1px)) solid var(--input-border-color, var(--border-color));
-    color: var(--input-color, var(--text-color));
-    font-weight: var(--input-font-weight, 400);
+    background-color: var(--input-bg);
+    border: var(--input-border-width) solid var(--input-border-color);
+    color: var(--input-color);
+    font-weight: var(--input-font-weight);
     outline: none;
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 
     // Базовый размер контрола (высота 44px совпадает с кнопкой, отступы компактные для текста)
     @include control-size(
       var(--control-height-md),
-      var(--input-padding-y-md, 0.5rem),
-      var(--input-padding-x-md, 0.75rem),
-      var(--input-font-size-md, var(--control-font-size-md)),
-      var(--input-radius-md, var(--control-radius-md))
+      var(--input-padding-y-md),
+      var(--input-padding-x-md),
+      var(--input-font-size-md),
+      var(--input-radius-md)
     );
 
     // Модификаторы размеров полей
@@ -57,10 +57,10 @@
     &.form-control-sm {
       @include control-size(
         var(--control-height-sm),
-        var(--input-padding-y-sm, 0.375rem),
-        var(--input-padding-x-sm, 0.625rem),
-        var(--input-font-size-sm, var(--control-font-size-sm)),
-        var(--input-radius-sm, var(--control-radius-sm))
+        var(--input-padding-y-sm),
+        var(--input-padding-x-sm),
+        var(--input-font-size-sm),
+        var(--input-radius-sm)
       );
     }
 
@@ -68,43 +68,42 @@
     &.form-control-lg {
       @include control-size(
         var(--control-height-lg),
-        var(--input-padding-y-lg, 0.75rem),
-        var(--input-padding-x-lg, 1rem),
-        var(--input-font-size-lg, var(--control-font-size-lg)),
-        var(--input-radius-lg, var(--control-radius-lg))
+        var(--input-padding-y-lg),
+        var(--input-padding-x-lg),
+        var(--input-font-size-lg),
+        var(--input-radius-lg)
       );
     }
 
     &::placeholder {
-      color: var(--input-placeholder-color, var(--text-muted));
+      color: var(--input-placeholder-color);
       opacity: 1;
     }
 
     &:hover:not(:focus):not(:disabled) {
-      border-color: var(--input-border-hover, var(--text-muted));
+      border-color: var(--input-border-hover);
     }
 
     &:focus,
     &:focus-visible {
-      border-color: var(--input-border-focus, var(--brand-primary));
+      border-color: var(--input-border-focus);
       outline: none;
-      box-shadow: var(--input-focus-shadow, none);
     }
 
     &.error,
     &[aria-invalid="true"] {
-      border-color: var(--input-border-error, var(--brand-danger));
-      background-color: var(--input-bg-error, rgba(204, 19, 53, 0.02));
+      border-color: var(--input-border-error);
+      background-color: var(--input-bg-error);
     }
 
     &:disabled,
     &[disabled],
     &.is-disabled {
-      background-color: var(--input-bg-disabled, var(--page-bg));
-      border-color: var(--input-border-disabled, var(--border-color-light));
-      color: var(--input-color-disabled, var(--text-muted));
+      background-color: var(--input-bg-disabled);
+      border-color: var(--input-border-disabled);
+      color: var(--input-color-disabled);
       cursor: not-allowed;
-      opacity: 0.7;
+      opacity: .7;
     }
   }
 
@@ -113,7 +112,7 @@
     appearance: none;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%237D7C7C'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
-    background-position: right 0.75rem center;
+    background-position: right .75rem center;
     background-size: 1rem 1rem;
     padding-right: 2.5rem;
     cursor: pointer;
@@ -123,13 +122,13 @@
   textarea {
     width: 100%;
     max-width: 100%;
-    background-color: var(--input-bg, var(--surface-card));
-    border: var(--input-border-width, var(--control-border-width, 1px)) solid var(--input-border-color, var(--border-color));
-    color: var(--input-color, var(--text-color));
-    border-radius: var(--input-radius-md, var(--control-radius-md));
-    padding: var(--input-padding-y-md, 0.5rem) var(--input-padding-x-md, 0.75rem);
-    font-size: var(--input-font-size-md, var(--control-font-size-md));
-    font-weight: var(--input-font-weight, 400);
+    background-color: var(--input-bg);
+    border: var(--input-border-width) solid var(--input-border-color);
+    color: var(--input-color);
+    border-radius: var(--input-radius-md);
+    padding: var(--input-padding-y-md) var(--input-padding-x-md);
+    font-size: var(--input-font-size-md);
+    font-weight: var(--input-font-weight);
     line-height: var(--control-line-height);
     font-family: inherit;
     resize: vertical;
@@ -138,42 +137,41 @@
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 
     &::placeholder {
-      color: var(--input-placeholder-color, var(--text-muted));
+      color: var(--input-placeholder-color);
       opacity: 1;
     }
 
     &:hover:not(:focus):not(:disabled) {
-      border-color: var(--input-border-hover, var(--text-muted));
+      border-color: var(--input-border-hover);
     }
 
     &:focus,
     &:focus-visible {
-      border-color: var(--input-border-focus, var(--brand-primary));
+      border-color: var(--input-border-focus);
       outline: none;
-      box-shadow: var(--input-focus-shadow, none);
     }
 
     &.error,
     &[aria-invalid="true"] {
-      border-color: var(--input-border-error, var(--brand-danger));
-      background-color: var(--input-bg-error, rgba(204, 19, 53, 0.02));
+      border-color: var(--input-border-error);
+      background-color: var(--input-bg-error);
     }
 
     &:disabled,
     &[disabled],
     &.is-disabled {
-      background-color: var(--input-bg-disabled, var(--page-bg));
-      border-color: var(--input-border-disabled, var(--border-color-light));
-      color: var(--input-color-disabled, var(--text-muted));
+      background-color: var(--input-bg-disabled);
+      border-color: var(--input-border-disabled);
+      color: var(--input-color-disabled);
       cursor: not-allowed;
-      opacity: 0.7;
+      opacity: .7;
     }
   }
 
   .description {
     color: var(--text-muted);
-    font-size: var(--font-size-sm, 0.889rem);
-    margin-top: 0.35rem;
+    font-size: var(--font-size-sm);
+    margin-top: .35rem;
   }
 }
 
@@ -194,7 +192,7 @@
     background-position: center;
     background-size: contain;
     cursor: pointer;
-    margin: 0 0.5rem 0 0;
+    margin: 0 .5rem 0 0;
     flex-shrink: 0;
     transition: border-color var(--transition-fast), background-color var(--transition-fast);
 
@@ -211,10 +209,10 @@
     }
 
     &:disabled {
-      opacity: 0.5;
+      opacity: .5;
       cursor: not-allowed;
       ~ label {
-        opacity: 0.5;
+        opacity: .5;
         cursor: not-allowed;
       }
     }
@@ -236,10 +234,10 @@
     width: 1.15rem;
     height: 1.15rem;
     border: 1px solid var(--border-color);
-    border-radius: 0.2rem;
+    border-radius: .2rem;
     background-color: var(--surface-card);
     cursor: pointer;
-    margin: 0 0.5rem 0 0;
+    margin: 0 .5rem 0 0;
     flex-shrink: 0;
     transition: border-color var(--transition-fast), background-color var(--transition-fast);
 
@@ -259,10 +257,10 @@
     }
 
     &:disabled {
-      opacity: 0.5;
+      opacity: .5;
       cursor: not-allowed;
       ~ label {
-        opacity: 0.5;
+        opacity: .5;
         cursor: not-allowed;
       }
     }
@@ -280,13 +278,13 @@
   .container-inline {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: .5rem;
   }
 
   h4 {
     display: inline-block;
     font-family: inherit;
-    font-size: 1rem;
+    font-size: var(--font-size-base);
     margin-bottom: var(--label-gap-y);
   }
 

@@ -12,7 +12,7 @@
   // --- 2. Типографика ---
   --font-family-base: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-family-heading: var(--font-family-base);
-  --font-size-sm: 0.889rem;
+  --font-size-sm: .889rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.222rem;
   --line-height-base: 1.15;
@@ -23,7 +23,13 @@
   --font-size-h3: 1.333rem;
   --font-size-h4: 1.222rem;
   --font-size-h5: 1rem;
-  --font-size-h6: 0.889rem;
+  --font-size-h6: .889rem;
+
+  // 2. Увеличение для планшетов и десктопа:
+  @media #{$smart-only} {
+      --font-size-h1: 2rem;
+      --font-size-h2: 1.5rem;
+  }
 
   // --- 3. Cистема контролов (Кнопки, Поля ввода, Селекты) ---
   // Высота элементов (гарантирует идеальное выравнивание кнопок и полей в одной строке)
@@ -32,23 +38,23 @@
   --control-height-lg: 3.25rem;       // 52px
 
   // Типографика и базовые свойства
-  --control-font-size-sm: 0.875rem;   // 14px
+  --control-font-size-sm: .875rem;   // 14px
   --control-font-size-md: 1rem;       // 16px
   --control-font-size-lg: 1.125rem;   // 18px
   --control-line-height: 1.5;
   --control-border-width: 1px;
 
   // Базовые скругления (Border Radius)
-  --control-radius-sm: 0.25rem;       // 4px
-  --control-radius-md: 0.25rem;       // 4px
-  --control-radius-lg: 0.375rem;      // 6px
+  --control-radius-sm: .25rem;       // 4px
+  --control-radius-md: .25rem;       // 4px
+  --control-radius-lg: .375rem;      // 6px
 
   // Поля ввода (Inputs, Select, Textarea) - геометрия
-  --input-padding-y-sm: 0.375rem;     // 6px
-  --input-padding-x-sm: 0.625rem;     // 10px
-  --input-padding-y-md: 0.5rem;       // 8px
-  --input-padding-x-md: 0.75rem;      // 12px (стандарт читаемости)
-  --input-padding-y-lg: 0.75rem;      // 12px
+  --input-padding-y-sm: .375rem;     // 6px
+  --input-padding-x-sm: .625rem;     // 10px
+  --input-padding-y-md: .5rem;       // 8px
+  --input-padding-x-md: .75rem;      // 12px (стандарт читаемости)
+  --input-padding-y-lg: .75rem;      // 12px
   --input-padding-x-lg: 1rem;         // 16px
   --input-font-size-sm: var(--control-font-size-sm);  // 14px
   --input-font-size-md: var(--control-font-size-md);  // 16px
@@ -62,23 +68,22 @@
   --input-bg: var(--surface-card);
   --input-color: var(--text-color);
   --input-placeholder-color: var(--text-muted);
-  --input-border-width: var(--control-border-width, 1px);
+  --input-border-width: var(--control-border-width);
   --input-border-color: var(--border-color);          // Обычное состояние (как у верхнего поля)
   --input-border-hover: var(--text-muted);            // При наведении мыши
   --input-border-focus: var(--brand-primary);         // В фокусе / активный ввод (одинарная рамка)
-  --input-focus-shadow: none;                         // Без внешней тени / контура для чистой одинарной рамки
   --input-border-error: var(--brand-danger);          // Ошибка валидации
-  --input-bg-error: rgba(204, 19, 53, 0.02);
+  --input-bg-error: rgba(204, 19, 53, .02);
   --input-bg-disabled: var(--page-bg);                // Неактивное поле
   --input-border-disabled: var(--border-color-light);
   --input-color-disabled: var(--text-muted);
 
   // Кнопки (Buttons) - геометрия
-  --btn-padding-y-sm: 0.375rem;       // 6px
+  --btn-padding-y-sm: .375rem;       // 6px
   --btn-padding-x-sm: 1.25rem;        // 20px
-  --btn-padding-y-md: 0.5rem;         // 8px
+  --btn-padding-y-md: .5rem;         // 8px
   --btn-padding-x-md: 1.75rem;        // 28px
-  --btn-padding-y-lg: 0.75rem;        // 12px
+  --btn-padding-y-lg: .75rem;        // 12px
   --btn-padding-x-lg: 2.25rem;        // 36px
   --btn-font-size-sm: var(--control-font-size-sm);    // 14px
   --btn-font-size-md: var(--control-font-size-md);    // 16px
@@ -92,7 +97,10 @@
   --btn-bg: var(--brand-primary);
   --btn-color: #ffffff;
   --btn-border-color: var(--brand-primary);
-  --btn-border-width: var(--control-border-width, 1px);
+  --btn-border-width: var(--control-border-width);
+  --btn-shadow: var(--shadow-xs);
+  --btn-shadow-hover: var(--shadow-sm);
+  --btn-shadow-active: none;
 
   --btn-bg-hover: var(--brand-primary-hover);
   --btn-color-hover: #ffffff;
@@ -103,23 +111,42 @@
   --btn-border-color-active: var(--brand-primary-active);
   --btn-transform-active: translateY(1px);
 
-  --btn-focus-ring-color: var(--focus-ring-color, var(--brand-primary));
-  --btn-focus-ring-width: var(--focus-ring-width, 2px);
-  --btn-focus-ring-offset: var(--focus-ring-offset, 2px);
+  --btn-focus-ring-color: var(--focus-ring-color);
+  --btn-focus-ring-width: var(--focus-ring-width);
+  --btn-focus-ring-offset: var(--focus-ring-offset);
 
   --btn-disabled-bg: var(--btn-bg);
   --btn-disabled-color: var(--btn-color);
   --btn-disabled-border-color: var(--btn-border-color);
-  --btn-disabled-opacity: 0.5;
+  --btn-disabled-opacity: .5;
 
-  --btn-loading-opacity: 0.7;
+  --btn-loading-opacity: .7;
 
   // Лейблы форм
   --label-color: var(--text-color);
   --label-weight: 500;
-  --label-gap-y: 0.375rem;
+  --label-gap-y: .375rem;
 
-  // --- 4. Цветовые роли и поверхности ---
+  // --- 4. Шкала теней (Elevation / Box-shadows) ---
+  --shadow-base-color: #000000;
+
+  --shadow-xs: 0 1px 3px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 4%, transparent));
+  --shadow-sm: 0 2px 6px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 5%, transparent));
+  --shadow-md: 0 5px 10px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 6%, transparent));
+  --shadow-lg: 0 10px 20px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 8%, transparent));
+  --shadow-xl: 0 14px 28px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 15%, transparent));
+
+  // Семантические токены теней
+  --card-shadow: var(--shadow-md);
+  --dropdown-shadow: var(--shadow-lg);
+  --control-shadow: none;                             // Контролы и поля формы по дефолту плоские
+
+  // Динамические цветные тени кнопок
+  --btn-shadow-color: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 25%, transparent);
+  --btn-shadow-color-hover: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 35%, transparent);
+  --btn-shadow-color-active: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 20%, transparent);
+
+  // --- 5. Цветовые роли и поверхности ---
   --brand-primary: #213a6e;
   --brand-info: #5bc0de;
   --brand-success: #36aa3d;
@@ -137,16 +164,16 @@
   --border-color: #cccccc;
   --border-color-light: #e9e9e9;
 
-  // --- 5. Доступность (A11y Focus Ring) ---
+  // --- 6. Доступность (A11y Focus Ring) ---
   --focus-ring-color: var(--brand-primary);
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
 
-  // --- 6. Шапка, Подвал и Навигация ---
+  // --- 7. Шапка, Подвал и Навигация ---
   --header-height: 5rem;
   --header-color: var(--text-color);
   --header-bg: transparent;
-  --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --header-shadow: var(--shadow-md);
 
   --footer-bg: #1e1e1c;
   --footer-color: #ffffff;
@@ -158,7 +185,7 @@
   --menu-mobile-divider: rgba(255, 255, 255, 0.15);
   --menu-mobile-btn-size: 30px;
 
-  // --- 7. Z-Index шкала ---
+  // --- 8. Z-Index шкала ---
   --z-dropdown: 1000;
   --z-sticky: 1020;
   --z-fixed: 1030;
@@ -166,12 +193,12 @@
   --z-modal: 1060;
   --z-toast: 1080;
 
-  // --- 8. Модальные окна и диалоги ---
-  --modal-backdrop-bg: rgba(0, 0, 0, 0.5);
+  // --- 9. Модальные окна и диалоги ---
+  --modal-backdrop-bg: rgba(0, 0, 0, .5);
   --modal-backdrop-blur: 4px;
-  --modal-bg: var(--surface-card, #ffffff);
+  --modal-bg: var(--surface-card);
   --modal-radius: 1rem;
-  --modal-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.25);
+  --modal-shadow: var(--shadow-xl);
   --modal-default-width: 500px;
   --modal-max-width: 1000px;
   --modal-max-width-narrow: 420px;

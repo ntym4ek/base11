@@ -10,6 +10,7 @@ libraries:
   - base11/font-montserrat
   - base11/base
   - base11/messages
+  - base11/ajax-spinner
   - core/normalize
 
 libraries-override:

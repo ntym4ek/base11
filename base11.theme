@@ -140,19 +140,44 @@ function base11_preprocess_image_widget(array &$vars): void
  */
 function base11_preprocess_status_messages(array &$vars): void
 {
-  if (!empty($vars['message_list']['error'])) {
+  if (empty($vars['message_list']['error'])) {
+    return;
+  }
+
+  $request = \Drupal::request();
+  $is_form_submit = $request->isMethod('POST') || $request->request->has('form_id');
+
+  $has_form_errors = false;
+  $filtered_errors = [];
+
+  foreach ($vars['message_list']['error'] as $message) {
+    $message_str = (string) $message;
+
+    // Структурный признак inline_form_errors (якорная ссылка на поле формы <a href="#edit-...>)
+    if (str_contains($message_str, 'href="#')) {
+      $has_form_errors = true;
+      continue; // Пропускаем сырую сводку со ссылками на поля
+    }
+
+    // Если это POST-запрос (сабмит формы), любые ошибки валидации полей относим к ошибкам формы
+    if ($is_form_submit) {
+      $has_form_errors = true;
+      continue;
+    }
+
+    // Системные ошибки, не связанные с сабмитом форм, сохраняем как есть
+    $filtered_errors[] = $message;
+  }
+
+  // Если были обнаружены ошибки заполнения формы, выводим ровно одно компактное обобщённое сообщение
+  if ($has_form_errors) {
     $current_lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
     $replacement = $current_lang === 'ru'
       ? 'Пожалуйста, проверьте правильность заполнения полей.'
       : t('Please check the highlighted fields for errors.');
 
-    foreach ($vars['message_list']['error'] as $key => $message) {
-      $message_str = (string) $message;
-      // Проверяем, является ли сообщение сводкой модуля inline_form_errors (содержит ссылки на поля формы href="#...")
-      if (str_contains($message_str, 'href="#') || str_contains($message_str, 'errors have been found') || str_contains($message_str, 'обнаружено') || str_contains($message_str, 'обнаружена')) {
-        $vars['message_list']['error'][$key] = $replacement;
-      }
-    }
+    array_unshift($filtered_errors, $replacement);
+    $vars['message_list']['error'] = $filtered_errors;
   }
 }
 

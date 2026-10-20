@@ -40,9 +40,9 @@
     .menu {
       a {
         display: inline-block;
-        padding: 0.7rem 1rem;
+        padding: .7rem 1rem;
         text-decoration: none;
-        transition: color var(--transition-fast, 150ms);
+        transition: color var(--transition-fast);
       }
 
       // Верхний уровень меню
@@ -72,12 +72,12 @@
           visibility: hidden;
           opacity: 0;
           position: absolute;
-          z-index: var(--z-dropdown, 1000);
-          background-color: var(--surface-card, #ffffff);
+          z-index: var(--z-dropdown);
+          background-color: var(--surface-card);
           min-width: 220px;
-          padding: 0.5rem 0;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          border-radius: var(--control-radius-sm, 4px);
+          padding: .5rem 0;
+          box-shadow: var(--dropdown-shadow);
+          border-radius: var(--control-radius-sm);
           transition: opacity var(--transition-fast), visibility var(--transition-fast);
 
           a {
@@ -91,7 +91,7 @@
             padding-right: 1rem;
             &:hover,
             &:focus {
-              background: var(--page-bg, #f8f7f4);
+              background: var(--page-bg);
               & > .menu {
                 visibility: visible;
                 opacity: 1;
@@ -129,10 +129,10 @@
 
 .page-footer {
   a {
-    color: var(--footer-color, #ffffff);
-    transition: color var(--transition-fast, 150ms);
+    color: var(--footer-color);
+    transition: color var(--transition-fast);
     &:hover {
-      color: var(--footer-hover-color, #ffffff);
+      color: var(--footer-hover-color);
     }
   }
 
@@ -140,11 +140,11 @@
     > .menu-item {
       &:hover {
         > a {
-          color: var(--footer-hover-color, #ffffff);
+          color: var(--footer-hover-color);
         }
       }
       > a {
-        color: var(--footer-color, #ffffff);
+        color: var(--footer-color);
       }
     }
   }

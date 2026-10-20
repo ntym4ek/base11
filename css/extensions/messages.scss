@@ -57,6 +57,13 @@ div.messages,
     margin-top: .35rem;
   }
 
+  // --- Ссылки внутри сообщений ------------------------------------------------
+  a {
+    font-weight: 600;
+    text-decoration: underline; text-underline-offset: 2px;
+    transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+  }
+
   // --- Кнопка закрытия --------------------------------------------------------
   .close {
     cursor: pointer;

@@ -241,9 +241,14 @@ lightbox:
     - core/drupal
     - core/once
 
-# Индикатор загрузки (спиннер) внутри нажатой кнопки при AJAX-запросах вместо дефолтного троббера
+# Индикатор загрузки (спиннер) внутри нажатой кнопки при AJAX и стандартной отправке форм
 ajax-spinner:
   version: VERSION
   css:
     component:
       css/extensions/ajax-spinner.css: {}
+  js:
+    js/extensions/ajax-spinner.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

@@ -13,17 +13,17 @@
   flex-direction: column;
   min-height: 100dvh;
   position: relative;
-  transition: transform var(--transition-base, 200ms ease-in);
+  transition: transform var(--transition-base);
 }
 
 .page-offside {
   background: var(--menu-mobile-bg);
   position: fixed;
   bottom: 0;
-  z-index: var(--z-fixed, 1030);
+  z-index: var(--z-fixed);
   width: var(--menu-mobile-width);
   height: 100%;
-  transition: transform var(--transition-base, 200ms ease-in), margin var(--transition-base, 200ms ease-in);
+  transition: transform var(--transition-base), margin var(--transition-base);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

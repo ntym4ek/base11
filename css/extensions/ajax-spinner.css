@@ -4,39 +4,89 @@
 }
 
 .button:has(+ .ajax-progress),
-.button:has(.ajax-progress) {
+.button:has(.ajax-progress),
+.button.is-loading,
+.btn.is-loading,
+button.is-loading,
+input[type=submit].is-loading {
   color: transparent !important;
   pointer-events: none;
   position: relative;
 }
 .button:has(+ .ajax-progress):active,
-.button:has(.ajax-progress):active {
+.button:has(.ajax-progress):active,
+.button.is-loading:active,
+.btn.is-loading:active,
+button.is-loading:active,
+input[type=submit].is-loading:active {
   transform: scale(0.98);
 }
 
 .button:not(input):has(+ .ajax-progress)::after,
-.button:not(input):has(.ajax-progress)::after {
+.button:not(input):has(.ajax-progress)::after,
+button.is-loading::after,
+.button:not(input).is-loading::after,
+.btn:not(input).is-loading::after {
   animation: btnSpin 0.6s linear infinite;
+  background: transparent !important;
   border: 2px solid rgba(255, 255, 255, 0.35);
   border-top-color: #ffffff;
   border-radius: 50%;
+  box-sizing: border-box;
   content: "";
   margin-top: -8px;
   margin-left: -8px;
+  mask: none !important;
+  -webkit-mask: none !important;
   position: absolute;
   top: 50%;
   left: 50%;
+  transition: none !important;
   width: 16px;
   height: 16px;
 }
 
 input.button:has(+ .ajax-progress),
 input[type=submit]:has(+ .ajax-progress),
-input[type=button]:has(+ .ajax-progress) {
+input[type=button]:has(+ .ajax-progress),
+input.is-loading,
+input[type=submit].is-loading {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(255,255,255,.35)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 16px 16px;
+}
+
+.button--link.is-loading,
+input[type=submit].button--link.is-loading,
+input[type=button].button--link.is-loading,
+.button--link:has(.ajax-progress) {
+  background-image: none !important;
+  color: inherit !important;
+  cursor: wait;
+  opacity: 0.5;
+}
+.button--link.is-loading::after,
+input[type=submit].button--link.is-loading::after,
+input[type=button].button--link.is-loading::after,
+.button--link:has(.ajax-progress)::after {
+  display: none !important;
+}
+
+.button--white.is-loading::after,
+.button--default.is-loading::after,
+.button--outline.is-loading::after {
+  border-color: rgba(0, 0, 0, 0.15);
+  border-top-color: var(--text-color);
+}
+
+input.button--white.is-loading,
+input[type=submit].button--white.is-loading,
+input.button--default.is-loading,
+input[type=submit].button--default.is-loading,
+input.button--outline.is-loading,
+input[type=submit].button--outline.is-loading {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(0,0,0,.15)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23333333' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
 }
 
 @keyframes btnSpin {
@@ -45,4 +95,4 @@ input[type=button]:has(+ .ajax-progress) {
   }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22ajax-spinner.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAEA;AAAA;EAEE;;;AAIF;AAAA;EAEE;EACA;EAAsB;;AAEtB;AAAA;EACE;;;AAOF;AAAA;EACE;EACA;EAA4C;EAA2B;EACvE;EACA;EAAkB;EAClB;EAAoB;EAAU;EAC9B;EAAa;;;AAKjB;AAAA;AAAA;EAGE;EACA;EAA6B;EAA8B;;;AAG7D;EACE;IAAK%22,%22file%22:%22ajax-spinner.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22ajax-spinner.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAEA;AAAA;EAEE;;;AAIF;AAAA;AAAA;AAAA;AAAA;AAAA;EAME;EACA;EAAsB;;AAEtB;AAAA;AAAA;AAAA;AAAA;AAAA;EACE;;;AAUF;AAAA;AAAA;AAAA;AAAA;EACE;EACA;EACA;EAA4C;EAA2B;EACvE;EACA;EACA;EAAkB;EAClB;EAAuB;EACvB;EAAoB;EAAU;EAC9B;EACA;EAAa;;;AAKjB;AAAA;AAAA;AAAA;AAAA;EAKE;EACA;EAA6B;EAA8B;;;AAK7D;AAAA;AAAA;AAAA;EAIE;EACA;EACA;EACA;;AAEA;AAAA;AAAA;AAAA;EACE;;;AAKJ;AAAA;AAAA;EAGE;EAAkC;;;AAGpC;AAAA;AAAA;AAAA;AAAA;AAAA;EAME;;;AAGF;EACE;IAAK%22,%22file%22:%22ajax-spinner.css%22%7D */

@@ -1,4 +1,4 @@
-// --- Ajax Spinner ----------------------------------------------------
+// --- Ajax & Form Submit Spinner ---------------------------------------------
 
 .ajax-progress,
 .ajax-progress-throbber {
@@ -7,7 +7,11 @@
 
 // Общие стили для активных кнопок (<button> и <input>)
 .button:has(+ .ajax-progress),
-.button:has(.ajax-progress) {
+.button:has(.ajax-progress),
+.button.is-loading,
+.btn.is-loading,
+button.is-loading,
+input[type="submit"].is-loading {
   color: transparent !important;
   pointer-events: none; position: relative;
 
@@ -18,13 +22,20 @@
 
 // Для <button> (поддерживает псевдоэлементы)
 .button:not(input):has(+ .ajax-progress),
-.button:not(input):has(.ajax-progress) {
+.button:not(input):has(.ajax-progress),
+button.is-loading,
+.button:not(input).is-loading,
+.btn:not(input).is-loading {
   &::after {
     animation: btnSpin .6s linear infinite;
+    background: transparent !important;
     border: 2px solid rgba(255, 255, 255, .35); border-top-color: #ffffff; border-radius: 50%;
+    box-sizing: border-box;
     content: '';
     margin-top: -8px; margin-left: -8px;
+    mask: none !important; -webkit-mask: none !important;
     position: absolute; top: 50%; left: 50%;
+    transition: none !important;
     width: 16px; height: 16px;
   }
 }
@@ -32,9 +43,43 @@
 // Для <input> (void-элемент, псевдоэлементы не работают — выводим SVG-спиннер через background)
 input.button:has(+ .ajax-progress),
 input[type="submit"]:has(+ .ajax-progress),
-input[type="button"]:has(+ .ajax-progress) {
+input[type="button"]:has(+ .ajax-progress),
+input.is-loading,
+input[type="submit"].is-loading {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(255,255,255,.35)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
   background-position: center; background-repeat: no-repeat; background-size: 16px 16px;
+}
+
+// Исключение для кнопок-ссылок (.button--link):
+// Текст не должен скрываться в прозрачность, а белый спиннер не должен подставляться
+.button--link.is-loading,
+input[type="submit"].button--link.is-loading,
+input[type="button"].button--link.is-loading,
+.button--link:has(.ajax-progress) {
+  background-image: none !important;
+  color: inherit !important;
+  cursor: wait;
+  opacity: .5;
+
+  &::after {
+    display: none !important;
+  }
+}
+
+// Для кнопок со светлым фоном (.button--white, .button--default, .button--outline) спиннер должен быть темным
+.button--white.is-loading::after,
+.button--default.is-loading::after,
+.button--outline.is-loading::after {
+  border-color: rgba(0, 0, 0, .15); border-top-color: var(--text-color);
+}
+
+input.button--white.is-loading,
+input[type="submit"].button--white.is-loading,
+input.button--default.is-loading,
+input[type="submit"].button--default.is-loading,
+input.button--outline.is-loading,
+input[type="submit"].button--outline.is-loading {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(0,0,0,.15)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23333333' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
 }
 
 @keyframes btnSpin {

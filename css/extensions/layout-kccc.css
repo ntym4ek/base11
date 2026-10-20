@@ -5,7 +5,7 @@
   --block-gap-y: 2rem;
   --font-family-base: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-family-heading: var(--font-family-base);
-  --font-size-sm: 0.889rem;
+  --font-size-sm: .889rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.222rem;
   --line-height-base: 1.15;
@@ -14,23 +14,23 @@
   --font-size-h3: 1.333rem;
   --font-size-h4: 1.222rem;
   --font-size-h5: 1rem;
-  --font-size-h6: 0.889rem;
+  --font-size-h6: .889rem;
   --control-height-sm: 2.25rem;
   --control-height-md: 2.75rem;
   --control-height-lg: 3.25rem;
-  --control-font-size-sm: 0.875rem;
+  --control-font-size-sm: .875rem;
   --control-font-size-md: 1rem;
   --control-font-size-lg: 1.125rem;
   --control-line-height: 1.5;
   --control-border-width: 1px;
-  --control-radius-sm: 0.25rem;
-  --control-radius-md: 0.25rem;
-  --control-radius-lg: 0.375rem;
-  --input-padding-y-sm: 0.375rem;
-  --input-padding-x-sm: 0.625rem;
-  --input-padding-y-md: 0.5rem;
-  --input-padding-x-md: 0.75rem;
-  --input-padding-y-lg: 0.75rem;
+  --control-radius-sm: .25rem;
+  --control-radius-md: .25rem;
+  --control-radius-lg: .375rem;
+  --input-padding-y-sm: .375rem;
+  --input-padding-x-sm: .625rem;
+  --input-padding-y-md: .5rem;
+  --input-padding-x-md: .75rem;
+  --input-padding-y-lg: .75rem;
   --input-padding-x-lg: 1rem;
   --input-font-size-sm: var(--control-font-size-sm);
   --input-font-size-md: var(--control-font-size-md);
@@ -42,21 +42,20 @@
   --input-bg: var(--surface-card);
   --input-color: var(--text-color);
   --input-placeholder-color: var(--text-muted);
-  --input-border-width: var(--control-border-width, 1px);
+  --input-border-width: var(--control-border-width);
   --input-border-color: var(--border-color);
   --input-border-hover: var(--text-muted);
   --input-border-focus: var(--brand-primary);
-  --input-focus-shadow: none;
   --input-border-error: var(--brand-danger);
-  --input-bg-error: rgba(204, 19, 53, 0.02);
+  --input-bg-error: rgba(204, 19, 53, .02);
   --input-bg-disabled: var(--page-bg);
   --input-border-disabled: var(--border-color-light);
   --input-color-disabled: var(--text-muted);
-  --btn-padding-y-sm: 0.375rem;
+  --btn-padding-y-sm: .375rem;
   --btn-padding-x-sm: 1.25rem;
-  --btn-padding-y-md: 0.5rem;
+  --btn-padding-y-md: .5rem;
   --btn-padding-x-md: 1.75rem;
-  --btn-padding-y-lg: 0.75rem;
+  --btn-padding-y-lg: .75rem;
   --btn-padding-x-lg: 2.25rem;
   --btn-font-size-sm: var(--control-font-size-sm);
   --btn-font-size-md: var(--control-font-size-md);
@@ -68,7 +67,10 @@
   --btn-bg: var(--brand-primary);
   --btn-color: #ffffff;
   --btn-border-color: var(--brand-primary);
-  --btn-border-width: var(--control-border-width, 1px);
+  --btn-border-width: var(--control-border-width);
+  --btn-shadow: var(--shadow-xs);
+  --btn-shadow-hover: var(--shadow-sm);
+  --btn-shadow-active: none;
   --btn-bg-hover: var(--brand-primary-hover);
   --btn-color-hover: #ffffff;
   --btn-border-color-hover: var(--brand-primary-hover);
@@ -76,17 +78,29 @@
   --btn-color-active: #ffffff;
   --btn-border-color-active: var(--brand-primary-active);
   --btn-transform-active: translateY(1px);
-  --btn-focus-ring-color: var(--focus-ring-color, var(--brand-primary));
-  --btn-focus-ring-width: var(--focus-ring-width, 2px);
-  --btn-focus-ring-offset: var(--focus-ring-offset, 2px);
+  --btn-focus-ring-color: var(--focus-ring-color);
+  --btn-focus-ring-width: var(--focus-ring-width);
+  --btn-focus-ring-offset: var(--focus-ring-offset);
   --btn-disabled-bg: var(--btn-bg);
   --btn-disabled-color: var(--btn-color);
   --btn-disabled-border-color: var(--btn-border-color);
-  --btn-disabled-opacity: 0.5;
-  --btn-loading-opacity: 0.7;
+  --btn-disabled-opacity: .5;
+  --btn-loading-opacity: .7;
   --label-color: var(--text-color);
   --label-weight: 500;
-  --label-gap-y: 0.375rem;
+  --label-gap-y: .375rem;
+  --shadow-base-color: #000000;
+  --shadow-xs: 0 1px 3px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 4%, transparent));
+  --shadow-sm: 0 2px 6px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 5%, transparent));
+  --shadow-md: 0 5px 10px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 6%, transparent));
+  --shadow-lg: 0 10px 20px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 8%, transparent));
+  --shadow-xl: 0 14px 28px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 15%, transparent));
+  --card-shadow: var(--shadow-md);
+  --dropdown-shadow: var(--shadow-lg);
+  --control-shadow: none;
+  --btn-shadow-color: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 25%, transparent);
+  --btn-shadow-color-hover: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 35%, transparent);
+  --btn-shadow-color-active: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 20%, transparent);
   --brand-primary: #213a6e;
   --brand-info: #5bc0de;
   --brand-success: #36aa3d;
@@ -107,7 +121,7 @@
   --header-height: 5rem;
   --header-color: var(--text-color);
   --header-bg: transparent;
-  --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --header-shadow: var(--shadow-md);
   --footer-bg: #1e1e1c;
   --footer-color: #ffffff;
   --footer-hover-color: #ffffff;
@@ -122,11 +136,11 @@
   --z-modal-backdrop: 1050;
   --z-modal: 1060;
   --z-toast: 1080;
-  --modal-backdrop-bg: rgba(0, 0, 0, 0.5);
+  --modal-backdrop-bg: rgba(0, 0, 0, .5);
   --modal-backdrop-blur: 4px;
-  --modal-bg: var(--surface-card, #ffffff);
+  --modal-bg: var(--surface-card);
   --modal-radius: 1rem;
-  --modal-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.25);
+  --modal-shadow: var(--shadow-xl);
   --modal-default-width: 500px;
   --modal-max-width: 1000px;
   --modal-max-width-narrow: 420px;
@@ -135,6 +149,12 @@
   --modal-close-hover-color: var(--brand-primary);
   --transition-fast: 150ms ease-in-out;
   --transition-base: 200ms ease-in-out;
+}
+@media (max-width: 767px) {
+  :root {
+    --font-size-h1: 2rem;
+    --font-size-h2: 1.5rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -418,4 +438,4 @@
   color: inherit;
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_tokens.scss%22,%22layout-kccc.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EAEE;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAIA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAEA;EACA;EAEA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;;;AAKF;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AC3NF;EACE;EACA;EAAoB;EAAW;EAAS;EAAU;EAClD;;AACA;EACE;EACA;;AAEF;EACE;EACA;EAAa;;AACb;EACE;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;;AAGJ;EACE;EAAe;;AACf;EACE;EACA;;AACA;EAAM;;AAGV;EACE;EAAe;EACf;;AAEF;EACE;EAAe;EACf;EACA;;AAEF;EACE;EAAe;EACf;EACA;;AACA;EACE;EAAe;EACf;;AACA;EACE;EACA;EACA;EACA;;AAIF;EACE;EACA;EACA;;AACA;EAAc;;AAKpB;EACE;EAAe;EAA2B;EAC1C;EACA;EACA;;AACA;EACE;EACA;EACA;;AAIJ;EACE;IACE;;EACA;IAAW;;EAEb;IACE;;;AAGJ;EACE;IACE;;EACA;IAAW;;EAEb;IACE;;;AAGJ;EAhGF;IAuGI;;EALE;IAAW;;EAEb;IACE;;EAGF;IACE;IACA;IACA;;EAEF;IACE;;EACA;IACE;IACA;IACA;;EACA;IAAQ;;EAGR;IACE;IACA;;EAIN;IAAqB;;;AAIzB;EACE;;AAEA;EAHF;IAII;;;AAEF;EANF;IAOI;;;AAIJ;EACE;;AAEA;EACE;EAAe;;AAEjB;EAAe;;AACf;EACE;EAAoB;;AAEtB;EACE;EAAe;EAAiB;EAChC;EAAa;EACb;EACA;EACA;EACA;;AAEF;EAAgB;EAAoB;EAAkB;;AACtD;EACE;EAA0C;EAAkB;EAC5D;;AAGF;EACE;IAAe;;EACf;IAAwB;;EACxB;IACE;IACA;;;AAKN;EAAc;;AAGZ;EACE;;AACA;EACE;;AACA;EAAM;;AAMV;EACE;EAAc;EAAwB;EACtC;;AACA;EACE;EACA;;AACA;EAAM;;AAER;EACE;EAA0C;EAC1C;;AAEF;EAAQ;EAA0C;;AAClD;EAAI%22,%22file%22:%22layout-kccc.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_tokens.scss%22,%22layout-kccc.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EAEE;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAUA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EAGA;EACA;EACA;EAGA;EAEA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAEA;EACA;EAEA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;;AAtLA;EAxBF;IAyBM;IACA;;;;AAyLN;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;ACtPF;EACE;EACA;EAAoB;EAAW;EAAS;EAAU;EAClD;;AACA;EACE;EACA;;AAEF;EACE;EACA;EAAa;;AACb;EACE;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;;AAGJ;EACE;EAAe;;AACf;EACE;EACA;;AACA;EAAM;;AAGV;EACE;EAAe;EACf;;AAEF;EACE;EAAe;EACf;EACA;;AAEF;EACE;EAAe;EACf;EACA;;AACA;EACE;EAAe;EACf;;AACA;EACE;EACA;EACA;EACA;;AAIF;EACE;EACA;EACA;;AACA;EAAc;;AAKpB;EACE;EAAe;EAA2B;EAC1C;EACA;EACA;;AACA;EACE;EACA;EACA;;AAIJ;EACE;IACE;;EACA;IAAW;;EAEb;IACE;;;AAGJ;EACE;IACE;;EACA;IAAW;;EAEb;IACE;;;AAGJ;EAhGF;IAuGI;;EALE;IAAW;;EAEb;IACE;;EAGF;IACE;IACA;IACA;;EAEF;IACE;;EACA;IACE;IACA;IACA;;EACA;IAAQ;;EAGR;IACE;IACA;;EAIN;IAAqB;;;AAIzB;EACE;;AAEA;EAHF;IAII;;;AAEF;EANF;IAOI;;;AAIJ;EACE;;AAEA;EACE;EAAe;;AAEjB;EAAe;;AACf;EACE;EAAoB;;AAEtB;EACE;EAAe;EAAiB;EAChC;EAAa;EACb;EACA;EACA;EACA;;AAEF;EAAgB;EAAoB;EAAkB;;AACtD;EACE;EAA0C;EAAkB;EAC5D;;AAGF;EACE;IAAe;;EACf;IAAwB;;EACxB;IACE;IACA;;;AAKN;EAAc;;AAGZ;EACE;;AACA;EACE;;AACA;EAAM;;AAMV;EACE;EAAc;EAAwB;EACtC;;AACA;EACE;EACA;;AACA;EAAM;;AAER;EACE;EAA0C;EAC1C;;AAEF;EAAQ;EAA0C;;AAClD;EAAI%22,%22file%22:%22layout-kccc.css%22%7D */

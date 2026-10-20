@@ -10,10 +10,10 @@
   inset: 0;
   width: 100vw;
   height: 100dvh;
-  background-color: var(--modal-backdrop-bg, rgba(0, 0, 0, 0.5));
-  backdrop-filter: var(--modal-backdrop-blur, blur(4px));
-  -webkit-backdrop-filter: var(--modal-backdrop-blur, blur(4px));
-  z-index: var(--z-modal-backdrop, 1050);
+  background-color: var(--modal-backdrop-bg);
+  backdrop-filter: var(--modal-backdrop-blur);
+  -webkit-backdrop-filter: var(--modal-backdrop-blur);
+  z-index: var(--z-modal-backdrop);
 }
 
 // 2. Базовый контейнер диалога
@@ -24,15 +24,15 @@
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
   margin: 0 !important;
-  z-index: var(--z-modal, 1060);
+  z-index: var(--z-modal);
 
   // Адаптивные габариты и скролл
   // Дефолтная ширина темы (действует, если в data-dialog-options ширина не задана).
   // Без !important, чтобы инлайновый style="width: ...px", выставленный jQuery UI из опций, имел приоритет:
-  width: var(--modal-default-width, 500px);
+  width: var(--modal-default-width);
   // Предохранитель: не дает устаревшему дефолту jQuery UI (300px) сжать окно меньше темы,
   // при этом на экранах смартфонов безопасно адаптируется по доступной ширине:
-  min-width: min(var(--modal-default-width, 500px), calc(100vw - 2rem));
+  min-width: min(var(--modal-default-width), calc(100vw - 2rem));
   max-width: calc(100vw - 2rem);
   max-height: calc(100dvh - 2rem);
   display: flex;
@@ -40,9 +40,9 @@
   overflow: hidden;
 
   // Оформление карточки
-  background-color: var(--modal-bg, var(--surface-card, #ffffff));
-  border-radius: var(--modal-radius, 1rem);
-  box-shadow: var(--modal-shadow, 0 1.5rem 3rem rgba(0, 0, 0, 0.25));
+  background-color: var(--modal-bg);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--modal-shadow);
   box-sizing: border-box;
   font-family: inherit;
 
@@ -55,11 +55,11 @@
 
   // Модификаторы размеров окна
   &.ui-dialog--narrow {
-    max-width: var(--modal-max-width-narrow, 420px);
+    max-width: var(--modal-max-width-narrow);
   }
 
   &.ui-dialog--wide {
-    max-width: var(--modal-max-width-wide, 800px);
+    max-width: var(--modal-max-width-wide);
   }
 
   // 3. Шапка диалога
@@ -69,7 +69,7 @@
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
-    padding: 1.5rem 1.5rem 0.5rem;
+    padding: 1.5rem 1.5rem .5rem;
 
     .ui-dialog-title {
       margin: 0;
@@ -92,13 +92,13 @@
       border-radius: 50%;
       padding: 0;
       cursor: pointer;
-      color: var(--modal-close-color, var(--text-muted, #7d7c7c));
+      color: var(--modal-close-color);
       font-size: 0;
       line-height: 0;
       overflow: hidden;
-      transition: color var(--transition-fast, 150ms ease-in-out),
-                  background-color var(--transition-fast, 150ms ease-in-out),
-                  transform var(--transition-fast, 150ms ease-in-out);
+      transition: color var(--transition-fast),
+                  background-color var(--transition-fast),
+                  transform var(--transition-fast);
 
       // Скрываем встроенные элементы и текст jQuery UI
       .ui-button-icon,
@@ -119,16 +119,16 @@
       }
 
       &:hover {
-        color: var(--modal-close-hover-color, var(--brand-primary));
+        color: var(--modal-close-hover-color);
         background-color: rgba(0, 0, 0, 0.05);
       }
 
       &:active {
-        transform: scale(0.92);
+        transform: scale(.92);
       }
 
       &:focus-visible {
-        outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, var(--brand-primary));
+        outline: var(--focus-ring-width) solid var(--focus-ring-color);
         outline-offset: 2px;
       }
     }
@@ -146,7 +146,7 @@
   .ui-dialog-buttonpane {
     display: flex;
     justify-content: flex-end;
-    gap: 0.5rem;
+    gap: .5rem;
     padding: 1rem 1.5rem;
     border-top: 1px solid var(--border-color-light);
     flex-shrink: 0;
@@ -154,7 +154,7 @@
     .ui-dialog-buttonset {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: .5rem;
       margin: 0;
     }
   }
