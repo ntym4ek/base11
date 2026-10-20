@@ -1,8 +1,9 @@
 /**
  * @file
  * Интеграция лаконичного Vanilla JS лайтбокса (GLightbox) для Drupal 11.
- * Автоматически находит галереи в слайдерах Swiper, ссылки на изображения,
- * подтягивает подписи из alt/title и синхронизирует состояние со Swiper.
+ * Автоматически находит галереи в слайдерах Swiper, обрабатывает ссылки
+ * с явно указанными классами glightbox/lightbox, подтягивает подписи из alt/title
+ * и синхронизирует состояние со Swiper.
  */
 
 ((Drupal, once) => {
@@ -144,8 +145,8 @@
         });
       });
 
-      // 2. Автоматический поиск одиночных ссылок на изображения вне слайдеров
-      once('auto-image-lightbox', 'a', context).forEach((link) => {
+      // 2. Обработка ссылок с явно указанным классом лайтбокса вне слайдеров
+      once('explicit-lightbox', 'a.glightbox, a.lightbox', context).forEach((link) => {
         if (
           link.closest('.swiper, .swiper-container, [data-swiper-formatter], .swiper-thumbs') ||
           link.dataset.noLightbox !== undefined
@@ -153,10 +154,8 @@
           return;
         }
 
-        if (isImageLink(link) && (link.querySelector('img') || link.classList.contains('lightbox') || link.classList.contains('glightbox'))) {
-          link.classList.add('glightbox');
-          setupCaption(link);
-        }
+        link.classList.add('glightbox');
+        setupCaption(link);
       });
 
       // 3. Инициализация / обновление экземпляра GLightbox
