@@ -35,12 +35,10 @@
 
 .image-widget .image-preview {
   flex-shrink: 0;
-  float: none;
 }
 .image-widget .image-widget-data {
   flex-grow: 1;
   min-width: 0;
-  float: none;
 }
 
 table:has(.image-widget),

@@ -1,0 +1,208 @@
+// === Drupal Core Functional Styles (base11) ===
+// Нативные функциональные интерфейсы ядра Drupal (таблицы, прогресс-бары, пароли)
+
+// --- 1. Интерактивные таблицы (Tabledrag, Tablesort, Tableselect) ------------
+tr.drag {
+  background-color: color-mix(in srgb, var(--brand-warning) 12%, var(--surface-card));
+}
+
+tr.drag-previous {
+  background-color: color-mix(in srgb, var(--brand-warning) 6%, var(--surface-card));
+}
+
+body div.tabledrag-changed-warning {
+  margin-bottom: .5rem;
+}
+
+tr.selected td {
+  background-color: color-mix(in srgb, var(--brand-primary) 8%, var(--surface-card));
+}
+
+td.checkbox,
+th.checkbox {
+  text-align: center;
+}
+
+th.is-active img {
+  display: inline;
+}
+
+td.is-active {
+  background-color: color-mix(in srgb, var(--border-color-light) 40%, var(--surface-card));
+}
+
+// --- 2. Древовидные комментарии ----------------------------------------------
+.indented {
+  margin-left: 1.5rem;
+
+  [dir="rtl"] & {
+    margin-left: 0; margin-right: 1.5rem;
+  }
+}
+
+// --- 3. Индикатор прогресса (Progress Bar) -----------------------------------
+.progress__track {
+  background-color: var(--page-bg);
+  border: 1px solid var(--border-color); border-radius: var(--control-radius-lg);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .08);
+  height: 1rem;
+  overflow: hidden;
+}
+
+.progress__bar {
+  background-color: var(--brand-primary);
+  border-radius: var(--control-radius-lg);
+  height: 100%;
+  transition: width var(--transition-base);
+}
+
+// --- 4. Индикатор сложности пароля (Password Strength & Confirm) -------------
+.password-strength__meter {
+  background-color: var(--border-color-light); border-radius: var(--control-radius-sm);
+  height: 6px;
+  margin-top: .35rem;
+  overflow: hidden;
+}
+
+.password-strength__indicator {
+  background-color: var(--brand-success);
+  height: 100%;
+  transition: width var(--transition-fast);
+
+  &.is-weak {
+    background-color: var(--brand-danger);
+  }
+
+  &.is-fair {
+    background-color: var(--brand-warning);
+  }
+
+  &.is-good {
+    background-color: var(--brand-info);
+  }
+
+  &.is-strong {
+    background-color: var(--brand-success);
+  }
+}
+
+.password-confirm {
+  .ok {
+    color: var(--brand-success); font-weight: 600;
+  }
+
+  .error {
+    color: var(--brand-danger); font-weight: 600;
+  }
+}
+
+.password-suggestions {
+  background-color: var(--page-bg);
+  border: 1px solid var(--border-color-light); border-radius: var(--control-radius-sm);
+  font-size: var(--font-size-sm);
+  margin: .5rem 0;
+  padding: .5rem .75rem;
+
+  ul {
+    margin-bottom: 0;
+  }
+}
+
+// --- 5. Кнопки действий (Action Links) ---------------------------------------
+.action-links {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+  list-style: none;
+  margin: 1rem 0; padding: 0;
+
+  .button-action {
+    display: inline-flex; align-items: center; gap: .35rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    &::before {
+      content: "+";
+      font-weight: 900;
+    }
+  }
+}
+
+// --- 6. Выпадающие кнопки (Dropbutton) ---------------------------------------
+.js .dropbutton-widget {
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-color); border-radius: var(--control-radius-sm);
+
+  &:hover {
+    border-color: var(--text-muted);
+  }
+
+  .dropbutton .dropbutton-action > * {
+    padding: .25rem .75rem;
+    white-space: nowrap;
+  }
+
+  .dropbutton .secondary-action {
+    border-top: 1px solid var(--border-color-light);
+  }
+}
+
+// --- 7. Пагинация (Pager) ---------------------------------------------------
+.pager {
+  margin: 1.5rem 0;
+
+  &__items {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .35rem;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+
+  &__item {
+    margin: 0;
+
+    a,
+    &.is-active span {
+      border: 1px solid var(--border-color); border-radius: var(--control-radius-sm);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: var(--control-font-size-sm); font-weight: 500;
+      min-width: var(--control-height-sm); height: var(--control-height-sm);
+      padding: 0 .5rem;
+      text-decoration: none;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    a {
+      background-color: var(--surface-card);
+      color: var(--text-color);
+
+      &:hover {
+        background-color: var(--page-bg);
+        border-color: var(--brand-primary);
+        color: var(--brand-primary);
+      }
+    }
+
+    &.is-active span {
+      background-color: var(--brand-primary);
+      border-color: var(--brand-primary);
+      color: #ffffff;
+      font-weight: 700;
+    }
+  }
+}
+
+// --- 8. Инлайн-контейнеры (Container Inline) ---------------------------------
+.container-inline {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+
+  .form-item {
+    margin-bottom: 0;
+  }
+}
+
+// --- 9. Списки элементов (Item List) -----------------------------------------
+.item-list {
+  ul,
+  ol {
+    margin: 0 0 1rem 1.25rem;
+    padding: 0;
+  }
+}

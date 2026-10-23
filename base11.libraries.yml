@@ -1,69 +1,8 @@
-base:
-  version: VERSION
-  css:
-    component:
-      css/components/action-links.css:
-        weight: -10
-      css/components/breadcrumb.css:
-        weight: -10
-      css/components/button.css:
-        weight: -10
-      css/components/container-inline.css:
-        weight: -10
-      css/components/details.css:
-        weight: -10
-      css/components/exposed-filters.css:
-        weight: -10
-      css/components/field.css:
-        weight: -10
-      css/components/form.css:
-        weight: -10
-      css/components/icons.css:
-        weight: -10
-      css/components/inline-form.css:
-        weight: -10
-      css/components/item-list.css:
-        weight: -10
-      css/components/link.css:
-        weight: -10
-      css/components/links.css:
-        weight: -10
-      css/components/menu.css:
-        weight: -10
-      css/components/more-link.css:
-        weight: -10
-      css/components/pager.css:
-        weight: -10
-      css/components/tabledrag.css:
-        weight: -10
-      css/components/tableselect.css:
-        weight: -10
-      css/components/tablesort.css:
-        weight: -10
-      css/components/tabs.css:
-        weight: -10
-      css/components/textarea.css:
-        weight: -10
-
 font-montserrat:
   version: VERSION
   css:
     base:
       fonts/montserrat/montserrat.css: {}
-
-dropbutton:
-  version: VERSION
-  css:
-    component:
-      css/components/dropbutton.css:
-        weight: -10
-
-file:
-  version: VERSION
-  css:
-    component:
-      css/components/file.css:
-        weight: -10
 
 file-upload:
   version: VERSION
@@ -76,18 +15,6 @@ file-upload:
   dependencies:
     - core/drupal
     - core/once
-
-image-widget:
-  version: VERSION
-  css:
-    component:
-      css/components/image-widget.css: {  }
-
-indented:
-  version: VERSION
-  css:
-    component:
-      css/components/indented.css: {  }
 
 # Всплывающие и встроенные системные сообщения (Toast / Inline)
 messages:
@@ -102,33 +29,6 @@ messages:
     - core/drupal
     - core/once
     - core/drupalSettings
-
-node:
-  version: VERSION
-  css:
-    component:
-      css/components/node.css:
-        weight: -10
-
-progress:
-  version: VERSION
-  css:
-    component:
-      css/components/progress.css:
-        weight: -10
-
-search-results:
-  version: VERSION
-  css:
-    component:
-      css/components/search-results.css: {  }
-
-user:
-  version: VERSION
-  css:
-    component:
-      css/components/user.css:
-        weight: -10
 
 # ==============================================================================
 # Собственные библиотеки темы Base11 (extensions & helpers)

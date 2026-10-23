@@ -702,8 +702,7 @@ details {
 // --- Кнопки действий формы (Form Actions) -------------------------------------
 .form-actions {
   display: flex; flex-wrap: wrap; align-items: center; gap: .75rem;
-  margin-top: 2rem;
-  padding: 1.25rem 0 0;
+  margin: 1.5rem 0;
 
   .button--primary,
   button[id*="edit-submit"],
