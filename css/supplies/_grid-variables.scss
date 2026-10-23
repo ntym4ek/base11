@@ -13,6 +13,14 @@ $grid-breakpoints: (
   "wd": 1920px
 ) !default;
 
+// Алиасы брейкпоинтов для обратной совместимости с base9/cbtheme
+$grid-breakpoint-aliases: (
+  "xs": "sm",
+  "md": "tb",
+  "lg": "dt",
+  "xl": "wd"
+) !default;
+
 // Основные адаптивные медиавыражения (Mobile First: от указанной точки входа и выше)
 $pad:     "(min-width: 768px)";
 $tablet:  "(min-width: 1024px)";
