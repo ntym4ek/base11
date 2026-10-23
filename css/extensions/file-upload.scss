@@ -1,0 +1,129 @@
+// === File & Image Upload Base Extension (base11) ===
+// Базовое функциональное оформление загрузки файлов и изображений (single и multiple).
+//
+// Архитектурная связь:
+// 1. Разметка (Markup Alter): Функция _base11_wrap_single_managed_files() в base11.theme
+//    унифицирует одиночные поля managed_file, оборачивая их в <details open>, благодаря чему
+//    структура DOM для single и multiple полей становится полностью идентичной:
+//    <details open> -> <summary> -> .details-wrapper -> .form-type-managed-file.
+// 2. Функциональный слой (Base Extension): Данный файл задаёт структурную сетку dropzone,
+//    позиционирование невидимого <input type="file"> над всей зоной перетаскивания,
+//    скрытие системных кнопок и табличных заголовков core, ресет tabledrag-ручек.
+// 3. Интерактивность (JS Behavior): Скрипт js/extensions/file-upload.js реализует
+//    HTML5 Drag & Drop (подсветка .is-dragover, передача файлов в DataTransfer).
+// 4. Темизация (Subtheme): Цветовые токены, скругления, тени, SVG-маски и типографика
+//    задаются в подтемах (например, web/themes/project/css/_file.scss).
+
+// --- 1. Интерактивная зона перетаскивания (Dropzone Functional Layout) --------
+.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) {
+  cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin-bottom: 0;
+  position: relative;
+  text-align: center;
+
+  // Невидимый input[type="file"], растянутый на всю площадь дропзоны
+  input[type="file"] {
+    cursor: pointer;
+    height: 100%; width: 100%;
+    inset: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: auto;
+    position: absolute; z-index: 2;
+  }
+
+  // Кнопка загрузки скрыта, так как Drupal автоматически запускает аякс при изменении input[type="file"]
+  input[name*="upload_button"],
+  button[name*="upload_button"] {
+    display: none !important;
+  }
+
+  // Метка и описание не перехватывают клики и события дропа у прозрачного input
+  label,
+  .description {
+    pointer-events: none;
+    position: relative; z-index: 1;
+  }
+
+  // Состояние перетаскивания файла над зоной (управляется file-upload.js)
+  &.is-dragover {
+    border-style: solid;
+  }
+}
+
+// --- 2. Сброс блочной структуры карточки изображения --------------------------
+.image-widget {
+  .image-preview {
+    flex-shrink: 0;
+    float: none;
+  }
+
+  .image-widget-data {
+    flex-grow: 1; min-width: 0;
+    float: none;
+  }
+}
+
+// --- 3. Структурный сброс таблицы множественной загрузки ---------------------
+table:has(.image-widget),
+.field-multiple-table {
+  border-collapse: separate; border-spacing: 0;
+  display: block;
+  width: 100%;
+
+  thead {
+    display: none !important;
+  }
+
+  tbody {
+    display: block;
+    width: 100%;
+
+    tr {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%;
+
+      > td {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+
+        &:first-child {
+          display: flex; align-items: center;
+          flex-grow: 1; min-width: 0;
+        }
+
+        &:last-child {
+          flex-shrink: 0;
+          text-align: right;
+          white-space: nowrap;
+        }
+
+        &.tabledrag-hide {
+          display: none !important;
+        }
+      }
+    }
+  }
+
+  // Ресет всплывающего флоата и геометрии стандартной ручки перетаскивания Drupal
+  a.tabledrag-handle {
+    cursor: grab;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    float: none !important;
+    margin: 0 !important;
+
+    .handle {
+      float: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+}
+
+// Скрытие переключателя веса строк
+.tabledrag-toggle-weight-wrapper {
+  display: none !important;
+}

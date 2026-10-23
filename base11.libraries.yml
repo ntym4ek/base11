@@ -65,6 +65,18 @@ file:
       css/components/file.css:
         weight: -10
 
+file-upload:
+  version: VERSION
+  css:
+    component:
+      css/extensions/file-upload.css:
+        weight: -10
+  js:
+    js/extensions/file-upload.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
 image-widget:
   version: VERSION
   css:

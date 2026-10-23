@@ -1,6 +1,6 @@
 name: Base11
 type: theme
-version: 1.2.0
+version: 1.2.1
 description: ''
 'base theme': stable9
 core_version_requirement: ^11
@@ -11,6 +11,7 @@ libraries:
   - base11/base
   - base11/messages
   - base11/ajax-spinner
+  - base11/file-upload
   - core/normalize
 
 libraries-override:

@@ -49,7 +49,7 @@
   --input-border-error: var(--brand-danger);
   --input-bg-error: rgba(204, 19, 53, .02);
   --input-bg-disabled: var(--page-bg);
-  --input-border-disabled: var(--border-color-light);
+  --input-border-disabled: var(--border-color);
   --input-color-disabled: var(--text-muted);
   --btn-padding-y-sm: .375rem;
   --btn-padding-x-sm: 1.25rem;

@@ -1,0 +1,111 @@
+.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+  position: relative;
+  text-align: center;
+}
+.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) input[type=file] {
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  inset: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: auto;
+  position: absolute;
+  z-index: 2;
+}
+.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) input[name*=upload_button],
+.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) button[name*=upload_button] {
+  display: none !important;
+}
+.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) label,
+.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) .description {
+  pointer-events: none;
+  position: relative;
+  z-index: 1;
+}
+.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment).is-dragover {
+  border-style: solid;
+}
+
+.image-widget .image-preview {
+  flex-shrink: 0;
+  float: none;
+}
+.image-widget .image-widget-data {
+  flex-grow: 1;
+  min-width: 0;
+  float: none;
+}
+
+table:has(.image-widget),
+.field-multiple-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  display: block;
+  width: 100%;
+}
+table:has(.image-widget) thead,
+.field-multiple-table thead {
+  display: none !important;
+}
+table:has(.image-widget) tbody,
+.field-multiple-table tbody {
+  display: block;
+  width: 100%;
+}
+table:has(.image-widget) tbody tr,
+.field-multiple-table tbody tr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+table:has(.image-widget) tbody tr > td,
+.field-multiple-table tbody tr > td {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+table:has(.image-widget) tbody tr > td:first-child,
+.field-multiple-table tbody tr > td:first-child {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  min-width: 0;
+}
+table:has(.image-widget) tbody tr > td:last-child,
+.field-multiple-table tbody tr > td:last-child {
+  flex-shrink: 0;
+  text-align: right;
+  white-space: nowrap;
+}
+table:has(.image-widget) tbody tr > td.tabledrag-hide,
+.field-multiple-table tbody tr > td.tabledrag-hide {
+  display: none !important;
+}
+table:has(.image-widget) a.tabledrag-handle,
+.field-multiple-table a.tabledrag-handle {
+  cursor: grab;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  float: none !important;
+  margin: 0 !important;
+}
+table:has(.image-widget) a.tabledrag-handle .handle,
+.field-multiple-table a.tabledrag-handle .handle {
+  float: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tabledrag-toggle-weight-wrapper {
+  display: none !important;
+}

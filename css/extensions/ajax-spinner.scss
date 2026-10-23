@@ -29,7 +29,9 @@ button.is-loading,
   &::after {
     animation: btnSpin .6s linear infinite;
     background: transparent !important;
-    border: 2px solid rgba(255, 255, 255, .35); border-top-color: #ffffff; border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--btn-spinner-color, #ffffff) 35%, transparent);
+    border-top-color: var(--btn-spinner-color, #ffffff);
+    border-radius: 50%;
     box-sizing: border-box;
     content: '';
     margin-top: -8px; margin-left: -8px;
@@ -67,10 +69,23 @@ input[type="button"].button--link.is-loading,
 }
 
 // Для кнопок со светлым фоном (.button--white, .button--default, .button--outline) спиннер должен быть темным
+.button--white,
+.button--default,
+.button--outline {
+  --btn-spinner-color: var(--text-color);
+}
+
 .button--white.is-loading::after,
+.button--white:has(+ .ajax-progress)::after,
+.button--white:has(.ajax-progress)::after,
 .button--default.is-loading::after,
-.button--outline.is-loading::after {
-  border-color: rgba(0, 0, 0, .15); border-top-color: var(--text-color);
+.button--default:has(+ .ajax-progress)::after,
+.button--default:has(.ajax-progress)::after,
+.button--outline.is-loading::after,
+.button--outline:has(+ .ajax-progress)::after,
+.button--outline:has(.ajax-progress)::after {
+  border-color: color-mix(in srgb, var(--btn-spinner-color, var(--text-color)) 35%, transparent);
+  border-top-color: var(--btn-spinner-color, var(--text-color));
 }
 
 input.button--white.is-loading,

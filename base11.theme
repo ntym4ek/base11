@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Extension\ThemeSettingsProvider;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 use Drupal\image\Entity\ImageStyle;
 
 
@@ -177,3 +179,63 @@ function base11_preprocess_status_messages(array &$vars): void
   }
 }
 
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Архитектурная связь с библиотекой base11/file-upload:
+ * Универсально находит все одиночные поля загрузки файлов/изображений (managed_file)
+ * на любых формах сущностей и оборачивает их в аккордеон <details open>.
+ * Благодаря этому DOM-дерево одиночных и множественных полей становится полностью
+ * идентичным (<details> -> <summary> -> .details-wrapper -> .form-type-managed-file),
+ * что позволяет единообразно применять базовые функциональные стили и JS из расширения
+ * base11/file-upload, а также визуальную подтемизацию (например, в project/css/_file.scss).
+ */
+function base11_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void
+{
+  _base11_wrap_single_managed_files($form, $form);
+}
+
+/**
+ * Рекурсивно оборачивает одиночные виджеты managed_file в элемент details.
+ *
+ * В ядре Drupal множественные поля файлов оборачиваются в <details> по умолчанию
+ * (\Drupal\file\Plugin\Field\FieldWidget\FileWidget::formMultipleElements),
+ * а одиночные поля рендерятся плоским элементом без контейнера details.
+ *
+ * Данная функция устраняет это структурное различие, приводя разметку к единому стандарту.
+ *
+ * @param array $elements
+ *   Элемент формы или ветвь массива рендеринга.
+ * @param array $form
+ *   Корневой массив формы для подключения библиотек.
+ */
+function _base11_wrap_single_managed_files(array &$elements, array &$form): void
+{
+  // Проверяем, является ли текущий элемент контейнером одиночного виджета managed_file
+  if (
+    isset($elements['widget'][0]['#type']) &&
+    $elements['widget'][0]['#type'] === 'managed_file' &&
+    (!isset($elements['widget']['#type']) || $elements['widget']['#type'] !== 'details')
+  ) {
+    $title = $elements['widget'][0]['#title'] ?? $elements['#title'] ?? '';
+    $elements['widget']['#type'] = 'details';
+    $elements['widget']['#open'] = TRUE;
+    $elements['widget']['#title'] = $title;
+    $elements['widget'][0]['#title'] = t('Добавить файл');
+    if (!in_array('base11/file-upload', $form['#attached']['library'] ?? [], true)) { $form['#attached']['library'][] = 'base11/file-upload'; }
+  }
+
+  // Если обнаружен managed_file в любом виде (включая множественные поля), подключаем расширение
+  if (
+    (isset($elements['#type']) && $elements['#type'] === 'managed_file') ||
+    (isset($elements['widget']['#type']) && $elements['widget']['#type'] === 'details' && isset($elements['widget'][0]['#type']) && $elements['widget'][0]['#type'] === 'managed_file')
+  ) {
+    if (!in_array('base11/file-upload', $form['#attached']['library'] ?? [], true)) { $form['#attached']['library'][] = 'base11/file-upload'; }
+  }
+
+  // Рекурсивно обходим все дочерние элементы формы
+  foreach (Element::children($elements) as $key) {
+    _base11_wrap_single_managed_files($elements[$key], $form);
+  }
+}

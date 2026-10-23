@@ -29,8 +29,8 @@ button.is-loading::after,
 .btn:not(input).is-loading::after {
   animation: btnSpin 0.6s linear infinite;
   background: transparent !important;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  border-top-color: #ffffff;
+  border: 2px solid color-mix(in srgb, var(--btn-spinner-color, #ffffff) 35%, transparent);
+  border-top-color: var(--btn-spinner-color, #ffffff);
   border-radius: 50%;
   box-sizing: border-box;
   content: "";
@@ -73,11 +73,23 @@ input[type=button].button--link.is-loading::after,
   display: none !important;
 }
 
+.button--white,
+.button--default,
+.button--outline {
+  --btn-spinner-color: var(--text-color);
+}
+
 .button--white.is-loading::after,
+.button--white:has(+ .ajax-progress)::after,
+.button--white:has(.ajax-progress)::after,
 .button--default.is-loading::after,
-.button--outline.is-loading::after {
-  border-color: rgba(0, 0, 0, 0.15);
-  border-top-color: var(--text-color);
+.button--default:has(+ .ajax-progress)::after,
+.button--default:has(.ajax-progress)::after,
+.button--outline.is-loading::after,
+.button--outline:has(+ .ajax-progress)::after,
+.button--outline:has(.ajax-progress)::after {
+  border-color: color-mix(in srgb, var(--btn-spinner-color, var(--text-color)) 35%, transparent);
+  border-top-color: var(--btn-spinner-color, var(--text-color));
 }
 
 input.button--white.is-loading,
@@ -94,5 +106,3 @@ input[type=submit].button--outline.is-loading {
     transform: rotate(360deg);
   }
 }
-
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22ajax-spinner.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAEA;AAAA;EAEE;;;AAIF;AAAA;AAAA;AAAA;AAAA;AAAA;EAME;EACA;EAAsB;;AAEtB;AAAA;AAAA;AAAA;AAAA;AAAA;EACE;;;AAUF;AAAA;AAAA;AAAA;AAAA;EACE;EACA;EACA;EAA4C;EAA2B;EACvE;EACA;EACA;EAAkB;EAClB;EAAuB;EACvB;EAAoB;EAAU;EAC9B;EACA;EAAa;;;AAKjB;AAAA;AAAA;AAAA;AAAA;EAKE;EACA;EAA6B;EAA8B;;;AAK7D;AAAA;AAAA;AAAA;EAIE;EACA;EACA;EACA;;AAEA;AAAA;AAAA;AAAA;EACE;;;AAKJ;AAAA;AAAA;EAGE;EAAkC;;;AAGpC;AAAA;AAAA;AAAA;AAAA;AAAA;EAME;;;AAGF;EACE;IAAK%22,%22file%22:%22ajax-spinner.css%22%7D */
