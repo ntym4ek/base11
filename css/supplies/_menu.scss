@@ -1,9 +1,8 @@
 // === Menu Styles (base11) ===
 
 .menu {
-  margin: 0;
-  padding: 0;
   list-style: none outside;
+  margin: 0; padding: 0;
   text-align: left;
 
   ul {
@@ -12,29 +11,22 @@
   }
 
   li {
-    margin: 0;
-    padding: 0;
     list-style: none;
+    margin: 0; padding: 0;
   }
 }
 
 .page-header {
   .menu-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: center; display: flex; justify-content: space-between;
     height: 100%;
 
     .region-primary-menu {
-      display: flex;
-      justify-content: flex-start;
-      flex: 1 1 auto;
+      display: flex; flex: 1 1 auto; justify-content: flex-start;
     }
 
     .region-secondary-menu {
-      display: flex;
-      justify-content: flex-end;
-      flex: 0 0 auto;
+      display: flex; flex: 0 0 auto; justify-content: flex-end;
     }
 
     .menu {
@@ -49,80 +41,110 @@
       > .menu-item {
         display: inline-block;
         position: relative;
+
         > a {
           color: var(--header-color);
           white-space: nowrap;
-          &:hover {
-            color: var(--brand-primary);
-          }
+
+          &:hover,
           &.is-active,
           &:focus {
             color: var(--brand-primary);
           }
         }
-        &.first a,
-        &:first-child a {
+
+        &.first > a,
+        &:first-child > a {
           padding-left: 0; // выровнять первый пункт меню по сетке
         }
       }
 
       // Вложенные меню (выпадающие)
       .menu-item--expanded {
-        .menu {
-          visibility: hidden;
-          opacity: 0;
-          position: absolute;
-          z-index: var(--z-dropdown);
-          background-color: var(--surface-card);
-          min-width: 220px;
-          padding: .5rem 0;
-          box-shadow: var(--dropdown-shadow);
-          border-radius: var(--control-radius-sm);
-          transition: opacity var(--transition-fast), visibility var(--transition-fast);
+        position: relative;
 
-          a {
-            color: var(--text-color);
-            width: 100%;
-          }
+        > a {
+          align-items: center; display: inline-flex; gap: .375rem;
 
-          > .menu-item {
-            display: block;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            &:hover,
-            &:focus {
-              background: var(--page-bg);
-              & > .menu {
-                visibility: visible;
-                opacity: 1;
-              }
-              > a {
-                color: var(--brand-primary);
-              }
-            }
+          &::after {
+            background-color: currentColor;
+            content: ""; display: inline-block;
+            mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") no-repeat center / contain;
+            opacity: .6;
+            transition: opacity var(--transition-fast), transform var(--transition-fast);
+            width: 10px; height: 10px;
           }
         }
 
         &:hover,
-        &:focus {
-          & > .menu {
-            visibility: visible;
+        &:focus-within {
+          > a::after {
             opacity: 1;
+            transform: rotate(180deg);
+          }
+
+          > .menu {
+            opacity: 1; pointer-events: auto; transform: translateY(0); visibility: visible;
           }
         }
 
-        // Третий уровень и глубже
-        .menu-item--expanded .menu {
-          left: 90%;
-          top: 10px;
+        > .menu {
+          background-color: var(--surface-card);
+          border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+          box-shadow: var(--shadow-lg);
+          display: flex; flex-direction: column; gap: .125rem;
+          min-width: 200px;
+          opacity: 0; pointer-events: none;
+          padding: .375rem;
+          position: absolute; top: calc(100% + 4px); left: 0; z-index: var(--z-dropdown);
+          transform: translateY(6px);
+          transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+          visibility: hidden;
+
+          // Невидимая зона наведения (мост между ссылкой и подменю)
+          &::before {
+            content: ""; display: block;
+            position: absolute; top: -10px; left: 0; right: 0; height: 10px;
+          }
+
+          > .menu-item {
+            display: block;
+            margin: 0; padding: 0;
+            width: 100%;
+
+            > a {
+              background: transparent;
+              border-radius: var(--control-radius-sm);
+              color: var(--text-color);
+              display: flex; align-items: center; justify-content: space-between;
+              font-size: var(--font-size-sm); font-weight: 500;
+              padding: .5rem .75rem;
+              transition: background-color var(--transition-fast), color var(--transition-fast);
+              white-space: nowrap; width: 100%;
+
+              &:hover,
+              &:focus {
+                background: var(--page-bg);
+                color: var(--brand-primary);
+              }
+
+              &.is-active {
+                background: var(--page-bg);
+                color: var(--brand-primary); font-weight: 600;
+              }
+            }
+          }
+
+          .region-secondary-menu & {
+            left: auto; right: 0;
+          }
+        }
+
+        // Подменю третьего уровня и глубже
+        .menu-item--expanded > .menu {
+          left: calc(100% + 4px); top: -.375rem;
         }
       }
-    }
-
-    // Выпадающее меню
-    .menu .menu {
-      .region-primary-menu & { left: 0; }
-      .region-secondary-menu & { right: 0; }
     }
   }
 }
@@ -131,6 +153,7 @@
   a {
     color: var(--footer-color);
     transition: color var(--transition-fast);
+
     &:hover {
       color: var(--footer-hover-color);
     }
@@ -138,13 +161,12 @@
 
   .menu {
     > .menu-item {
-      &:hover {
-        > a {
-          color: var(--footer-hover-color);
-        }
-      }
       > a {
         color: var(--footer-color);
+      }
+
+      &:hover > a {
+        color: var(--footer-hover-color);
       }
     }
   }

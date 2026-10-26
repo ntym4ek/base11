@@ -169,7 +169,7 @@
     }
   }
 
-  .description {
+  :is(.description, .form-item__description) {
     color: var(--text-muted);
     font-size: var(--font-size-sm);
     margin-top: .35rem;
@@ -224,10 +224,10 @@
     margin-bottom: 0;
   }
 
-  .description {
+  :is(.description, .form-item__description) {
     color: var(--text-muted);
     flex-basis: 100%;
-    font-size: var(--font-size-sm); line-height: 1.35;
+    font-size: var(--font-size-sm); line-height: var(--line-height-sm);
     margin-left: calc(1.15rem + .5rem); margin-top: .35rem;
     width: 100%;
   }
@@ -281,10 +281,10 @@
     margin-bottom: 0;
   }
 
-  .description {
+  :is(.description, .form-item__description) {
     color: var(--text-muted);
     flex-basis: 100%;
-    font-size: var(--font-size-sm); line-height: 1.35;
+    font-size: var(--font-size-sm); line-height: var(--line-height-sm);
     margin-left: calc(1.15rem + .5rem); margin-top: .35rem;
     width: 100%;
   }
@@ -341,7 +341,6 @@
 
 // --- Аккордеоны и группировки (Details & Fieldsets) ---------------------------
 details {
-  background-color: var(--surface-card);
   border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
   margin: 1.25rem 0;
   transition: border-color var(--transition-fast);
@@ -351,11 +350,10 @@ details {
     border-bottom: 1px solid transparent;
     color: var(--text-color); cursor: pointer;
     display: flex; align-items: center;
-    font-family: var(--font-family-heading); font-size: var(--font-size-base); font-weight: 700;
+    font-size: var(--font-size-base); font-weight: 600;
     list-style: none;
-    padding: 1rem 1.25rem;
+    padding: .875rem 1.25rem;
     position: relative;
-    text-transform: uppercase;
     transition: background-color var(--transition-fast), border-color var(--transition-fast);
 
     &::-webkit-details-marker {
@@ -420,14 +418,13 @@ details {
 
       a {
         background-color: var(--page-bg);
-        border: 1px solid var(--border-color-light); border-bottom: 1px solid var(--border-color);
+        border: 1px solid var(--border-color-light); border-bottom: 1px solid transparent;
         border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
         color: var(--text-muted);
         display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
-        font-family: var(--font-family-heading); font-size: var(--font-size-base); font-weight: 600; line-height: 1.2;
-        padding: .625rem 1.25rem;
+        font-size: var(--font-size-base); font-weight: 500; line-height: var(--line-height-sm);
         position: relative;
-        text-decoration: none; text-transform: uppercase;
+        text-decoration: none;
         transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 
         &:hover {
@@ -447,11 +444,9 @@ details {
 
         a {
           background-color: var(--surface-card);
-          border: 1px solid var(--border-color);
-          border-top: 3px solid var(--brand-primary);
-          border-bottom: 1px solid var(--surface-card);
+          border: 1px solid var(--border-color); border-bottom: 1px solid var(--surface-card);
           border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
-          color: var(--brand-primary); font-weight: 700;
+          color: var(--text-color); font-weight: 600;
           margin-bottom: -1px;
           position: relative; z-index: 2;
         }
@@ -460,7 +455,6 @@ details {
   }
 
   .horizontal-tabs-panes {
-    --input-bg: var(--page-bg);
     background: transparent;
     border: none;
     padding: 0;
@@ -485,10 +479,8 @@ details {
 
 // --- Вертикальные вкладки (Vertical Tabs) ------------------------------------
 .vertical-tabs {
-  --input-bg: var(--page-bg);
   background-color: var(--surface-card);
   border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
-  box-shadow: var(--shadow-xs);
   display: flex; flex-direction: column;
   margin: 1.5rem 0;
   position: relative;
@@ -522,7 +514,7 @@ details {
         transition: background-color var(--transition-fast), color var(--transition-fast);
 
         &:hover {
-          background-color: color-mix(in srgb, var(--brand-primary) 4%, transparent);
+          background-color: color-mix(in srgb, var(--border-color-light) 40%, var(--page-bg));
           outline: none;
         }
       }
@@ -531,32 +523,25 @@ details {
         background-color: var(--surface-card);
 
         a {
-          color: var(--brand-primary);
-        }
-
-        &::before {
-          background-color: var(--brand-primary);
-          content: '';
-          height: 100%; width: 3px;
-          position: absolute; left: 0; top: 0;
+          color: var(--text-color);
         }
 
         .vertical-tabs__menu-item-title {
-          color: var(--brand-primary); font-weight: 700;
+          font-weight: 700;
         }
       }
 
       .vertical-tabs__menu-item-title {
         color: var(--text-color);
         display: block;
-        font-family: var(--font-family-heading); font-size: var(--font-size-base); font-weight: 600; line-height: 1.3;
+        font-size: var(--font-size-base); font-weight: 600; line-height: var(--line-height-sm);
         transition: color var(--transition-fast);
       }
 
       .vertical-tabs__menu-item-summary {
         color: var(--text-muted);
         display: block;
-        font-size: var(--font-size-sm); line-height: 1.35;
+        font-size: var(--font-size-sm); line-height: var(--line-height-sm);
         margin-top: .15rem;
       }
     }
@@ -580,104 +565,6 @@ details {
 
       > .details-wrapper {
         padding: 0;
-      }
-    }
-
-    .form-type-checkbox,
-    .form-type-radio {
-      label.option {
-        font-size: var(--control-font-size-sm);
-        margin-bottom: 0;
-      }
-
-      .description {
-        font-size: .75rem;
-        margin-left: calc(1.15rem + .5rem); margin-top: .25rem;
-      }
-    }
-
-    .form-item {
-      margin-bottom: 1.25rem;
-
-      label {
-        color: var(--text-color);
-        display: block;
-        font-size: var(--control-font-size-sm); font-weight: 600; line-height: 1.2;
-        margin-bottom: .35rem;
-      }
-
-      input[type="text"],
-      input[type="date"],
-      input[type="time"],
-      input[type="number"],
-      select {
-        background-color: var(--input-bg);
-        border: 1px solid var(--border-color); border-radius: var(--control-radius-sm);
-        box-sizing: border-box;
-        color: var(--text-color);
-        font-size: var(--control-font-size-sm);
-        height: 2.25rem; min-height: 0;
-        padding: 0 .75rem;
-        transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
-        width: 100%;
-
-        &:hover:not(:disabled) {
-          border-color: var(--text-muted);
-        }
-
-        &:focus {
-          background-color: var(--surface-card);
-          border-color: var(--brand-primary);
-          box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-primary) 15%, transparent);
-          outline: none;
-        }
-
-        &:disabled,
-        &[disabled] {
-          background-color: var(--page-bg);
-          border-color: var(--border-color);
-          color: var(--text-muted);
-          cursor: not-allowed;
-          opacity: .85;
-        }
-      }
-
-      textarea {
-        background-color: var(--input-bg);
-        border: 1px solid var(--border-color); border-radius: var(--control-radius-sm);
-        box-sizing: border-box;
-        color: var(--text-color);
-        font-size: var(--control-font-size-sm);
-        min-height: 5rem;
-        padding: .625rem .75rem;
-        transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
-        width: 100%;
-
-        &:hover:not(:disabled) {
-          border-color: var(--text-muted);
-        }
-
-        &:focus {
-          background-color: var(--surface-card);
-          border-color: var(--brand-primary);
-          box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-primary) 15%, transparent);
-          outline: none;
-        }
-
-        &:disabled,
-        &[disabled] {
-          background-color: var(--page-bg);
-          border-color: var(--border-color);
-          color: var(--text-muted);
-          cursor: not-allowed;
-          opacity: .85;
-        }
-      }
-
-      .description {
-        color: var(--text-muted);
-        font-size: .75rem; line-height: 1.35;
-        margin-top: .35rem;
       }
     }
   }
@@ -707,54 +594,20 @@ details {
   .button--primary,
   button[id*="edit-submit"],
   input[id*="edit-submit"] {
-    --btn-bg: var(--brand-primary);
-    background-color: var(--btn-bg);
-    border-color: var(--btn-bg);
-    color: #ffffff;
     order: 1;
-
-    &:hover {
-      --btn-bg-hover: var(--brand-primary-hover);
-      background-color: var(--btn-bg-hover);
-      border-color: var(--btn-bg-hover);
-    }
   }
 
+  .button--secondary,
   button[id*="edit-preview"],
-  input[id*="edit-preview"],
-  .button--secondary {
-    --btn-bg: var(--surface-card);
-    --btn-color: var(--text-color);
-    --btn-spinner-color: var(--text-color);
-    background-color: var(--btn-bg) !important;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-xs);
-    color: var(--btn-color) !important;
+  input[id*="edit-preview"] {
     order: 2;
-
-    &:hover {
-      background-color: var(--page-bg) !important;
-      border-color: var(--text-color);
-      color: var(--text-color) !important;
-    }
   }
 
   .button--danger,
   a[id*="edit-delete"],
   button[id*="edit-delete"],
   input[id*="edit-delete"] {
-    --btn-bg: transparent;
-    --btn-spinner-color: var(--brand-danger);
-    background-color: transparent !important;
-    border: 1px solid var(--brand-danger);
-    color: var(--brand-danger) !important;
     margin-left: auto;
     order: 3;
-
-    &:hover {
-      background-color: color-mix(in srgb, var(--brand-danger) 10%, transparent) !important;
-      border-color: var(--brand-danger);
-      color: var(--brand-danger) !important;
-    }
   }
 }

@@ -15,7 +15,7 @@
 //    задаются в подтемах (например, web/themes/project/css/_file.scss).
 
 // --- 1. Интерактивная зона перетаскивания (Dropzone Functional Layout) --------
-.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) {
+:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) {
   cursor: pointer;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   margin-bottom: 0;
@@ -41,7 +41,7 @@
 
   // Метка и описание не перехватывают клики и события дропа у прозрачного input
   label,
-  .description {
+  :is(.description, .form-item__description) {
     pointer-events: none;
     position: relative; z-index: 1;
   }

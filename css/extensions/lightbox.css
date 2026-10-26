@@ -17,7 +17,7 @@
   font-family: inherit;
   font-size: 0.95rem;
   font-weight: 600;
-  line-height: 1.35;
+  line-height: var(--line-height-sm);
   letter-spacing: -0.01em;
   margin-bottom: 0.25rem;
 }
@@ -26,7 +26,6 @@
   font-family: inherit;
   font-size: 0.84rem;
   font-weight: 400;
-  line-height: 1.45;
   margin-bottom: 0;
 }
 .glightbox-clean .gslide-image img {
@@ -66,5 +65,3 @@
 .ginner-container:not(:has(.gslide-description)) .gslide-image img {
   border-radius: 0.5rem;
 }
-
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22lightbox.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIE;EACE;EAAmC;EAA6B;EAChE;EAA2C;EAAkB;EAC7D;EACA;;AAGF;EACE;EACA;;AAGF;EACE;EACA;EAAsB;EAAmB;EAAkB;EAAmB;EAC9E;;AAGF;EACE;EACA;EAAsB;EAAmB;EAAkB;EAC3D;;AAIF;EACE;;AAIF;AAAA;AAAA;EAGE;EAA2C;EAA6B;EACxE;EACA;;AAEA;AAAA;AAAA;EACE;EACA;EACA;;AAIJ;AAAA;EAEE;EACA;EAAa;;AAGf;EACE;EACA;EAAoB;EAAW;EAC/B;EAAa;;;AAKjB;EACE%22,%22file%22:%22lightbox.css%22%7D */

@@ -1,4 +1,4 @@
-.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) {
+:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) {
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   position: relative;
   text-align: center;
 }
-.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) input[type=file] {
+:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) input[type=file] {
   cursor: pointer;
   height: 100%;
   width: 100%;
@@ -19,17 +19,17 @@
   position: absolute;
   z-index: 2;
 }
-.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) input[name*=upload_button],
-.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) button[name*=upload_button] {
+:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) input[name*=upload_button],
+:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) button[name*=upload_button] {
   display: none !important;
 }
-.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) label,
-.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment) .description {
+:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) label,
+:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) :is(.description, .form-item__description) {
   pointer-events: none;
   position: relative;
   z-index: 1;
 }
-.form-type-managed-file:not(:has(.image-preview)):not(.cart-order-attachment).is-dragover {
+:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *).is-dragover {
   border-style: solid;
 }
 

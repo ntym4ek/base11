@@ -6,7 +6,7 @@
 div.messages,
 .messages {
   border-radius: var(--control-radius, .5rem);
-  font-size: .889rem; font-weight: 500; line-height: 1.4;
+  font-size: var(--font-size-sm); font-weight: 500;
   padding: .875rem 2.5rem .875rem 1rem;
   position: relative;
 

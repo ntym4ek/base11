@@ -74,7 +74,7 @@
     .ui-dialog-title {
       margin: 0;
       font-weight: 700;
-      line-height: 1.25;
+      line-height: var(--line-height-sm);
     }
 
     // Кнопка закрытия (крестик)

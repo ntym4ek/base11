@@ -16,7 +16,7 @@
 
   Drupal.behaviors.base11FileUpload = {
     attach(context) {
-      const dropzones = once('base11-file-dropzone', '.form-type-managed-file', context);
+      const dropzones = once('base11-file-dropzone', '.form-type-managed-file, .form-type--managed-file', context);
 
       dropzones.forEach((dropzone) => {
         const fileInput = dropzone.querySelector('input[type="file"]');
