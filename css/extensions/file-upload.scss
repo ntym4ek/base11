@@ -1,21 +1,22 @@
 // === File & Image Upload Base Extension (base11) ===
-// Базовое функциональное оформление загрузки файлов и изображений (single и multiple).
+// Базовое функциональное оформление загрузки файлов и изображений (dropzone и compact).
 //
 // Архитектурная связь:
 // 1. Разметка (Markup Alter): Функция _base11_wrap_single_managed_files() в base11.theme
 //    унифицирует одиночные поля managed_file, оборачивая их в <details open>, благодаря чему
 //    структура DOM для single и multiple полей становится полностью идентичной:
 //    <details open> -> <summary> -> .details-wrapper -> .form-type-managed-file.
-// 2. Функциональный слой (Base Extension): Данный файл задаёт структурную сетку dropzone,
-//    позиционирование невидимого <input type="file"> над всей зоной перетаскивания,
-//    скрытие системных кнопок и табличных заголовков core, ресет tabledrag-ручек.
+// 2. Модификаторы раскладки:
+//    - .file-upload--dropzone: крупная интерактивная зона Drag & Drop для форм сущностей
+//      и Media Library.
+//    - .file-upload--compact: компактная строчная загрузка (например, прикрепление файла в заявках).
 // 3. Интерактивность (JS Behavior): Скрипт js/extensions/file-upload.js реализует
-//    HTML5 Drag & Drop (подсветка .is-dragover, передача файлов в DataTransfer).
+//    HTML5 Drag & Drop для зон .file-upload--dropzone.
 // 4. Темизация (Subtheme): Цветовые токены, скругления, тени, SVG-маски и типографика
 //    задаются в подтемах (например, web/themes/project/css/_file.scss).
 
 // --- 1. Интерактивная зона перетаскивания (Dropzone Functional Layout) --------
-:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) {
+.file-upload--dropzone:not(:has(.image-preview)):not(:has(.file)) {
   cursor: pointer;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   margin-bottom: 0;
@@ -49,6 +50,26 @@
   // Состояние перетаскивания файла над зоной (управляется file-upload.js)
   &.is-dragover {
     border-style: solid;
+  }
+}
+
+// --- 2. Компактная загрузка файла (Compact Functional Layout) -----------------
+.file-upload--compact {
+  position: relative;
+
+  // Невидимый input[type="file"] с сохранением доступности в DOM
+  input[type="file"] {
+    height: .1px; width: .1px;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute; z-index: -1;
+  }
+
+  // Кнопка загрузки скрыта, так как Drupal запускает аякс по change
+  input[name*="upload_button"],
+  button[name*="upload_button"] {
+    display: none !important;
   }
 }
 

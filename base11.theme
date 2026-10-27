@@ -197,13 +197,15 @@ function base11_form_alter(array &$form, FormStateInterface $form_state, string 
 }
 
 /**
- * Рекурсивно оборачивает одиночные виджеты managed_file в элемент details.
+ * Рекурсивно оборачивает одиночные виджеты managed_file в элемент details
+ * и маркирует поля загрузки файлов модификатором дропзоны.
  *
  * В ядре Drupal множественные поля файлов оборачиваются в <details> по умолчанию
  * (\Drupal\file\Plugin\Field\FieldWidget\FileWidget::formMultipleElements),
  * а одиночные поля рендерятся плоским элементом без контейнера details.
  *
- * Данная функция устраняет это структурное различие, приводя разметку к единому стандарту.
+ * Данная функция устраняет это структурное различие, приводя разметку к единому стандарту,
+ * и навешивает модификатор .file-upload--dropzone на виджеты полей сущностей.
  *
  * @param array $elements
  *   Элемент формы или ветвь массива рендеринга.
@@ -223,7 +225,27 @@ function _base11_wrap_single_managed_files(array &$elements, array &$form): void
     $elements['widget']['#open'] = TRUE;
     $elements['widget']['#title'] = $title;
     $elements['widget'][0]['#title'] = t('Добавить файл');
-    if (!in_array('base11/file-upload', $form['#attached']['library'] ?? [], true)) { $form['#attached']['library'][] = 'base11/file-upload'; }
+
+    $existing_classes = $elements['widget'][0]['#wrapper_attributes']['class'] ?? [];
+    if (!in_array('file-upload--compact', $existing_classes, true) && !in_array('file-upload--dropzone', $existing_classes, true)) {
+      $elements['widget'][0]['#wrapper_attributes']['class'][] = 'file-upload--dropzone';
+    }
+
+    if (!in_array('base11/file-upload', $form['#attached']['library'] ?? [], true)) {
+      $form['#attached']['library'][] = 'base11/file-upload';
+    }
+  }
+
+  // Множественные поля managed_file (виджеты сущностей file_widget_multiple)
+  if (isset($elements['widget']['#theme']) && $elements['widget']['#theme'] === 'file_widget_multiple') {
+    foreach (Element::children($elements['widget']) as $delta) {
+      if (isset($elements['widget'][$delta]['#type']) && $elements['widget'][$delta]['#type'] === 'managed_file') {
+        $existing_classes = $elements['widget'][$delta]['#wrapper_attributes']['class'] ?? [];
+        if (!in_array('file-upload--compact', $existing_classes, true) && !in_array('file-upload--dropzone', $existing_classes, true)) {
+          $elements['widget'][$delta]['#wrapper_attributes']['class'][] = 'file-upload--dropzone';
+        }
+      }
+    }
   }
 
   // Если обнаружен managed_file в любом виде (включая множественные поля), подключаем расширение

@@ -4,7 +4,7 @@
  *
  * Архитектурная связь:
  * - Дополняет функциональное расширение css/extensions/file-upload.css.
- * - Обрабатывает события dragenter, dragover, dragleave, drop на блоках .form-type-managed-file.
+ * - Обрабатывает события dragenter, dragover, dragleave, drop на блоках .file-upload--dropzone.
  * - Использует счетчик dragCounter для предотвращения мигания класса .is-dragover
  *   при прохождении курсора над дочерними элементами (label, description, etc.).
  * - При drop наполняет files у нативного input[type="file"] и генерирует событие 'change',
@@ -16,7 +16,7 @@
 
   Drupal.behaviors.base11FileUpload = {
     attach(context) {
-      const dropzones = once('base11-file-dropzone', '.form-type-managed-file, .form-type--managed-file', context);
+      const dropzones = once('base11-file-dropzone', '.file-upload--dropzone', context);
 
       dropzones.forEach((dropzone) => {
         const fileInput = dropzone.querySelector('input[type="file"]');

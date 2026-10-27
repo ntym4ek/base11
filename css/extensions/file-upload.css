@@ -1,4 +1,4 @@
-:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) {
+.file-upload--dropzone:not(:has(.image-preview)):not(:has(.file)) {
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   position: relative;
   text-align: center;
 }
-:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) input[type=file] {
+.file-upload--dropzone:not(:has(.image-preview)):not(:has(.file)) input[type=file] {
   cursor: pointer;
   height: 100%;
   width: 100%;
@@ -19,18 +19,35 @@
   position: absolute;
   z-index: 2;
 }
-:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) input[name*=upload_button],
-:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) button[name*=upload_button] {
+.file-upload--dropzone:not(:has(.image-preview)):not(:has(.file)) input[name*=upload_button],
+.file-upload--dropzone:not(:has(.image-preview)):not(:has(.file)) button[name*=upload_button] {
   display: none !important;
 }
-:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) label,
-:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *) :is(.description, .form-item__description) {
+.file-upload--dropzone:not(:has(.image-preview)):not(:has(.file)) label,
+.file-upload--dropzone:not(:has(.image-preview)):not(:has(.file)) :is(.description, .form-item__description) {
   pointer-events: none;
   position: relative;
   z-index: 1;
 }
-:is(.form-type-managed-file, .form-type--managed-file):not(:has(.image-preview)):not(.cart-order-attachment):not(.media-library-add-form__media *):not(.media-library-add-form__fields *).is-dragover {
+.file-upload--dropzone:not(:has(.image-preview)):not(:has(.file)).is-dragover {
   border-style: solid;
+}
+
+.file-upload--compact {
+  position: relative;
+}
+.file-upload--compact input[type=file] {
+  height: 0.1px;
+  width: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+.file-upload--compact input[name*=upload_button],
+.file-upload--compact button[name*=upload_button] {
+  display: none !important;
 }
 
 .image-widget .image-preview {
