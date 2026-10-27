@@ -1,9 +1,9 @@
 // === Base Styles (base11) ===
 // Доступная типографика, фокус клавиатуры (WCAG) и базовые сбросы
 
-@import "tokens";
-@import "grid-variables";
-@import "mixins";
+@import "b11-tokens";
+@import "b11-grid-variables";
+@import "b11-mixins";
 
 html {
   // Процентное масштабирование сохраняет пользовательские настройки шрифта в браузере (A11y)

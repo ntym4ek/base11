@@ -3,29 +3,29 @@
 // ==========================================================================
 
 // 1. Дизайн-токены, переменные и миксины
-@import "tokens";
-@import "grid-variables";
-@import "mixins";
+@import "b11-tokens";
+@import "b11-grid-variables";
+@import "b11-mixins";
 
 // 2. Базовые стили и сетка
-@import "base";
-@import "drupal-core";
-@import "grid";
-@import "layout";
-@import "media";
+@import "b11-base";
+@import "b11-drupal-core";
+@import "b11-grid";
+@import "b11-layout";
+@import "b11-media";
 
 // 3. Контролы (кнопки и формы)
-@import "button";
-@import "form";
+@import "b11-buttons";
+@import "b11-forms";
 
 // 4. Навигация и системные элементы
-@import "menu";
-@import "menu-mobile";
-@import "breadcrumb";
-@import "dialog";
+@import "b11-menu";
+@import "b11-menu-mobile";
+@import "b11-breadcrumbs";
+@import "b11-dialog";
 
 
 // 5. Утилиты и вспомогательные стили
-@import "ajax";
-@import "helper";
-@import "print";
+@import "b11-ajax";
+@import "b11-helper";
+@import "b11-print";

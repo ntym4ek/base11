@@ -1,26 +1,30 @@
 // === Form Styles (base11) ===
 // Единая размерная сетка с кнопками, современный a11y фокус и чистая стилизация контролов
 
-@import "tokens";
-@import "grid-variables";
-@import "mixins";
+@import "b11-tokens";
+@import "b11-grid-variables";
+@import "b11-mixins";
 
 .form-item {
   margin: 0 0 1rem;
   position: relative;
 
   label {
-    display: inline-block;
     color: var(--label-color);
+    display: block;
     font-weight: var(--label-weight);
+
+    &.option {
+      display: inline;
+    }
 
     &:not(.option) {
       margin-bottom: var(--label-gap-y);
     }
 
     &.form-required::after {
-      content: "*";
       color: var(--brand-danger);
+      content: "*";
       margin-left: .25rem;
     }
   }
@@ -30,6 +34,7 @@
   input[type="email"],
   input[type="tel"],
   input[type="date"],
+  input[type="time"],
   input[type="number"],
   input[type="password"],
   input[type="search"],
@@ -310,6 +315,27 @@
   .form-item {
     margin-top: 0;
     margin-bottom: 0;
+  }
+}
+
+// --- Текстовые поля только для чтения (Item Form Elements) -------------------
+.form-type-item {
+  color: var(--text-color);
+  display: flex; flex-direction: column;
+  line-height: var(--line-height-base);
+}
+
+// --- Метаданные сущности (Entity Meta) ---------------------------------------
+.entity-meta {
+  &__title {
+    color: var(--text-color);
+    font-size: var(--font-size-lg); font-weight: 700; line-height: var(--line-height-sm);
+    margin-bottom: 1.25rem;
+  }
+
+  &__last-saved,
+  &__author {
+    margin-bottom: 1rem;
   }
 }
 

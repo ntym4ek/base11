@@ -195,6 +195,11 @@ td.is-active {
 
   .form-item {
     margin-bottom: 0;
+
+    label:not(.visually-hidden) {
+      display: inline-block;
+      margin-bottom: 0; margin-right: .35rem;
+    }
   }
 }
 
