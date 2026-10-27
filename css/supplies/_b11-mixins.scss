@@ -10,17 +10,6 @@
   box-sizing: border-box;
 }
 
-// Алиас для обратной совместимости вызовов button-size в подтемах
-@mixin button-size($padding-horizontal, $font-size, $line-height, $border-radius, $height) {
-  min-height: $height;
-  padding-left: $padding-horizontal;
-  padding-right: $padding-horizontal;
-  font-size: $font-size;
-  line-height: $line-height;
-  border-radius: $border-radius;
-  box-sizing: border-box;
-}
-
 // Миксин видимого фокуса доступности (WCAG 2.1 & 2.2 Focus Visible)
 @mixin focus-ring {
   &:focus-visible {
@@ -43,7 +32,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: .5rem;
   font-weight: var(--btn-font-weight, 500);
   text-align: center;
   touch-action: manipulation;
@@ -60,7 +49,93 @@
   @include focus-ring;
 }
 
-// Цветовые варианты кнопок
+// Контурная (пустотелая) кнопка
+@mixin button-outline($color: var(--brand-primary), $hover-color: null, $hover-bg: null) {
+  $resolved-h-bg: if($hover-bg, $hover-bg, color-mix(in srgb, #{$color} 8%, transparent));
+  $resolved-h-color: if($hover-color, $hover-color, color-mix(in srgb, #{$color}, black 15%));
+
+  --btn-bg: transparent;
+  --btn-border-color: #{$color};
+  --btn-color: #{$color};
+  --btn-shadow: none;
+
+  --btn-bg-hover: #{$resolved-h-bg};
+  --btn-border-color-hover: #{$resolved-h-color};
+  --btn-color-hover: #{$resolved-h-color};
+
+  --btn-bg-active: color-mix(in srgb, #{$color} 15%, transparent);
+  --btn-border-color-active: color-mix(in srgb, #{$color}, black 20%);
+  --btn-color-active: color-mix(in srgb, #{$color}, black 20%);
+
+  background-color: transparent;
+  border-color: #{$color};
+  box-shadow: none;
+  color: #{$color};
+
+  &:hover,
+  &.is-hover {
+    background-color: #{$resolved-h-bg};
+    border-color: #{$resolved-h-color};
+    box-shadow: none;
+    color: #{$resolved-h-color};
+  }
+
+  &:active,
+  &.is-active,
+  &.active {
+    background-color: color-mix(in srgb, #{$color} 15%, transparent);
+    border-color: color-mix(in srgb, #{$color}, black 20%);
+    color: color-mix(in srgb, #{$color}, black 20%);
+    transform: var(--btn-transform-active, translateY(1px));
+  }
+}
+
+// Сплошная цветная кнопка
+@mixin button-solid($bg: var(--brand-primary), $color: #ffffff, $border: null) {
+  $border-color: if($border, $border, $bg);
+
+  --btn-bg: #{$bg};
+  --btn-border-color: #{$border-color};
+  --btn-color: #{$color};
+
+  --btn-bg-hover: color-mix(in srgb, #{$bg}, black 12%);
+  --btn-border-color-hover: color-mix(in srgb, #{$border-color}, black 12%);
+  --btn-color-hover: #{$color};
+
+  --btn-bg-active: color-mix(in srgb, #{$bg}, black 20%);
+  --btn-border-color-active: color-mix(in srgb, #{$border-color}, black 20%);
+  --btn-color-active: #{$color};
+  --btn-transform-active: translateY(1px);
+
+  --btn-shadow-color: color-mix(in srgb, #{$bg} 25%, transparent);
+  --btn-shadow-color-hover: color-mix(in srgb, #{$bg} 35%, transparent);
+  --btn-shadow-color-active: color-mix(in srgb, #{$bg} 20%, transparent);
+
+  background-color: var(--btn-bg);
+  border-color: var(--btn-border-color);
+  box-shadow: var(--btn-shadow);
+  color: var(--btn-color);
+
+  &:hover,
+  &.is-hover {
+    background-color: var(--btn-bg-hover);
+    border-color: var(--btn-border-color-hover);
+    box-shadow: var(--btn-shadow-hover);
+    color: var(--btn-color-hover);
+  }
+
+  &:active,
+  &.is-active,
+  &.active {
+    background-color: var(--btn-bg-active);
+    border-color: var(--btn-border-color-active);
+    box-shadow: var(--btn-shadow-active);
+    color: var(--btn-color-active);
+    transform: var(--btn-transform-active, translateY(1px));
+  }
+}
+
+// Цветовые варианты кнопок (устаревший совместимый миксин)
 @mixin button-variant($color, $bkg, $border, $color-h: null, $bkg-h: null, $border-h: null) {
   color: $color;
   background-color: $bkg;
@@ -88,7 +163,7 @@
   &[disabled],
   fieldset[disabled] & {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: .5;
     box-shadow: none;
     &:hover,
     &:focus-visible {

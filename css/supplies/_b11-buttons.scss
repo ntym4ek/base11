@@ -20,7 +20,6 @@ input[type="reset"] {
     var(--btn-radius-md)
   );
 
-  --btn-bg: var(--brand-primary);
   background-color: var(--btn-bg);
   border-color: var(--btn-border-color);
   border-width: var(--btn-border-width);
@@ -123,28 +122,6 @@ input[type="reset"] {
   }
 
   // --- Цветовые модификаторы ---
-  &.button--default {
-    --btn-bg: var(--surface-card);
-    --shadow-color: color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
-    background-color: var(--btn-bg);
-    border-color: var(--border-color);
-    color: var(--text-color);
-
-    &:hover {
-      --btn-bg: var(--page-bg);
-      --shadow-color: color-mix(in srgb, var(--shadow-base-color) 10%, transparent);
-      background-color: var(--btn-bg);
-      border-color: var(--text-muted);
-      color: var(--text-color);
-    }
-
-    &:active,
-    &.is-active,
-    &.active {
-      --shadow-color: color-mix(in srgb, var(--shadow-base-color) 4%, transparent);
-    }
-  }
-
   &.button--white {
     --btn-bg: #ffffff;
     --shadow-color: color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
@@ -165,161 +142,52 @@ input[type="reset"] {
     }
   }
 
-  &.button--brand,
-  &.button--primary,
-  &.button--action {
-    --btn-bg: var(--brand-primary);
-    background-color: var(--btn-bg);
-    border-color: var(--btn-bg);
-    color: var(--surface-card);
-
-    &:hover {
-      background-color: var(--brand-primary-hover);
-      border-color: var(--brand-primary-hover);
-      color: var(--surface-card);
-    }
+  &.button--primary {
+    @include button-solid(var(--brand-primary), #ffffff);
   }
 
   &.button--success {
-    --btn-bg: var(--brand-success);
-    background-color: var(--btn-bg);
-    border-color: var(--btn-bg);
-    color: var(--surface-card);
-
-    &:hover {
-      background-color: color-mix(in srgb, var(--brand-success), black 12%);
-      border-color: color-mix(in srgb, var(--brand-success), black 12%);
-      color: var(--surface-card);
-    }
+    @include button-solid(var(--brand-success), #ffffff);
   }
 
   &.button--info {
-    --btn-bg: var(--brand-info);
-    background-color: var(--btn-bg);
-    border-color: var(--btn-bg);
-    color: var(--surface-card);
-
-    &:hover {
-      background-color: color-mix(in srgb, var(--brand-info), black 12%);
-      border-color: color-mix(in srgb, var(--brand-info), black 12%);
-      color: var(--surface-card);
-    }
+    @include button-solid(var(--brand-info), #ffffff);
   }
 
   &.button--warning {
-    --btn-bg: var(--brand-warning);
-    background-color: var(--btn-bg);
-    border-color: var(--brand-warning);
-    color: var(--surface-card);
-
-    &:hover {
-      background-color: color-mix(in srgb, var(--brand-warning), black 12%);
-      border-color: color-mix(in srgb, var(--brand-warning), black 12%);
-      color: var(--surface-card);
-    }
+    @include button-solid(var(--brand-warning), #ffffff);
   }
 
   &.button--danger {
-    --btn-bg: var(--brand-danger);
-    background-color: var(--btn-bg);
-    border-color: var(--brand-danger);
-    color: var(--surface-card);
-
-    &:hover {
-      background-color: color-mix(in srgb, var(--brand-danger), black 12%);
-      border-color: color-mix(in srgb, var(--brand-danger), black 12%);
-      color: var(--surface-card);
-    }
+    @include button-solid(var(--brand-danger), #ffffff);
   }
 
   // Контурные кнопки (Outline)
   &.button--outline {
-    background-color: transparent;
-    box-shadow: none;
-
-    &:hover,
-    &.is-hover {
-      background-color: transparent;
-      box-shadow: none;
-    }
-
-    &.button--default {
-      border-color: var(--text-color);
-      color: var(--text-color);
-      &:hover,
-      &.is-hover {
-        background-color: transparent;
-        border-color: var(--brand-primary);
-        color: var(--brand-primary);
-      }
-    }
+    @include button-outline(var(--brand-primary));
 
     &.button--white {
-      border-color: #ffffff;
-      color: var(--surface-card);
-      &:hover,
-      &.is-hover {
-        background-color: transparent;
-        border-color: rgba(255, 255, 255, 0.7);
-        color: rgba(255, 255, 255, 0.9);
-      }
+      @include button-outline(#ffffff, rgba(255, 255, 255, .9), transparent);
     }
 
-    &.button--brand,
-    &.button--primary,
-    &.button--action {
-      border-color: var(--brand-primary);
-      color: var(--brand-primary);
-      &:hover,
-      &.is-hover {
-        background-color: transparent;
-        border-color: var(--brand-primary-hover);
-        color: var(--brand-primary-hover);
-      }
+    &.button--primary {
+      @include button-outline(var(--brand-primary));
     }
 
     &.button--success {
-      border-color: var(--brand-success);
-      color: var(--brand-success);
-      &:hover,
-      &.is-hover {
-        background-color: transparent;
-        border-color: color-mix(in srgb, var(--brand-success), black 12%);
-        color: color-mix(in srgb, var(--brand-success), black 12%);
-      }
+      @include button-outline(var(--brand-success));
     }
 
     &.button--danger {
-      border-color: var(--brand-danger);
-      color: var(--brand-danger);
-      &:hover,
-      &.is-hover {
-        background-color: transparent;
-        border-color: color-mix(in srgb, var(--brand-danger), black 12%);
-        color: color-mix(in srgb, var(--brand-danger), black 12%);
-      }
+      @include button-outline(var(--brand-danger));
     }
 
     &.button--warning {
-      border-color: var(--brand-warning);
-      color: var(--brand-warning);
-      &:hover,
-      &.is-hover {
-        background-color: transparent;
-        border-color: color-mix(in srgb, var(--brand-warning), black 12%);
-        color: color-mix(in srgb, var(--brand-warning), black 12%);
-      }
+      @include button-outline(var(--brand-warning));
     }
 
     &.button--info {
-      border-color: var(--brand-info);
-      color: var(--brand-info);
-      &:hover,
-      &.is-hover {
-        background-color: transparent;
-        border-color: color-mix(in srgb, var(--brand-info), black 12%);
-        color: color-mix(in srgb, var(--brand-info), black 12%);
-      }
+      @include button-outline(var(--brand-info));
     }
   }
 
@@ -393,15 +261,11 @@ input[type="reset"] {
   &.button--badge {
     position: relative;
     .badge {
-      position: absolute;
-      top: -.5rem;
-      right: -.5rem;
+      position: absolute; top: -.5rem; right: -.5rem;
       background: var(--brand-danger);
       border-radius: 999px;
-      color: var(--surface-card);
-      font-size: .65rem;
+      color: #fff; font-size: .65rem; line-height: 1;
       padding: .2em .5em;
-      line-height: 1;
     }
   }
 

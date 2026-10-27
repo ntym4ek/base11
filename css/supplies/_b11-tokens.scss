@@ -96,21 +96,21 @@
   --btn-radius-lg: var(--control-radius-lg);
 
   // Кнопки - цвета и состояния (Drupal 11+)
-  --btn-bg: var(--brand-primary);
-  --btn-color: #ffffff;
-  --btn-border-color: var(--brand-primary);
+  --btn-bg: #f1f3f5;
+  --btn-color: var(--text-color);
+  --btn-border-color: #d1d5db;
   --btn-border-width: var(--control-border-width);
   --btn-shadow: var(--shadow-xs);
   --btn-shadow-hover: var(--shadow-sm);
   --btn-shadow-active: none;
 
-  --btn-bg-hover: var(--brand-primary-hover);
-  --btn-color-hover: #ffffff;
-  --btn-border-color-hover: var(--brand-primary-hover);
+  --btn-bg-hover: #e5e7eb;
+  --btn-color-hover: var(--text-color);
+  --btn-border-color-hover: #9ca3af;
 
-  --btn-bg-active: var(--brand-primary-active);
-  --btn-color-active: #ffffff;
-  --btn-border-color-active: var(--brand-primary-active);
+  --btn-bg-active: #d1d5db;
+  --btn-color-active: var(--text-color);
+  --btn-border-color-active: #6b7280;
   --btn-transform-active: translateY(1px);
 
   --btn-focus-ring-color: var(--focus-ring-color);
@@ -144,9 +144,9 @@
   --control-shadow: none;                             // Контролы и поля формы по дефолту плоские
 
   // Динамические цветные тени кнопок
-  --btn-shadow-color: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 25%, transparent);
-  --btn-shadow-color-hover: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 35%, transparent);
-  --btn-shadow-color-active: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 20%, transparent);
+  --btn-shadow-color: color-mix(in srgb, var(--shadow-base-color) 8%, transparent);
+  --btn-shadow-color-hover: color-mix(in srgb, var(--shadow-base-color) 12%, transparent);
+  --btn-shadow-color-active: color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
 
   // --- 5. Цветовые роли и поверхности ---
   --brand-primary: #213a6e;
