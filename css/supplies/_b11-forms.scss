@@ -321,7 +321,6 @@
 // --- Текстовые поля только для чтения (Item Form Elements) -------------------
 .form-type-item {
   color: var(--text-color);
-  display: flex; flex-direction: column;
   line-height: var(--line-height-base);
 }
 
@@ -334,8 +333,17 @@
   }
 
   &__last-saved,
-  &__author {
+  &__author,
+  .form-type-item {
+    display: flex; flex-direction: column; gap: var(--label-gap-y, .25rem);
     margin-bottom: 1rem;
+
+    label {
+      color: var(--label-color);
+      display: block;
+      font-weight: var(--label-weight);
+      margin-bottom: 0;
+    }
   }
 }
 

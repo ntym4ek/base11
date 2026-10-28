@@ -18,7 +18,7 @@
 
     &:not(:first-child)::before {
       color: var(--text-muted);
-      content: "\bb";
+      content: "/";
       margin: 0 .5rem;
     }
 

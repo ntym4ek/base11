@@ -92,10 +92,10 @@
           background-color: var(--surface-card);
           border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
           box-shadow: var(--shadow-lg);
-          display: flex; flex-direction: column; gap: .125rem;
-          min-width: 200px;
+          display: flex; flex-direction: column;
+          min-width: 220px;
           opacity: 0; pointer-events: none;
-          padding: .375rem;
+          padding: 0;
           position: absolute; top: calc(100% + 4px); left: 0; z-index: var(--z-dropdown);
           transform: translateY(6px);
           transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
@@ -104,32 +104,79 @@
           // Невидимая зона наведения (мост между ссылкой и подменю)
           &::before {
             content: ""; display: block;
-            position: absolute; top: -10px; left: 0; right: 0; height: 10px;
+            height: 10px;
+            position: absolute; top: -10px; left: 0; right: 0;
           }
 
           > .menu-item {
+            border-bottom: 1px solid var(--border-color-light);
             display: block;
             margin: 0; padding: 0;
+            position: relative;
             width: 100%;
+
+            &:first-child {
+              border-top-left-radius: calc(var(--control-radius-md) - 1px);
+              border-top-right-radius: calc(var(--control-radius-md) - 1px);
+
+              > a {
+                border-top-left-radius: calc(var(--control-radius-md) - 1px);
+                border-top-right-radius: calc(var(--control-radius-md) - 1px);
+
+                &::before {
+                  border-top-left-radius: calc(var(--control-radius-md) - 1px);
+                }
+              }
+            }
+
+            &:last-child {
+              border-bottom: none;
+              border-bottom-left-radius: calc(var(--control-radius-md) - 1px);
+              border-bottom-right-radius: calc(var(--control-radius-md) - 1px);
+
+              > a {
+                border-bottom-left-radius: calc(var(--control-radius-md) - 1px);
+                border-bottom-right-radius: calc(var(--control-radius-md) - 1px);
+
+                &::before {
+                  border-bottom-left-radius: calc(var(--control-radius-md) - 1px);
+                }
+              }
+            }
 
             > a {
               background: transparent;
-              border-radius: var(--control-radius-sm);
               color: var(--text-color);
               display: flex; align-items: center; justify-content: space-between;
-              padding: .5rem .75rem;
+              padding: .75rem 1.25rem;
+              position: relative;
               transition: background-color var(--transition-fast), color var(--transition-fast);
               white-space: nowrap; width: 100%;
 
               &:hover,
               &:focus {
-                background: var(--page-bg);
+                background-color: color-mix(in srgb, var(--brand-primary) 4%, transparent);
                 color: var(--brand-primary);
-              }
 
-              &.is-active {
-                background: var(--page-bg);
-                color: var(--brand-primary); font-weight: 600;
+                &::before {
+                  background-color: var(--brand-primary);
+                  content: "";
+                  height: 100%; width: 3px;
+                  position: absolute; left: 0; top: 0;
+                }
+              }
+            }
+
+            &.is-active > a,
+            &.menu-item--active-trail > a,
+            > a.is-active {
+              color: var(--brand-primary); font-weight: 600;
+
+              &::before {
+                background-color: var(--brand-primary);
+                content: "";
+                height: 100%; width: 3px;
+                position: absolute; left: 0; top: 0;
               }
             }
           }
