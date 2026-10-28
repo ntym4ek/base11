@@ -100,8 +100,8 @@
   --btn-color: var(--text-color);
   --btn-border-color: #d1d5db;
   --btn-border-width: var(--control-border-width);
-  --btn-shadow: var(--shadow-xs);
-  --btn-shadow-hover: var(--shadow-sm);
+  --btn-shadow: var(--shadow-sm);
+  --btn-shadow-hover: var(--shadow-base);
   --btn-shadow-active: none;
 
   --btn-bg-hover: #e5e7eb;
@@ -131,15 +131,12 @@
 
   // --- 4. Шкала теней (Elevation / Box-shadows) ---
   --shadow-base-color: #000000;
-
-  --shadow-xs: 0 1px 3px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 4%, transparent));
-  --shadow-sm: 0 2px 6px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 5%, transparent));
-  --shadow-md: 0 5px 10px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 6%, transparent));
-  --shadow-lg: 0 10px 20px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 8%, transparent));
-  --shadow-xl: 0 14px 28px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 15%, transparent));
+  --shadow-sm: 0 2px 5px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 5%, transparent));
+  --shadow-base: 0 5px 12px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 7%, transparent));
+  --shadow-lg: 0 12px 24px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 12%, transparent));
 
   // Семантические токены теней
-  --card-shadow: var(--shadow-md);
+  --card-shadow: var(--shadow-base);
   --dropdown-shadow: var(--shadow-lg);
   --control-shadow: none;                             // Контролы и поля формы по дефолту плоские
 
@@ -175,7 +172,7 @@
   --header-height: 5rem;
   --header-color: var(--text-color);
   --header-bg: transparent;
-  --header-shadow: var(--shadow-md);
+  --header-shadow: var(--shadow-base);
 
   --footer-bg: #1e1e1c;
   --footer-color: #ffffff;
@@ -200,7 +197,7 @@
   --modal-backdrop-blur: 4px;
   --modal-bg: var(--surface-card);
   --modal-radius: 1rem;
-  --modal-shadow: var(--shadow-xl);
+  --modal-shadow: var(--shadow-lg);
   --modal-default-width: 500px;
   --modal-max-width: 1000px;
   --modal-max-width-narrow: 420px;

@@ -66,19 +66,19 @@
   --btn-radius-sm: var(--control-radius-sm);
   --btn-radius-md: var(--control-radius-md);
   --btn-radius-lg: var(--control-radius-lg);
-  --btn-bg: var(--brand-primary);
-  --btn-color: #ffffff;
-  --btn-border-color: var(--brand-primary);
+  --btn-bg: #f1f3f5;
+  --btn-color: var(--text-color);
+  --btn-border-color: #d1d5db;
   --btn-border-width: var(--control-border-width);
-  --btn-shadow: var(--shadow-xs);
-  --btn-shadow-hover: var(--shadow-sm);
+  --btn-shadow: var(--shadow-sm);
+  --btn-shadow-hover: var(--shadow-base);
   --btn-shadow-active: none;
-  --btn-bg-hover: var(--brand-primary-hover);
-  --btn-color-hover: #ffffff;
-  --btn-border-color-hover: var(--brand-primary-hover);
-  --btn-bg-active: var(--brand-primary-active);
-  --btn-color-active: #ffffff;
-  --btn-border-color-active: var(--brand-primary-active);
+  --btn-bg-hover: #e5e7eb;
+  --btn-color-hover: var(--text-color);
+  --btn-border-color-hover: #9ca3af;
+  --btn-bg-active: #d1d5db;
+  --btn-color-active: var(--text-color);
+  --btn-border-color-active: #6b7280;
   --btn-transform-active: translateY(1px);
   --btn-focus-ring-color: var(--focus-ring-color);
   --btn-focus-ring-width: var(--focus-ring-width);
@@ -92,17 +92,15 @@
   --label-weight: 500;
   --label-gap-y: .375rem;
   --shadow-base-color: #000000;
-  --shadow-xs: 0 1px 3px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 4%, transparent));
-  --shadow-sm: 0 2px 6px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 5%, transparent));
-  --shadow-md: 0 5px 10px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 6%, transparent));
-  --shadow-lg: 0 10px 20px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 8%, transparent));
-  --shadow-xl: 0 14px 28px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 15%, transparent));
-  --card-shadow: var(--shadow-md);
+  --shadow-sm: 0 2px 5px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 5%, transparent));
+  --shadow-base: 0 5px 12px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 7%, transparent));
+  --shadow-lg: 0 12px 24px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 12%, transparent));
+  --card-shadow: var(--shadow-base);
   --dropdown-shadow: var(--shadow-lg);
   --control-shadow: none;
-  --btn-shadow-color: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 25%, transparent);
-  --btn-shadow-color-hover: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 35%, transparent);
-  --btn-shadow-color-active: color-mix(in srgb, var(--btn-bg, var(--brand-primary)) 20%, transparent);
+  --btn-shadow-color: color-mix(in srgb, var(--shadow-base-color) 8%, transparent);
+  --btn-shadow-color-hover: color-mix(in srgb, var(--shadow-base-color) 12%, transparent);
+  --btn-shadow-color-active: color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
   --brand-primary: #213a6e;
   --brand-info: #5bc0de;
   --brand-success: #36aa3d;
@@ -123,7 +121,7 @@
   --header-height: 5rem;
   --header-color: var(--text-color);
   --header-bg: transparent;
-  --header-shadow: var(--shadow-md);
+  --header-shadow: var(--shadow-base);
   --footer-bg: #1e1e1c;
   --footer-color: #ffffff;
   --footer-hover-color: #ffffff;
@@ -142,7 +140,7 @@
   --modal-backdrop-blur: 4px;
   --modal-bg: var(--surface-card);
   --modal-radius: 1rem;
-  --modal-shadow: var(--shadow-xl);
+  --modal-shadow: var(--shadow-lg);
   --modal-default-width: 500px;
   --modal-max-width: 1000px;
   --modal-max-width-narrow: 420px;
@@ -194,60 +192,86 @@
     --block-gap-y: 3rem;
   }
 }
-.click-to-copy:hover ~ .click-to-copy__tooltip {
+.click-to-copy {
+  display: inline;
+  position: relative;
+}
+.click-to-copy:hover ~ .click-to-copy__tooltip, .click-to-copy:focus-within ~ .click-to-copy__tooltip {
   opacity: 1;
   visibility: visible;
 }
 .click-to-copy__tooltip {
-  display: inline-block;
-  position: absolute;
-  transition: all 150ms;
-  visibility: hidden;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.25rem;
   opacity: 0;
-  padding: 0.4em;
-  margin-top: -0.4em;
+  visibility: hidden;
+  padding: 0.25rem;
+  position: relative;
+  transition: opacity var(--transition-fast), visibility var(--transition-fast);
+  vertical-align: middle;
+}
+.click-to-copy__tooltip:hover, .click-to-copy__tooltip:focus-within {
+  opacity: 1;
+  visibility: visible;
+}
+.click-to-copy__tooltip:hover .click-to-copy__tooltiptext, .click-to-copy__tooltip:focus-within .click-to-copy__tooltiptext {
+  opacity: 1;
+  visibility: visible;
+}
+.click-to-copy__btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  transition: color var(--transition-fast);
 }
-.click-to-copy__tooltip svg {
+.click-to-copy__btn:hover {
+  color: var(--brand-primary);
+}
+.click-to-copy__btn.click-to-copy-copied {
+  color: var(--brand-success);
+}
+.click-to-copy__icon {
   display: block;
-  stroke: var(--text-muted);
-}
-.click-to-copy__tooltip svg.click-to-copy-copied {
-  stroke: var(--brand-primary);
-}
-.click-to-copy__tooltip:hover {
-  opacity: 1;
-  visibility: visible;
-}
-.click-to-copy__tooltip:hover .click-to-copy__tooltiptext {
-  visibility: visible;
-  opacity: 1;
+  width: 18px;
+  height: 18px;
 }
 .click-to-copy__tooltiptext {
+  background: var(--text-color);
+  border-radius: var(--control-radius-sm);
+  box-shadow: var(--shadow-base);
+  color: var(--surface-card);
   display: inline-block;
-  visibility: hidden;
-  min-width: 140px;
-  background-color: black;
-  color: whitesmoke;
-  font-size: 0.8em;
+  font-size: 0.75rem;
   text-align: center;
   white-space: nowrap;
-  border-radius: 6px;
-  padding: 5px 15px;
+  line-height: 1.2;
+  min-width: 100px;
+  opacity: 0;
+  visibility: hidden;
+  padding: 0.375rem 0.625rem;
   position: absolute;
-  z-index: 1;
-  bottom: 150%;
-  left: 0;
+  z-index: var(--z-dropdown, 1000);
+  bottom: 130%;
+  left: 50%;
   transform: translateX(-50%);
-  margin-left: 1.3em;
+  transition: opacity var(--transition-fast), visibility var(--transition-fast);
 }
 .click-to-copy__tooltiptext::after {
+  border-color: var(--text-color) transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px;
   content: "";
   position: absolute;
   top: 100%;
   left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
+  transform: translateX(-50%);
 }
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-tokens.scss%22,%22click-to-copy.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EAEE;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAUA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EAEA;EACA;EAEA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EAGA;EACA;EACA;EACA;EAEA;EACA;EACA;EAEA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAGA;EACA;;AAnLA;EA1BF;IA2BM;IACA;;;;AAsLN;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;AAIJ;EACE;IACE;IACA;IACA;;;ACvPJ;EACE;EACA;;AAEA;EAEE;EAAY;;AAGd;EACE;EAAsB;EACtB;EACA;EAAY;EACZ;EACA;EACA;EACA;;AAEA;EAEE;EAAY;;AAEZ;EACE;EAAY;;AAKlB;EACE;EACA;EACA;EACA;EACA;EAAsB;EAAqB;EAC3C;EACA;EACA;;AAEA;EACE;;AAGF;EACE;;AAIJ;EACE;EACA;EAAa;;AAGf;EACE;EACA;EACA;EACA;EACA;EACA;EAAmB;EAAoB;EACvC;EACA;EACA;EAAY;EACZ;EACA;EAAoB;EAAkC;EAAc;EACpE;EACA;;AAEA;EACE;EACA;EAAqB;EACrB;EACA;EAAoB;EAAW;EAC/B%22,%22file%22:%22click-to-copy.css%22%7D */
