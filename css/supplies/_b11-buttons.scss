@@ -1,7 +1,6 @@
 // === Button Styles (base11) ===
 // Единая размерная сетка с элементами форм и полная совместимость с классами модификаторов
 
-@import "b11-tokens";
 @import "b11-mixins";
 
 .button,
@@ -12,10 +11,13 @@ input[type="reset"] {
   @include btn();
 
   // Базовый размер по умолчанию (md: 44px - WCAG 2.1 touch target)
+  --btn-padding-x: var(--btn-padding-x-md);
+  --btn-padding-y: var(--btn-padding-y-md);
+
   @include control-size(
     var(--control-height-md),
-    var(--btn-padding-y-md),
-    var(--btn-padding-x-md),
+    var(--btn-padding-y),
+    var(--btn-padding-x),
     var(--btn-font-size-md),
     var(--btn-radius-md)
   );
@@ -94,10 +96,13 @@ input[type="reset"] {
   // --- Размеры кнопок ---
   &.button--sm,
   &.button--small {
+    --btn-padding-x: var(--btn-padding-x-sm);
+    --btn-padding-y: var(--btn-padding-y-sm);
+
     @include control-size(
       var(--control-height-sm),
-      var(--btn-padding-y-sm),
-      var(--btn-padding-x-sm),
+      var(--btn-padding-y),
+      var(--btn-padding-x),
       var(--btn-font-size-sm),
       var(--btn-radius-sm)
     );
@@ -105,40 +110,53 @@ input[type="reset"] {
 
   &.button--lg,
   &.button--large {
+    --btn-padding-x: var(--btn-padding-x-lg);
+    --btn-padding-y: var(--btn-padding-y-lg);
+
     @include control-size(
       var(--control-height-lg),
-      var(--btn-padding-y-lg),
-      var(--btn-padding-x-lg),
+      var(--btn-padding-y),
+      var(--btn-padding-x),
       var(--btn-font-size-lg),
       var(--btn-radius-lg)
     );
   }
 
   &.button--xs {
-    min-height: 1.75rem;
-    padding: .2rem .5rem;
-    font-size: var(--btn-font-size-xs, .75rem);
+    --btn-padding-x: .5rem;
+    --btn-padding-y: .2rem;
     border-radius: var(--btn-radius-sm);
+    font-size: var(--btn-font-size-xs, .75rem);
+    min-height: 1.75rem;
+    padding: var(--btn-padding-y) var(--btn-padding-x);
   }
 
   // --- Цветовые модификаторы ---
   &.button--white {
     --btn-bg: #ffffff;
+    --btn-color: var(--text-color);
+    --btn-color-hover: var(--text-color);
+    --btn-color-active: var(--text-color);
     --shadow-color: color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
     background-color: var(--btn-bg);
     border-color: #ffffff;
-    color: var(--brand-primary);
+    color: var(--btn-color);
+
+    &:visited {
+      color: var(--btn-color);
+    }
 
     &:hover {
       --shadow-color: color-mix(in srgb, var(--shadow-base-color) 10%, transparent);
-      background-color: rgba(255, 255, 255, .9);
-      border-color: rgba(255, 255, 255, .9);
+      background-color: rgba(255, 255, 255, .9); border-color: rgba(255, 255, 255, .9);
+      color: var(--btn-color-hover);
     }
 
     &:active,
     &.is-active,
     &.active {
       --shadow-color: color-mix(in srgb, var(--shadow-base-color) 4%, transparent);
+      color: var(--btn-color-active);
     }
   }
 
@@ -224,8 +242,7 @@ input[type="reset"] {
 
   // --- Вспомогательные модификаторы ---
   &.button--wide {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: calc(var(--btn-padding-x) * var(--btn-wide-ratio)); padding-right: calc(var(--btn-padding-x) * var(--btn-wide-ratio));
   }
 
   &.button--full-width {
