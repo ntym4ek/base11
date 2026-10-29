@@ -27,6 +27,13 @@ libraries-override:
     css:
       component:
         misc/vertical-tabs.css: false
+  # Отключаем глобальные стили модуля Webform, которые вызывают утечку стилей (CSS leak)
+  # и некорректно меняют поведение базовых элементов Form API ядра (.form-item .container-inline,
+  # .form-radios, .form-composite и др.) на всех сторонних формах сайта.
+  webform/webform.form:
+    css:
+      component:
+        css/webform.form.css: false
 
 
 regions:
