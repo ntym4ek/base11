@@ -9,11 +9,10 @@
       display: list-item;
       padding: 0 1rem;
       > a {
-        color: var(--menu-mobile-color);
+        color: var(--menu-mobile-color); font-size: var(--font-size-sm); text-decoration: none; text-transform: uppercase;
         display: flex;
-        font-size: var(--font-size-sm);
-        padding: 1rem;
-        text-decoration: none; text-transform: uppercase;
+        padding: .8rem 1rem;
+
         word-spacing: 1.5px;
         &:hover,
         &.active {
@@ -71,7 +70,7 @@
     background-color: currentColor; border-radius: 999px;
     position: relative;
     transition: transform .35s, background-color .35s;
-    width: var(--menu-mobile-btn-size); height: calc(var(--menu-mobile-btn-size) * .133);
+    width: var(--menu-mobile-btn-size); height: calc(var(--menu-mobile-btn-size) * .123);
 
     &:before,
     &:after {

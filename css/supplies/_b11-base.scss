@@ -85,8 +85,7 @@ h6, .h6 { font-size: var(--font-size-h6); font-weight: 700; }
 
 :root {
   @media #{$smart-only} {
-    --font-size-h1: var(--font-size-h2);
-    --font-size-h2: var(--font-size-sm);
+    --font-size-h2: var(--font-size-h3);
     --font-size-h3: var(--font-size-h4);
   }
 }

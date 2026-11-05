@@ -14,23 +14,33 @@
  */
 #}
 {%
+  set classes = [
+    'js-form-item',
+    'form-item',
+    'form-datetime-wrapper',
+  ]
+%}
+{%
   set title_classes = [
     'label',
+    'form-item__label',
     required ? 'js-form-required',
     required ? 'form-required',
   ]
 %}
-{% if title %}
-  <h4{{ title_attributes.addClass(title_classes) }}>{{ title }}</h4>
-{% endif %}
-{{ content }}
-{% if errors %}
-  <div class="form-item--error-message">
-    <strong>{{ errors }}</strong>
-  </div>
-{% endif %}
-{% if description %}
-  <div{{ description_attributes.addClass('description') }}>
-    {{ description }}
-  </div>
-{% endif %}
+<div{{ attributes.addClass(classes) }}>
+  {% if title %}
+    <h4{{ title_attributes.addClass(title_classes) }}>{{ title }}</h4>
+  {% endif %}
+  {{ content }}
+  {% if errors %}
+    <div class="form-item--error-message">
+      <strong>{{ errors }}</strong>
+    </div>
+  {% endif %}
+  {% if description %}
+    <div{{ description_attributes.addClass('description') }}>
+      {{ description }}
+    </div>
+  {% endif %}
+</div>

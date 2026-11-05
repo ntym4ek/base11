@@ -9,10 +9,13 @@
   margin: 0 0 1rem;
   position: relative;
 
-  label {
+  label,
+  .label,
+  .form-item__label {
     color: var(--label-color);
     display: block;
-    font-weight: var(--label-weight);
+    font-family: inherit; font-size: var(--font-size-base); font-weight: var(--label-weight); line-height: var(--line-height-base);
+    margin: 0;
 
     &.option {
       display: inline;
@@ -225,6 +228,7 @@
   }
 
   label.option {
+    color: var(--text-color);
     cursor: pointer;
     margin-bottom: 0;
   }
@@ -282,6 +286,7 @@
   }
 
   label.option {
+    color: var(--text-color);
     cursor: pointer;
     margin-bottom: 0;
   }
@@ -295,26 +300,15 @@
   }
 }
 
-// --- Формы даты/времени ---
+// --- Формы даты/времени (Datetime Form Elements) ----------------------------
+.form-datetime-wrapper,
 .field--type-datetime {
-  margin-top: 1rem;
-
   .container-inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem;
-  }
+    display: flex; flex-wrap: wrap; gap: .5rem;
 
-  h4 {
-    display: inline-block;
-    font-family: inherit;
-    font-size: var(--font-size-base);
-    margin-bottom: var(--label-gap-y);
-  }
-
-  .form-item {
-    margin-top: 0;
-    margin-bottom: 0;
+    .form-item {
+      margin: 0;
+    }
   }
 }
 

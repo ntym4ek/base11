@@ -180,8 +180,25 @@
 
         let lastActiveTrigger = null;
 
+        const setupIframe = (slideNode) => {
+          if (!slideNode) {
+            return;
+          }
+          const iframe = slideNode.querySelector('iframe');
+          if (iframe) {
+            iframe.setAttribute('allow', 'autoplay; fullscreen; encrypted-media; picture-in-picture');
+            iframe.setAttribute('allowfullscreen', 'true');
+          }
+        };
+
+        lightboxInstance.on('slide_after_load', ({ slide }) => {
+          setupIframe(slide);
+        });
+
         // Синхронизация при листании внутри лайтбокса
         lightboxInstance.on('slide_changed', ({ current }) => {
+          const slideNode = current?.slideNode || document.querySelector('.gslide.current');
+          setupIframe(slideNode);
           const trigger = current?.trigger || current?.node || (lightboxInstance.elements?.[current?.slideIndex]?.node);
           if (trigger) {
             lastActiveTrigger = trigger;
