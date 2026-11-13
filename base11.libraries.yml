@@ -164,3 +164,16 @@ ajax-spinner:
   dependencies:
     - core/drupal
     - core/once
+
+# Переключатель видимости пароля (показать / скрыть)
+password-toggle:
+  version: VERSION
+  css:
+    component:
+      css/extensions/password-toggle.css:
+        weight: -10
+  js:
+    js/extensions/password-toggle.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

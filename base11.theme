@@ -181,6 +181,17 @@ function base11_preprocess_status_messages(array &$vars): void
 
 
 /**
+ * Implements hook_preprocess_input().
+ */
+function base11_preprocess_input(array &$vars): void
+{
+  if (isset($vars['attributes']['type']) && $vars['attributes']['type'] === 'password') {
+    $vars['#attached']['library'][] = 'base11/password-toggle';
+  }
+}
+
+
+/**
  * Implements hook_form_alter().
  *
  * Архитектурная связь с библиотекой base11/file-upload:
