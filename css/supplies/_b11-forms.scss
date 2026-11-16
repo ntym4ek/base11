@@ -429,6 +429,16 @@ details {
   margin: 1.5rem 0;
   position: relative;
 
+  // Плейсхолдер шапки закладок до инициализации JS (предотвращает прыжок высоты CLS)
+  &:has(> ul.horizontal-tabs-list.visually-hidden) {
+    &::before {
+      border-bottom: 1px solid var(--border-color);
+      content: '';
+      display: block;
+      height: 2.75rem; width: 100%;
+    }
+  }
+
   ul.horizontal-tabs-list {
     background: transparent;
     border: none; border-bottom: 1px solid var(--border-color);
@@ -482,21 +492,35 @@ details {
     }
   }
 
+  [data-horizontal-tabs-panes],
   .horizontal-tabs-panes {
     background: transparent;
     border: none;
     padding: 0;
 
-    .horizontal-tabs-pane {
+    // Скрываем summary аккордеонов (названия выводятся в кнопках закладок)
+    > details > summary {
+      display: none !important;
+    }
+
+    // Если в URL передан якорь на конкретную секцию или поле внутри неё — показываем целевую
+    &:has(> details:target, > details:has(:target)) {
+      > details:not(:target):not(:has(:target)) {
+        display: none;
+      }
+    }
+
+    // До инициализации JS: скрываем последующие секции, предотвращая эффект вертикальной простыни
+    > details:not(.horizontal-tabs-pane):not(:first-of-type) {
+      display: none;
+    }
+
+    > details {
       background: transparent;
       border: none; border-radius: 0;
       box-shadow: none;
       margin: 0;
       padding: 1.25rem 0 0;
-
-      > summary {
-        display: none !important;
-      }
 
       > .details-wrapper {
         padding: 0;
