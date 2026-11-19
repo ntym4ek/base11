@@ -22,6 +22,13 @@ input[type=submit].is-loading:active {
   transform: scale(0.98);
 }
 
+.button:not(.button--link).is-loading > *,
+.btn:not(.button--link).is-loading > *,
+.button:not(.button--link):has(+ .ajax-progress) > *,
+.button:not(.button--link):has(.ajax-progress) > * {
+  opacity: 0;
+}
+
 .button:not(input):has(+ .ajax-progress)::after,
 .button:not(input):has(.ajax-progress)::after,
 button.is-loading::after,
@@ -107,4 +114,4 @@ input[type=submit].button--outline.is-loading {
   }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22ajax-spinner.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAEA;AAAA;EAEE;;;AAIF;AAAA;AAAA;AAAA;AAAA;AAAA;EAME;EACA;EAAsB;;AAEtB;AAAA;AAAA;AAAA;AAAA;AAAA;EACE;;;AAUF;AAAA;AAAA;AAAA;AAAA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAAkB;EAClB;EAAuB;EACvB;EAAoB;EAAU;EAC9B;EACA;EAAa;;;AAKjB;AAAA;AAAA;AAAA;AAAA;EAKE;EACA;EAA6B;EAA8B;;;AAK7D;AAAA;AAAA;AAAA;EAIE;EACA;EACA;EACA;;AAEA;AAAA;AAAA;AAAA;EACE;;;AAKJ;AAAA;AAAA;EAGE;;;AAGF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;EASE;EACA;;;AAGF;AAAA;AAAA;AAAA;AAAA;AAAA;EAME;;;AAGF;EACE;IAAK%22,%22file%22:%22ajax-spinner.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22ajax-spinner.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAEA;AAAA;EAEE;;;AAIF;AAAA;AAAA;AAAA;AAAA;AAAA;EAME;EACA;EAAsB;;AAEtB;AAAA;AAAA;AAAA;AAAA;AAAA;EACE;;;AASF;AAAA;AAAA;AAAA;EACE;;;AAUF;AAAA;AAAA;AAAA;AAAA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EAAkB;EAClB;EAAuB;EACvB;EAAoB;EAAU;EAC9B;EACA;EAAa;;;AAKjB;AAAA;AAAA;AAAA;AAAA;EAKE;EACA;EAA6B;EAA8B;;;AAK7D;AAAA;AAAA;AAAA;EAIE;EACA;EACA;EACA;;AAEA;AAAA;AAAA;AAAA;EACE;;;AAKJ;AAAA;AAAA;EAGE;;;AAGF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;EASE;EACA;;;AAGF;AAAA;AAAA;AAAA;AAAA;AAAA;EAME;;;AAGF;EACE;IAAK%22,%22file%22:%22ajax-spinner.css%22%7D */

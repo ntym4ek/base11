@@ -5,7 +5,7 @@
   display: none !important;
 }
 
-// Общие стили для активных кнопок (<button> и <input>)
+// Общие стили для активных кнопок (<button>, <input> и <a class="button">)
 .button:has(+ .ajax-progress),
 .button:has(.ajax-progress),
 .button.is-loading,
@@ -17,6 +17,16 @@ input[type="submit"].is-loading {
 
   &:active {
     transform: scale(.98);
+  }
+}
+
+// Скрытие вложенных элементов (иконки, подписи в <span>) при отображении спиннера
+.button:not(.button--link).is-loading,
+.btn:not(.button--link).is-loading,
+.button:not(.button--link):has(+ .ajax-progress),
+.button:not(.button--link):has(.ajax-progress) {
+  > * {
+    opacity: 0;
   }
 }
 
