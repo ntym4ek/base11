@@ -2,6 +2,11 @@ $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schema
 name: Пустое состояние (Empty State)
 status: stable
 description: Заглушка пустого состояния (пустая корзина, пустые результаты поиска/фильтра, страницы 403/404).
+variants:
+  card:
+    title: Карточка
+  plain:
+    title: Без рамки
 props:
   type: object
   required:
@@ -21,13 +26,6 @@ props:
         - h1
         - h2
         - h3
-    variant:
-      type: string
-      title: Вариант оформления
-      default: card
-      enum:
-        - card
-        - plain
     full_height:
       type: boolean
       title: Центрирование на странице (min-height 50vh)

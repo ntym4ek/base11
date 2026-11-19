@@ -2,17 +2,16 @@ $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schema
 name: Карточка (Card)
 status: stable
 description: Универсальная структурная карточка со слотами и адаптацией через Container Queries (@container).
+variants:
+  default:
+    title: По умолчанию (с тенью)
+  bordered:
+    title: С рамкой (без тени)
+  flat:
+    title: Плоская (приглушённый фон)
 props:
   type: object
   properties:
-    variant:
-      type: string
-      title: Вариант оформления
-      default: default
-      enum:
-        - default
-        - bordered
-        - flat
     interactive:
       type: boolean
       title: Интерактивное состояние наведения

@@ -2,6 +2,19 @@ $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schema
 name: Бейдж (Badge)
 status: stable
 description: Универсальный статусный бейдж / метка на цветовых токенах темы Base11.
+variants:
+  neutral:
+    title: Нейтральный
+  primary:
+    title: Основной (бренд)
+  info:
+    title: Информация
+  success:
+    title: Успех
+  warning:
+    title: Предупреждение
+  danger:
+    title: Ошибка / опасность
 props:
   type: object
   required:
@@ -10,17 +23,6 @@ props:
     text:
       type: string
       title: Текст бейджа
-    variant:
-      type: string
-      title: Вариант цвета
-      default: neutral
-      enum:
-        - neutral
-        - primary
-        - info
-        - success
-        - warning
-        - danger
     size:
       type: string
       title: Размер
