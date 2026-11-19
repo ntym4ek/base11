@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\base11\Hook;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Theme\Icon\IconDefinition;
 
 /**
  * ООП-реализации хуков базовой темы Base11 (стандарт Drupal 11.4+).
@@ -21,7 +24,7 @@ class Base11Hooks implements TrustedCallbackInterface {
    * {@inheritdoc}
    */
   public static function trustedCallbacks(): array {
-    return ['preRenderIconOverride'];
+    return ['preRenderIconOverride', 'preRenderIconWindowsFallback'];
   }
 
   /**
@@ -118,6 +121,7 @@ class Base11Hooks implements TrustedCallbackInterface {
   public function elementInfoAlter(array &$types): void {
     if (isset($types['icon']['#pre_render']) && is_array($types['icon']['#pre_render'])) {
       array_unshift($types['icon']['#pre_render'], [self::class, 'preRenderIconOverride']);
+      $types['icon']['#pre_render'][] = [self::class, 'preRenderIconWindowsFallback'];
     }
   }
 
@@ -139,6 +143,113 @@ class Base11Hooks implements TrustedCallbackInterface {
     $override_id = $active_theme . ':' . $element['#icon_id'];
     if (isset($definitions[$active_theme]['icons'][$override_id])) {
       $element['#pack_id'] = $active_theme;
+    }
+
+    return $element;
+  }
+
+  /**
+   * Фоллбэк рендера SVG-иконок на Windows (OSPanel6).
+   *
+   * В Drupal 11.4 метод IconFinder::getFileContents() отклоняет пути Windows
+   * с диском вида C:\..., так как parse_url() воспринимает букву диска как scheme.
+   * На Linux и в исправленных версиях ядра inline-template уже сформирован
+   * штатным Icon::preRenderIcon(), поэтому колбэк завершается сразу без работы.
+   */
+  public static function preRenderIconWindowsFallback(array $element): array {
+    if (isset($element['inline-template'])) {
+      return $element;
+    }
+
+    $pack_id = (string) ($element['#pack_id'] ?? '');
+    $icon_id = (string) ($element['#icon_id'] ?? '');
+    if ($pack_id === '' || $icon_id === '') {
+      return $element;
+    }
+
+    // Ограничиваем фоллбэк паками base11 и активной подтемы.
+    $active_theme = \Drupal::theme()->getActiveTheme()->getName();
+    if ($pack_id !== 'base11' && $pack_id !== $active_theme) {
+      return $element;
+    }
+
+    $definitions = \Drupal::service('plugin.manager.icon_pack')->getDefinitions();
+    $definition = $definitions[$pack_id] ?? NULL;
+    if (!$definition || ($definition['extractor'] ?? '') !== 'svg' || empty($definition['template'])) {
+      return $element;
+    }
+
+    $icon_full_id = IconDefinition::createIconId($pack_id, $icon_id);
+    $icon_data = $definition['icons'][$icon_full_id] ?? NULL;
+    if (empty($icon_data['absolute_path'])) {
+      return $element;
+    }
+
+    static $svg_cache = [];
+    $path = $icon_data['absolute_path'];
+
+    if (!array_key_exists($path, $svg_cache)) {
+      $svg_cache[$path] = NULL;
+      $real_root = realpath(\Drupal::root());
+      $real_file = realpath($path);
+
+      if (
+        $real_root !== FALSE &&
+        $real_file !== FALSE &&
+        is_file($real_file) &&
+        str_starts_with(strtolower($real_file), strtolower($real_root) . DIRECTORY_SEPARATOR) &&
+        str_ends_with(strtolower($real_file), '.svg')
+      ) {
+        $raw = file_get_contents($real_file);
+        if ($raw !== FALSE) {
+          libxml_use_internal_errors(TRUE);
+          $svg = simplexml_load_string($raw);
+          libxml_clear_errors();
+          if ($svg !== FALSE) {
+            $inner = '';
+            foreach ($svg as $child) {
+              $inner .= $child->asXML();
+            }
+            if ($inner !== '') {
+              $raw_attributes = [];
+              foreach ($svg->attributes() as $name => $value) {
+                $raw_attributes[$name] = (string) $value;
+              }
+              $svg_cache[$path] = [
+                'content' => $inner,
+                'raw_attributes' => $raw_attributes,
+              ];
+            }
+          }
+        }
+      }
+    }
+
+    if ($svg_cache[$path] === NULL) {
+      return $element;
+    }
+
+    // Создаём свежий объект Attribute на каждый рендер, чтобы вызовы в шаблоне не мутировали общий кэш.
+    $data_definition = array_diff_key($definition, array_flip(['enabled', 'template', 'description', 'links', 'config']));
+    $extractor_data = [
+      'content' => new FormattableMarkup($svg_cache[$path]['content'], []),
+      'attributes' => new Attribute($svg_cache[$path]['raw_attributes']),
+    ] + $data_definition;
+
+    $settings = is_array($element['#settings'] ?? NULL) ? $element['#settings'] : [];
+    $context = ['icon_id' => $icon_id];
+    if (!empty($icon_data['source'])) {
+      $context['source'] = $icon_data['source'];
+    }
+
+    $element['inline-template'] = [
+      '#type' => 'inline_template',
+      '#template' => $definition['template'],
+      '#context' => array_merge($extractor_data, $settings, $context),
+    ];
+
+    if (!empty($definition['library'])) {
+      $element['inline-template']['#attached'] = ['library' => [$definition['library']]];
     }
 
     return $element;

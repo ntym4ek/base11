@@ -116,5 +116,7 @@ CSS каждого компонента подгружается ядром то
 {{ icon('base11', 'cart', { size: 22, class: 'header-cart__svg' }) }}
 ```
 
-### Переопределение иконок в подтеме
+### Переопределение иконок в подтеме и работа на Windows
 Если дочерняя тема объявляет собственный `<theme>.icons.yml` (пак с именем темы, например `project:`, с параметрами `size` и `class`), то при наличии одноимённого SVG-файла (например `images/icons/arrow-up.svg`) `Base11Hooks::elementInfoAlter()` + `preRenderIconOverride()` автоматически подменит вызов `icon('base11', 'arrow-up')` на иконку из активной подтемы.
+
+В дополнение к этому `Base11Hooks::preRenderIconWindowsFallback()` прозрачно обходит ограничение ядра Drupal 11.4 в `IconFinder::getFileContents()` при работе с путями Windows (`C:\...` на OSPanel6), не затрагивая штатный рендер ядра на Linux.
