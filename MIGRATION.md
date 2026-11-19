@@ -410,9 +410,9 @@
 - **Как найти в подтеме (regex):** `<div[^>]*class="[^"]*page-offside-label`
 - **Что сделать в `project`:** заменить `<div class="page-offside-label">` на семантический `<button type="button" class="page-offside-label" aria-label="{{ 'Menu'|t }}" aria-expanded="false">` в `page.html.twig` (выполнено во всех 3 подтемах).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-33] Паттерн WAI-ARIA Tabs и троттлинг `ResizeObserver` в `tabs-js`
 - **Этап:** 3 | **Тип:** FIXED
@@ -421,9 +421,9 @@
 - **Как найти в подтеме (regex):** `\.tabs-js\s*\{`
 - **Что сделать в `project`:** удалить дублирующие базовые стили `.tabs-js` в подтемах (например в `jp.local/_tabs.scss`).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-34] Безопасность (XSS), доступность и локализация `facet-extension` и `facet-list-filter`
 - **Этап:** 3 | **Тип:** FIXED
@@ -432,9 +432,9 @@
 - **Как найти в подтеме (regex):** `facet-list-filter|bef-exposed-form`
 - **Что сделать в `project`:** правки не требуются.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-35] Доступность `back-to-top` и поддержка `prefers-reduced-motion`
 - **Этап:** 3 | **Тип:** FIXED
@@ -443,9 +443,9 @@
 - **Как найти в подтеме (regex):** `id="back-to-top".*display:\s*none|<div[^>]*id="back-to-top"`
 - **Что сделать в `project`:** перевести `#back-to-top` в `page.html.twig` на `<button type="button" id="back-to-top" class="back-to-top" data-drupal-selector="back-to-top" aria-label="{{ 'Back to top'|t }}">`; в `jp.local` убрать `style="display: none;"` и сохранить квадратную форму кнопки в `_layout.scss`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-36] Семантика закрытия и дефолтные цвета сообщений (`status-messages` / `base11/messages`)
 - **Этап:** 3 | **Тип:** CHANGED / ADDED
@@ -454,9 +454,9 @@
 - **Как найти в подтеме (regex):** `@use\s+"messages"`
 - **Что сделать в `project`:** удалить дублирующий паршал `_messages.scss` в подтемах со стандартной палитрой (`ff.local`); темы с полностью кастомными тостами (`jp.local`) не затрагиваются.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-37] A11y, надёжность JS (`click-to-copy`, `swiper-thumbs`) и единый порядок слоёв в расширениях
 - **Этап:** 3 | **Тип:** FIXED
@@ -465,9 +465,9 @@
 - **Как найти в подтеме (regex):** `click-to-copy|swiper-thumbs`
 - **Что сделать в `project`:** правки не требуются.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-38] Адресное скрытие системного `.ajax-progress` в `ajax-spinner`
 - **Этап:** 3 | **Тип:** FIXED
@@ -476,9 +476,9 @@
 - **Как найти в подтеме (regex):** `base11/ajax-spinner`
 - **Что сделать в `project`:** удалить избыточные подключения `base11/ajax-spinner` в `project.info.yml` (`ff.local`).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-39] Общие компоненты `.tabs.primary`, `.prose`, `<fieldset>` и библиотека `base11/media-library`
 - **Этап:** 3 | **Тип:** ADDED
@@ -491,6 +491,6 @@
 - **Как найти в подтеме (regex):** `@use\s+"tabs"|\.tabs\.primary|\.ui-dialog\.media-library-widget-modal`
 - **Что сделать в `project`:** удалить дубликат `_tabs.scss` в `ff.local` и `lubr.local`; в `ff.local/_media-library.scss` оставить только компактную проектную настройку поверх `base11/media-library` (через токены `--ml-*` и точечные оверрайды без копирования базы).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
