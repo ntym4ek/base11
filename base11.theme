@@ -8,7 +8,6 @@
 use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\image\Entity\ImageStyle;
 
 
 /**
@@ -23,99 +22,6 @@ function base11_preprocess_html(&$vars)
   $vars['#attached']['drupalSettings']['theme'] = [
     'page_offside_hide_width' => \Drupal::service(ThemeSettingsProvider::class)->getSetting('page-offside-hide-width') ?? '1024',
   ];
-}
-
-/**
- * Implements hook_preprocess_page().
- */
-function base11_preprocess_page(array &$vars): void
-{
-  // - Load the site name out of configuration.
-  $config = \Drupal::config('system.site');
-  $vars['site']['name'] = $config->get('name');
-
-  // - Логотипы
-  $path_theme = \Drupal::service('extension.path.resolver')->getPath('theme', 'base11');
-  $vars['site']['logo']['standart'] = \Drupal::service('file_url_generator')->generateString($path_theme . '/images/logo/logo.png');
-  $vars['site']['logo']['transparent'] = \Drupal::service('file_url_generator')->generateString($path_theme . '/images/logo/logo_t.png');
-
-  // - Copyright в подвале
-  $vars['site']['copyright'] = '© ' . date('Y') . ' KCCC GROUP';
-
-  // - Можно отключить шапку
-  $vars['is_header_on'] = true;
-
-  // - Баннер с заголовком в начале страницы
-  $banner = [];
-
-  // Вывод баннера, если в папке page-banners есть изображение с именем, аналогичным пути.
-  // Проверка наличия файла выполняется по всей цепочке пути, от самой длинной до короткой.
-  // Для главной страницы проверяется наличие баннера с именем "front".
-  $banner_uri = '';
-  if (\Drupal::service('path.matcher')->isFrontPage()) {
-    $paths = ['front'];
-  } else {
-    $current_path = \Drupal::service('path.current')->getPath();
-    $current_alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
-
-    $current_path = ltrim($current_path, '/');
-    $current_alias = ltrim($current_alias, '/');
-
-    $paths = [$current_path];
-    if ($current_path !== $current_alias) {
-      $paths[] = $current_alias;
-    }
-  }
-  foreach($paths as $path) {
-    if ($chunks = explode('/', $path)) {
-      do {
-        $filename = implode('--', $chunks);
-        foreach(['jpg', 'png'] as $ext) {
-          $uri = 'public://images/page-banners/' . $filename . '.' . $ext;
-          if (file_exists($uri)) {
-            $banner_uri = $uri;
-            break;
-          }
-        }
-        array_pop($chunks);
-      } while (count($chunks));
-    }
-  }
-  if ($banner_uri) {
-    // можно задать текст или любой html для баннера
-//    $banner['title'] = [
-//      'prefix' => '',
-//      'suffix' => '',
-//      'text' => '',
-//    ];
-
-    // ширина экрана, до которой выводится мобильная версия баннера
-    $banner['break'] = \Drupal::service(ThemeSettingsProvider::class)->getSetting('nav-mobile-hide-width') ?? '1024';
-    $banner['image']['url'] = \Drupal::service('file_url_generator')->generateString($banner_uri);
-
-    // если стиля для мобильного баннера не существует, создать его
-    if (!ImageStyle::load('banner_mobile')) {
-      $image_style = ImageStyle::create([
-        'name' => 'banner_mobile',
-        'label' => 'Мобильный размер баннера (1080х1080)',
-      ]);
-      $image_style->save();
-      $image_style->addImageEffect([
-        'id' => 'image_scale',
-        'weight' => 0,
-        'data' => [
-          'width' => 1080,
-          'height' => 1080,
-          'upscale' => false,
-        ],
-      ]);
-      $image_style->save();
-    }
-    // версия баннера для мобильных
-    $banner['image']['mobile_url'] = ImageStyle::load('banner_mobile')->buildUrl($banner_uri);
-
-    $vars['banner'] = $banner;
-  }
 }
 
 /**
@@ -142,9 +48,6 @@ function base11_preprocess_status_messages(array &$vars): void
     return;
   }
 
-  $request = \Drupal::request();
-  $is_form_submit = $request->isMethod('POST') || $request->request->has('form_id');
-
   $has_form_errors = false;
   $filtered_errors = [];
 
@@ -157,24 +60,13 @@ function base11_preprocess_status_messages(array &$vars): void
       continue; // Пропускаем сырую сводку со ссылками на поля
     }
 
-    // Если это POST-запрос (сабмит формы), любые ошибки валидации полей относим к ошибкам формы
-    if ($is_form_submit) {
-      $has_form_errors = true;
-      continue;
-    }
-
-    // Системные ошибки, не связанные с сабмитом форм, сохраняем как есть
+    // Все прочие ошибки (системные, коммерции, оплаты, прав доступа и т.д.) сохраняем как есть
     $filtered_errors[] = $message;
   }
 
   // Если были обнаружены ошибки заполнения формы, выводим ровно одно компактное обобщённое сообщение
   if ($has_form_errors) {
-    $current_lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
-    $replacement = $current_lang === 'ru'
-      ? 'Пожалуйста, проверьте правильность заполнения полей.'
-      : t('Please check the highlighted fields for errors.');
-
-    array_unshift($filtered_errors, $replacement);
+    array_unshift($filtered_errors, t('Please check the highlighted fields for errors.'));
     $vars['message_list']['error'] = $filtered_errors;
   }
 }

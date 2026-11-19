@@ -258,6 +258,7 @@ td .dropbutton-wrapper {
     margin: 0;
 
     a,
+    &.is-active a,
     &.is-active span {
       border: 1px solid var(--border-color); border-radius: var(--control-radius-sm);
       display: inline-flex; align-items: center; justify-content: center;
@@ -279,11 +280,18 @@ td .dropbutton-wrapper {
       }
     }
 
+    &.is-active a,
     &.is-active span {
       background-color: var(--brand-primary);
       border-color: var(--brand-primary);
       color: #ffffff;
       font-weight: 700;
+
+      &:hover {
+        background-color: var(--brand-primary);
+        border-color: var(--brand-primary);
+        color: #ffffff;
+      }
     }
   }
 }

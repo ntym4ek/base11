@@ -48,9 +48,13 @@
 
 // Кнопка мобильного меню (гамбургер)
 .page-offside-label {
+  background: transparent;
+  border: 0;
   color: inherit;
+  cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
+  padding: 0;
   position: relative;
   transition: color var(--transition-base);
   width: var(--menu-mobile-btn-size); height: var(--menu-mobile-btn-size);

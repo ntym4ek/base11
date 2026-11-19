@@ -122,15 +122,6 @@ input[type="reset"] {
     );
   }
 
-  &.button--xs {
-    --btn-padding-x: .5rem;
-    --btn-padding-y: .2rem;
-    border-radius: var(--btn-radius-sm);
-    font-size: var(--btn-font-size-xs, .75rem);
-    min-height: 1.75rem;
-    padding: var(--btn-padding-y) var(--btn-padding-x);
-  }
-
   // --- Цветовые модификаторы ---
   &.button--white {
     --btn-bg: #ffffff;
@@ -281,7 +272,7 @@ input[type="reset"] {
       position: absolute; top: -.5rem; right: -.5rem;
       background: var(--brand-danger);
       border-radius: 999px;
-      color: #fff; font-size: .65rem; line-height: 1;
+      color: #fff; font-size: var(--font-size-xs); line-height: 1;
       padding: .2em .5em;
     }
   }

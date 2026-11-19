@@ -1,0 +1,10 @@
+base11.settings:
+  type: theme_settings
+  label: 'Base11 settings'
+  mapping:
+    page-offside-position:
+      type: string
+      label: 'Mobile menu position'
+    page-offside-hide-width:
+      type: integer
+      label: 'Mobile menu breakpoint'

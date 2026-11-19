@@ -11,11 +11,7 @@
     msg.classList.remove('visible');
 
     setTimeout(() => {
-      const container = msg.closest('[data-drupal-messages]');
       msg.remove();
-      if (container && !container.querySelector('.messages')) {
-        container.remove();
-      }
     }, 400);
   }
 
@@ -92,11 +88,7 @@
                 element.style.opacity = '0';
                 element.style.transform = 'translateY(-6px)';
                 setTimeout(() => {
-                  const container = element.closest('[data-drupal-messages]');
                   element.remove();
-                  if (container && !container.querySelector('.messages')) {
-                    container.remove();
-                  }
                 }, 200);
               } else {
                 closeMessage(element);

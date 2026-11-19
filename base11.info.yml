@@ -1,17 +1,18 @@
 name: Base11
 type: theme
-version: 1.3.6
+version: 2.0.0-alpha1
 description: ''
 base theme: false
 core_version_requirement: ^11
 
 libraries:
-  - base11/font-montserrat
   - base11/messages
   - base11/ajax-spinner
-  - base11/file-upload
-  - base11/password-toggle
   - core/normalize
+
+libraries-extend:
+  file/drupal.file:
+    - base11/file-upload
 
 libraries-override:
   core/internal.jquery_ui:
@@ -35,7 +36,6 @@ libraries-override:
       component:
         css/webform.form.css: false
 
-
 regions:
   header: Header
   primary_menu: Primary menu
@@ -48,5 +48,3 @@ regions:
   sidebar_second: Right sidebar
   downlighted: Downlighted
   footer: Footer
-
-

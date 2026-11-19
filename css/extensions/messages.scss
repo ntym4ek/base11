@@ -3,7 +3,7 @@
 // --- Базовая структура сообщения ----------------------------------------------
 div.messages,
 .messages {
-  border-radius: var(--control-radius, .5rem);
+  border-radius: var(--control-radius-md);
   font-size: var(--font-size-sm); font-weight: 500;
   padding: .875rem 2.5rem .875rem 1rem;
   position: relative;
@@ -17,11 +17,11 @@ div.messages,
   // --- Режим всплывающего уведомления (Toast) на страницах --------------------
   &:not(.inline) {
     box-shadow: 0 10px 25px rgba(0, 0, 0, .12), 0 2px 8px rgba(0, 0, 0, .06);
-    left: 50%; top: 1.25rem; z-index: var(--z-toast, 1080);
+    left: 50%; top: 1.25rem; z-index: var(--z-toast);
     max-width: 520px; width: calc(100% - 2rem);
     position: fixed;
     transform: translate(-50%, -150%);
-    transition: transform var(--transition-base, 200ms), visibility var(--transition-base, 200ms);
+    transition: transform var(--transition-base), visibility var(--transition-base);
     visibility: hidden;
 
     &.visible {
@@ -72,7 +72,7 @@ div.messages,
     span {
       display: inline-block;
       font-size: 1.15rem; font-weight: 400; line-height: 1;
-      transition: color var(--transition-fast, 150ms);
+      transition: color var(--transition-fast);
     }
   }
 }

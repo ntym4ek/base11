@@ -12,24 +12,9 @@
 
   'use strict';
 
-  // patch CustomEvent to allow constructor creation (IE/Chrome)
-  if (typeof window.CustomEvent !== 'function') {
-
-    window.CustomEvent = function (event, params) {
-
-      params = params || { bubbles: false, cancelable: false, detail: undefined };
-
-      var evt = document.createEvent('CustomEvent');
-      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-      return evt;
-    };
-
-    window.CustomEvent.prototype = window.Event.prototype;
-  }
-
-  document.addEventListener('touchstart', handleTouchStart, false);
-  document.addEventListener('touchmove', handleTouchMove, false);
-  document.addEventListener('touchend', handleTouchEnd, false);
+  document.addEventListener('touchstart', handleTouchStart, { passive: true });
+  document.addEventListener('touchmove', handleTouchMove, { passive: true });
+  document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
   var xDown = null;
   var yDown = null;

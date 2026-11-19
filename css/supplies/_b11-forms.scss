@@ -204,7 +204,7 @@
 
     &:checked {
       background-color: var(--surface-card);
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23213A6E'/%3e%3c/svg%3e");
+      background-image: radial-gradient(circle, var(--brand-primary) 45%, transparent 50%);
       border-color: var(--brand-primary);
     }
 

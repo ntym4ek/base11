@@ -43,7 +43,6 @@
     button.setAttribute('aria-label', showText);
     button.setAttribute('title', showText);
     button.setAttribute('aria-pressed', 'false');
-    button.tabIndex = -1;
     button.innerHTML = ICON_SHOW + ICON_HIDE;
 
     wrapper.appendChild(button);

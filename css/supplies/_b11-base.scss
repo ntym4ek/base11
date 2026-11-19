@@ -34,9 +34,9 @@ html {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
 }
@@ -83,13 +83,6 @@ h4, .h4 { font-size: var(--font-size-h4); font-weight: 700; line-height: var(--l
 h5, .h5 { font-size: var(--font-size-h5); font-weight: 700; }
 h6, .h6 { font-size: var(--font-size-h6); font-weight: 700; }
 
-:root {
-  @media #{$smart-only} {
-    --font-size-h2: var(--font-size-h3);
-    --font-size-h3: var(--font-size-h4);
-  }
-}
-
 h1, h2, h3 { margin: 2rem 0 1rem; }
 h4, h5, h6 { margin: 1rem 0; }
 
@@ -97,8 +90,4 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
-}
-
-.visually-hidden {
-  inset: 0;
 }

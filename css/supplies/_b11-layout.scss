@@ -5,7 +5,7 @@
 @import "b11-grid-variables";
 
 .page-wrapper {
-  overflow: hidden;
+  overflow-x: clip;
 }
 
 .page {

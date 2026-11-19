@@ -54,15 +54,15 @@
   &__tooltiptext {
     background: var(--text-color);
     border-radius: var(--control-radius-sm);
-    box-shadow: var(--shadow-base);
+    box-shadow: var(--shadow-md);
     color: var(--surface-card);
     display: inline-block;
-    font-size: .75rem; text-align: center; white-space: nowrap;
+    font-size: var(--font-size-xs); text-align: center; white-space: nowrap;
     line-height: 1.2;
     min-width: 100px;
     opacity: 0; visibility: hidden;
     padding: .375rem .625rem;
-    position: absolute; z-index: var(--z-dropdown, 1000); bottom: 130%; left: 50%;
+    position: absolute; z-index: var(--z-dropdown); bottom: 130%; left: 50%;
     transform: translateX(-50%);
     transition: opacity var(--transition-fast), visibility var(--transition-fast);
 

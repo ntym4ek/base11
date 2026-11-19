@@ -11,8 +11,8 @@
   width: 100vw;
   height: 100dvh;
   background-color: var(--modal-backdrop-bg);
-  backdrop-filter: var(--modal-backdrop-blur);
-  -webkit-backdrop-filter: var(--modal-backdrop-blur);
+  backdrop-filter: blur(var(--modal-backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--modal-backdrop-blur));
   z-index: var(--z-modal-backdrop);
 }
 
