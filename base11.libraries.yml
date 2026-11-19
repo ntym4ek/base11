@@ -163,3 +163,25 @@ media-library:
       css/extensions/media-library.css: {}
   dependencies:
     - core/drupal.dialog
+
+# Каркас страниц для дашбордов и порталов отчётности (сайдбар + верхняя панель)
+layout-dashboard:
+  css:
+    layout:
+      css/extensions/layout-dashboard.css: {}
+  js:
+    js/extensions/layout-dashboard.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+# Нативные модальные окна и выезжающие боковые шторки (Drawer) на базе HTML <dialog>
+native-dialog:
+  css:
+    component:
+      css/extensions/native-dialog.css: {}
+  js:
+    js/extensions/native-dialog.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

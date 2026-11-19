@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * SDC-компонент «Бейдж» (base11:badge).
+ *
+ * Пример использования в Twig:
+ *   {% include 'base11:badge' with {
+ *     text: 'Оплачен',
+ *     variant: 'success',
+ *     size: 'sm',
+ *     pill: true,
+ *   } only %}
+ */
+#}
+{% set variant_val = variant|default('neutral') %}
+{% set size_val = size|default('md') %}
+{%
+  set classes = [
+    'b11-badge',
+    'b11-badge--' ~ variant_val,
+    size_val == 'sm' ? 'b11-badge--sm',
+    pill ? 'b11-badge--pill',
+  ]
+%}
+<span{{ attributes.addClass(classes) }}>{{ text }}</span>

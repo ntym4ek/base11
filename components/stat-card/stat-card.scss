@@ -1,0 +1,59 @@
+// ==========================================================================
+// SDC-компонент «Карточка метрики» (base11:stat-card)
+// ==========================================================================
+
+@use "../../css/supplies/b11-layers";
+
+@layer b11.components {
+  .b11-stat-card {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+    box-shadow: var(--card-shadow);
+    display: flex; flex-direction: column; gap: .75rem;
+    padding: 1.25rem 1.5rem;
+
+    &__top {
+      display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+    }
+
+    &__label {
+      color: var(--text-muted); font-size: var(--font-size-sm); font-weight: 500;
+    }
+
+    &__icon {
+      background-color: var(--surface-subtle); border-radius: var(--control-radius-sm);
+      color: var(--brand-primary);
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      width: 2.25rem; height: 2.25rem;
+    }
+
+    &__value {
+      color: var(--text-color); font-family: var(--font-family-heading); font-size: var(--font-size-h2); font-variant-numeric: tabular-nums; font-weight: 700; line-height: var(--line-height-sm);
+    }
+
+    &__meta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+    }
+
+    &__delta {
+      background-color: var(--surface-subtle); border-radius: var(--control-radius-sm);
+      color: var(--text-muted); font-size: var(--font-size-xs); font-variant-numeric: tabular-nums; font-weight: 600;
+      display: inline-flex; align-items: center;
+      padding: .125rem .5rem;
+
+      &--up {
+        background-color: var(--status-success-bg);
+        color: var(--status-success-text);
+      }
+
+      &--down {
+        background-color: var(--status-danger-bg);
+        color: var(--status-danger-text);
+      }
+    }
+
+    &__caption {
+      color: var(--text-muted); font-size: var(--font-size-xs);
+    }
+  }
+}

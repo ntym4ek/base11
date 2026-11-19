@@ -1,0 +1,38 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Карточка метрики (Stat Card)
+status: stable
+description: Карточка ключевого показателя (KPI) для дашбордов, отчётов и блоков статистики.
+props:
+  type: object
+  required:
+    - label
+    - value
+  properties:
+    label:
+      type: string
+      title: Название показателя
+    value:
+      type: string
+      title: Основное значение
+    delta:
+      type: string
+      title: Изменение (дельта)
+    trend:
+      type: string
+      title: Направление тренда
+      default: neutral
+      enum:
+        - up
+        - down
+        - neutral
+    caption:
+      type: string
+      title: Подпись периода / пояснение
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Атрибуты
+      description: Дополнительные HTML-атрибуты корневого элемента.
+slots:
+  icon:
+    title: Иконка
+    description: Опциональный слот для иконки показателя.

@@ -1,0 +1,88 @@
+// ==========================================================================
+// Базовые стили и модификаторы таблиц Base11 (дашборды, отчёты, каталоги)
+// ==========================================================================
+
+@layer b11.components {
+  // --- 1. Базовая таблица и системные таблицы ядра (Tabledrag / Tablesort / Tableselect) ---
+  table {
+    border-collapse: separate; border-spacing: 0;
+    width: 100%;
+
+    th {
+      background-color: var(--page-bg);
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-muted); font-family: var(--font-family-heading); font-size: var(--font-size-sm); font-weight: 700;
+      padding: var(--table-head-padding-y) var(--table-cell-padding-x);
+      text-align: left;
+    }
+
+    td {
+      border-bottom: 1px solid var(--border-color-light);
+      color: var(--text-color);
+      padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
+      vertical-align: middle;
+    }
+
+    th.is-numeric,
+    td.is-numeric {
+      font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap;
+    }
+  }
+
+  tr.drag {
+    background-color: color-mix(in srgb, var(--brand-warning) 12%, var(--surface-card));
+  }
+
+  tr.drag-previous {
+    background-color: color-mix(in srgb, var(--brand-warning) 6%, var(--surface-card));
+  }
+
+  body div.tabledrag-changed-warning { margin-bottom: .5rem; }
+
+  tr.selected td {
+    background-color: color-mix(in srgb, var(--brand-primary) 8%, var(--surface-card));
+  }
+
+  td.checkbox,
+  th.checkbox {
+    text-align: center;
+  }
+
+  th.is-active img { display: inline; }
+
+  td.is-active { background-color: var(--surface-hover); }
+
+  // --- 2. Адаптивный контейнер прокрутки широких таблиц -------------------
+  .table-responsive {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+
+    table { margin: 0; }
+    tbody tr:last-child td { border-bottom: 0; }
+  }
+
+  // --- 3. Модификаторы для отчётных таблиц и дашбордов --------------------
+  .table--striped tbody tr:nth-child(even) td {
+    background-color: var(--surface-subtle);
+  }
+
+  .table--hover tbody tr {
+    transition: background-color var(--transition-fast);
+
+    &:hover td { background-color: var(--surface-hover); }
+  }
+
+  .table--sticky-head thead th {
+    position: sticky; top: 0; z-index: 1;
+  }
+
+  .table--compact {
+    th,
+    td {
+      padding: .5rem .75rem;
+    }
+  }
+}

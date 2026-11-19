@@ -3,51 +3,7 @@
 // ==========================================================================
 
 @layer b11.components {
-  // --- 1. Интерактивные таблицы (Tabledrag, Tablesort, Tableselect) ------
-  table {
-    border-collapse: separate; border-spacing: 0;
-    width: 100%;
-
-    th {
-      background-color: var(--page-bg);
-      border-bottom: 1px solid var(--border-color);
-      color: var(--text-muted); font-family: var(--font-family-heading); font-size: var(--font-size-sm); font-weight: 700;
-      padding: .75rem 1rem;
-      text-align: left;
-    }
-
-    td {
-      border-bottom: 1px solid var(--border-color-light);
-      color: var(--text-color);
-      padding: .875rem 1rem;
-      vertical-align: middle;
-    }
-  }
-
-  tr.drag {
-    background-color: color-mix(in srgb, var(--brand-warning) 12%, var(--surface-card));
-  }
-
-  tr.drag-previous {
-    background-color: color-mix(in srgb, var(--brand-warning) 6%, var(--surface-card));
-  }
-
-  body div.tabledrag-changed-warning { margin-bottom: .5rem; }
-
-  tr.selected td {
-    background-color: color-mix(in srgb, var(--brand-primary) 8%, var(--surface-card));
-  }
-
-  td.checkbox,
-  th.checkbox {
-    text-align: center;
-  }
-
-  th.is-active img { display: inline; }
-
-  td.is-active { background-color: var(--surface-hover); }
-
-  // --- 2. Древовидные комментарии -----------------------------------------
+  // --- 1. Древовидные комментарии -----------------------------------------
   .indented {
     margin-left: 1.5rem;
 
@@ -56,7 +12,7 @@
     }
   }
 
-  // --- 3. Индикатор прогресса (Progress Bar) ------------------------------
+  // --- 2. Индикатор прогресса (Progress Bar) ------------------------------
   .progress__track {
     background-color: var(--page-bg);
     border: 1px solid var(--border-color); border-radius: var(--control-radius-lg);
@@ -71,7 +27,7 @@
     transition: width var(--transition-base);
   }
 
-  // --- 4. Индикатор сложности пароля (Password Strength & Confirm) --------
+  // --- 3. Индикатор сложности пароля (Password Strength & Confirm) --------
   .password-strength__meter {
     background-color: var(--border-color-light); border-radius: var(--control-radius-sm);
     height: 6px;
@@ -104,7 +60,7 @@
     ul { margin-bottom: 0; }
   }
 
-  // --- 5. Локальные кнопки действий (Action Links) -----------------------
+  // --- 4. Локальные кнопки действий (Action Links) -----------------------
   .action-links {
     display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
     list-style: none;
@@ -121,7 +77,7 @@
     }
   }
 
-  // --- 6. Выпадающие кнопки (Dropbutton) ----------------------------------
+  // --- 5. Выпадающие кнопки (Dropbutton) ----------------------------------
   .dropbutton-wrapper {
     display: inline-flex;
     margin: 0;
@@ -207,7 +163,7 @@
     }
   }
 
-  // --- 7. Пагинация (Pager) -----------------------------------------------
+  // --- 6. Пагинация (Pager) -----------------------------------------------
   .pager {
     margin: 1.5rem 0;
 
@@ -256,7 +212,7 @@
     }
   }
 
-  // --- 8. Инлайн-контейнеры (Container Inline) ----------------------------
+  // --- 7. Инлайн-контейнеры (Container Inline) ----------------------------
   .container-inline {
     display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
 
@@ -270,7 +226,7 @@
     }
   }
 
-  // --- 9. Списки элементов (Item List) ------------------------------------
+  // --- 8. Списки элементов (Item List) ------------------------------------
   .item-list {
     ul,
     ol {
@@ -278,7 +234,7 @@
     }
   }
 
-  // --- 10. Локальные вкладки Drupal (Primary / Secondary Tabs) ------------
+  // --- 9. Локальные вкладки Drupal (Primary / Secondary Tabs) -------------
   .tabs.primary {
     border-bottom: 1px solid var(--border-color);
     display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: flex-end; gap: .25rem;

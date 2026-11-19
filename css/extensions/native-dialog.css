@@ -1,0 +1,134 @@
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.components {
+  dialog.b11-dialog {
+    background-color: var(--modal-bg);
+    border: 0;
+    border-radius: var(--modal-radius);
+    box-shadow: var(--modal-shadow);
+    box-sizing: border-box;
+    color: var(--text-color);
+    margin: auto;
+    max-height: calc(100dvh - 2rem);
+    max-width: calc(100vw - 2rem);
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    transform: translateY(0.75rem) scale(0.98);
+    transition: opacity var(--transition-base), transform var(--transition-base), overlay var(--transition-base) allow-discrete, display var(--transition-base) allow-discrete;
+    width: min(var(--modal-default-width), 100vw - 2rem);
+  }
+  dialog.b11-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  @starting-style {
+    dialog.b11-dialog[open] {
+      opacity: 0;
+      transform: translateY(0.75rem) scale(0.98);
+    }
+  }
+  dialog.b11-dialog[open]::backdrop {
+    opacity: 1;
+  }
+  @starting-style {
+    dialog.b11-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+  dialog.b11-dialog::backdrop {
+    backdrop-filter: blur(var(--modal-backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--modal-backdrop-blur));
+    background-color: var(--modal-backdrop-bg);
+    opacity: 0;
+    transition: opacity var(--transition-base), overlay var(--transition-base) allow-discrete, display var(--transition-base) allow-discrete;
+  }
+  dialog.b11-dialog--narrow {
+    width: min(var(--modal-max-width-narrow), 100vw - 2rem);
+  }
+  dialog.b11-dialog--wide {
+    width: min(var(--modal-max-width-wide), 100vw - 2rem);
+  }
+  dialog.b11-dialog--drawer, dialog.b11-dialog--drawer-left {
+    border-radius: 0;
+    height: 100dvh;
+    max-height: 100dvh;
+    max-width: 100vw;
+    margin: 0 0 0 auto;
+    transform: translateX(100%);
+    width: min(var(--modal-default-width), 100vw);
+  }
+  dialog.b11-dialog--drawer[open], dialog.b11-dialog--drawer-left[open] {
+    transform: translateX(0);
+  }
+  @starting-style {
+    dialog.b11-dialog--drawer[open], dialog.b11-dialog--drawer-left[open] {
+      transform: translateX(100%);
+    }
+  }
+  dialog.b11-dialog--drawer-left {
+    margin: 0 auto 0 0;
+    transform: translateX(-100%);
+  }
+  dialog.b11-dialog--drawer-left[open] {
+    transform: translateX(0);
+  }
+  @starting-style {
+    dialog.b11-dialog--drawer-left[open] {
+      transform: translateX(-100%);
+    }
+  }
+  dialog.b11-dialog__header {
+    border-bottom: 1px solid var(--border-color-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+  }
+  dialog.b11-dialog__title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    line-height: var(--line-height-sm);
+    margin: 0;
+  }
+  dialog.b11-dialog__close {
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    color: var(--modal-close-color);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  dialog.b11-dialog__close:hover {
+    background-color: var(--surface-hover);
+    color: var(--modal-close-hover-color);
+  }
+  dialog.b11-dialog__body {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  dialog.b11-dialog__footer {
+    border-top: 1px solid var(--border-color-light);
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+  }
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22native-dialog.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EACE;IACE;IACA;IAAW;IACX;IAAiC;IACjC;IACA;IACA;IAAiC;IACjC;IAAY;IAAkB;IAC9B;IACA;IACA;;EAEA;IACE;IAAe;IACf;IACA;;EAEA;IALF;MAMI;MACA;;;EAGF;IACE;;EAEA;IAHF;MAGoB;;;EAItB;IACE;IACA;IACA;IACA;IACA;;EAIF;IAAY;;EACZ;IAAY;;EAGZ;IAEE;IACA;IAAgB;IAAoB;IACpC;IACA;IACA;;EAEA;IACE;;EAEA;IAHF;MAGoB;;;EAItB;IACE;IACA;;EAEA;IACE;;EAEA;IAHF;MAGoB;;;EAKtB;IACE;IACA;IAAe;IAAqB;IAAgC;IAAgB;IACpF;;EAGF;IACE;IAAyC;IAAgC;IAAkB;IAC3F;;EAGF;IACE;IACA;IAAW;IACX;IAAiC;IACjC;IAAsB;IAAqB;IAAyB;IACpE;IACA;IACA;IAAgB;;EAEhB;IACE;IACA;;EAIJ;IACE;IACA;IACA;IACA;;EAGF;IACE;IACA;IAAe;IAAgB;IAAiB;IAA2B;IAC3E%22,%22file%22:%22native-dialog.css%22%7D */

@@ -1,0 +1,48 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Пустое состояние (Empty State)
+status: stable
+description: Заглушка пустого состояния (пустая корзина, пустые результаты поиска/фильтра, страницы 403/404).
+props:
+  type: object
+  required:
+    - title
+  properties:
+    title:
+      type: string
+      title: Заголовок состояния
+    description:
+      type: string
+      title: Поясняющий текст
+    heading_level:
+      type: string
+      title: Уровень HTML-заголовка
+      default: h2
+      enum:
+        - h1
+        - h2
+        - h3
+    variant:
+      type: string
+      title: Вариант оформления
+      default: card
+      enum:
+        - card
+        - plain
+    full_height:
+      type: boolean
+      title: Центрирование на странице (min-height 50vh)
+      default: false
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Атрибуты
+      description: Дополнительные HTML-атрибуты корневой обёртки.
+slots:
+  icon:
+    title: Иконка
+    description: Круглая иконка состояния.
+  badge:
+    title: Бейдж
+    description: Опциональный статус или код ошибки над заголовком.
+  actions:
+    title: Кнопки действий
+    description: Кнопки перехода или сброса фильтров.

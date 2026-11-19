@@ -1,0 +1,38 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Бейдж (Badge)
+status: stable
+description: Универсальный статусный бейдж / метка на цветовых токенах темы Base11.
+props:
+  type: object
+  required:
+    - text
+  properties:
+    text:
+      type: string
+      title: Текст бейджа
+    variant:
+      type: string
+      title: Вариант цвета
+      default: neutral
+      enum:
+        - neutral
+        - primary
+        - info
+        - success
+        - warning
+        - danger
+    size:
+      type: string
+      title: Размер
+      default: md
+      enum:
+        - sm
+        - md
+    pill:
+      type: boolean
+      title: Скругление капсулой
+      default: false
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Атрибуты
+      description: Дополнительные HTML-атрибуты корневого элемента.

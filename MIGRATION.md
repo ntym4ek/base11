@@ -494,3 +494,89 @@
   - [x] `ff.local`
   - [x] `jp.local`
   - [x] `lubr.local`
+
+---
+
+## Этап 4 — Современные возможности Drupal 11.4+ (дашборды, SDC, Icon API, релиз 2.0.0)
+
+### [CHG-40] Примитивы для таблиц отчётности и компактный режим `[data-density="compact"]`
+- **Этап:** 4 | **Тип:** ADDED
+- **Было:** базовое оформление таблиц находилось в `_b11-drupal-core.scss` без модификаторов адаптивности и плотности.
+- **Стало:**
+  - выделен модуль `css/supplies/_b11-tables.scss` (`@layer b11.components`) с `.table-responsive`, `.table--striped`, `.table--hover`, `.table--sticky-head`, `.table--compact`, `.is-numeric` и токенами `--table-cell-padding-x`, `--table-cell-padding-y`, `--table-head-padding-y`;
+  - в `_b11-tokens.scss` добавлен режим `[data-density="compact"]`;
+  - в `_b11-helper.scss` добавлены `.font-mono` и `.tabular-nums`.
+- **Как найти в подтеме (regex):** `\.table-responsive|data-density`
+- **Что сделать в `project`:** перекомпилировать SCSS; при необходимости использовать базовые классы и токены вместо локальных правил таблиц.
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
+
+### [CHG-41] Опциональный каркас дашборда `base11/layout-dashboard`
+- **Этап:** 4 | **Тип:** ADDED
+- **Было:** готового каркаса «сайдбар + верхняя панель фильтров + рабочая область» не было.
+- **Стало:** добавлена библиотека `base11/layout-dashboard` (`css/extensions/layout-dashboard.scss`, `js/extensions/layout-dashboard.js`) с `.b11-dashboard` и переменными `--dash-*`.
+- **Как найти в подтеме (regex):** `base11/layout-dashboard`
+- **Что сделать в `project`:** подключать в `project.info.yml` на порталах отчётности и дашбордах.
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
+
+### [CHG-42] Авто-сетка `.grid-auto`, `.cq-container` и библиотека `base11/native-dialog`
+- **Этап:** 4 | **Тип:** ADDED
+- **Было:** сетка ограничивалась 12-колоночной flexbox-моделью и jQuery UI диалогами.
+- **Стало:** в `_b11-grid.scss` добавлены `.grid-auto` (`.grid-auto--sm`, `.grid-auto--lg`, `--grid-min`) и `.cq-container`; добавлена опциональная библиотека `base11/native-dialog` для нативного `<dialog>` и боковых шторок (`--drawer`, `--drawer-left`) на токенах `--modal-*`.
+- **Как найти в подтеме (regex):** `grid-auto|cq-container|base11/native-dialog`
+- **Что сделать в `project`:** перекомпилировать SCSS; подключать `base11/native-dialog` там, где нужны лёгкие клиентские диалоги или выдвижные шторки.
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
+
+### [CHG-43] Базовые SDC-компоненты (`base11:badge`, `stat-card`, `card`, `empty-state`)
+- **Этап:** 4 | **Тип:** ADDED
+- **Было:** повторно используемые паттерны карточек, бейджей и пустых состояний дублировались в шаблонах и SCSS подтем.
+- **Стало:** созданы 4 SDC-компонента в `components/{badge,stat-card,card,empty-state}/` с JSON Schema и стилями внутри `@layer b11.components` (автоподгрузка CSS только при рендере).
+- **Как найти в подтеме (regex):** `cart-empty-page|page-error`
+- **Что сделать в `project`:** перевести дублирующие заглушки (`commerce-cart-empty-page`, `page--403`, `page--404` в `ff.local`) на `base11:empty-state` и очистить лишние стили в `_pages.scss` / `_commerce.scss`.
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
+
+### [CHG-44] Drupal 11 Icon API (`base11.icons.yml`) и автоподмена иконок подтемой
+- **Этап:** 4 | **Тип:** CHANGED / ADDED
+- **Было:** в `images/icons/` лежали устаревшие PNG/SVG-файлы Drupal 7/8, а UI-иконки копировались инлайново в шаблоны подтем.
+- **Стало:**
+  - `images/icons/` очищена от PNG и заполнена набором из 30 чистых UI SVG-иконок (`24x24`, `currentColor`), зарегистрирован пак `base11` в `base11.icons.yml`;
+  - в `Base11Hooks::elementInfoAlter()` + `preRenderIconOverride()` добавлено автоматическое переопределение одноимённых иконок `base11` на иконки из `<theme>.icons.yml` активной подтемы;
+  - кнопка `#back-to-top` в `base11/templates/layout/page.html.twig` переведена на `{{ icon('base11', 'chevrons-up', ...) }}`.
+- **Как найти в подтеме (regex):** `images/icons/|back-to-top__icon|<svg`
+- **Что сделать в `project`:**
+  - перевести UI-иконки шаблонов (`#back-to-top`, корзина, аккордеон, copy-link, статусы и т.д.) на `{{ icon('base11', ...) }}`;
+  - при наличии кастомного набора иконок (`jp.local`) объявить `project.icons.yml`, проверить ссылки из CSS (например `css/_form.scss` на `base11/images/icons/error.svg` через маску).
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
+
+### [CHG-45] Актуализация `starterkits/project/` и удаление лишнего `StarterKit.php`
+- **Этап:** 4 | **Тип:** CHANGED / REMOVED
+- **Было:** в стартерките оставались `README.txt` (с упоминанием Base9), пустой `_variables.scss`, процедурный `project.theme` и устаревший `.info.yml`; в `base11/src/` лежал неиспользуемый `StarterKit.php`.
+- **Стало:** удалены `src/StarterKit.php`, `README.txt`, `_variables.scss`, `project.theme`; стартеркит обновлён на ООП `src/Hook/ProjectHooks.php`, `css/ckeditor5.scss`, `@layer b11.base` в `_base.scss`, актуальный `_tokens.scss`, `README.md` и `project.info.yml.starterkit`; добавлен полный справочник `base11/README.md`.
+- **Как найти в подтеме (regex):** `Base9|_variables\.scss`
+- **Что сделать в `project`:** использовать обновлённый стартеркит для новых проектов; в существующих темах правок не требуется.
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
+
+### [CHG-46] Релиз `base11` версии `2.0.0`
+- **Этап:** 4 | **Тип:** RELEASE
+- **Стало:** `version: 2.0.0` в `base11.info.yml`.
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`

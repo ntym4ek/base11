@@ -1,30 +1,40 @@
-// === Project Design Tokens ===
+// ==========================================================================
+// Дизайн-токены подтемы Project (переопределяют значения из base11)
+// ==========================================================================
+// Раскомментируйте нужные переменные. Полный список токенов см. в
+// themes/base11/css/supplies/_b11-tokens.scss и _media-library.scss.
+
 :root {
-  // Шрифты (раскомментируйте для смены шрифта base11):
+  // --- 1. Типографика -----------------------------------------------------
   // --font-family-base: 'YourFont', sans-serif;
   // --font-family-heading: var(--font-family-base);
-  // --font-size-sm: 0.889rem;
+  // --font-size-xs: .75rem;
+  // --font-size-sm: .889rem;
   // --font-size-lg: 1.222rem;
 
-  // Фирменные цвета:
+  // --- 2. Фирменные цвета и поверхности -----------------------------------
   // --brand-primary: #213a6e;
   // --brand-danger: #cc1335;
+  // --page-bg: #f8f7f4;
+  // --surface-card: #ffffff;
 
-  // Контролы (отступы, размеры и насыщенность шрифтов кнопок и полей ввода):
-  // --btn-padding-x-md: 2rem;
-  // --input-padding-x-md: 0.75rem;
-  // --btn-font-size-md: 1.25rem;       // 20px
-  // --input-font-size-md: 1rem;        // 16px
+  // --- 3. Контролы (кнопки и поля ввода) ----------------------------------
+  // --btn-font-size-md: 1.125rem;
   // --btn-font-weight: 600;
-  // --input-font-weight: 400;
-  // --btn-wide-ratio: 1.5;             // Множитель горизонтального отступа для button--wide
-
-  // Рамки полей ввода (обычная и в фокусе):
+  // --btn-padding-x-md: 2rem;
+  // --btn-wide-ratio: 1.5;
   // --input-border-color: #cccccc;
   // --input-border-focus: var(--brand-primary);
+  // --input-padding-x-md: .75rem;
 
-  // Состояния кнопок (Drupal 11+):
-  // --btn-bg-hover: ...;
-  // --btn-bg-active: ...;
-  // --btn-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+  // --- 4. Оформление Drupal Media Library (base11/media-library) ----------
+  // --ml-card-radius: var(--control-radius-md);
+  // --ml-heading-transform: uppercase;
+  // --ml-heading-weight: 700;
 }
+
+// Для дашбордов и плотных интерфейсов добавьте атрибут data-density="compact"
+// на <body> или контейнер — при необходимости переопределите локально:
+// [data-density="compact"] {
+//   --table-cell-padding-y: .4rem;
+// }

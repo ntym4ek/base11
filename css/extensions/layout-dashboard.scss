@@ -1,0 +1,94 @@
+// ==========================================================================
+// Каркас дашборда и отчётных порталов Base11 (base11/layout-dashboard)
+// ==========================================================================
+
+@use "../supplies/b11-layers";
+@use "../supplies/b11-grid-variables" as *;
+
+@layer b11.layout {
+  .b11-dashboard {
+    --dash-gap: 1.5rem;
+    --dash-sidebar-bg: var(--surface-card);
+    --dash-sidebar-width: 260px;
+    --dash-topbar-bg: var(--surface-card);
+    --dash-topbar-height: 3.75rem;
+
+    display: grid; grid-template-columns: minmax(0, 1fr);
+    min-height: 100dvh;
+    position: relative;
+
+    // --- Боковая панель навигации (на мобильных — выдвижная шторка) -------
+    &__sidebar {
+      background-color: var(--dash-sidebar-bg);
+      border-right: 1px solid var(--border-color-light);
+      box-sizing: border-box;
+      display: flex; flex-direction: column;
+      height: 100dvh; width: var(--dash-sidebar-width); max-width: 85vw;
+      left: 0; position: fixed; top: 0; z-index: var(--z-modal);
+      overflow-y: auto;
+      padding: 1.25rem 1rem;
+      transform: translateX(-100%);
+      transition: transform var(--transition-base);
+    }
+
+    &.is-sidebar-open &__sidebar {
+      box-shadow: var(--shadow-lg);
+      transform: translateX(0);
+    }
+
+    // --- Подложка затемнения для мобильного режима ------------------------
+    &__backdrop {
+      background-color: var(--modal-backdrop-bg);
+      inset: 0; position: fixed; z-index: var(--z-modal-backdrop);
+      opacity: 0; pointer-events: none; visibility: hidden;
+      transition: opacity var(--transition-base), visibility var(--transition-base);
+    }
+
+    &.is-sidebar-open &__backdrop {
+      opacity: 1; pointer-events: auto; visibility: visible;
+    }
+
+    // --- Контейнер рабочей области (верхняя панель + контент) --------------
+    &__workspace {
+      display: flex; flex-direction: column;
+      min-width: 0;
+    }
+
+    // --- Липкая верхняя панель заголовка и фильтров -----------------------
+    &__topbar {
+      background-color: var(--dash-topbar-bg);
+      border-bottom: 1px solid var(--border-color-light);
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      min-height: var(--dash-topbar-height);
+      padding: .75rem var(--dash-gap);
+      position: sticky; top: 0; z-index: var(--z-sticky);
+    }
+
+    &__toggle {
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    // --- Основная контентная область дашборда -----------------------------
+    &__main {
+      flex-grow: 1;
+      min-width: 0;
+      padding: var(--dash-gap);
+    }
+
+    // --- Единая точка адаптивности: на ноутбуках сайдбар закреплён --------
+    @media #{$laptop} {
+      grid-template-columns: var(--dash-sidebar-width) minmax(0, 1fr);
+
+      &__sidebar {
+        height: 100dvh; max-width: none; width: 100%;
+        position: sticky; top: 0; z-index: auto;
+        transform: none;
+      }
+
+      &__backdrop,
+      &__toggle {
+        display: none;
+      }
+    }
+  }
+}

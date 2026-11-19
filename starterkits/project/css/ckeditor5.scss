@@ -1,0 +1,15 @@
+// ==========================================================================
+// Стили содержимого CKEditor 5 подтемы Project
+// ==========================================================================
+// Подключает типографику и выравнивание медиа для редактора из base11.
+// Скомпилируйте в css/ckeditor5.css и включите ckeditor5-stylesheets в .info.yml.
+
+@use "../../base11/css/supplies/b11-ckeditor5";
+
+.ck.ck-content,
+.ck-content {
+  // Переопределите акцентный цвет и шрифты проекта внутри редактора:
+  // --brand-primary: #213a6e;
+  // --font-family-base: 'YourFont', sans-serif;
+  // --font-family-heading: var(--font-family-base);
+}

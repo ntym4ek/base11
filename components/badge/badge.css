@@ -1,0 +1,51 @@
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.components {
+  .b11-badge {
+    background-color: var(--surface-subtle);
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--control-radius-sm);
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    line-height: 1.25;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    white-space: nowrap;
+  }
+  .b11-badge--sm {
+    font-size: var(--font-size-xs);
+    padding: 0.125rem 0.5rem;
+  }
+  .b11-badge--pill {
+    border-radius: 999px;
+  }
+  .b11-badge--primary {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: var(--on-primary);
+  }
+  .b11-badge--info {
+    background-color: var(--status-info-bg);
+    border-color: var(--status-info-border);
+    color: var(--status-info-text);
+  }
+  .b11-badge--success {
+    background-color: var(--status-success-bg);
+    border-color: var(--status-success-border);
+    color: var(--status-success-text);
+  }
+  .b11-badge--warning {
+    background-color: var(--status-warning-bg);
+    border-color: var(--status-warning-border);
+    color: var(--status-warning-text);
+  }
+  .b11-badge--danger {
+    background-color: var(--status-danger-bg);
+    border-color: var(--status-danger-border);
+    color: var(--status-danger-text);
+  }
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../../css/supplies/_b11-layers.scss%22,%22badge.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EACE;IACE;IACA;IAA6C;IAC7C;IAA0B;IAAgC;IAAkB;IAC5E;IAAsB;IAAqB;IAC3C;IACA;;EAEA;IACE;IACA;;EAGF;IAAU;;EAEV;IACE;IAAwC;IACxC;;EAGF;IACE;IAAyC;IACzC;;EAGF;IACE;IAA4C;IAC5C;;EAGF;IACE;IAA4C;IAC5C;;EAGF;IACE;IAA2C;IAC3C%22,%22file%22:%22badge.css%22%7D */

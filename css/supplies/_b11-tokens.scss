@@ -131,6 +131,11 @@
     --label-weight: 500;
     --label-gap-y: .375rem;
 
+    // Таблицы (отступы ячеек и заголовков)
+    --table-cell-padding-x: 1rem;
+    --table-cell-padding-y: .875rem;
+    --table-head-padding-y: .75rem;
+
     // --- 4. Шкала теней (Elevation) ---------------------------------------
     --shadow-base-color: #000000;
     --shadow-sm: 0 2px 5px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 5%, transparent));
@@ -293,5 +298,29 @@
       --grid-gap-x: 2rem;
       --page-gap-x: 1rem;
     }
+  }
+
+  // --- 11. Компактный режим плотности (дашборды, отчёты, плотные формы) ---
+  [data-density="compact"] {
+    --block-gap-y: 1.25rem;
+    --btn-padding-x-lg: 1.5rem;
+    --btn-padding-x-md: 1.25rem;
+    --btn-padding-x-sm: .875rem;
+    --btn-padding-y-lg: .5rem;
+    --btn-padding-y-md: .375rem;
+    --btn-padding-y-sm: .25rem;
+    --control-height-lg: 2.5rem;
+    --control-height-md: 2.25rem;
+    --control-height-sm: 1.875rem;
+    --grid-gap-x: .75rem;
+    --input-padding-x-lg: .75rem;
+    --input-padding-x-md: .625rem;
+    --input-padding-x-sm: .5rem;
+    --input-padding-y-lg: .5rem;
+    --input-padding-y-md: .375rem;
+    --input-padding-y-sm: .25rem;
+    --table-cell-padding-x: .75rem;
+    --table-cell-padding-y: .5rem;
+    --table-head-padding-y: .5rem;
   }
 }

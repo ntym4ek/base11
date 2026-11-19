@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * SDC-компонент «Пустое состояние» (base11:empty-state).
+ *
+ * Пример использования в Twig:
+ *   {% embed 'base11:empty-state' with {
+ *     title: 'Корзина пока пуста',
+ *     description: 'Перейдите в каталог, чтобы выбрать нужные товары.',
+ *     heading_level: 'h1',
+ *     full_height: true,
+ *   } only %}
+ *     {% block icon %}{{ icon('base11', 'cart', { size: 32 }) }}{% endblock %}
+ *     {% block actions %}
+ *       <a href="{{ path('<front>') }}" class="button button--primary">{{ 'В каталог'|t }}</a>
+ *     {% endblock %}
+ *   {% endembed %}
+ */
+#}
+{% set tag = heading_level|default('h2') %}
+{% set variant_val = variant|default('card') %}
+{% set icon_slot %}{% block icon %}{% endblock %}{% endset %}
+{% set badge_slot %}{% block badge %}{% endblock %}{% endset %}
+{% set actions_slot %}{% block actions %}{% endblock %}{% endset %}
+
+{%
+  set classes = [
+    'b11-empty-state',
+    'b11-empty-state--' ~ variant_val,
+    full_height ? 'b11-empty-state--full',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+  <div class="b11-empty-state__panel">
+    {% if icon_slot|trim is not empty %}
+      <div class="b11-empty-state__icon" aria-hidden="true">{{ icon_slot }}</div>
+    {% endif %}
+
+    {% if badge_slot|trim is not empty %}
+      <div class="b11-empty-state__badge">{{ badge_slot }}</div>
+    {% endif %}
+
+    <{{ tag }} class="b11-empty-state__title">{{ title }}</{{ tag }}>
+
+    {% if description %}
+      <p class="b11-empty-state__description">{{ description }}</p>
+    {% endif %}
+
+    {% if actions_slot|trim is not empty %}
+      <div class="b11-empty-state__actions">{{ actions_slot }}</div>
+    {% endif %}
+  </div>
+</div>

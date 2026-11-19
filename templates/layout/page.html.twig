@@ -123,10 +123,7 @@
 
     {# Плавающая кнопка прокрутки страницы наверх (управляется библиотекой base11/back-to-top) #}
     <button type="button" id="back-to-top" class="back-to-top" data-drupal-selector="back-to-top" aria-label="{{ 'Back to top'|t }}">
-      <svg viewBox="0 0 24 24" class="back-to-top__icon" aria-hidden="true">
-        <path d="M6.5 12.5L12 7.5L17.5 12.5" />
-        <path d="M6.5 17.5L12 12.5L17.5 17.5" />
-      </svg>
+      {{ icon('base11', 'chevrons-up', { size: 24, class: 'back-to-top__icon' }) }}
     </button>
 
   </div>

@@ -7,6 +7,10 @@
 @layer b11.utilities {
   .full-height { height: 100%; }
 
+  .font-mono { font-family: var(--font-family-mono); }
+
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+
   .text-center { text-align: center; }
 
   .screen-wide { @include screen-wide(); }

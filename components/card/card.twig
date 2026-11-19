@@ -1,0 +1,49 @@
+{#
+/**
+ * @file
+ * SDC-компонент «Карточка» (base11:card).
+ *
+ * Пример использования в Twig:
+ *   {% embed 'base11:card' with { variant: 'default', interactive: true, responsive: true } only %}
+ *     {% block media %}{{ content.field_image }}{% endblock %}
+ *     {% block header %}<h3>{{ label }}</h3>{% endblock %}
+ *     {% block body %}{{ content.body }}{% endblock %}
+ *   {% endembed %}
+ */
+#}
+{% set variant_val = variant|default('default') %}
+{% set media_slot %}{% block media %}{% endblock %}{% endset %}
+{% set header_slot %}{% block header %}{% endblock %}{% endset %}
+{% set body_slot %}{% block body %}{% endblock %}{% endset %}
+{% set footer_slot %}{% block footer %}{% endblock %}{% endset %}
+
+{%
+  set classes = [
+    'b11-card',
+    'b11-card--' ~ variant_val,
+    interactive ? 'b11-card--interactive',
+    responsive ? 'b11-card--responsive',
+  ]
+%}
+
+{% if responsive %}<div class="b11-card-cq">{% endif %}
+<article{{ attributes.addClass(classes) }}>
+  {% if media_slot|trim is not empty %}
+    <div class="b11-card__media">{{ media_slot }}</div>
+  {% endif %}
+
+  <div class="b11-card__content">
+    {% if header_slot|trim is not empty %}
+      <div class="b11-card__header">{{ header_slot }}</div>
+    {% endif %}
+
+    {% if body_slot|trim is not empty %}
+      <div class="b11-card__body">{{ body_slot }}</div>
+    {% endif %}
+
+    {% if footer_slot|trim is not empty %}
+      <div class="b11-card__footer">{{ footer_slot }}</div>
+    {% endif %}
+  </div>
+</article>
+{% if responsive %}</div>{% endif %}

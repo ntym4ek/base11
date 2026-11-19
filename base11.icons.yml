@@ -1,0 +1,34 @@
+# Базовый набор UI-иконок темы Base11 (Drupal 11 Icon API)
+# Вызов в Twig: {{ icon('base11', 'cart', { size: 20, class: 'header-cart__svg' }) }}
+# Подтемы могут автоматически переопределять одноимённые иконки через свой <theme>.icons.yml
+# (механизм реализован в Base11Hooks::elementInfoAlter() + preRenderIconOverride()).
+base11:
+  enabled: true
+  label: "Иконки Base11"
+  description: "Базовый набор векторных UI-иконок темы Base11."
+  version: "2.0.0"
+  extractor: svg
+  config:
+    sources:
+      - images/icons/*.svg
+  settings:
+    size:
+      title: "Размер (px)"
+      description: "Ширина и высота иконки в пикселях."
+      type: "integer"
+      default: 20
+    class:
+      title: "CSS-класс"
+      description: "Дополнительный CSS-класс элемента <svg>."
+      type: "string"
+      default: ""
+  template: >-
+    {% set svg_attrs = attributes
+      .addClass('b11-icon', 'b11-icon--' ~ icon_id|clean_class)
+      .setAttribute('viewBox', attributes.viewBox|default('0 0 24 24'))
+      .setAttribute('width', size|default(20))
+      .setAttribute('height', size|default(20))
+      .setAttribute('aria-hidden', 'true')
+    %}
+    {% if class %}{% set svg_attrs = svg_attrs.addClass(class) %}{% endif %}
+    <svg{{ svg_attrs }}>{{ content }}</svg>

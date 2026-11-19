@@ -1,0 +1,43 @@
+{#
+/**
+ * @file
+ * SDC-компонент «Карточка метрики» (base11:stat-card).
+ *
+ * Пример использования в Twig:
+ *   {% embed 'base11:stat-card' with {
+ *     label: 'Заказы за месяц',
+ *     value: '1 284',
+ *     delta: '+14.2%',
+ *     trend: 'up',
+ *     caption: 'к прошлому месяцу',
+ *   } only %}
+ *     {% block icon %}
+ *       {{ icon('base11', 'cart', { size: 20 }) }}
+ *     {% endblock %}
+ *   {% endembed %}
+ */
+#}
+{% set trend_val = trend|default('neutral') %}
+{% set icon_slot %}{% block icon %}{% endblock %}{% endset %}
+
+<div{{ attributes.addClass('b11-stat-card') }}>
+  <div class="b11-stat-card__top">
+    <span class="b11-stat-card__label">{{ label }}</span>
+    {% if icon_slot|trim is not empty %}
+      <span class="b11-stat-card__icon" aria-hidden="true">{{ icon_slot }}</span>
+    {% endif %}
+  </div>
+
+  <div class="b11-stat-card__value">{{ value }}</div>
+
+  {% if delta or caption %}
+    <div class="b11-stat-card__meta">
+      {% if delta %}
+        <span class="b11-stat-card__delta b11-stat-card__delta--{{ trend_val }}">{{ delta }}</span>
+      {% endif %}
+      {% if caption %}
+        <span class="b11-stat-card__caption">{{ caption }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

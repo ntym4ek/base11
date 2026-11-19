@@ -8,13 +8,21 @@ use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * ООП-реализации хуков базовой темы Base11 (стандарт Drupal 11.4+).
  */
-class Base11Hooks {
+class Base11Hooks implements TrustedCallbackInterface {
   use StringTranslationTrait;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks(): array {
+    return ['preRenderIconOverride'];
+  }
 
   /**
    * Внедрение зависимостей темы через автовайринг контейнера.
@@ -98,6 +106,42 @@ class Base11Hooks {
     if (isset($variables['attributes']['type']) && $variables['attributes']['type'] === 'password') {
       $variables['#attached']['library'][] = 'base11/password-toggle';
     }
+  }
+
+  /**
+   * Реализует hook_element_info_alter() для рендер-элемента icon.
+   *
+   * Встраивает колбэк автоподмены иконок перед рендером ядра, позволяя активной
+   * дочерней теме переопределять одноимённые иконки base11 собственным паком.
+   */
+  #[Hook('element_info_alter')]
+  public function elementInfoAlter(array &$types): void {
+    if (isset($types['icon']['#pre_render']) && is_array($types['icon']['#pre_render'])) {
+      array_unshift($types['icon']['#pre_render'], [self::class, 'preRenderIconOverride']);
+    }
+  }
+
+  /**
+   * Автоматически переключает #pack_id с base11 на активную подтему,
+   * если в её пачке иконок (<theme>.icons.yml) объявлена иконка с тем же ID.
+   */
+  public static function preRenderIconOverride(array $element): array {
+    if (($element['#pack_id'] ?? '') !== 'base11' || empty($element['#icon_id'])) {
+      return $element;
+    }
+
+    $active_theme = \Drupal::theme()->getActiveTheme()->getName();
+    if ($active_theme === 'base11') {
+      return $element;
+    }
+
+    $definitions = \Drupal::service('plugin.manager.icon_pack')->getDefinitions();
+    $override_id = $active_theme . ':' . $element['#icon_id'];
+    if (isset($definitions[$active_theme]['icons'][$override_id])) {
+      $element['#pack_id'] = $active_theme;
+    }
+
+    return $element;
   }
 
   /**

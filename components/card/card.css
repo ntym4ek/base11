@@ -1,0 +1,79 @@
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.components {
+  .b11-card-cq {
+    container-type: inline-size;
+  }
+  .b11-card {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--control-radius-md);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  }
+  .b11-card--bordered {
+    box-shadow: none;
+  }
+  .b11-card--flat {
+    background-color: var(--surface-subtle);
+    border-color: transparent;
+    box-shadow: none;
+  }
+  .b11-card--interactive:hover {
+    border-color: var(--border-color);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+  .b11-card__media {
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .b11-card__media img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  .b11-card__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 1.25rem 1.5rem;
+  }
+  .b11-card__header > :first-child {
+    margin-top: 0;
+  }
+  .b11-card__header > :last-child {
+    margin-bottom: 0;
+  }
+  .b11-card__body {
+    color: var(--text-color);
+    flex-grow: 1;
+  }
+  .b11-card__body > :first-child {
+    margin-top: 0;
+  }
+  .b11-card__body > :last-child {
+    margin-bottom: 0;
+  }
+  .b11-card__footer {
+    border-top: 1px solid var(--border-color-light);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 0.875rem;
+  }
+  @container (min-width: 30rem) {
+    .b11-card.b11-card--responsive {
+      display: grid;
+      grid-template-columns: minmax(12rem, 36%) minmax(0, 1fr);
+    }
+  }
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../../css/supplies/_b11-layers.scss%22,%22card.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EAEE;IAAe;;EAEf;IACE;IACA;IAA6C;IAC7C;IACA;IAAe;IACf;IACA;;EAEA;IAAc;;EAEd;IACE;IACA;IACA;;EAGF;IACE;IACA;IACA;;EAGF;IACE;IACA;;EAEA;IACE;IAAc;IACd;;EAIJ;IACE;IAAe;IAAwB;IAAc;IACrD;IACA;;EAGF;IAA2B;;EAC3B;IAA2B;;EAE3B;IACE;IACA;;EAEA;IAAiB;;EACjB;IAAiB;;EAGnB;IACE;IACA;IAAe;IAAiB;IAAqB;IACrD;IAAkB;;EAIpB;IACE;MACE;MAAe%22,%22file%22:%22card.css%22%7D */

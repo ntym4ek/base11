@@ -101,4 +101,15 @@
     .show-dt-only { display: block !important; }
     .hide-dt-only { display: none !important; }
   }
+
+  // --- Современные примитивы CSS Grid и Container Queries -----------------
+  .grid-auto {
+    display: grid; gap: var(--grid-gap-x);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min, 17rem), 100%), 1fr));
+
+    &--sm { --grid-min: 13rem; }
+    &--lg { --grid-min: 22rem; }
+  }
+
+  .cq-container { container-type: inline-size; }
 }

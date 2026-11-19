@@ -1,0 +1,120 @@
+# Base11 (v2.0) — Базовая тема для проектов на Drupal 11.4+
+
+`base11` — автономная каркасная тема (`base theme: false`) для лендингов, корпоративных сайтов, интернет-магазинов (Drupal Commerce 3) и внутренних дашбордов/порталов отчётности.
+
+Вся проектная стилизация выносится в дочернюю тему (`themes/project`) через CSS-переменные (Design Tokens), каскадные слои `@layer` и опциональные библиотеки.
+
+---
+
+## 1. Модульный Sass и публичный API
+
+В `base11` используется современный синтаксис Sass (`@use` / `@forward`, без `@import`):
+
+- **Точка входа базовых стилей (подключается один раз в `project.scss`):**
+  ```scss
+  @use "../../base11/css/supplies/styles";
+  // При нестандартном числе колонок (например, 10):
+  // @use "../../base11/css/supplies/styles" with ($grid-columns: 10);
+  ```
+- **Публичный API для дочерних паршалов (0 байт дублированного CSS):**
+  ```scss
+  @use "../../base11/css/supplies/api" as *;
+  ```
+  Подключает переменные брейкпоинтов (`$smart-only`, `$pad`, `$tablet`, `$laptop`, `$desktop`, `$wide`, а также `$pad-only`, `$tablet-only`, `$laptop-only`, `$desktop-only`), карту `$grid-breakpoints` и миксины (`row`, `col`, `responsive-prop`, `font-size`, `gradient`, `button-reset` и др.).
+- **Опциональные стили для WYSIWYG-редактора CKEditor 5:**
+  ```scss
+  @use "../../base11/css/supplies/b11-ckeditor5";
+  ```
+
+---
+
+## 2. Каскадные слои (`@layer`)
+
+Порядок приоритета слоёв объявлен в `css/supplies/_b11-layers.scss` (от наименьшего к наибольшему):
+
+```css
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+```
+
+- Стили подтемы вне `@layer` всегда имеют приоритет выше любого базового слоя без необходимости в `!important` или громоздких селекторах.
+- **Важно:** глобальные стили HTML-тегов в подтеме (`html`, `body`, `h1..h6`, `a` в `_base.scss`) следует оборачивать в `@layer b11.base { ... }`, а глобальные правила `<details>` — в `@layer b11.elements { ... }`, чтобы они не перекрывали компоненты `.button`, `.pager`, `.menu`, `.tabs`, `.b11-badge`.
+- Все standalone-расширения (`css/extensions/*.scss`) и SDC-компоненты (`components/*/*.scss`) первыми строками подключают `_b11-layers.scss`, гарантируя стабильный порядок слоёв независимо от порядка загрузки CSS-файлов.
+
+---
+
+## 3. Дизайн-токены и плотность интерфейсов
+
+Основные переменные определены в `css/supplies/_b11-tokens.scss` и переопределяются в `_tokens.scss` подтемы:
+
+- **Шрифты и типографика:** `--font-family-base`, `--font-family-heading`, `--font-family-mono`, `--font-size-{xs,sm,base,lg,h1..h6}`, `--line-height-{sm,base,lg}`. Для редакционного контента предусмотрен класс `.prose`.
+- **Цвета и статусные палитры:** `--brand-{primary,info,success,warning,danger}`, `--page-bg`, `--surface-{card,subtle,hover}`, `--text-{color,muted,light}`, `--border-color`, `--border-color-light`, `--on-{primary,info,success,warning,danger}`, `--status-{info,success,warning,danger}-{bg,border,text}`.
+- **Контролы и формы:** `--control-height-{sm,md,lg}`, `--control-font-size-{sm,md,lg}`, `--control-radius-{sm,md,lg}`, `--btn-*`, `--input-*`, `--label-*`.
+- **Таблицы и отступы:** `--table-cell-padding-x`, `--table-cell-padding-y`, `--table-head-padding-y`.
+- **Модалки и слои:** `--modal-*`, `--z-{dropdown,sticky,fixed,modal-backdrop,modal,toast}`, `--shadow-{sm,md,lg}`, `--card-shadow`, `--dropdown-shadow`.
+
+### Компактный режим (`data-density="compact"`)
+Для дашбордов, отчётных таблиц и плотных форм фильтров достаточно добавить атрибут `data-density="compact"` на `<body>` или отдельный контейнер — автоматически уменьшатся `--control-height-*`, отступы кнопок, полей, таблиц и сетки.
+
+---
+
+## 4. Сетка, таблицы и адаптивные брейкпоинты
+
+- **Drupal Breakpoints (`base11.breakpoints.yml`):** группы `base11.sm` (0px), `base11.pd` (768px), `base11.tb` (1024px), `base11.lp` (1366px), `base11.dt` (1600px), `base11.wd` (1920px) — доступны для Responsive Image Styles.
+- **Авто-сетка и Container Queries (`_b11-grid.scss`):**
+  - `.grid-auto` (`.grid-auto--sm`, `.grid-auto--lg`, кастом `--grid-min`) — адаптивная сетка CSS Grid без ручного перечисления брейкпоинтов.
+  - `.cq-container` — задаёт `container-type: inline-size` для адаптации вложенных блоков по ширине родителя.
+- **Таблицы (`_b11-tables.scss` и `_b11-helper.scss`):**
+  - `.table-responsive` — контейнер горизонтальной прокрутки для широких таблиц.
+  - `.table--striped`, `.table--hover`, `.table--sticky-head`, `.table--compact`.
+  - `.is-numeric` / `.tabular-nums` / `.font-mono` — табличные цифры и моноширинные значения (цены, суммы, артикулы).
+
+---
+
+## 5. Библиотеки темы (`base11.libraries.yml`)
+
+Подключаются в `base11.info.yml` глобально:
+- `base11/messages` — тосты/встроенные системные сообщения (переопределяется токенами `--status-*`).
+- `base11/ajax-spinner` — встроенный спиннер кнопок для AJAX, submit-форм и ссылок с задержкой `120ms`.
+- `base11/file-upload` (через `file/drupal.file` + `Base11Hooks::formAlter()`).
+- `base11/media-library` (через `media_library/widget`, `media_library/ui`, настраивается токенами `--ml-*`).
+- `base11/password-toggle` (автоматически для `input[type="password"]` в `Base11Hooks::preprocessInput()`).
+
+Подключаются по требованию в `.info.yml` подтемы:
+- `base11/font-montserrat`, `base11/helper`, `base11/back-to-top`, `base11/menu-mobile`, `base11/swipe-events`, `base11/click-to-copy`, `base11/tabs-js`, `base11/swiper-thumbs`, `base11/lightbox`, `base11/facet-extension`, `base11/facet-list-filter`, `base11/layout-dashboard`, `base11/native-dialog`.
+
+---
+
+## 6. SDC-компоненты Drupal 11 (`components/`)
+
+CSS каждого компонента подгружается ядром только при рендере:
+
+1. **`base11:badge`** (`text`, `variant`: `neutral|primary|info|success|warning|danger`, `size`: `sm|md`, `pill`):
+   ```twig
+   {% include 'base11:badge' with { text: 'Оплачен', variant: 'success', size: 'sm' } only %}
+   ```
+2. **`base11:stat-card`** (`label`, `value`, `delta`, `trend`: `up|down|neutral`, `caption`; слот `icon`):
+   ```twig
+   {% include 'base11:stat-card' with { label: 'Заказы', value: '1 284', delta: '+14%', trend: 'up' } only %}
+   ```
+3. **`base11:card`** (`variant`: `default|bordered|flat`, `interactive`, `responsive`; слоты `media`, `header`, `body`, `footer`):
+   ```twig
+   {% embed 'base11:card' with { interactive: true, responsive: true } only %}
+     {% block header %}<h3>{{ label }}</h3>{% endblock %}
+     {% block body %}{{ content.body }}{% endblock %}
+   {% endembed %}
+   ```
+4. **`base11:empty-state`** (`title`, `description`, `heading_level`: `h1|h2|h3`, `variant`: `card|plain`, `full_height`; слоты `icon`, `badge`, `actions`; кастомизация цветами через `--empty-icon-bg`, `--empty-icon-color`, `--empty-icon-size`, `--empty-max-width`).
+
+---
+
+## 7. Icon API (`base11.icons.yml`) и автоподмена в подтеме
+
+В `images/icons/` хранятся 30 UI-иконок (`arrow-up`, `arrow-down`, `arrow-left`, `arrow-right`, `chevron-down`, `chevron-left`, `chevron-right`, `chevrons-up`, `external-link`, `close`, `menu`, `search`, `filter`, `plus`, `minus`, `copy`, `link`, `download`, `check`, `info`, `warning`, `error`, `cart`, `user`, `calendar`, `inbox`, `lock`, `play`, `star`, `star-filled`).
+
+Вызов в любом шаблоне:
+```twig
+{{ icon('base11', 'cart', { size: 22, class: 'header-cart__svg' }) }}
+```
+
+### Переопределение иконок в подтеме
+Если дочерняя тема объявляет собственный `<theme>.icons.yml` (пак с именем темы, например `project:`, с параметрами `size` и `class`), то при наличии одноимённого SVG-файла (например `images/icons/arrow-up.svg`) `Base11Hooks::elementInfoAlter()` + `preRenderIconOverride()` автоматически подменит вызов `icon('base11', 'arrow-up')` на иконку из активной подтемы.

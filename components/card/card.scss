@@ -1,0 +1,73 @@
+// ==========================================================================
+// SDC-компонент «Карточка» (base11:card) с поддержкой Container Queries
+// ==========================================================================
+
+@use "../../css/supplies/b11-layers";
+
+@layer b11.components {
+  // Контейнер-обёртка для измерения ширины родителя через @container
+  .b11-card-cq { container-type: inline-size; }
+
+  .b11-card {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+    box-shadow: var(--card-shadow);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+
+    &--bordered { box-shadow: none; }
+
+    &--flat {
+      background-color: var(--surface-subtle);
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    &--interactive:hover {
+      border-color: var(--border-color);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    &__media {
+      flex-shrink: 0;
+      overflow: hidden;
+
+      img {
+        height: 100%; width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__content {
+      display: flex; flex-direction: column; flex-grow: 1; gap: .75rem;
+      min-width: 0;
+      padding: 1.25rem 1.5rem;
+    }
+
+    &__header > :first-child { margin-top: 0; }
+    &__header > :last-child  { margin-bottom: 0; }
+
+    &__body {
+      color: var(--text-color);
+      flex-grow: 1;
+
+      > :first-child { margin-top: 0; }
+      > :last-child  { margin-bottom: 0; }
+    }
+
+    &__footer {
+      border-top: 1px solid var(--border-color-light);
+      display: flex; flex-wrap: wrap; align-items: center; gap: .75rem;
+      margin-top: auto; padding-top: .875rem;
+    }
+
+    // Автоматическая горизонтальная перестройка при ширине контейнера >= 30rem
+    @container (min-width: 30rem) {
+      &.b11-card--responsive {
+        display: grid; grid-template-columns: minmax(12rem, 36%) minmax(0, 1fr);
+      }
+    }
+  }
+}

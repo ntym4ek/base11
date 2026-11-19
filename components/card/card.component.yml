@@ -1,0 +1,40 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Карточка (Card)
+status: stable
+description: Универсальная структурная карточка со слотами и адаптацией через Container Queries (@container).
+props:
+  type: object
+  properties:
+    variant:
+      type: string
+      title: Вариант оформления
+      default: default
+      enum:
+        - default
+        - bordered
+        - flat
+    interactive:
+      type: boolean
+      title: Интерактивное состояние наведения
+      default: false
+    responsive:
+      type: boolean
+      title: Горизонтальная перестройка при ширине контейнера от 30rem
+      default: false
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Атрибуты
+      description: Дополнительные HTML-атрибуты карточки.
+slots:
+  media:
+    title: Медиа
+    description: Изображение или превью в верхней / левой части карточки.
+  header:
+    title: Шапка
+    description: Заголовок и метаданные карточки.
+  body:
+    title: Содержимое
+    description: Основной текст или поля карточки.
+  footer:
+    title: Подвал
+    description: Кнопки действий, теги или дополнительные ссылки.

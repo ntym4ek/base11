@@ -1,0 +1,48 @@
+// ==========================================================================
+// SDC-компонент «Бейдж» (base11:badge)
+// ==========================================================================
+
+@use "../../css/supplies/b11-layers";
+
+@layer b11.components {
+  .b11-badge {
+    background-color: var(--surface-subtle);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-sm);
+    color: var(--text-color); font-size: var(--font-size-sm); font-weight: 600; line-height: 1.25;
+    display: inline-flex; align-items: center; gap: .25rem;
+    padding: .25rem .625rem;
+    white-space: nowrap;
+
+    &--sm {
+      font-size: var(--font-size-xs);
+      padding: .125rem .5rem;
+    }
+
+    &--pill { border-radius: 999px; }
+
+    &--primary {
+      background-color: var(--brand-primary); border-color: var(--brand-primary);
+      color: var(--on-primary);
+    }
+
+    &--info {
+      background-color: var(--status-info-bg); border-color: var(--status-info-border);
+      color: var(--status-info-text);
+    }
+
+    &--success {
+      background-color: var(--status-success-bg); border-color: var(--status-success-border);
+      color: var(--status-success-text);
+    }
+
+    &--warning {
+      background-color: var(--status-warning-bg); border-color: var(--status-warning-border);
+      color: var(--status-warning-text);
+    }
+
+    &--danger {
+      background-color: var(--status-danger-bg); border-color: var(--status-danger-border);
+      color: var(--status-danger-text);
+    }
+  }
+}

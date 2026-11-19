@@ -1,0 +1,68 @@
+// ==========================================================================
+// SDC-компонент «Пустое состояние» (base11:empty-state)
+// ==========================================================================
+
+@use "../../css/supplies/b11-layers";
+
+@layer b11.components {
+  .b11-empty-state {
+    --empty-icon-bg: var(--surface-subtle);
+    --empty-icon-color: var(--text-muted);
+    --empty-icon-size: 4rem;
+    --empty-max-width: 540px;
+
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem 1rem;
+
+    &--full {
+      min-height: 50vh;
+      padding: 3rem 1rem 4rem;
+    }
+
+    &__panel {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+      box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; align-items: center;
+      max-width: var(--empty-max-width); width: 100%;
+      padding: 3rem 2rem; text-align: center;
+    }
+
+    &--plain &__panel {
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 1.5rem 1rem;
+    }
+
+    &__icon {
+      background-color: var(--empty-icon-bg); border-radius: 50%;
+      color: var(--empty-icon-color);
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+      width: var(--empty-icon-size); height: var(--empty-icon-size);
+    }
+
+    &__badge {
+      background-color: var(--page-bg); border-radius: var(--control-radius-sm);
+      color: var(--text-muted); font-size: var(--font-size-sm); font-weight: 600;
+      display: inline-flex; align-items: center;
+      margin-bottom: 1rem; padding: .25rem .75rem;
+    }
+
+    &__title {
+      color: var(--text-color); font-family: var(--font-family-heading); font-size: var(--font-size-h2); font-weight: 600; line-height: var(--line-height-sm);
+      margin: 0 0 .75rem;
+    }
+
+    &__description {
+      color: var(--text-muted);
+      margin: 0; max-width: 44ch;
+    }
+
+    &__actions {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem;
+      margin-top: 2rem;
+    }
+  }
+}
