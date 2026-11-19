@@ -1,31 +1,29 @@
 {#
 /**
  * @file
- * Theme override to display a single page.
+ * Базовый шаблон структуры страницы темы Base11.
  *
- * The doctype, html, head and body tags are not in this template. Instead they
- * can be found in the html.html.twig template in this directory.
+ * Теги doctype, html, head и body описаны в templates/layout/html.html.twig.
  *
- * Available variables:
- * - base_path: The base URL path of the Drupal installation.
- * - is_front: A flag indicating if the current page is the front page.
- * - logged_in: A flag indicating if the user is registered and signed in.
- * - is_admin: A flag indicating if the user has permission to access
- *   administration pages.
- * - front_page: The URL of the front page.
+ * Доступные переменные:
+ * - base_path: Базовый URL-путь установки Drupal.
+ * - is_front: Флаг главной страницы.
+ * - logged_in: Флаг авторизованного пользователя.
+ * - is_admin: Флаг прав администратора.
+ * - front_page: URL главной страницы.
  *
- * Regions:
- * - page.header: Items for the header region.
- * - page.primary_menu: Items for the primary menu region.
- * - page.secondary_menu: Items for the secondary menu region.
- * - page.highlighted: Items for the highlighted content region.
- * - page.breadcrumb: Items for the breadcrumb region.
- * - page.help: Dynamic help text, mostly for admin pages.
- * - page.sidebar_first: Items for the first sidebar.
- * - page.content: The main content of the current page.
- * - page.sidebar_second: Items for the second sidebar.
- * - page.downlighted: Items for the downlighted region.
- * - page.footer: Items for the footer region.
+ * Регионы:
+ * - page.header: Логотип и элементы брендинга в шапке.
+ * - page.primary_menu: Основная навигация сайта.
+ * - page.secondary_menu: Дополнительное меню (язык, вход, корзина и т.д.).
+ * - page.highlighted: Системные уведомления и выделенные блоки над контентом.
+ * - page.breadcrumb: Навигационная цепочка (хлебные крошки).
+ * - page.help: Динамическая справка (обычно для административных разделов).
+ * - page.sidebar_first: Левая боковая колонка.
+ * - page.content: Основное содержимое текущей страницы.
+ * - page.sidebar_second: Правая боковая колонка.
+ * - page.downlighted: Нижняя выделенная область под основным контентом.
+ * - page.footer: Подвал сайта.
  *
  * @see \Drupal\Core\Theme\ThemePreprocess::preprocessPage()
  * @see html.html.twig
@@ -33,6 +31,7 @@
 #}
 <div class="page-wrapper">
 
+  {# Мобильная выдвижная шторка навигации (управляется библиотекой base11/menu-mobile) #}
   {% if page.primary_menu or page.secondary_menu %}
   <div class="page-offside">
     <div class="menu-mobile-wrapper">
@@ -43,6 +42,7 @@
   {% endif %}
 
   <div class="page">
+    {# Шапка сайта: брендинг, кнопка открытия мобильного меню и десктопная навигация #}
     {% if page.header or page.primary_menu or page.secondary_menu %}
     <header class="page-header" role="banner">
       <div class="container">
@@ -70,6 +70,7 @@
     </header>
     {% endif %}
 
+    {# Основная контентная область страницы #}
     <div class="page-content">
       <div class="container">
 
@@ -79,6 +80,7 @@
 
         {{ page.help }}
 
+        {# Основная сетка контента: сайдбары и центральная колонка (блоки доступны для переопределения в подтемах) #}
         <div class="page-main">
           {% block page_main %}
           <div class="row">
@@ -89,7 +91,8 @@
             {% endif %}
 
             <main class="col-sm-12 col-pd-fill" role="main">
-              <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+              {# Якорь доступности для ссылки «Перейти к основному содержимому» из html.html.twig #}
+              <a id="main-content" tabindex="-1"></a>
               {% block page_content %}
                 {{ page.content }}
               {% endblock %}
@@ -109,6 +112,7 @@
       </div>
     </div>
 
+    {# Подвал сайта #}
     {% if page.footer %}
     <footer class="page-footer" role="contentinfo">
       <div class="container">
@@ -117,6 +121,7 @@
     </footer>
     {% endif %}
 
+    {# Плавающая кнопка прокрутки страницы наверх (управляется библиотекой base11/back-to-top) #}
     <button type="button" id="back-to-top" class="back-to-top" data-drupal-selector="back-to-top" aria-label="{{ 'Back to top'|t }}">
       <svg viewBox="0 0 24 24" class="back-to-top__icon" aria-hidden="true">
         <path d="M6.5 12.5L12 7.5L17.5 12.5" />

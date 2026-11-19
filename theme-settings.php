@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Functions to support Base11 theme settings.
+ * Настройки темы Base11 в административном интерфейсе оформления.
  */
 
 use Drupal\Core\Extension\ThemeSettingsProvider;
@@ -10,11 +10,15 @@ use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_form_FORM_ID_alter() for system_theme_settings.
+ *
+ * Добавляет параметры мобильной навигации, которые затем передаются в разметку
+ * и JS через base11_preprocess_html() (класс .page-offside-* и drupalSettings.theme).
  */
 function base11_form_system_theme_settings_alter(&$form, FormStateInterface $form_state): void
 {
   $settings = \Drupal::service(ThemeSettingsProvider::class);
 
+  // Секция дополнительных настроек оформления темы Base11.
   $form['other'] = [
     '#type' => 'details',
     '#title' => t('Additional settings'),
@@ -22,6 +26,7 @@ function base11_form_system_theme_settings_alter(&$form, FormStateInterface $for
     '#open' => TRUE,
   ];
 
+  // Сторона выезда мобильной шторки меню (класс .page-offside-left / .page-offside-right на body).
   $form['other']['page-offside-position'] = [
     '#type' => 'select',
     '#title' => t('Mobile menu position'),
@@ -32,6 +37,7 @@ function base11_form_system_theme_settings_alter(&$form, FormStateInterface $for
     ],
   ];
 
+  // Порог ширины экрана (в px), передаётся в js/menu-mobile.js через drupalSettings.theme.page_offside_hide_width.
   $form['other']['page-offside-hide-width'] = [
     '#type' => 'number',
     '#title' => t('Mobile menu breakpoint'),

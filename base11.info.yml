@@ -1,19 +1,26 @@
+# Основные метаданные базовой темы Base11 (автономная тема без наследования ядра)
 name: Base11
 type: theme
 version: 2.0.0-alpha1
-description: ''
+description: 'Базовая каркасная тема для проектов группы компаний на Drupal 11'
 base theme: false
 core_version_requirement: ^11
 
+# Базовые библиотеки, подключаемые глобально на всех страницах:
+# - font-montserrat подключается опционально подтемой при необходимости;
+# - file-upload подключается через libraries-extend (file/drupal.file) и base11_form_alter();
+# - password-toggle подключается динамически в base11_preprocess_input() для полей password.
 libraries:
   - base11/messages
   - base11/ajax-spinner
   - core/normalize
 
+# Расширение модульных библиотек ядра функционалом темы
 libraries-extend:
   file/drupal.file:
     - base11/file-upload
 
+# Отключение устаревших/конфликтующих стилей jQuery UI, ядра и сторонних модулей
 libraries-override:
   core/internal.jquery_ui:
     css:
@@ -36,6 +43,7 @@ libraries-override:
       component:
         css/webform.form.css: false
 
+# Регионы разметки страницы (выводятся в templates/layout/page.html.twig)
 regions:
   header: Header
   primary_menu: Primary menu
