@@ -245,3 +245,155 @@
   - [x] `ff.local`
   - [x] `jp.local`
   - [x] `lubr.local`
+
+
+---
+
+## Этап 2 — Архитектура Drupal 11.4 и CSS-фундамент
+
+### [CHG-21] Переход SCSS-архитектуры на `@use` / `@forward` и выделение `_api.scss`
+- **Этап:** 2 | **Тип:** BREAKING
+- **Было:** подключение стилей и переменных через устаревший `@import` (`styles.scss`, `_b11-tokens.scss`, `facet-extension.scss`); настройки `$grid-columns` и миксины `_b11-grid.scss` невозможно было изолированно использовать без генерации лишнего CSS.
+- **Стало:**
+  - все файлы `base11` переведены на `@use` / `@forward` (0 предупреждений `DEPRECATION WARNING [import]`);
+  - миксины сетки выделены в чистый Sass-паршал `css/supplies/_b11-grid-mixins.scss`;
+  - создана единая точка импорта чистого API `css/supplies/_api.scss` (`@forward "b11-grid-variables"`, `"b11-mixins"`, `"b11-grid-mixins"`, 0 байт CSS);
+  - `_styles.scss` пробрасывает `@forward "b11-grid-variables"` первой строкой для работы `@use "../../base11/css/supplies/styles" with ($grid-columns: N);`;
+  - обновлён `starterkits/project/css/project.scss.starterkit`.
+- **Как найти в подтеме (regex):** `^[ \t]*@import\s+["'](?!url\(|https?:)`
+- **Что сделать в `project`:**
+  - заменить все `@import` в `project.scss` (и других точках входа: `email.scss`, `ckeditor5.scss`) на `@use`; в `jp.local` использовать `@use "../../base11/css/supplies/styles" with ($grid-columns: 10);`;
+  - в паршалах, использующих переменные брейкпоинтов или миксины `base11`, добавить в начало `@use "../../base11/css/supplies/api" as *;` (строго выше CSS `@import url(...)`);
+  - при вызове локальных миксинов (например `padding-side()` / `padding-block()` в `jp.local`) подключить `@use "helper" as *;`.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-22] Каскадные слои CSS (`@layer b11.*`)
+- **Этап:** 2 | **Тип:** BREAKING / ADDED
+- **Было:** плоский глобальный каскад без слоёв. Правила `base11` могли конкурировать с дочерней темой по порядку подключения и специфичности, а длинные селекторы требовали перебивания сложными цепочками.
+- **Стало:**
+  - создан `css/supplies/_b11-layers.scss` с порядком: `@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;`;
+  - все стили `base11` распределены по соответствующим слоям;
+  - стили дочерней темы (вне слоёв) по спецификации CSS Cascade имеют более высокий приоритет над слоями `base11` независимо от специфичности селектора.
+- **Как найти в подтеме (regex):** `^(html|body|h[1-6]|a|details)\b[^:{]*\{`
+- **Что сделать в `project`:**
+  - **Критично:** неразвёрнутые (unlayered) глобальные селекторы тегов (`a { color: inherit; }`, `html`, `body`, `h1..h4` в `_base.scss` или `details { ... }` в `_file.scss`) перебьют слоёные компоненты `base11` (`.button`, `.pager`, `.breadcrumb`, `.horizontal-tabs`);
+  - обернуть глобальные правила тегов в `_base.scss` в `@layer b11.base { ... }`, а переопределение `details` (например в `ff.local/_file.scss`) в `@layer b11.elements { ... }`, оставив классы компонентов (`.button`, `.button--default`, ...) вне слоёв.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-23] Замена `core/normalize` на `@layer b11.reset` и расширение `libraries-override`
+- **Этап:** 2 | **Тип:** CHANGED
+- **Было:** неслоёный `core/normalize` и базовые CSS-файлы ядра/модулей (`system/base` align/container-inline, `core/drupal.dropbutton`, `core/drupal.progress`, `field_group/element.horizontal_tabs`) загружались вне слоёв и обладали более высоким приоритетом, чем `@layer b11.*`.
+- **Стало:**
+  - `core/normalize` исключён из `libraries:` и отключён через `libraries-override: core/normalize: false`; вместо него добавлен компактный `css/supplies/_b11-reset.scss` в `@layer b11.reset`;
+  - в `base11.info.yml` через `libraries-override` отключены конфликтующие неслоёные CSS: `system/base` (`align.module.css`, `container-inline.module.css` с сохранением `clearfix`/`hidden`/`js`), `core/drupal.dropbutton` (`dropbutton.css`), `core/drupal.progress` (`progress.module.css`), `field_group/element.horizontal_tabs` (`horizontal-tabs.css`); `core/drupal.checkbox` (JS) не затронут.
+- **Как найти в подтеме (regex):** `core/normalize`
+- **Что сделать в `project`:** правки в подтемах не требуются (если подтема не подключала `core/normalize` вручную).
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-24] Расширение дизайн-токенов и устранение `mixed-decls` в `_b11-tokens.scss`
+- **Этап:** 2 | **Тип:** ADDED / FIXED
+- **Было:**
+  - отсутствовали токены `--font-family-mono`, `--surface-subtle`, `--surface-hover`, `--link-color`, `--link-hover-color`, контрастный текст `--on-*` и статусные палитры `--status-*`;
+  - в `--btn-bg`/`--btn-border-color`/`--btn-bg-hover` и др. использовались хардкодные цвета `#f1f3f5`/`#d1d5db`/`#e5e7eb`/`#9ca3af`/`#6b7280`;
+  - `@media #{$smart-only}` располагался внутри `:root { ... }`, порождая ~148 предупреждений Dart Sass `mixed-decls`.
+- **Стало:**
+  - добавлены токены: `--font-family-mono`, `--link-color`, `--link-hover-color`, `--surface-subtle`, `--surface-hover`, `--on-{primary,info,success,warning,danger}`, `--status-{info,success,warning,danger}-{bg,border,text}`;
+  - цвета дефолтной нейтральной кнопки выражены через `--surface-subtle`, `--surface-hover`, `--border-color`, `--text-muted`;
+  - `@media #{$smart-only}` вынесен вниз `_b11-tokens.scss` (0 предупреждений `mixed-decls`).
+- **Как найти в подтеме (regex):** `--font-family-mono|--surface-subtle|--status-|--on-primary`
+- **Что сделать в `project`:** при необходимости переопределить `--link-color`/`--on-*`/`--surface-*` в `_tokens.scss` и использовать новые токены при разработке компонентов.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-25] Фиксированный `html { font-size: 100%; }` и `text-wrap: balance` для заголовков
+- **Этап:** 2 | **Тип:** BREAKING
+- **Было:** `base11` переключал `html { font-size }` на `106.25%` (`$tablet`) и `112.5%` (`$laptop+`), из-за чего пропорционально раздувались `rem` на десктопе (в `jp.local` приходилось сбрасывать обратно к `16px` через 5 `@media`).
+- **Стало:** в `css/supplies/_b11-base.scss` оставлен фиксированный `html { font-size: 100%; }` (16px по умолчанию) и добавлен `text-wrap: balance;` для `h1, .h1, h2, .h2, h3, .h3`.
+- **Как найти в подтеме (regex):** `html\s*\{[^}]*font-size`
+- **Что сделать в `project`:**
+  - в `ff.local` и `lubr.local` явно перенести масштабирование `html` (`106.25%` на `$tablet`, `112.5%` на `$laptop`) в `_base.scss` внутри `@layer b11.base` для сохранения текущего дизайна;
+  - в `jp.local` удалить избыточные 5 `@media` в `html { ... }`, оставив `font-size: 16px;`.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-26] Оптимизация `_b11-buttons.scss` и `_b11-forms.scss`
+- **Этап:** 2 | **Тип:** CHANGED
+- **Было:** `_b11-buttons.scss` генерировал ~46 КБ (декартово умножение 5 базовых селекторов на все модификаторы и псевдоклассы); в `_b11-forms.scss` вкладки и базовые `details` находились в одном неслоёном пространстве; в обоих файлах возникали `mixed-decls`.
+- **Стало:**
+  - `_b11-buttons.scss` переписан через `:where(.button, input[type="submit"], input[type="button"], input[type="reset"])` и плоские модификаторы, переопределяющие только CSS-переменные `--btn-*`;
+  - `_b11-forms.scss` использует `:where(...)` для инпутов и разделяет базовые формы (`@layer b11.elements`) и вкладки (`@layer b11.components`);
+  - 0 предупреждений `mixed-decls`.
+- **Как найти в подтеме (regex):** `--btn-bg|--btn-color`
+- **Что сделать в `project`:** проверить пользовательские правила `mixed-decls` в паршалах подтемы (`ff.local`: `_blocks.scss`, `_product.scss`, `_views.scss`) и поднять свойства выше вложенных селекторов/`@include`.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-27] Базовый модуль стилей CKEditor 5 (`_b11-ckeditor5.scss`)
+- **Этап:** 2 | **Тип:** ADDED
+- **Было:** стили содержимого WYSIWYG-редактора CKEditor 5 копировались вручную целиком внутри `project/css/ckeditor5.scss`.
+- **Стало:** добавлен опциональный паршал `css/supplies/_b11-ckeditor5.scss` (`.ck.ck-content, .ck-content` и `.ck.ck-fullscreen__main-wrapper` на токенах `base11`, с поддержкой `code`/`pre` на `--font-family-mono`), подключаемый подтемами через `@use "../../base11/css/supplies/b11-ckeditor5";`.
+- **Как найти в подтеме (regex):** `\.ck-content`
+- **Что сделать в `project`:** существующие `ckeditor5.scss` перевести с `@import` на `@use`; использовать `_b11-ckeditor5.scss` в новых и рефакторируемых проектах.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-28] Файл брейкпоинтов `base11.breakpoints.yml`
+- **Этап:** 2 | **Тип:** ADDED
+- **Было:** файл `base11.breakpoints.yml` отсутствовал (Responsive Image и модули ядра не видели адаптивную сетку базовой темы).
+- **Стало:** создан `base11.breakpoints.yml` с группами `base11.sm`, `base11.pd`, `base11.tb`, `base11.lp`, `base11.dt`, `base11.wd`, синхронизированными с `$grid-breakpoints` в `_b11-grid-variables.scss`.
+- **Как найти в подтеме (regex):** `breakpoints\.yml`
+- **Что сделать в `project`:** правки не требуются.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-29] Перевод хуков темы на ООП (`src/Hook/Base11Hooks.php`)
+- **Этап:** 2 | **Тип:** CHANGED / REMOVED
+- **Было:** процедурные хуки в `base11.theme` с прямыми вызовами `\Drupal::service(...)`.
+- **Стало:** все хуки перенесены в `src/Hook/Base11Hooks.php` (`namespace Drupal\base11\Hook;`, атрибуты `#[Hook('...')]`, конструкторный автовайринг `ThemeSettingsProvider`, `StringTranslationTrait`); файл `base11.theme` удалён (`theme-settings.php` сохранён). Версия темы в `base11.info.yml` — `2.0.0-alpha2`.
+- **Как найти в подтеме (regex):** `base11_preprocess_|_base11_wrap_single_managed_files`
+- **Что сделать в `project`:** убедиться, что подтема не вызывает удалённые внутренние функции `base11.theme`.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-30] Удаление 22 дублирующих шаблонов и синхронизация с Drupal 11.4
+- **Этап:** 2 | **Тип:** REMOVED / CHANGED
+- **Было:** в `templates/` находились 22 шаблона, полностью дублирующие ядро, а также устаревшие `not page` в `taxonomy-term.html.twig`, избыточные `role="navigation"`/`banner`/`main`/`complementary`/`contentinfo` на HTML5-элементах, устаревшие `@see` и неполные атрибуты описаний в формах.
+- **Стало:** 22 дубля удалены; 12 шаблонов синхронизированы со `starterkit_theme` Drupal 11.4 (`taxonomy-term`, `block--local-tasks-block`, `block--system-menu-block`, `breadcrumb`, `views-mini-pager`, `maintenance-page`, `form-element`, `fieldset`, `details`, `item-list--search-results`, `html`, `image`); в `datetime-wrapper.html.twig` сохранена обёртка `.form-datetime-wrapper` и обновлён `@see`.
+- **Как найти в подтеме (regex):** `role="(navigation|banner|main|complementary|contentinfo)"|not page\b`
+- **Что сделать в `project`:** при наличии скопированных шаблонов таксономии/форм в подтеме — учитывать актуальный синтаксис Drupal 11.4.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-31] Возврат атрибутов `width` / `height` в `templates/field/image.html.twig`
+- **Этап:** 2 | **Тип:** BREAKING / FIXED
+- **Было:** `<img{{ attributes.addClass(classes)|without('width', 'height') }} />` принудительно вырезал HTML-атрибуты `width`/`height`, ухудшая Core Web Vitals (CLS).
+- **Стало:** фильтр `|without('width', 'height')` удалён (`image.html.twig` синхронизирован со `starterkit_theme` Drupal 11.4).
+- **Как найти в подтеме (regex):** `img\s*\{[^}]*height\s*:`
+- **Что сделать в `project`:** во всех правилах `img` дочерней темы, где заданы фиксированные `height` или `max-height` без указания `width` (или `aspect-ratio`), явно добавить `width: auto;` (либо убедиться, что пропорции заданы корректно), чтобы браузер не растягивал картинку по HTML-атрибуту `width`.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`

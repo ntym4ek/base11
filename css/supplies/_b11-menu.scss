@@ -1,33 +1,32 @@
-// === Menu Styles (base11) ===
+// ==========================================================================
+// Навигационные меню шапки и подвала Base11
+// ==========================================================================
 
-.menu {
-  list-style: none outside;
-  margin: 0; padding: 0;
-  text-align: left;
-
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  li {
-    list-style: none;
+@layer b11.components {
+  // --- Сброс списков навигационного меню ---------------------------------
+  .menu {
+    list-style: none outside;
     margin: 0; padding: 0;
-  }
-}
+    text-align: left;
 
-.page-header {
-  .menu-wrapper {
-    align-items: center; display: flex; justify-content: space-between;
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+      margin: 0; padding: 0;
+    }
+  }
+
+  // --- Меню в шапке сайта -------------------------------------------------
+  .page-header .menu-wrapper {
+    display: flex; align-items: center; justify-content: space-between;
     height: 100%;
 
-    .region-primary-menu {
-      display: flex; flex: 1 1 auto; justify-content: flex-start;
-    }
-
-    .region-secondary-menu {
-      display: flex; flex: 0 0 auto; justify-content: flex-end;
-    }
+    .region-primary-menu   { display: flex; flex: 1 1 auto; justify-content: flex-start; }
+    .region-secondary-menu { display: flex; flex: 0 0 auto; justify-content: flex-end; }
 
     .menu {
       a {
@@ -53,13 +52,14 @@
           }
         }
 
+        // Выравнивание первого пункта по краю сетки
         &.first > a,
         &:first-child > a {
-          padding-left: 0; // выровнять первый пункт меню по сетке
+          padding-left: 0;
         }
       }
 
-      // Вложенные меню (выпадающие)
+      // Вложенные выпадающие меню
       .menu-item--expanded {
         position: relative;
 
@@ -76,16 +76,16 @@
           box-shadow: var(--shadow-lg);
           display: flex; flex-direction: column;
           min-width: 220px;
-          opacity: 0; pointer-events: none;
+          opacity: 0; pointer-events: none; visibility: hidden;
           padding: 0;
           position: absolute; top: calc(100% + 4px); left: 0; z-index: var(--z-dropdown);
           transform: translateY(6px);
           transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
-          visibility: hidden;
 
-          // Невидимая зона наведения (мост между ссылкой и подменю)
+          // Невидимая зона-мост между ссылкой и выпадающим списком
           &::before {
-            content: ""; display: block;
+            content: "";
+            display: block;
             height: 10px;
             position: absolute; top: -10px; left: 0; right: 0;
           }
@@ -105,9 +105,7 @@
                 border-top-left-radius: calc(var(--control-radius-md) - 1px);
                 border-top-right-radius: calc(var(--control-radius-md) - 1px);
 
-                &::before {
-                  border-top-left-radius: calc(var(--control-radius-md) - 1px);
-                }
+                &::before { border-top-left-radius: calc(var(--control-radius-md) - 1px); }
               }
             }
 
@@ -120,9 +118,7 @@
                 border-bottom-left-radius: calc(var(--control-radius-md) - 1px);
                 border-bottom-right-radius: calc(var(--control-radius-md) - 1px);
 
-                &::before {
-                  border-bottom-left-radius: calc(var(--control-radius-md) - 1px);
-                }
+                &::before { border-bottom-left-radius: calc(var(--control-radius-md) - 1px); }
               }
             }
 
@@ -175,16 +171,10 @@
       }
     }
   }
-}
 
-.page-footer .menu {
-  > .menu-item {
-    > a:not(.button) {
-      color: var(--footer-color);
-    }
-
-    &:hover > a:not(.button) {
-      color: var(--footer-hover-color);
-    }
+  // --- Меню в подвале сайта -----------------------------------------------
+  .page-footer .menu > .menu-item {
+    > a:not(.button) { color: var(--footer-color); }
+    &:hover > a:not(.button) { color: var(--footer-hover-color); }
   }
 }

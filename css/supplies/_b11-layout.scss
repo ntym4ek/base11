@@ -1,88 +1,73 @@
-// === Layout Styles (base11) ===
-// Разметка страницы, прижатие подвала и мобильная шторка offside
+// ==========================================================================
+// Каркас страницы, прижатый подвал и мобильная шторка offside Base11
+// ==========================================================================
 
+@use "b11-grid-variables" as *;
 
-@import "b11-grid-variables";
+@layer b11.layout {
+  // --- Внешняя обёртка и основной столбец страницы -----------------------
+  .page-wrapper { overflow-x: clip; }
 
-.page-wrapper {
-  overflow-x: clip;
-}
-
-.page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
-  position: relative;
-  transition: transform var(--transition-base);
-}
-
-.page-offside {
-  background: var(--menu-mobile-bg);
-  position: fixed;
-  bottom: 0;
-  z-index: var(--z-fixed);
-  width: var(--menu-mobile-width);
-  height: 100%;
-  transition: transform var(--transition-base), margin var(--transition-base);
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  overflow-y: auto;
-
-  .page-offside-left & {
-    left: 0;
-    margin: 0 0 0 calc(-1 * var(--menu-mobile-width));
+  .page {
+    display: flex; flex-direction: column;
+    min-height: 100dvh;
+    position: relative;
+    transition: transform var(--transition-base);
   }
 
-  .page-offside-right & {
-    right: 0;
-    margin: 0 calc(-1 * var(--menu-mobile-width)) 0 0;
-  }
+  .page-content { flex: 1 0 auto; }
 
-  @media #{$laptop} {
-    display: none;
-  }
-}
+  .page-title { margin-bottom: 2rem; }
 
-.page-offside-opened {
+  // --- Выдвижное мобильное меню (Offside Drawer) -------------------------
   .page-offside {
-    margin: 0;
-  }
+    background: var(--menu-mobile-bg);
+    bottom: 0; height: 100%; width: var(--menu-mobile-width);
+    display: flex; flex-direction: column; flex-wrap: nowrap;
+    overflow-y: auto;
+    position: fixed; z-index: var(--z-fixed);
+    transition: transform var(--transition-base), margin var(--transition-base);
 
-  // Сдвиг страницы при открытом меню слева
-  &.page-offside-left .page {
-    transform: translate3d(var(--menu-mobile-width), 0, 0);
-  }
+    .page-offside-left & {
+      left: 0;
+      margin: 0 0 0 calc(-1 * var(--menu-mobile-width));
+    }
 
-  // Сдвиг страницы при открытом меню справа
-  &.page-offside-right .page {
-    transform: translate3d(calc(-1 * var(--menu-mobile-width)), 0, 0);
-  }
-}
+    .page-offside-right & {
+      margin: 0 calc(-1 * var(--menu-mobile-width)) 0 0;
+      right: 0;
+    }
 
-.page-content {
-  flex: 1 0 auto;
-}
-
-.page-footer {
-  background: var(--footer-bg);
-  color: var(--footer-color);
-
-  a:not(.button) {
-    color: var(--footer-color);
-    transition: color var(--transition-fast);
-
-    &:hover {
-      color: var(--footer-hover-color);
+    @media #{$laptop} {
+      display: none;
     }
   }
 
-  .container,
-  .container-fluid {
-    height: 100%;
-  }
-}
+  .page-offside-opened {
+    .page-offside { margin: 0; }
 
-.page-title {
-  margin-bottom: 2rem;
+    // Сдвиг основной страницы при открытой шторке слева
+    &.page-offside-left .page { transform: translate3d(var(--menu-mobile-width), 0, 0); }
+
+    // Сдвиг основной страницы при открытой шторке справа
+    &.page-offside-right .page { transform: translate3d(calc(-1 * var(--menu-mobile-width)), 0, 0); }
+  }
+
+  // --- Подвал страницы ----------------------------------------------------
+  .page-footer {
+    background: var(--footer-bg);
+    color: var(--footer-color);
+
+    a:not(.button) {
+      color: var(--footer-color);
+      transition: color var(--transition-fast);
+
+      &:hover { color: var(--footer-hover-color); }
+    }
+
+    .container,
+    .container-fluid {
+      height: 100%;
+    }
+  }
 }

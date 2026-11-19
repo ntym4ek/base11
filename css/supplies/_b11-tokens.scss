@@ -1,256 +1,297 @@
-// === CSS Design Tokens (base11) ===
+// ==========================================================================
+// Дизайн-токены темы Base11 (CSS Custom Properties)
+// ==========================================================================
+// Все визуальные константы определены внутри @layer b11.tokens и легко
+// переопределяются в файле _tokens.scss конкретной дочерней темы.
 
-@import "b11-grid-variables";
+@use "b11-grid-variables" as *;
 
-:root {
-  // --- 1. Геометрия и отступы страницы ---
-  --page-max-width: 1320px;
-  --page-gap-x: 2rem;          // Отступ от краев экрана до контента (sm: < 768px)
-  --grid-gap-x: 1rem;          // Горизонтальный межколоночный разрыв сетки (sm: < 768px)
-  --block-gap-y: 2rem;         // Вертикальный разрыв между блоками/секциями (sm: < 768px)
+@layer b11.tokens {
+  :root {
+    // --- 1. Геометрия и отступы страницы --------------------------------
+    --page-max-width: 1320px;
+    --page-gap-x: 2rem;          // Отступ от краёв экрана до контента (sm: < 768px)
+    --grid-gap-x: 1rem;          // Горизонтальный межколоночный разрыв сетки (sm: < 768px)
+    --block-gap-y: 2rem;         // Вертикальный разрыв между блоками/секциями (sm: < 768px)
 
-  // --- 2. Типографика ---
-  --font-family-base: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-family-heading: var(--font-family-base);
-  --font-size-xs: .75rem;
-  --font-size-sm: .889rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.222rem;
-  --line-height-sm: 1.2;
-  --line-height-base: 1.35;
-  --line-height-lg: 1.6;
+    // --- 2. Типографика ---------------------------------------------------
+    --font-family-base: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-family-heading: var(--font-family-base);
+    // Моноширинный шрифт: артикулы (SKU), коды, таблицы отчётов, технические значения
+    --font-family-mono: ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --font-size-xs: .75rem;      // Мелкие подписи, бейджи, сноски (12px при 16px root)
+    --font-size-sm: .889rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.222rem;
+    --line-height-sm: 1.2;
+    --line-height-base: 1.35;
+    --line-height-lg: 1.6;
 
-  // Шкала размеров заголовков
-  --font-size-h1: 2.33rem;
-  --font-size-h2: 1.667rem;
-  --font-size-h3: 1.333rem;
-  --font-size-h4: 1.222rem;
-  --font-size-h5: 1rem;
-  --font-size-h6: .889rem;
+    // Шкала размеров заголовков (десктопные значения; на смартфонах см. @media внизу)
+    --font-size-h1: 2.33rem;
+    --font-size-h2: 1.667rem;
+    --font-size-h3: 1.333rem;
+    --font-size-h4: 1.222rem;
+    --font-size-h5: 1rem;
+    --font-size-h6: .889rem;
 
-  // 2. Увеличение для планшетов и десктопа:
+    // --- 3. Система контролов (кнопки, поля ввода, селекты) ---------------
+    // Единая сетка высот гарантирует выравнивание кнопок и полей в одной строке
+    --control-height-sm: 2.25rem;  // 36px
+    --control-height-md: 2.75rem;  // 44px (базовый стандарт WCAG 2.1 touch target)
+    --control-height-lg: 3.25rem;  // 52px
+
+    // Типографика и рамка контролов
+    --control-font-size-sm: .875rem; // 14px
+    --control-font-size-md: 1rem;    // 16px
+    --control-font-size-lg: 1.125rem; // 18px
+    --control-line-height: 1.35;
+    --control-border-width: 1px;
+
+    // Базовые скругления контролов
+    --control-radius-sm: .25rem;   // 4px
+    --control-radius-md: .25rem;   // 4px
+    --control-radius-lg: .375rem;  // 6px
+
+    // Поля ввода (Inputs, Select, Textarea) — геометрия
+    --input-padding-y-sm: .375rem; // 6px
+    --input-padding-x-sm: .625rem; // 10px
+    --input-padding-y-md: .5rem;   // 8px
+    --input-padding-x-md: .75rem;  // 12px
+    --input-padding-y-lg: .75rem;  // 12px
+    --input-padding-x-lg: 1rem;    // 16px
+    --input-font-size-sm: var(--control-font-size-sm);
+    --input-font-size-md: var(--control-font-size-md);
+    --input-font-size-lg: var(--control-font-size-lg);
+    --input-font-weight: 400;
+    --input-radius-sm: var(--control-radius-sm);
+    --input-radius-md: var(--control-radius-md);
+    --input-radius-lg: var(--control-radius-lg);
+
+    // Поля ввода — цвета, рамки и состояния
+    --input-bg: var(--surface-card);
+    --input-color: var(--text-color);
+    --input-placeholder-color: var(--text-muted);
+    --input-border-width: var(--control-border-width);
+    --input-border-color: var(--border-color);
+    --input-border-hover: var(--text-muted);
+    --input-border-focus: var(--brand-primary);
+    --input-border-error: var(--brand-danger);
+    --input-bg-error: color-mix(in srgb, var(--brand-danger) 4%, var(--surface-card));
+    --input-bg-disabled: var(--page-bg);
+    --input-border-disabled: var(--border-color);
+    --input-color-disabled: var(--text-muted);
+
+    // Кнопки — геометрия
+    --btn-padding-y-sm: .375rem;   // 6px
+    --btn-padding-x-sm: 1.25rem;   // 20px
+    --btn-padding-y-md: .5rem;     // 8px
+    --btn-padding-x-md: 1.75rem;   // 28px
+    --btn-padding-y-lg: .75rem;    // 12px
+    --btn-padding-x-lg: 2.25rem;   // 36px
+    --btn-wide-ratio: 1.5;         // Множитель горизонтального отступа для button--wide
+    --btn-font-size-sm: var(--control-font-size-sm);
+    --btn-font-size-md: var(--control-font-size-md);
+    --btn-font-size-lg: var(--control-font-size-lg);
+    --btn-font-weight: 400;
+    --btn-radius-sm: var(--control-radius-sm);
+    --btn-radius-md: var(--control-radius-md);
+    --btn-radius-lg: var(--control-radius-lg);
+
+    // Кнопки — цвета и состояния (нейтральная кнопка по умолчанию от токенов темы)
+    --btn-bg: var(--surface-subtle);
+    --btn-color: var(--text-color);
+    --btn-border-color: var(--border-color);
+    --btn-border-width: var(--control-border-width);
+    --btn-shadow: var(--shadow-sm);
+    --btn-shadow-hover: var(--shadow-md);
+    --btn-shadow-active: none;
+
+    --btn-bg-hover: var(--surface-hover);
+    --btn-color-hover: var(--text-color);
+    --btn-border-color-hover: var(--text-muted);
+
+    --btn-bg-active: var(--border-color-light);
+    --btn-color-active: var(--text-color);
+    --btn-border-color-active: var(--text-color);
+    --btn-transform-active: translateY(1px);
+
+    --btn-focus-ring-color: var(--focus-ring-color);
+    --btn-focus-ring-width: var(--focus-ring-width);
+    --btn-focus-ring-offset: var(--focus-ring-offset);
+
+    --btn-disabled-bg: var(--btn-bg);
+    --btn-disabled-color: var(--btn-color);
+    --btn-disabled-border-color: var(--btn-border-color);
+    --btn-disabled-opacity: .5;
+    --btn-loading-opacity: .7;
+
+    // Лейблы форм
+    --label-color: var(--text-color);
+    --label-weight: 500;
+    --label-gap-y: .375rem;
+
+    // --- 4. Шкала теней (Elevation) ---------------------------------------
+    --shadow-base-color: #000000;
+    --shadow-sm: 0 2px 5px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 5%, transparent));
+    --shadow-md: 0 5px 12px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 7%, transparent));
+    --shadow-lg: 0 12px 24px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 12%, transparent));
+
+    // Семантические токены теней
+    --card-shadow: var(--shadow-md);
+    --dropdown-shadow: var(--shadow-lg);
+    --control-shadow: none;
+
+    // Динамические тени кнопок
+    --btn-shadow-color: color-mix(in srgb, var(--shadow-base-color) 8%, transparent);
+    --btn-shadow-color-hover: color-mix(in srgb, var(--shadow-base-color) 12%, transparent);
+    --btn-shadow-color-active: color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
+
+    // --- 5. Цветовые роли, поверхности и статусные палитры ----------------
+    --brand-primary: #213a6e;
+    --brand-info: #5bc0de;
+    --brand-success: #36aa3d;
+    --brand-warning: #f08200;
+    --brand-danger: #cc1335;
+
+    --brand-primary-hover: color-mix(in srgb, var(--brand-primary), black 12%);
+    --brand-primary-active: color-mix(in srgb, var(--brand-primary), black 20%);
+
+    // Базовые цвета ссылок (переопределяются в подтеме при необходимости)
+    --link-color: var(--brand-primary);
+    --link-hover-color: var(--brand-primary-hover);
+
+    // Базовые поверхности и текст
+    --page-bg: #f8f7f4;
+    --surface-card: #ffffff;
+    // Вторичная приглушённая поверхность (зебра таблиц, панели фильтров, нейтральные плашки)
+    --surface-subtle: color-mix(in srgb, var(--page-bg) 60%, var(--surface-card));
+    // Поверхность состояния наведения (строки таблиц, пункты меню, интерактивные списки)
+    --surface-hover: color-mix(in srgb, var(--border-color-light) 50%, var(--surface-card));
+    --text-color: #333333;
+    --text-muted: #7d7c7c;
+    --text-light: #aaaaaa;
+    --border-color: #cccccc;
+    --border-color-light: #e9e9e9;
+
+    // Контрастный цвет текста/иконок поверх заливки соответствующих ролей
+    --on-primary: #ffffff;
+    --on-info: #ffffff;
+    --on-success: #ffffff;
+    --on-warning: #ffffff;
+    --on-danger: #ffffff;
+
+    // Семантические статусные палитры для бейджей, системных уведомлений и дашбордов
+    --status-info-bg: color-mix(in srgb, var(--brand-info) 12%, var(--surface-card));
+    --status-info-border: color-mix(in srgb, var(--brand-info) 35%, transparent);
+    --status-info-text: color-mix(in srgb, var(--brand-info), var(--text-color) 45%);
+
+    --status-success-bg: color-mix(in srgb, var(--brand-success) 12%, var(--surface-card));
+    --status-success-border: color-mix(in srgb, var(--brand-success) 35%, transparent);
+    --status-success-text: color-mix(in srgb, var(--brand-success), var(--text-color) 45%);
+
+    --status-warning-bg: color-mix(in srgb, var(--brand-warning) 12%, var(--surface-card));
+    --status-warning-border: color-mix(in srgb, var(--brand-warning) 35%, transparent);
+    --status-warning-text: color-mix(in srgb, var(--brand-warning), var(--text-color) 45%);
+
+    --status-danger-bg: color-mix(in srgb, var(--brand-danger) 12%, var(--surface-card));
+    --status-danger-border: color-mix(in srgb, var(--brand-danger) 35%, transparent);
+    --status-danger-text: color-mix(in srgb, var(--brand-danger), var(--text-color) 45%);
+
+    // --- 6. Доступность (Focus Ring) --------------------------------------
+    --focus-ring-color: var(--brand-primary);
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+
+    // --- 7. Шапка, подвал и мобильное меню --------------------------------
+    --header-height: 5rem;
+    --header-color: var(--text-color);
+    --header-bg: transparent;
+    --header-shadow: var(--shadow-md);
+
+    --footer-bg: #1e1e1c;
+    --footer-color: #ffffff;
+    --footer-hover-color: #ffffff;
+
+    --menu-mobile-width: 300px;
+    --menu-mobile-bg: var(--brand-primary);
+    --menu-mobile-color: var(--on-primary);
+    --menu-mobile-divider: rgba(255, 255, 255, .15);
+    --menu-mobile-btn-size: 24px;
+
+    // --- 8. Шкала Z-Index -------------------------------------------------
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1050;
+    --z-modal: 1060;
+    --z-toast: 1080;
+
+    // --- 9. Модальные окна и диалоги --------------------------------------
+    --modal-backdrop-bg: rgba(0, 0, 0, .5);
+    --modal-backdrop-blur: 4px;
+    --modal-bg: var(--surface-card);
+    --modal-radius: 1rem;
+    --modal-shadow: var(--shadow-lg);
+    --modal-default-width: 500px;
+    --modal-max-width: 1000px;
+    --modal-max-width-narrow: 420px;
+    --modal-max-width-wide: 800px;
+    --modal-close-color: var(--text-muted);
+    --modal-close-hover-color: var(--brand-primary);
+
+    // --- 10. Анимации и переходы ------------------------------------------
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 200ms ease-in-out;
+  }
+
+  // --- Адаптивные размеры заголовков на смартфонах -------------------------
   @media #{$smart-only} {
-    --font-size-h1: 2rem;
-    --font-size-h2: 1.5rem;
-    --font-size-h3: 1.222rem;
+    :root {
+      --font-size-h1: 2rem;
+      --font-size-h2: 1.5rem;
+      --font-size-h3: 1.222rem;
+    }
   }
 
-  // --- 3. Cистема контролов (Кнопки, Поля ввода, Селекты) ---
-  // Высота элементов (гарантирует идеальное выравнивание кнопок и полей в одной строке)
-  --control-height-sm: 2.25rem;       // 36px
-  --control-height-md: 2.75rem;       // 44px (Базовый стандарт WCAG 2.1 touch target)
-  --control-height-lg: 3.25rem;       // 52px
-
-  // Типографика и базовые свойства
-  --control-font-size-sm: .875rem;   // 14px
-  --control-font-size-md: 1rem;       // 16px
-  --control-font-size-lg: 1.125rem;   // 18px
-  --control-line-height: 1.35;
-  --control-border-width: 1px;
-
-  // Базовые скругления (Border Radius)
-  --control-radius-sm: .25rem;       // 4px
-  --control-radius-md: .25rem;       // 4px
-  --control-radius-lg: .375rem;      // 6px
-
-  // Поля ввода (Inputs, Select, Textarea) - геометрия
-  --input-padding-y-sm: .375rem;     // 6px
-  --input-padding-x-sm: .625rem;     // 10px
-  --input-padding-y-md: .5rem;       // 8px
-  --input-padding-x-md: .75rem;      // 12px (стандарт читаемости)
-  --input-padding-y-lg: .75rem;      // 12px
-  --input-padding-x-lg: 1rem;         // 16px
-  --input-font-size-sm: var(--control-font-size-sm);  // 14px
-  --input-font-size-md: var(--control-font-size-md);  // 16px
-  --input-font-size-lg: var(--control-font-size-lg);  // 18px
-  --input-font-weight: 400;
-  --input-radius-sm: var(--control-radius-sm);
-  --input-radius-md: var(--control-radius-md);
-  --input-radius-lg: var(--control-radius-lg);
-
-  // Поля ввода - цвета, рамки и состояния
-  --input-bg: var(--surface-card);
-  --input-color: var(--text-color);
-  --input-placeholder-color: var(--text-muted);
-  --input-border-width: var(--control-border-width);
-  --input-border-color: var(--border-color);          // Обычное состояние (как у верхнего поля)
-  --input-border-hover: var(--text-muted);            // При наведении мыши
-  --input-border-focus: var(--brand-primary);         // В фокусе / активный ввод (одинарная рамка)
-  --input-border-error: var(--brand-danger);          // Ошибка валидации
-  --input-bg-error: rgba(204, 19, 53, .02);
-  --input-bg-disabled: var(--page-bg);                // Неактивное поле
-  --input-border-disabled: var(--border-color);
-  --input-color-disabled: var(--text-muted);
-
-  // Кнопки (Buttons) - геометрия
-  --btn-padding-y-sm: .375rem;       // 6px
-  --btn-padding-x-sm: 1.25rem;        // 20px
-  --btn-padding-y-md: .5rem;         // 8px
-  --btn-padding-x-md: 1.75rem;        // 28px
-  --btn-padding-y-lg: .75rem;        // 12px
-  --btn-padding-x-lg: 2.25rem;        // 36px
-  --btn-wide-ratio: 1.5;             // Множитель горизонтального отступа для button--wide
-  --btn-font-size-sm: var(--control-font-size-sm);    // 14px
-  --btn-font-size-md: var(--control-font-size-md);    // 16px
-  --btn-font-size-lg: var(--control-font-size-lg);    // 18px
-  --btn-font-weight: 400;
-  --btn-radius-sm: var(--control-radius-sm);
-  --btn-radius-md: var(--control-radius-md);
-  --btn-radius-lg: var(--control-radius-lg);
-
-  // Кнопки - цвета и состояния (Drupal 11+)
-  --btn-bg: #f1f3f5;
-  --btn-color: var(--text-color);
-  --btn-border-color: #d1d5db;
-  --btn-border-width: var(--control-border-width);
-  --btn-shadow: var(--shadow-sm);
-  --btn-shadow-hover: var(--shadow-md);
-  --btn-shadow-active: none;
-
-  --btn-bg-hover: #e5e7eb;
-  --btn-color-hover: var(--text-color);
-  --btn-border-color-hover: #9ca3af;
-
-  --btn-bg-active: #d1d5db;
-  --btn-color-active: var(--text-color);
-  --btn-border-color-active: #6b7280;
-  --btn-transform-active: translateY(1px);
-
-  --btn-focus-ring-color: var(--focus-ring-color);
-  --btn-focus-ring-width: var(--focus-ring-width);
-  --btn-focus-ring-offset: var(--focus-ring-offset);
-
-  --btn-disabled-bg: var(--btn-bg);
-  --btn-disabled-color: var(--btn-color);
-  --btn-disabled-border-color: var(--btn-border-color);
-  --btn-disabled-opacity: .5;
-
-  --btn-loading-opacity: .7;
-
-  // Лейблы форм
-  --label-color: var(--text-color);
-  --label-weight: 500;
-  --label-gap-y: .375rem;
-
-  // --- 4. Шкала теней (Elevation / Box-shadows) ---
-  --shadow-base-color: #000000;
-  --shadow-sm: 0 2px 5px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 5%, transparent));
-  --shadow-md: 0 5px 12px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 7%, transparent));
-  --shadow-lg: 0 12px 24px var(--shadow-color, color-mix(in srgb, var(--shadow-base-color) 12%, transparent));
-
-  // Семантические токены теней
-  --card-shadow: var(--shadow-md);
-  --dropdown-shadow: var(--shadow-lg);
-  --control-shadow: none;                             // Контролы и поля формы по дефолту плоские
-
-  // Динамические цветные тени кнопок
-  --btn-shadow-color: color-mix(in srgb, var(--shadow-base-color) 8%, transparent);
-  --btn-shadow-color-hover: color-mix(in srgb, var(--shadow-base-color) 12%, transparent);
-  --btn-shadow-color-active: color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
-
-  // --- 5. Цветовые роли и поверхности ---
-  --brand-primary: #213a6e;
-  --brand-info: #5bc0de;
-  --brand-success: #36aa3d;
-  --brand-warning: #f08200;
-  --brand-danger: #cc1335;
-
-  --brand-primary-hover: color-mix(in srgb, var(--brand-primary), black 12%);
-  --brand-primary-active: color-mix(in srgb, var(--brand-primary), black 20%);
-
-  --page-bg: #f8f7f4;
-  --surface-card: #ffffff;
-  --text-color: #333333;
-  --text-muted: #7d7c7c;
-  --text-light: #aaaaaa;
-  --border-color: #cccccc;
-  --border-color-light: #e9e9e9;
-
-  // --- 6. Доступность (A11y Focus Ring) ---
-  --focus-ring-color: var(--brand-primary);
-  --focus-ring-width: 2px;
-  --focus-ring-offset: 2px;
-
-  // --- 7. Шапка, Подвал и Навигация ---
-  --header-height: 5rem;
-  --header-color: var(--text-color);
-  --header-bg: transparent;
-  --header-shadow: var(--shadow-md);
-
-  --footer-bg: #1e1e1c;
-  --footer-color: #ffffff;
-  --footer-hover-color: #ffffff;
-
-  --menu-mobile-width: 300px;
-  --menu-mobile-bg: var(--brand-primary);
-  --menu-mobile-color: #ffffff;
-  --menu-mobile-divider: rgba(255, 255, 255, 0.15);
-  --menu-mobile-btn-size: 24px;
-
-  // --- 8. Z-Index шкала ---
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-fixed: 1030;
-  --z-modal-backdrop: 1050;
-  --z-modal: 1060;
-  --z-toast: 1080;
-
-  // --- 9. Модальные окна и диалоги ---
-  --modal-backdrop-bg: rgba(0, 0, 0, .5);
-  --modal-backdrop-blur: 4px;
-  --modal-bg: var(--surface-card);
-  --modal-radius: 1rem;
-  --modal-shadow: var(--shadow-lg);
-  --modal-default-width: 500px;
-  --modal-max-width: 1000px;
-  --modal-max-width-narrow: 420px;
-  --modal-max-width-wide: 800px;
-  --modal-close-color: var(--text-muted);
-  --modal-close-hover-color: var(--brand-primary);
-
-  // --- 10. Анимации и переходы ---
-  --transition-fast: 150ms ease-in-out;
-  --transition-base: 200ms ease-in-out;
-}
-
-// === Адаптивные отступы (синхронизированы с брейкпоинтами сетки) ===
-
-@media #{$pad} {
-  :root {
-    --page-gap-x: 2rem;
-    --grid-gap-x: 1.25rem;
-    --block-gap-y: 2rem;
+  // --- Адаптивные отступы сетки и секций (синхронизированы с $grid-breakpoints) ---
+  @media #{$pad} {
+    :root {
+      --block-gap-y: 2rem;
+      --grid-gap-x: 1.25rem;
+      --page-gap-x: 2rem;
+    }
   }
-}
 
-@media #{$tablet} {
-  :root {
-    --page-gap-x: 2rem;
-    --grid-gap-x: 1.5rem;
-    --block-gap-y: 2.5rem;
+  @media #{$tablet} {
+    :root {
+      --block-gap-y: 2.5rem;
+      --grid-gap-x: 1.5rem;
+      --page-gap-x: 2rem;
+    }
   }
-}
 
-@media #{$laptop} {
-  :root {
-    --page-gap-x: 1rem;
-    --grid-gap-x: 1.5rem;
-    --block-gap-y: 3rem;
+  @media #{$laptop} {
+    :root {
+      --block-gap-y: 3rem;
+      --grid-gap-x: 1.5rem;
+      --page-gap-x: 1rem;
+    }
   }
-}
 
-@media #{$desktop} {
-  :root {
-    --page-gap-x: 1rem;
-    --grid-gap-x: 2rem;
-    --block-gap-y: 3rem;
+  @media #{$desktop} {
+    :root {
+      --block-gap-y: 3rem;
+      --grid-gap-x: 2rem;
+      --page-gap-x: 1rem;
+    }
   }
-}
 
-@media #{$wide} {
-  :root {
-    --page-gap-x: 1rem;
-    --grid-gap-x: 2rem;
-    --block-gap-y: 3rem;
+  @media #{$wide} {
+    :root {
+      --block-gap-y: 3rem;
+      --grid-gap-x: 2rem;
+      --page-gap-x: 1rem;
+    }
   }
 }

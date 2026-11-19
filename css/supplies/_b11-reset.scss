@@ -1,0 +1,121 @@
+// ==========================================================================
+// Базовый сброс браузерных стилей (замена normalize.css внутри @layer b11.reset)
+// ==========================================================================
+// Выполняется на минимальном приоритете каскада и не перебивает стили компонентов.
+
+@layer b11.reset {
+  // --- Единая блочная модель ----------------------------------------------
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  // --- Корневые элементы документа и секций -------------------------------
+  html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body { margin: 0; }
+
+  main { display: block; }
+
+  hr {
+    box-sizing: content-box;
+    height: 0; overflow: visible;
+  }
+
+  // --- Встроенная типографика и моноширинный код -------------------------
+  pre,
+  code,
+  kbd,
+  samp {
+    font-family: var(--font-family-mono); font-size: 1em;
+  }
+
+  abbr[title] {
+    border-bottom: none;
+    text-decoration: underline dotted;
+  }
+
+  b,
+  strong {
+    font-weight: 700;
+  }
+
+  small { font-size: 80%; }
+
+  sub,
+  sup {
+    font-size: 75%; line-height: 0;
+    position: relative; vertical-align: baseline;
+  }
+
+  sub { bottom: -.25em; }
+  sup { top: -.5em; }
+
+  // --- Медиа-элементы -----------------------------------------------------
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
+  img { border-style: none; }
+
+  // --- Сброс контролов форм и нативных интерактивных элементов ------------
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    color: inherit; font: inherit;
+    margin: 0;
+  }
+
+  button,
+  select {
+    text-transform: none;
+  }
+
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    -webkit-appearance: button;
+  }
+
+  fieldset {
+    border: 1px solid var(--border-color-light);
+    margin: 0; padding: .5rem .75rem .75rem;
+  }
+
+  legend {
+    box-sizing: border-box;
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    padding: 0;
+    white-space: normal;
+  }
+
+  progress { vertical-align: baseline; }
+
+  textarea { overflow: auto; }
+
+  [type="search"] {
+    outline-offset: -2px;
+    -webkit-appearance: textfield;
+  }
+
+  details { display: block; }
+  summary { display: list-item; }
+
+  template,
+  [hidden] {
+    display: none;
+  }
+}

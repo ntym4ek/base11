@@ -1,151 +1,147 @@
-// === Встроенные медиа (Media Library & CKEditor 5) ===
+// ==========================================================================
+// Встроенные медиа и выравнивание контента CKEditor 5 / Media Library Base11
+// ==========================================================================
 
-figure.caption,
-.caption-drupal-media,
-.caption-img,
-.caption,
-article.media {
-  display: block;
-  margin-block: 1.5rem; margin-inline: 0;
-  max-width: 100%;
+@use "b11-grid-variables" as *;
 
-  figcaption {
-    color: var(--text-muted); font-size: var(--font-size-sm);
+@layer b11.elements {
+  // --- Контейнеры подписей и встроенных медиа-сущностей --------------------
+  figure.caption,
+  .caption-drupal-media,
+  .caption-img,
+  .caption,
+  article.media {
     display: block;
-    margin-top: .5rem;
+    margin-block: 1.5rem; margin-inline: 0;
     max-width: 100%;
-  }
-
-  &.align-center {
-    clear: both;
-    display: block;
-    margin-block: 1.5rem; margin-inline: auto;
-    max-width: 100%;
-    text-align: center;
 
     figcaption {
+      color: var(--text-muted); font-size: var(--font-size-sm);
+      display: block;
+      margin-top: .5rem; max-width: 100%;
+    }
+
+    &.align-center {
+      clear: both;
+      display: block;
+      margin-block: 1.5rem; margin-inline: auto;
+      max-width: 100%;
       text-align: center;
+
+      figcaption { text-align: center; }
+
+      iframe,
+      img,
+      video,
+      .media-oembed-content {
+        display: block;
+        margin-inline: auto; max-width: 100%;
+      }
     }
 
-    iframe,
-    img,
-    video,
-    .media-oembed-content {
-      display: block;
-      margin-inline: auto;
-      max-width: 100%;
-    }
-  }
+    &.align-left {
+      clear: left;
+      display: block; float: left;
+      margin-block: .5rem 1rem; margin-inline: 0 1.5rem;
+      max-width: 50%;
 
-  &.align-left {
-    clear: left;
-    display: block;
-    float: left;
-    margin-block: .5rem 1rem; margin-inline: 0 1.5rem;
-    max-width: 50%;
+      figcaption { text-align: left; }
 
-    figcaption {
-      text-align: left;
+      iframe,
+      img,
+      video,
+      .media-oembed-content {
+        display: block;
+        max-width: 100%;
+      }
     }
 
-    iframe,
-    img,
-    video,
-    .media-oembed-content {
-      display: block;
-      max-width: 100%;
-    }
-  }
-
-  &.align-right {
-    clear: right;
-    display: block;
-    float: right;
-    margin-block: .5rem 1rem; margin-inline: 1.5rem 0;
-    max-width: 50%;
-
-    figcaption {
-      text-align: right;
-    }
-
-    iframe,
-    img,
-    video,
-    .media-oembed-content {
-      display: block;
-      max-width: 100%;
-    }
-  }
-
-  .media-oembed-content {
-    aspect-ratio: 16 / 9; border: 0;
-    display: block;
-    height: auto; max-width: 100%;
-  }
-
-  @media #{$smart-only} {
-    margin-block: 1rem; margin-inline: 0;
-    max-width: 100%; width: 100%;
-
-    &.align-center,
-    &.align-left,
     &.align-right {
-      clear: both;
-      float: none;
+      clear: right;
+      display: block; float: right;
+      margin-block: .5rem 1rem; margin-inline: 1.5rem 0;
+      max-width: 50%;
+
+      figcaption { text-align: right; }
+
+      iframe,
+      img,
+      video,
+      .media-oembed-content {
+        display: block;
+        max-width: 100%;
+      }
+    }
+
+    .media-oembed-content {
+      aspect-ratio: 16 / 9;
+      border: 0;
+      display: block;
+      height: auto; max-width: 100%;
+    }
+
+    @media #{$smart-only} {
       margin-block: 1rem; margin-inline: 0;
       max-width: 100%; width: 100%;
+
+      &.align-center,
+      &.align-left,
+      &.align-right {
+        clear: both; float: none;
+        margin-block: 1rem; margin-inline: 0;
+        max-width: 100%; width: 100%;
+      }
+
+      .media-oembed-content,
+      iframe,
+      img,
+      video {
+        margin-inline: 0;
+        width: 100%;
+      }
     }
-
-    .media-oembed-content,
-    iframe,
-    img,
-    video {
-      margin-inline: 0;
-      width: 100%;
-    }
-  }
-}
-
-iframe,
-img,
-video {
-  &.align-center {
-    clear: both;
-    display: block;
-    margin-block: 1.5rem; margin-inline: auto;
-    max-width: 100%;
   }
 
-  &.align-left {
-    clear: left;
-    display: block;
-    float: left;
-    margin-block: .5rem 1rem; margin-inline: 0 1.5rem;
-    max-width: 50%;
-  }
-
-  &.align-right {
-    clear: right;
-    display: block;
-    float: right;
-    margin-block: .5rem 1rem; margin-inline: 1.5rem 0;
-    max-width: 50%;
-  }
-
-  @media #{$smart-only} {
-    &.align-center,
-    &.align-left,
-    &.align-right {
+  // --- Отдельные встроенные элементы без обёртки figure --------------------
+  iframe,
+  img,
+  video {
+    &.align-center {
       clear: both;
-      float: none;
-      margin-block: 1rem; margin-inline: 0;
-      max-width: 100%; width: 100%;
+      display: block;
+      margin-block: 1.5rem; margin-inline: auto;
+      max-width: 100%;
+    }
+
+    &.align-left {
+      clear: left;
+      display: block; float: left;
+      margin-block: .5rem 1rem; margin-inline: 0 1.5rem;
+      max-width: 50%;
+    }
+
+    &.align-right {
+      clear: right;
+      display: block; float: right;
+      margin-block: .5rem 1rem; margin-inline: 1.5rem 0;
+      max-width: 50%;
+    }
+
+    @media #{$smart-only} {
+      &.align-center,
+      &.align-left,
+      &.align-right {
+        clear: both; float: none;
+        margin-block: 1rem; margin-inline: 0;
+        max-width: 100%; width: 100%;
+      }
     }
   }
-}
 
-.field--type-text-long,
-.field--type-text-with-summary,
-.text-formatted {
-  display: flow-root;
+  // --- Обтекание float-медиа внутри текстовых полей без утечки наружу -----
+  .field--type-text-long,
+  .field--type-text-with-summary,
+  .text-formatted {
+    display: flow-root;
+  }
 }

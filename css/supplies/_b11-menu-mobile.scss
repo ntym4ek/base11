@@ -1,97 +1,103 @@
-// === Mobile Menu Styles (base11) ===
+// ==========================================================================
+// Мобильное меню в выдвижной шторке и кнопка-гамбургер Base11
+// ==========================================================================
 
-.menu-mobile-wrapper {
-  display: flex; flex-direction: column; justify-content: space-between;
-  height: 100%;
+@layer b11.components {
+  // --- Контейнер навигации в мобильной шторке -----------------------------
+  .menu-mobile-wrapper {
+    display: flex; flex-direction: column; justify-content: space-between;
+    height: 100%;
 
-  .menu {
-    .menu-item {
-      display: list-item;
-      padding: 0 1rem;
-      > a {
-        color: var(--menu-mobile-color); font-size: var(--font-size-sm); text-decoration: none; text-transform: uppercase;
-        display: flex;
-        padding: .8rem 1rem;
+    .menu {
+      .menu-item {
+        display: list-item;
+        padding: 0 1rem;
 
-        word-spacing: 1.5px;
-        &:hover,
-        &.active {
-          background-color: rgba(255, 255, 255, 0.12);
+        > a {
+          color: var(--menu-mobile-color); font-size: var(--font-size-sm); text-decoration: none; text-transform: uppercase;
+          display: flex;
+          padding: .8rem 1rem;
+          word-spacing: 1.5px;
+
+          &:hover,
+          &.active {
+            background-color: rgba(255, 255, 255, .12);
+          }
+        }
+
+        &:not(:last-child) a {
+          border-bottom: 1px solid var(--menu-mobile-divider);
         }
       }
-      &:not(:last-child) a {
-        border-bottom: 1px solid var(--menu-mobile-divider);
-      }
-    }
 
-    .menu-item--expanded {
-      > .menu { display: none; }
-      &.open > .menu { display: block; }
-      & > a {
-        cursor: pointer;
-        display: flex; align-items: center;
+      .menu-item--expanded {
+        > .menu { display: none; }
+        &.open > .menu { display: block; }
+
+        > a {
+          cursor: pointer;
+          display: flex; align-items: center;
+        }
       }
     }
   }
-}
 
-// Отдельные ссылки в мобильном меню (смена языка, глобальный сайт)
-.menu-mobile-link {
-  padding: 0 1rem;
-  a {
-    color: var(--menu-mobile-color);
-    display: block;
-    padding: 1rem;
-    text-transform: uppercase;
+  // --- Дополнительные ссылки в шторке (переключатель языка, портал) -------
+  .menu-mobile-link {
+    padding: 0 1rem;
+
+    a {
+      color: var(--menu-mobile-color); text-transform: uppercase;
+      display: block;
+      padding: 1rem;
+    }
   }
-}
 
-// Кнопка мобильного меню (гамбургер)
-.page-offside-label {
-  background: transparent;
-  border: 0;
-  color: inherit;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-  padding: 0;
-  position: relative;
-  transition: color var(--transition-base);
-  width: var(--menu-mobile-btn-size); height: var(--menu-mobile-btn-size);
-
-  .icon {
-    background-color: currentColor; border-radius: 999px;
+  // --- Кнопка-гамбургер открытия/закрытия мобильного меню -----------------
+  .page-offside-label {
+    background: transparent;
+    border: 0;
+    color: inherit; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    padding: 0;
     position: relative;
-    transition: transform .35s, background-color .35s;
-    width: var(--menu-mobile-btn-size); height: calc(var(--menu-mobile-btn-size) * .123);
+    transition: color var(--transition-base);
+    width: var(--menu-mobile-btn-size); height: var(--menu-mobile-btn-size);
 
-    &:before,
-    &:after {
-      content: "";
-      background-color: inherit; border-radius: inherit;
-      position: absolute; left: 0;
-      transition: transform .35s, top .35s;
-      width: 100%; height: 100%;
-    }
-    &:before { top: calc(-1 * var(--menu-mobile-btn-size) / 3); }
-    &:after  { top: calc(var(--menu-mobile-btn-size) / 3); }
-  }
-
-  // Меню слева
-  .page-offside-opened.page-offside-left & {
     .icon {
+      background-color: currentColor; border-radius: 999px;
+      position: relative;
+      transition: transform .35s, background-color .35s;
+      width: var(--menu-mobile-btn-size); height: calc(var(--menu-mobile-btn-size) * .123);
+
+      &::before,
+      &::after {
+        background-color: inherit; border-radius: inherit;
+        content: "";
+        position: absolute; left: 0;
+        transition: transform .35s, top .35s;
+        width: 100%; height: 100%;
+      }
+
+      &::before { top: calc(-1 * var(--menu-mobile-btn-size) / 3); }
+      &::after  { top: calc(var(--menu-mobile-btn-size) / 3); }
+    }
+
+    // Анимация крестика при открытии слева
+    .page-offside-opened.page-offside-left & .icon {
       transform: translateX(7.5%);
-      &:before { transform: rotateZ(-45deg) scaleX(.75) translate(-37%, -83%); }
-      &:after  { transform: rotateZ(45deg)  scaleX(.75) translate(-37%,  83%); }
-    }
-  }
 
-  // Меню справа
-  .page-offside-opened.page-offside-right & {
-    .icon {
+      &::before { transform: rotateZ(-45deg) scaleX(.75) translate(-37%, -83%); }
+      &::after  { transform: rotateZ(45deg) scaleX(.75) translate(-37%, 83%); }
+    }
+
+    // Анимация крестика при открытии справа
+    .page-offside-opened.page-offside-right & .icon {
       transform: translateX(-7.5%);
-      &:before { transform: rotateZ(45deg)  scaleX(.75) translate(37%, -83%); }
-      &:after  { transform: rotateZ(-45deg) scaleX(.75) translate(37%,  83%); }
+
+      &::before { transform: rotateZ(45deg) scaleX(.75) translate(37%, -83%); }
+      &::after  { transform: rotateZ(-45deg) scaleX(.75) translate(37%, 83%); }
     }
   }
 }

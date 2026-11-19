@@ -1,0 +1,53 @@
+# ==========================================================================
+# Адаптивные брейкпоинты базовой темы Base11
+# ==========================================================================
+# Значения строго синхронизированы с $grid-breakpoints в файле
+# css/supplies/_b11-grid-variables.scss и используются модулями Responsive Image и Breakpoint.
+
+base11.sm:
+  label: 'Смартфон (sm)'
+  mediaQuery: ''
+  weight: 0
+  multipliers:
+    - 1x
+    - 2x
+
+base11.pd:
+  label: 'Планшет вертикально (pd)'
+  mediaQuery: 'all and (min-width: 768px)'
+  weight: 1
+  multipliers:
+    - 1x
+    - 2x
+
+base11.tb:
+  label: 'Планшет горизонтально (tb)'
+  mediaQuery: 'all and (min-width: 1024px)'
+  weight: 2
+  multipliers:
+    - 1x
+    - 2x
+
+base11.lp:
+  label: 'Ноутбук (lp)'
+  mediaQuery: 'all and (min-width: 1366px)'
+  weight: 3
+  multipliers:
+    - 1x
+    - 2x
+
+base11.dt:
+  label: 'Десктоп (dt)'
+  mediaQuery: 'all and (min-width: 1600px)'
+  weight: 4
+  multipliers:
+    - 1x
+    - 2x
+
+base11.wd:
+  label: 'Широкий экран (wd)'
+  mediaQuery: 'all and (min-width: 1920px)'
+  weight: 5
+  multipliers:
+    - 1x
+    - 2x

@@ -1,71 +1,66 @@
-// === Mixins (base11) ===
+// ==========================================================================
+// Вспомогательные миксины темы Base11 (чистый Sass без CSS)
+// ==========================================================================
 
-// Миксин единого габарита контрола (кнопки, инпуты, селекты)
+// --- Габарит контролов (кнопки, инпуты, селекты) -------------------------
 @mixin control-size($height, $py, $px, $font-size, $radius) {
+  border-radius: $radius; box-sizing: border-box;
+  font-size: $font-size; line-height: var(--control-line-height);
   min-height: $height;
   padding: $py $px;
-  font-size: $font-size;
-  line-height: var(--control-line-height);
-  border-radius: $radius;
-  box-sizing: border-box;
 }
 
-// Миксин видимого фокуса доступности (WCAG 2.1 & 2.2 Focus Visible)
+// --- Видимый фокус доступности (WCAG 2.1 & 2.2 Focus Visible) ------------
 @mixin focus-ring {
   &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, var(--brand-primary, #213a6e));
-    outline-offset: var(--focus-ring-offset, 2px);
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 }
 
-// Растянуть блок на всю ширину экрана за рамки родительского контейнера
+// --- Растяжение блока на всю ширину вьюпорта за рамки контейнера ---------
 @mixin screen-wide() {
+  margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%);
   position: relative;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
 }
 
-// Базовые свойства кнопки
-@mixin btn() {
-  border: var(--control-border-width, 1px) solid transparent;
+// --- Базовые свойства кнопки ---------------------------------------------
+@mixin btn($focus: true) {
+  border: var(--control-border-width) solid transparent;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  font-weight: var(--btn-font-weight, 500);
-  text-align: center;
-  touch-action: manipulation;
-  transition: background-color var(--transition-base, 200ms),
-              border-color var(--transition-base, 200ms),
-              color var(--transition-base, 200ms),
-              box-shadow var(--transition-base, 200ms),
-              transform var(--transition-base, 200ms);
-  user-select: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  font-weight: var(--btn-font-weight);
   position: relative;
+  text-align: center; text-decoration: none; touch-action: manipulation;
+  transition: background-color var(--transition-base),
+              border-color var(--transition-base),
+              color var(--transition-base),
+              box-shadow var(--transition-base),
+              transform var(--transition-base);
+  user-select: none;
   vertical-align: middle;
   white-space: nowrap;
-  text-decoration: none;
-  @include focus-ring;
+
+  @if $focus {
+    @include focus-ring;
+  }
 }
 
-// Контурная (пустотелая) кнопка
+// --- Контурная (пустотелая) кнопка ---------------------------------------
 @mixin button-outline($color: var(--brand-primary), $hover-color: null, $hover-bg: null) {
   $resolved-h-bg: if($hover-bg, $hover-bg, color-mix(in srgb, #{$color} 8%, transparent));
   $resolved-h-color: if($hover-color, $hover-color, color-mix(in srgb, #{$color}, black 15%));
 
   --btn-bg: transparent;
-  --btn-border-color: #{$color};
-  --btn-color: #{$color};
-  --btn-shadow: none;
-
-  --btn-bg-hover: #{$resolved-h-bg};
-  --btn-border-color-hover: #{$resolved-h-color};
-  --btn-color-hover: #{$resolved-h-color};
-
   --btn-bg-active: color-mix(in srgb, #{$color} 15%, transparent);
+  --btn-bg-hover: #{$resolved-h-bg};
+  --btn-border-color: #{$color};
   --btn-border-color-active: color-mix(in srgb, #{$color}, black 20%);
+  --btn-border-color-hover: #{$resolved-h-color};
+  --btn-color: #{$color};
   --btn-color-active: color-mix(in srgb, #{$color}, black 20%);
+  --btn-color-hover: #{$resolved-h-color};
+  --btn-shadow: none;
 
   background-color: transparent;
   border-color: #{$color};
@@ -86,30 +81,27 @@
     background-color: color-mix(in srgb, #{$color} 15%, transparent);
     border-color: color-mix(in srgb, #{$color}, black 20%);
     color: color-mix(in srgb, #{$color}, black 20%);
-    transform: var(--btn-transform-active, translateY(1px));
+    transform: var(--btn-transform-active);
   }
 }
 
-// Сплошная цветная кнопка
-@mixin button-solid($bg: var(--brand-primary), $color: #ffffff, $border: null) {
+// --- Сплошная цветная кнопка ---------------------------------------------
+@mixin button-solid($bg: var(--brand-primary), $color: var(--on-primary), $border: null) {
   $border-color: if($border, $border, $bg);
 
   --btn-bg: #{$bg};
-  --btn-border-color: #{$border-color};
-  --btn-color: #{$color};
-
-  --btn-bg-hover: color-mix(in srgb, #{$bg}, black 12%);
-  --btn-border-color-hover: color-mix(in srgb, #{$border-color}, black 12%);
-  --btn-color-hover: #{$color};
-
   --btn-bg-active: color-mix(in srgb, #{$bg}, black 20%);
+  --btn-bg-hover: color-mix(in srgb, #{$bg}, black 12%);
+  --btn-border-color: #{$border-color};
   --btn-border-color-active: color-mix(in srgb, #{$border-color}, black 20%);
+  --btn-border-color-hover: color-mix(in srgb, #{$border-color}, black 12%);
+  --btn-color: #{$color};
   --btn-color-active: #{$color};
-  --btn-transform-active: translateY(1px);
-
+  --btn-color-hover: #{$color};
   --btn-shadow-color: color-mix(in srgb, #{$bg} 25%, transparent);
-  --btn-shadow-color-hover: color-mix(in srgb, #{$bg} 35%, transparent);
   --btn-shadow-color-active: color-mix(in srgb, #{$bg} 20%, transparent);
+  --btn-shadow-color-hover: color-mix(in srgb, #{$bg} 35%, transparent);
+  --btn-transform-active: translateY(1px);
 
   background-color: var(--btn-bg);
   border-color: var(--btn-border-color);
@@ -131,6 +123,6 @@
     border-color: var(--btn-border-color-active);
     box-shadow: var(--btn-shadow-active);
     color: var(--btn-color-active);
-    transform: var(--btn-transform-active, translateY(1px));
+    transform: var(--btn-transform-active);
   }
 }

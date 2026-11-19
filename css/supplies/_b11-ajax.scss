@@ -1,18 +1,13 @@
-// === Ajax Throbber Styles (base11) ===
+// ==========================================================================
+// Стили системного AJAX-индикатора (Throbber) Base11
+// ==========================================================================
 
-.ajax-progress.ajax-progress-throbber {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  background: rgba(204, 204, 204, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@layer b11.components {
+  .ajax-progress.ajax-progress-throbber {
+    background: rgba(204, 204, 204, .6);
+    bottom: 0; left: 0; position: absolute; right: 0; top: 0; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
 
-  .message {
-    display: none;
+    .message { display: none; }
   }
 }

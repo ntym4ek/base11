@@ -1,101 +1,127 @@
-// === Button Styles (base11) ===
-// Единая размерная сетка с элементами форм и полная совместимость с классами модификаторов
+// ==========================================================================
+// Система кнопок Base11 (построена на CSS-переменных и :where() без дублирования)
+// ==========================================================================
 
-@import "b11-mixins";
+@use "b11-mixins" as *;
 
-.button,
-a.button,
-input[type="submit"],
-input[type="button"],
-input[type="reset"] {
-  @include btn();
+// Локальный хелпер переопределения переменных сплошной цветной кнопки
+@mixin _btn-solid-vars($bg, $color) {
+  --btn-bg: #{$bg};
+  --btn-bg-active: color-mix(in srgb, #{$bg}, black 20%);
+  --btn-bg-hover: color-mix(in srgb, #{$bg}, black 12%);
+  --btn-border-color: #{$bg};
+  --btn-border-color-active: color-mix(in srgb, #{$bg}, black 20%);
+  --btn-border-color-hover: color-mix(in srgb, #{$bg}, black 12%);
+  --btn-color: #{$color};
+  --btn-color-active: #{$color};
+  --btn-color-hover: #{$color};
+  --btn-shadow-color: color-mix(in srgb, #{$bg} 25%, transparent);
+  --btn-shadow-color-active: color-mix(in srgb, #{$bg} 20%, transparent);
+  --btn-shadow-color-hover: color-mix(in srgb, #{$bg} 35%, transparent);
+}
 
-  // Базовый размер по умолчанию (md: 44px - WCAG 2.1 touch target)
-  --btn-padding-x: var(--btn-padding-x-md);
-  --btn-padding-y: var(--btn-padding-y-md);
+// Локальный хелпер переопределения переменных контурной (outline) кнопки
+@mixin _btn-outline-vars($color, $hover-color: null, $hover-bg: null) {
+  $resolved-h-bg: if($hover-bg, $hover-bg, color-mix(in srgb, #{$color} 8%, transparent));
+  $resolved-h-color: if($hover-color, $hover-color, color-mix(in srgb, #{$color}, black 15%));
 
-  @include control-size(
-    var(--control-height-md),
-    var(--btn-padding-y),
-    var(--btn-padding-x),
-    var(--btn-font-size-md),
-    var(--btn-radius-md)
-  );
+  --btn-bg: transparent;
+  --btn-bg-active: color-mix(in srgb, #{$color} 15%, transparent);
+  --btn-bg-hover: #{$resolved-h-bg};
+  --btn-border-color: #{$color};
+  --btn-border-color-active: color-mix(in srgb, #{$color}, black 20%);
+  --btn-border-color-hover: #{$resolved-h-color};
+  --btn-color: #{$color};
+  --btn-color-active: color-mix(in srgb, #{$color}, black 20%);
+  --btn-color-hover: #{$resolved-h-color};
+  --btn-shadow: none;
+  --btn-shadow-active: none;
+  --btn-shadow-hover: none;
+}
 
-  background-color: var(--btn-bg);
-  border-color: var(--btn-border-color);
-  border-width: var(--btn-border-width);
-  --shadow-color: var(--btn-shadow-color);
-  box-shadow: var(--btn-shadow);
-  color: var(--btn-color);
+@layer b11.elements {
+  // --- 1. Базовая кнопка (:where() даёт нулевую специфичность и легко перекрывается) ---
+  :where(.button, input[type="submit"], input[type="button"], input[type="reset"]) {
+    // Локальные переменные габаритов и тени (до вложенных правил — без mixed-decls)
+    --btn-padding-x: var(--btn-padding-x-md);
+    --btn-padding-y: var(--btn-padding-y-md);
+    --shadow-color: var(--btn-shadow-color);
 
-  &:visited {
+    @include btn($focus: false);
+    @include control-size(
+      var(--control-height-md),
+      var(--btn-padding-y),
+      var(--btn-padding-x),
+      var(--btn-font-size-md),
+      var(--btn-radius-md)
+    );
+
+    background-color: var(--btn-bg);
+    border-color: var(--btn-border-color); border-width: var(--btn-border-width);
+    box-shadow: var(--btn-shadow);
     color: var(--btn-color);
-  }
 
-  &:hover,
-  &.is-hover {
-    background-color: var(--btn-bg-hover);
-    border-color: var(--btn-border-color-hover);
-    --shadow-color: var(--btn-shadow-color-hover);
-    box-shadow: var(--btn-shadow-hover);
-    color: var(--btn-color-hover);
-  }
-
-  &:active,
-  &.is-active,
-  &.active {
-    background-color: var(--btn-bg-active);
-    border-color: var(--btn-border-color-active);
-    --shadow-color: var(--btn-shadow-color-active);
-    box-shadow: var(--btn-shadow-active);
-    color: var(--btn-color-active);
-    transform: var(--btn-transform-active);
-  }
-
-  &:focus-visible {
-    outline: var(--btn-focus-ring-width) solid var(--btn-focus-ring-color);
-    outline-offset: var(--btn-focus-ring-offset);
-  }
-
-  &:disabled,
-  &.disabled,
-  &[disabled],
-  &.is-disabled,
-  &.button--disabled,
-  fieldset[disabled] & {
-    cursor: not-allowed;
-    background-color: var(--btn-disabled-bg);
-    border-color: var(--btn-disabled-border-color);
-    color: var(--btn-disabled-color);
-    opacity: var(--btn-disabled-opacity);
-    box-shadow: none;
-    pointer-events: none;
-    transform: none;
+    &:visited { color: var(--btn-color); }
 
     &:hover,
-    &:focus,
+    &.is-hover {
+      --shadow-color: var(--btn-shadow-color-hover);
+      background-color: var(--btn-bg-hover); border-color: var(--btn-border-color-hover);
+      box-shadow: var(--btn-shadow-hover);
+      color: var(--btn-color-hover);
+    }
+
+    &:active,
+    &.is-active,
+    &.active {
+      --shadow-color: var(--btn-shadow-color-active);
+      background-color: var(--btn-bg-active); border-color: var(--btn-border-color-active);
+      box-shadow: var(--btn-shadow-active);
+      color: var(--btn-color-active);
+      transform: var(--btn-transform-active);
+    }
+
     &:focus-visible {
-      background-color: var(--btn-disabled-bg);
-      border-color: var(--btn-disabled-border-color);
-      color: var(--btn-disabled-color);
+      outline: var(--btn-focus-ring-width) solid var(--btn-focus-ring-color);
+      outline-offset: var(--btn-focus-ring-offset);
+    }
+
+    &:disabled,
+    &.disabled,
+    &[disabled],
+    &.is-disabled,
+    &.button--disabled {
+      background-color: var(--btn-bg); border-color: var(--btn-border-color);
+      box-shadow: none;
+      color: var(--btn-color); cursor: not-allowed;
+      opacity: var(--btn-disabled-opacity);
+      pointer-events: none;
+      transform: none;
+    }
+
+    // Состояние AJAX-загрузки и ожидания в Drupal
+    &:has(+ .ajax-progress),
+    &:has(.ajax-progress),
+    &.is-loading,
+    &.button--loading,
+    &.is-ajax-waiting {
+      cursor: wait;
+      opacity: var(--btn-loading-opacity);
+      pointer-events: none;
     }
   }
 
-  // Состояние загрузки / AJAX в Drupal
-  &:has(+ .ajax-progress),
-  &:has(.ajax-progress),
-  &.is-loading,
-  &.button--loading,
-  &.is-ajax-waiting {
-    cursor: wait;
-    opacity: var(--btn-loading-opacity);
+  fieldset[disabled] :where(.button, input[type="submit"], input[type="button"], input[type="reset"]) {
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: var(--btn-disabled-opacity);
     pointer-events: none;
+    transform: none;
   }
 
-  // --- Размеры кнопок ---
-  &.button--sm,
-  &.button--small {
+  // --- 2. Модификаторы размеров -------------------------------------------
+  .button--sm,
+  .button--small {
     --btn-padding-x: var(--btn-padding-x-sm);
     --btn-padding-y: var(--btn-padding-y-sm);
 
@@ -108,8 +134,8 @@ input[type="reset"] {
     );
   }
 
-  &.button--lg,
-  &.button--large {
+  .button--lg,
+  .button--large {
     --btn-padding-x: var(--btn-padding-x-lg);
     --btn-padding-y: var(--btn-padding-y-lg);
 
@@ -122,135 +148,87 @@ input[type="reset"] {
     );
   }
 
-  // --- Цветовые модификаторы ---
-  &.button--white {
-    --btn-bg: #ffffff;
+  // --- 3. Цветовые модификаторы (переопределяют только CSS-переменные) ----
+  .button--white {
+    --btn-bg: var(--surface-card);
+    --btn-bg-active: color-mix(in srgb, var(--surface-card) 85%, transparent);
+    --btn-bg-hover: color-mix(in srgb, var(--surface-card) 90%, transparent);
+    --btn-border-color: var(--surface-card);
+    --btn-border-color-active: color-mix(in srgb, var(--surface-card) 85%, transparent);
+    --btn-border-color-hover: color-mix(in srgb, var(--surface-card) 90%, transparent);
     --btn-color: var(--text-color);
-    --btn-color-hover: var(--text-color);
     --btn-color-active: var(--text-color);
-    --shadow-color: color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
-    background-color: var(--btn-bg);
-    border-color: #ffffff;
-    color: var(--btn-color);
-
-    &:visited {
-      color: var(--btn-color);
-    }
-
-    &:hover {
-      --shadow-color: color-mix(in srgb, var(--shadow-base-color) 10%, transparent);
-      background-color: rgba(255, 255, 255, .9); border-color: rgba(255, 255, 255, .9);
-      color: var(--btn-color-hover);
-    }
-
-    &:active,
-    &.is-active,
-    &.active {
-      --shadow-color: color-mix(in srgb, var(--shadow-base-color) 4%, transparent);
-      color: var(--btn-color-active);
-    }
+    --btn-color-hover: var(--text-color);
+    --btn-shadow-color: color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
+    --btn-shadow-color-active: color-mix(in srgb, var(--shadow-base-color) 4%, transparent);
+    --btn-shadow-color-hover: color-mix(in srgb, var(--shadow-base-color) 10%, transparent);
   }
 
-  &.button--primary {
-    @include button-solid(var(--brand-primary), #ffffff);
+  .button--primary { @include _btn-solid-vars(var(--brand-primary), var(--on-primary)); }
+  .button--success { @include _btn-solid-vars(var(--brand-success), var(--on-success)); }
+  .button--info    { @include _btn-solid-vars(var(--brand-info), var(--on-info)); }
+  .button--warning { @include _btn-solid-vars(var(--brand-warning), var(--on-warning)); }
+  .button--danger  { @include _btn-solid-vars(var(--brand-danger), var(--on-danger)); }
+
+  // --- 4. Контурные кнопки (Outline) --------------------------------------
+  .button--outline {
+    @include _btn-outline-vars(var(--brand-primary));
+
+    &.button--white   { @include _btn-outline-vars(var(--surface-card), color-mix(in srgb, var(--surface-card) 90%, transparent), transparent); }
+    &.button--primary { @include _btn-outline-vars(var(--brand-primary)); }
+    &.button--success { @include _btn-outline-vars(var(--brand-success)); }
+    &.button--danger  { @include _btn-outline-vars(var(--brand-danger)); }
+    &.button--warning { @include _btn-outline-vars(var(--brand-warning)); }
+    &.button--info    { @include _btn-outline-vars(var(--brand-info)); }
   }
 
-  &.button--success {
-    @include button-solid(var(--brand-success), #ffffff);
-  }
+  // --- 5. Кнопка в виде ссылки --------------------------------------------
+  .button--link {
+    --btn-bg: transparent;
+    --btn-bg-active: transparent;
+    --btn-bg-hover: transparent;
+    --btn-border-color: transparent;
+    --btn-border-color-active: transparent;
+    --btn-border-color-hover: transparent;
+    --btn-color: var(--brand-primary);
+    --btn-color-active: var(--brand-primary-active);
+    --btn-color-hover: var(--brand-primary-hover);
+    --btn-shadow: none;
+    --btn-shadow-active: none;
+    --btn-shadow-hover: none;
+    --btn-transform-active: none;
 
-  &.button--info {
-    @include button-solid(var(--brand-info), #ffffff);
-  }
-
-  &.button--warning {
-    @include button-solid(var(--brand-warning), #ffffff);
-  }
-
-  &.button--danger {
-    @include button-solid(var(--brand-danger), #ffffff);
-  }
-
-  // Контурные кнопки (Outline)
-  &.button--outline {
-    @include button-outline(var(--brand-primary));
-
-    &.button--white {
-      @include button-outline(#ffffff, rgba(255, 255, 255, .9), transparent);
-    }
-
-    &.button--primary {
-      @include button-outline(var(--brand-primary));
-    }
-
-    &.button--success {
-      @include button-outline(var(--brand-success));
-    }
-
-    &.button--danger {
-      @include button-outline(var(--brand-danger));
-    }
-
-    &.button--warning {
-      @include button-outline(var(--brand-warning));
-    }
-
-    &.button--info {
-      @include button-outline(var(--brand-info));
-    }
-  }
-
-  // Кнопка в виде ссылки
-  &.button--link {
-    background-color: transparent;
-    border-color: transparent; border-radius: 0;
-    box-shadow: none;
-    color: var(--brand-primary);
+    border-radius: 0;
     font-weight: 400;
     min-height: auto;
     padding: 0;
 
     &:hover,
-    &:focus-visible {
-      background-color: transparent;
-      border-color: transparent;
-      box-shadow: none;
-      color: var(--brand-primary-hover);
-      text-decoration: underline;
-    }
-
+    &:focus-visible,
     &:active,
     &.is-active,
     &.active {
-      background-color: transparent;
-      border-color: transparent;
-      box-shadow: none;
-      color: var(--brand-primary-active);
       text-decoration: underline;
-      transform: none;
     }
   }
 
-  // --- Вспомогательные модификаторы ---
-  &.button--wide {
+  // --- 6. Вспомогательные модификаторы ------------------------------------
+  .button--wide {
     padding-left: calc(var(--btn-padding-x) * var(--btn-wide-ratio)); padding-right: calc(var(--btn-padding-x) * var(--btn-wide-ratio));
   }
 
-  &.button--full-width {
-    width: 100%;
-  }
+  .button--full-width { width: 100%; }
 
-  &.button--full-height {
+  .button--full-height {
     display: inline-flex;
     height: 100%;
   }
 
-  &.button--uppercase {
-    text-transform: uppercase;
-    letter-spacing: .05em;
+  .button--uppercase {
+    letter-spacing: .05em; text-transform: uppercase;
   }
 
-  &.button--icon {
+  .button--icon {
     background: none;
     border: none;
     box-shadow: none;
@@ -258,33 +236,28 @@ input[type="reset"] {
     padding: .5rem;
   }
 
-  &.button--with-icon-right .icon {
-    margin-left: .5rem;
-  }
+  .button--with-icon-right .icon { margin-left: .5rem; }
+  .button--with-icon-left .icon  { margin-right: .5rem; }
 
-  &.button--with-icon-left .icon {
-    margin-right: .5rem;
-  }
-
-  &.button--badge {
+  .button--badge {
     position: relative;
+
     .badge {
-      position: absolute; top: -.5rem; right: -.5rem;
-      background: var(--brand-danger);
-      border-radius: 999px;
-      color: #fff; font-size: var(--font-size-xs); line-height: 1;
+      background: var(--brand-danger); border-radius: 999px;
+      color: var(--on-danger); font-size: var(--font-size-xs); line-height: 1;
       padding: .2em .5em;
+      position: absolute; right: -.5rem; top: -.5rem;
     }
   }
 
-  &.button--file {
-    position: relative;
+  .button--file {
     overflow: hidden;
+    position: relative;
+
     input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
       cursor: pointer;
+      inset: 0; opacity: 0;
+      position: absolute;
     }
   }
 }

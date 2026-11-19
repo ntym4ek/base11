@@ -1,31 +1,33 @@
 // ==========================================================================
-// Base11 - Главный файл стилей темы
+// Base11 — Единая точка входа базовых стилей темы
 // ==========================================================================
+// Подключается в project.scss дочерней темы через @use:
+//   @use "../../base11/css/supplies/styles";
+// Для изменения числа колонок сетки в проекте (например, 10):
+//   @use "../../base11/css/supplies/styles" with ($grid-columns: 10);
 
-// 1. Дизайн-токены, переменные и миксины
-@import "b11-tokens";
-@import "b11-grid-variables";
-@import "b11-mixins";
+// 1. Проброс публичного Sass API (переменные должны идти первыми для работы with (...))
+@forward "b11-grid-variables";
+@forward "b11-mixins";
+@forward "b11-grid-mixins";
 
-// 2. Базовые стили и сетка
-@import "b11-base";
-@import "b11-drupal-core";
-@import "b11-grid";
-@import "b11-layout";
-@import "b11-media";
+// 2. Декларация порядка каскадных слоёв (выполняется строго до CSS-правил)
+@use "b11-layers";
 
-// 3. Контролы (кнопки и формы)
-@import "b11-buttons";
-@import "b11-forms";
-
-// 4. Навигация и системные элементы
-@import "b11-menu";
-@import "b11-menu-mobile";
-@import "b11-breadcrumbs";
-@import "b11-dialog";
-
-
-// 5. Утилиты и вспомогательные стили
-@import "b11-ajax";
-@import "b11-helper";
-@import "b11-print";
+// 3. Базовые слои, токены, сетка, элементы, компоненты ядра и утилиты
+@use "b11-reset";
+@use "b11-tokens";
+@use "b11-base";
+@use "b11-grid";
+@use "b11-layout";
+@use "b11-buttons";
+@use "b11-forms";
+@use "b11-media";
+@use "b11-drupal-core";
+@use "b11-menu";
+@use "b11-menu-mobile";
+@use "b11-breadcrumbs";
+@use "b11-dialog";
+@use "b11-ajax";
+@use "b11-helper";
+@use "b11-print";

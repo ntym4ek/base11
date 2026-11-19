@@ -1,665 +1,583 @@
-// === Form Styles (base11) ===
-// Единая размерная сетка с кнопками, современный a11y фокус и чистая стилизация контролов
+// ==========================================================================
+// Стили элементов форм, аккордеонов и системных вкладок Base11
+// ==========================================================================
 
+@use "b11-grid-variables" as *;
+@use "b11-mixins" as *;
 
-@import "b11-grid-variables";
-@import "b11-mixins";
+@layer b11.elements {
+  // --- 1. Базовые поля форм (Form Item, Inputs, Select, Textarea) ---------
+  .form-item {
+    margin: 0 0 1rem;
+    position: relative;
 
-.form-item {
-  margin: 0 0 1rem;
-  position: relative;
-
-  label,
-  .label,
-  .form-item__label {
-    color: var(--label-color);
-    display: block;
-    font-family: inherit; font-size: var(--font-size-base); font-weight: var(--label-weight); line-height: var(--line-height-base);
-    margin: 0;
-
-    &.option {
-      display: inline;
-    }
-
-    &:not(.option) {
-      margin-bottom: var(--label-gap-y);
-    }
-
-    &.form-required::after {
-      color: var(--brand-danger);
-      content: "*";
-      margin-left: .25rem;
-    }
-  }
-
-  // Текстовые поля ввода и селекты
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="date"],
-  input[type="time"],
-  input[type="number"],
-  input[type="password"],
-  input[type="search"],
-  input[type="url"],
-  select {
-    width: 100%;
-    max-width: 100%;
-    background-color: var(--input-bg);
-    border: var(--input-border-width) solid var(--input-border-color);
-    color: var(--input-color);
-    font-weight: var(--input-font-weight);
-    outline: none;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-
-    // Базовый размер контрола (высота 44px совпадает с кнопкой, отступы компактные для текста)
-    @include control-size(
-      var(--control-height-md),
-      var(--input-padding-y-md),
-      var(--input-padding-x-md),
-      var(--input-font-size-md),
-      var(--input-radius-md)
-    );
-
-    // Модификаторы размеров полей
-    &.input--sm,
-    &.form-control-sm {
-      @include control-size(
-        var(--control-height-sm),
-        var(--input-padding-y-sm),
-        var(--input-padding-x-sm),
-        var(--input-font-size-sm),
-        var(--input-radius-sm)
-      );
-    }
-
-    &.input--lg,
-    &.form-control-lg {
-      @include control-size(
-        var(--control-height-lg),
-        var(--input-padding-y-lg),
-        var(--input-padding-x-lg),
-        var(--input-font-size-lg),
-        var(--input-radius-lg)
-      );
-    }
-
-    &::placeholder {
-      color: var(--input-placeholder-color);
-      opacity: 1;
-    }
-
-    &:hover:not(:focus):not(:disabled) {
-      border-color: var(--input-border-hover);
-    }
-
-    &:focus,
-    &:focus-visible {
-      border-color: var(--input-border-focus);
-      outline: none;
-    }
-
-    &.error,
-    &[aria-invalid="true"] {
-      border-color: var(--input-border-error);
-      background-color: var(--input-bg-error);
-    }
-
-    &:disabled,
-    &[disabled],
-    &.is-disabled {
-      background-color: var(--input-bg-disabled);
-      border-color: var(--input-border-disabled);
-      color: var(--input-color-disabled);
-      cursor: not-allowed;
-      opacity: .85;
-    }
-  }
-
-  // Селекты со стрелкой
-  select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%237D7C7C'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right .75rem center;
-    background-size: 1rem 1rem;
-    padding-right: 2.5rem;
-    cursor: pointer;
-  }
-
-  // Текстовая область (Textarea)
-  textarea {
-    width: 100%;
-    max-width: 100%;
-    background-color: var(--input-bg);
-    border: var(--input-border-width) solid var(--input-border-color);
-    color: var(--input-color);
-    border-radius: var(--input-radius-md);
-    padding: var(--input-padding-y-md) var(--input-padding-x-md);
-    font-size: var(--input-font-size-md);
-    font-weight: var(--input-font-weight);
-    line-height: var(--control-line-height);
-    font-family: inherit;
-    resize: vertical;
-    min-height: 5rem;
-    outline: none;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-
-    &::placeholder {
-      color: var(--input-placeholder-color);
-      opacity: 1;
-    }
-
-    &:hover:not(:focus):not(:disabled) {
-      border-color: var(--input-border-hover);
-    }
-
-    &:focus,
-    &:focus-visible {
-      border-color: var(--input-border-focus);
-      outline: none;
-    }
-
-    &.error,
-    &[aria-invalid="true"] {
-      border-color: var(--input-border-error);
-      background-color: var(--input-bg-error);
-    }
-
-    &:disabled,
-    &[disabled],
-    &.is-disabled {
-      background-color: var(--input-bg-disabled);
-      border-color: var(--input-border-disabled);
-      color: var(--input-color-disabled);
-      cursor: not-allowed;
-      opacity: .85;
-    }
-  }
-
-  :is(.description, .form-item__description) {
-    color: var(--text-muted);
-    font-size: var(--font-size-sm);
-    margin-top: .35rem;
-  }
-}
-
-// --- Кастомные радиокнопки ---
-.form-type-radio {
-  display: flex; flex-wrap: wrap; align-items: center;
-  position: relative;
-
-  input {
-    appearance: none;
-    background-color: var(--surface-card);
-    background-position: center; background-repeat: no-repeat; background-size: contain;
-    border: 1px solid var(--border-color); border-radius: 50%;
-    cursor: pointer;
-    flex-shrink: 0;
-    margin: 0 .5rem 0 0;
-    transition: background-color var(--transition-fast), border-color var(--transition-fast);
-    width: 1.15rem; height: 1.15rem;
-
-    @include focus-ring;
-
-    &:checked {
-      background-color: var(--surface-card);
-      background-image: radial-gradient(circle, var(--brand-primary) 45%, transparent 50%);
-      border-color: var(--brand-primary);
-    }
-
-    &:hover:not(:disabled) {
-      border-color: var(--brand-primary);
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: .5;
-
-      ~ label {
-        cursor: not-allowed;
-        opacity: .5;
-      }
-    }
-
-    &.error {
-      border-color: var(--brand-danger);
-    }
-  }
-
-  label.option {
-    color: var(--text-color);
-    cursor: pointer;
-    margin-bottom: 0;
-  }
-
-  :is(.description, .form-item__description) {
-    color: var(--text-muted);
-    flex-basis: 100%;
-    font-size: var(--font-size-sm); line-height: var(--line-height-sm);
-    margin-left: calc(1.15rem + .5rem); margin-top: .35rem;
-    width: 100%;
-  }
-}
-
-// --- Кастомные чекбоксы ---
-.form-type-checkbox {
-  display: flex; flex-wrap: wrap; align-items: center;
-  position: relative;
-
-  input {
-    appearance: none;
-    background-color: var(--surface-card);
-    background-position: center; background-repeat: no-repeat; background-size: 80%;
-    border: 1px solid var(--border-color); border-radius: .2rem;
-    cursor: pointer;
-    flex-shrink: 0;
-    margin: 0 .5rem 0 0;
-    transition: background-color var(--transition-fast), border-color var(--transition-fast);
-    width: 1.15rem; height: 1.15rem;
-
-    @include focus-ring;
-
-    &:checked {
-      background-color: var(--brand-primary);
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='m4 10 4 4 8-8'/%3e%3c/svg%3e");
-      border-color: var(--brand-primary);
-    }
-
-    &:hover:not(:disabled) {
-      border-color: var(--brand-primary);
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: .5;
-
-      ~ label {
-        cursor: not-allowed;
-        opacity: .5;
-      }
-    }
-
-    &.error {
-      border-color: var(--brand-danger);
-    }
-  }
-
-  label.option {
-    color: var(--text-color);
-    cursor: pointer;
-    margin-bottom: 0;
-  }
-
-  :is(.description, .form-item__description) {
-    color: var(--text-muted);
-    flex-basis: 100%;
-    font-size: var(--font-size-sm); line-height: var(--line-height-sm);
-    margin-left: calc(1.15rem + .5rem); margin-top: .35rem;
-    width: 100%;
-  }
-}
-
-// --- Формы даты/времени (Datetime Form Elements) ----------------------------
-.form-datetime-wrapper,
-.field--type-datetime {
-  .container-inline {
-    display: flex; flex-wrap: wrap; gap: .5rem;
-
-    .form-item {
-      margin: 0;
-    }
-  }
-}
-
-// --- Текстовые поля только для чтения (Item Form Elements) -------------------
-.form-type-item {
-  color: var(--text-color);
-  line-height: var(--line-height-base);
-}
-
-// --- Метаданные сущности (Entity Meta) ---------------------------------------
-.entity-meta {
-  &__title {
-    color: var(--text-color);
-    font-size: var(--font-size-lg); font-weight: 700; line-height: var(--line-height-sm);
-    margin-bottom: 1.25rem;
-  }
-
-  &__last-saved,
-  &__author,
-  .form-type-item {
-    display: flex; flex-direction: column; gap: var(--label-gap-y, .25rem);
-    margin-bottom: 1rem;
-
-    label {
+    label,
+    .label,
+    .form-item__label {
       color: var(--label-color);
       display: block;
-      font-weight: var(--label-weight);
+      font-family: inherit; font-size: var(--font-size-base); font-weight: var(--label-weight); line-height: var(--line-height-base);
+      margin: 0;
+
+      &.option { display: inline; }
+      &:not(.option) { margin-bottom: var(--label-gap-y); }
+
+      &.form-required::after {
+        color: var(--brand-danger);
+        content: "*";
+        margin-left: .25rem;
+      }
+    }
+
+    // Текстовые поля ввода и выпадающие списки (:where() снижает вес длинного списка селекторов)
+    :where(
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="date"],
+      input[type="time"],
+      input[type="number"],
+      input[type="password"],
+      input[type="search"],
+      input[type="url"],
+      select
+    ) {
+      @include control-size(
+        var(--control-height-md),
+        var(--input-padding-y-md),
+        var(--input-padding-x-md),
+        var(--input-font-size-md),
+        var(--input-radius-md)
+      );
+
+      background-color: var(--input-bg);
+      border: var(--input-border-width) solid var(--input-border-color);
+      color: var(--input-color); font-weight: var(--input-font-weight);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      width: 100%; max-width: 100%;
+
+      &.input--sm,
+      &.form-control-sm {
+        @include control-size(
+          var(--control-height-sm),
+          var(--input-padding-y-sm),
+          var(--input-padding-x-sm),
+          var(--input-font-size-sm),
+          var(--input-radius-sm)
+        );
+      }
+
+      &.input--lg,
+      &.form-control-lg {
+        @include control-size(
+          var(--control-height-lg),
+          var(--input-padding-y-lg),
+          var(--input-padding-x-lg),
+          var(--input-font-size-lg),
+          var(--input-radius-lg)
+        );
+      }
+
+      &::placeholder {
+        color: var(--input-placeholder-color);
+        opacity: 1;
+      }
+
+      &:hover:not(:focus):not(:disabled) { border-color: var(--input-border-hover); }
+
+      &:focus,
+      &:focus-visible {
+        border-color: var(--input-border-focus);
+        outline: none;
+      }
+
+      &.error,
+      &[aria-invalid="true"] {
+        background-color: var(--input-bg-error);
+        border-color: var(--input-border-error);
+      }
+
+      &:disabled,
+      &[disabled],
+      &.is-disabled {
+        background-color: var(--input-bg-disabled);
+        border-color: var(--input-border-disabled);
+        color: var(--input-color-disabled); cursor: not-allowed;
+        opacity: .85;
+      }
+    }
+
+    // Выпадающий список (Select) со встроенным индикатором стрелки
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%237D7C7C'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+      background-position: right .75rem center; background-repeat: no-repeat; background-size: 1rem 1rem;
+      cursor: pointer;
+      padding-right: 2.5rem;
+    }
+
+    // Многострочное поле ввода (Textarea)
+    textarea {
+      background-color: var(--input-bg);
+      border: var(--input-border-width) solid var(--input-border-color); border-radius: var(--input-radius-md);
+      color: var(--input-color); font-family: inherit; font-size: var(--input-font-size-md); font-weight: var(--input-font-weight); line-height: var(--control-line-height);
+      min-height: 5rem; max-width: 100%; width: 100%;
+      outline: none;
+      padding: var(--input-padding-y-md) var(--input-padding-x-md);
+      resize: vertical;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+      &::placeholder {
+        color: var(--input-placeholder-color);
+        opacity: 1;
+      }
+
+      &:hover:not(:focus):not(:disabled) { border-color: var(--input-border-hover); }
+
+      &:focus,
+      &:focus-visible {
+        border-color: var(--input-border-focus);
+        outline: none;
+      }
+
+      &.error,
+      &[aria-invalid="true"] {
+        background-color: var(--input-bg-error);
+        border-color: var(--input-border-error);
+      }
+
+      &:disabled,
+      &[disabled],
+      &.is-disabled {
+        background-color: var(--input-bg-disabled);
+        border-color: var(--input-border-disabled);
+        color: var(--input-color-disabled); cursor: not-allowed;
+        opacity: .85;
+      }
+    }
+
+    :is(.description, .form-item__description) {
+      color: var(--text-muted); font-size: var(--font-size-sm);
+      margin-top: .35rem;
+    }
+  }
+
+  // --- 2. Кастомные радиокнопки -------------------------------------------
+  .form-type-radio {
+    display: flex; flex-wrap: wrap; align-items: center;
+    position: relative;
+
+    input {
+      appearance: none;
+      background-color: var(--surface-card); background-position: center; background-repeat: no-repeat; background-size: contain;
+      border: 1px solid var(--border-color); border-radius: 50%;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 0 .5rem 0 0;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast);
+      width: 1.15rem; height: 1.15rem;
+
+      @include focus-ring;
+
+      &:checked {
+        background-color: var(--surface-card); background-image: radial-gradient(circle, var(--brand-primary) 45%, transparent 50%);
+        border-color: var(--brand-primary);
+      }
+
+      &:hover:not(:disabled) { border-color: var(--brand-primary); }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: .5;
+
+        ~ label {
+          cursor: not-allowed;
+          opacity: .5;
+        }
+      }
+
+      &.error { border-color: var(--brand-danger); }
+    }
+
+    label.option {
+      color: var(--text-color); cursor: pointer;
       margin-bottom: 0;
     }
-  }
-}
 
-// --- Раскладка формы сущности (Entity / Node Edit Form Layout) ----------------
-.layout-node-form {
-  display: grid; grid-template-columns: 1fr; gap: 1.5rem;
-  margin-bottom: 2.5rem; width: 100%;
-
-  .layout-region-node-main {
-    min-width: 0;
-  }
-
-  .layout-region-node-secondary {
-    min-width: 0;
-  }
-
-  .layout-region-node-footer {
-    grid-column: 1 / -1;
-  }
-
-  @media #{$tablet} {
-    grid-template-columns: minmax(0, 1fr) 340px; align-items: start; gap: 2rem;
-
-    .layout-region-node-secondary {
-      position: sticky; top: 1.5rem;
+    :is(.description, .form-item__description) {
+      color: var(--text-muted); font-size: var(--font-size-sm); line-height: var(--line-height-sm);
+      flex-basis: 100%;
+      margin-left: calc(1.15rem + .5rem); margin-top: .35rem;
+      width: 100%;
     }
   }
-}
 
-// --- Аккордеоны и группировки (Details & Fieldsets) ---------------------------
-details {
-  border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
-  margin: 1.25rem 0;
-  transition: border-color var(--transition-fast);
-
-  > summary {
-    background-color: var(--page-bg);
-    border-bottom: 1px solid transparent;
-    color: var(--text-color); cursor: pointer;
-    display: flex; align-items: center;
-    font-size: var(--font-size-base); font-weight: 600;
-    list-style: none;
-    padding: .875rem 1.25rem;
+  // --- 3. Кастомные чекбоксы ----------------------------------------------
+  .form-type-checkbox {
+    display: flex; flex-wrap: wrap; align-items: center;
     position: relative;
-    transition: background-color var(--transition-fast), border-color var(--transition-fast);
 
-    &::-webkit-details-marker {
-      display: none;
+    input {
+      appearance: none;
+      background-color: var(--surface-card); background-position: center; background-repeat: no-repeat; background-size: 80%;
+      border: 1px solid var(--border-color); border-radius: .2rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 0 .5rem 0 0;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast);
+      width: 1.15rem; height: 1.15rem;
+
+      @include focus-ring;
+
+      &:checked {
+        background-color: var(--brand-primary);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='m4 10 4 4 8-8'/%3e%3c/svg%3e");
+        border-color: var(--brand-primary);
+      }
+
+      &:hover:not(:disabled) { border-color: var(--brand-primary); }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: .5;
+
+        ~ label {
+          cursor: not-allowed;
+          opacity: .5;
+        }
+      }
+
+      &.error { border-color: var(--brand-danger); }
     }
 
-    &::after {
-      background-color: var(--text-muted);
-      content: '';
-      display: inline-block;
-      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / contain;
-      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / contain;
-      position: absolute; right: 1.25rem; top: calc(50% - 8px);
-      transition: transform var(--transition-fast);
-      width: 16px; height: 16px;
+    label.option {
+      color: var(--text-color); cursor: pointer;
+      margin-bottom: 0;
     }
 
-    &:hover {
-      background-color: color-mix(in srgb, var(--border-color-light) 40%, var(--page-bg));
+    :is(.description, .form-item__description) {
+      color: var(--text-muted); font-size: var(--font-size-sm); line-height: var(--line-height-sm);
+      flex-basis: 100%;
+      margin-left: calc(1.15rem + .5rem); margin-top: .35rem;
+      width: 100%;
     }
   }
 
-  &[open] {
-    border-color: var(--border-color);
+  // --- 4. Поля даты/времени и поля только для чтения ----------------------
+  .form-datetime-wrapper,
+  .field--type-datetime {
+    .container-inline {
+      display: flex; flex-wrap: wrap; gap: .5rem;
 
-    > summary {
-      border-bottom-color: var(--border-color-light);
+      .form-item { margin: 0; }
+    }
+  }
 
-      &::after {
-        transform: rotate(180deg);
+  .form-type-item {
+    color: var(--text-color); line-height: var(--line-height-base);
+  }
+
+  // --- 5. Метаданные сущности в форме редактирования ----------------------
+  .entity-meta {
+    &__title {
+      color: var(--text-color); font-size: var(--font-size-lg); font-weight: 700; line-height: var(--line-height-sm);
+      margin-bottom: 1.25rem;
+    }
+
+    &__last-saved,
+    &__author,
+    .form-type-item {
+      display: flex; flex-direction: column; gap: var(--label-gap-y);
+      margin-bottom: 1rem;
+
+      label {
+        color: var(--label-color); font-weight: var(--label-weight);
+        display: block;
+        margin-bottom: 0;
       }
     }
   }
 
-  > .details-wrapper {
-    padding: 1.25rem 1.5rem;
+  // --- 6. Двухколоночная раскладка формы редактирования сущности ----------
+  .layout-node-form {
+    display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+
+    .layout-region-node-main,
+    .layout-region-node-secondary {
+      min-width: 0;
+    }
+
+    .layout-region-node-footer { grid-column: 1 / -1; }
+
+    @media #{$tablet} {
+      align-items: start; gap: 2rem; grid-template-columns: minmax(0, 1fr) 340px;
+
+      .layout-region-node-secondary { position: sticky; top: 1.5rem; }
+    }
+  }
+
+  // --- 7. Раскрывающиеся блоки (Details) ----------------------------------
+  details {
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+    margin: 1.25rem 0;
+    transition: border-color var(--transition-fast);
+
+    > summary {
+      background-color: var(--page-bg);
+      border-bottom: 1px solid transparent;
+      color: var(--text-color); cursor: pointer; font-size: var(--font-size-base); font-weight: 600;
+      display: flex; align-items: center;
+      list-style: none;
+      padding: .875rem 1.25rem;
+      position: relative;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast);
+
+      &::-webkit-details-marker { display: none; }
+
+      &::after {
+        background-color: var(--text-muted);
+        content: '';
+        display: inline-block;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / contain;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / contain;
+        position: absolute; right: 1.25rem; top: calc(50% - 8px);
+        transition: transform var(--transition-fast);
+        width: 16px; height: 16px;
+      }
+
+      &:hover { background-color: var(--surface-hover); }
+    }
+
+    &[open] {
+      border-color: var(--border-color);
+
+      > summary {
+        border-bottom-color: var(--border-color-light);
+
+        &::after { transform: rotate(180deg); }
+      }
+    }
+
+    > .details-wrapper { padding: 1.25rem 1.5rem; }
+  }
+
+  // --- 8. Панель кнопок действий формы ------------------------------------
+  .form-actions {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .75rem;
+    margin: 1.5rem 0;
+
+    .button--primary,
+    button[id*="edit-submit"],
+    input[id*="edit-submit"] {
+      order: 1;
+    }
+
+    .button--secondary,
+    button[id*="edit-preview"],
+    input[id*="edit-preview"] {
+      order: 2;
+    }
+
+    .button--danger,
+    a[id*="edit-delete"],
+    button[id*="edit-delete"],
+    input[id*="edit-delete"] {
+      margin-left: auto;
+      order: 3;
+    }
   }
 }
 
-// --- Горизонтальные вкладки (Fieldgroup Horizontal Tabs) ---------------------
-.field-group-tabs-wrapper,
-.horizontal-tabs {
-  background: transparent;
-  border: none;
-  margin: 1.5rem 0;
-  position: relative;
+@layer b11.components {
+  // --- 9. Горизонтальные вкладки (Fieldgroup Horizontal Tabs) -------------
+  // Вынесены в более высокий слой b11.components, чтобы базовый details не ломал вкладки.
+  .field-group-tabs-wrapper,
+  .horizontal-tabs {
+    background: transparent;
+    border: none;
+    margin: 1.5rem 0;
+    position: relative;
 
-  // Плейсхолдер шапки закладок до инициализации JS (предотвращает прыжок высоты CLS)
-  &:has(> ul.horizontal-tabs-list.visually-hidden) {
-    &::before {
+    // Плейсхолдер шапки закладок до инициализации JS (защита от сдвига CLS)
+    &:has(> ul.horizontal-tabs-list.visually-hidden)::before {
       border-bottom: 1px solid var(--border-color);
       content: '';
       display: block;
       height: 2.75rem; width: 100%;
     }
-  }
 
-  ul.horizontal-tabs-list {
-    background: transparent;
-    border: none; border-bottom: 1px solid var(--border-color);
-    display: flex; flex-wrap: wrap; align-items: flex-end; gap: .25rem;
-    height: auto; width: 100%;
-    list-style: none;
-    margin: 0; padding: 0;
-
-    .horizontal-tab-button {
+    ul.horizontal-tabs-list {
       background: transparent;
-      border: none;
-      float: none;
-      margin: 0; min-width: 0;
-      padding: 0;
+      border: none; border-bottom: 1px solid var(--border-color);
+      display: flex; flex-wrap: wrap; align-items: flex-end; gap: .25rem;
+      height: auto; width: 100%;
+      list-style: none;
+      margin: 0; padding: 0;
 
-      a {
-        background-color: var(--page-bg);
-        border: 1px solid var(--border-color-light); border-bottom: 1px solid transparent;
-        border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
-        color: var(--text-muted);
-        display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
-        font-size: var(--font-size-base); font-weight: 500; line-height: var(--line-height-sm);
-        position: relative;
-        text-decoration: none;
-        transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-
-        &:hover {
-          background-color: color-mix(in srgb, var(--border-color-light) 60%, var(--page-bg));
-          color: var(--text-color);
-          outline: none;
-        }
-
-        strong {
-          font-weight: inherit;
-        }
-      }
-
-      &.selected {
+      .horizontal-tab-button {
         background: transparent;
         border: none;
-
-        a {
-          background-color: var(--surface-card);
-          border: 1px solid var(--border-color); border-bottom: 1px solid var(--surface-card);
-          border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
-          color: var(--text-color); font-weight: 600;
-          margin-bottom: -1px;
-          position: relative; z-index: 2;
-        }
-      }
-    }
-  }
-
-  [data-horizontal-tabs-panes],
-  .horizontal-tabs-panes {
-    background: transparent;
-    border: none;
-    padding: 0;
-
-    // Скрываем summary аккордеонов (названия выводятся в кнопках закладок)
-    > details > summary {
-      display: none !important;
-    }
-
-    // Если в URL передан якорь на конкретную секцию или поле внутри неё — показываем целевую
-    &:has(> details:target, > details:has(:target)) {
-      > details:not(:target):not(:has(:target)) {
-        display: none;
-      }
-    }
-
-    // До инициализации JS: скрываем последующие секции, предотвращая эффект вертикальной простыни
-    > details:not(.horizontal-tabs-pane):not(:first-of-type) {
-      display: none;
-    }
-
-    > details {
-      background: transparent;
-      border: none; border-radius: 0;
-      box-shadow: none;
-      margin: 0;
-      padding: 1.25rem 0 0;
-
-      > .details-wrapper {
+        float: none;
+        margin: 0; min-width: 0;
         padding: 0;
+
+        a {
+          background-color: var(--page-bg);
+          border: 1px solid var(--border-color-light); border-bottom: 1px solid transparent;
+          border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
+          color: var(--text-muted); font-size: var(--font-size-base); font-weight: 500; line-height: var(--line-height-sm);
+          display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
+          position: relative;
+          text-decoration: none;
+          transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+
+          &:hover {
+            background-color: var(--surface-hover);
+            color: var(--text-color);
+            outline: none;
+          }
+
+          strong { font-weight: inherit; }
+        }
+
+        &.selected {
+          background: transparent;
+          border: none;
+
+          a {
+            background-color: var(--surface-card);
+            border: 1px solid var(--border-color); border-bottom: 1px solid var(--surface-card);
+            border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
+            color: var(--text-color); font-weight: 600;
+            margin-bottom: -1px;
+            position: relative; z-index: 2;
+          }
+        }
+      }
+    }
+
+    [data-horizontal-tabs-panes],
+    .horizontal-tabs-panes {
+      background: transparent;
+      border: none;
+      padding: 0;
+
+      // Скрываем summary аккордеонов (названия выводятся в кнопках закладок)
+      > details > summary { display: none !important; }
+
+      // При переходе по якорю показываем целевую вкладку до инициализации JS
+      &:has(> details:target, > details:has(:target)) {
+        > details:not(:target):not(:has(:target)) { display: none; }
+      }
+
+      // До инициализации JS скрываем последующие панели, избегая вертикальной простыни
+      > details:not(.horizontal-tabs-pane):not(:first-of-type) { display: none; }
+
+      > details {
+        background: transparent;
+        border: none; border-radius: 0;
+        box-shadow: none;
+        margin: 0; padding: 1.25rem 0 0;
+
+        > .details-wrapper { padding: 0; }
       }
     }
   }
-}
 
-// --- Вертикальные вкладки (Vertical Tabs) ------------------------------------
-.vertical-tabs {
-  background-color: var(--surface-card);
-  border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
-  display: flex; flex-direction: column;
-  margin: 1.5rem 0;
-  position: relative;
-
-  .vertical-tabs__menu {
-    background-color: var(--page-bg);
-    border: none; border-bottom: 1px solid var(--border-color-light);
+  // --- 10. Вертикальные вкладки (Vertical Tabs) ---------------------------
+  .vertical-tabs {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
     display: flex; flex-direction: column;
-    float: none;
-    list-style: none;
-    margin: 0; padding: 0;
-    position: relative; z-index: 1;
-    width: 100%;
+    margin: 1.5rem 0;
+    position: relative;
 
-    .vertical-tabs__menu-item {
-      background: transparent;
+    .vertical-tabs__menu {
+      background-color: var(--page-bg);
       border: none; border-bottom: 1px solid var(--border-color-light);
-      margin: 0;
-      position: relative;
-      transition: background-color var(--transition-fast);
+      display: flex; flex-direction: column;
+      float: none;
+      list-style: none;
+      margin: 0; padding: 0;
+      position: relative; z-index: 1;
+      width: 100%;
 
-      &:last-child {
-        border-bottom: none;
-      }
+      .vertical-tabs__menu-item {
+        background: transparent;
+        border: none; border-bottom: 1px solid var(--border-color-light);
+        margin: 0;
+        position: relative;
+        transition: background-color var(--transition-fast);
 
-      a {
-        color: var(--text-color);
-        display: block;
-        padding: .75rem 1rem;
-        text-decoration: none;
-        transition: background-color var(--transition-fast), color var(--transition-fast);
-
-        &:hover {
-          background-color: color-mix(in srgb, var(--border-color-light) 40%, var(--page-bg));
-          outline: none;
-        }
-      }
-
-      &.is-selected {
-        background-color: var(--surface-card);
+        &:last-child { border-bottom: none; }
 
         a {
-          color: var(--text-color);
+          color: var(--text-color); text-decoration: none;
+          display: block;
+          padding: .75rem 1rem;
+          transition: background-color var(--transition-fast), color var(--transition-fast);
+
+          &:hover {
+            background-color: var(--surface-hover);
+            outline: none;
+          }
+        }
+
+        &.is-selected {
+          background-color: var(--surface-card);
+
+          a { color: var(--text-color); }
+          .vertical-tabs__menu-item-title { font-weight: 700; }
         }
 
         .vertical-tabs__menu-item-title {
-          font-weight: 700;
+          color: var(--text-color); font-size: var(--font-size-base); font-weight: 600; line-height: var(--line-height-sm);
+          display: block;
+          transition: color var(--transition-fast);
         }
-      }
 
-      .vertical-tabs__menu-item-title {
-        color: var(--text-color);
-        display: block;
-        font-size: var(--font-size-base); font-weight: 600; line-height: var(--line-height-sm);
-        transition: color var(--transition-fast);
-      }
-
-      .vertical-tabs__menu-item-summary {
-        color: var(--text-muted);
-        display: block;
-        font-size: var(--font-size-sm); line-height: var(--line-height-sm);
-        margin-top: .15rem;
-      }
-    }
-  }
-
-  .vertical-tabs__panes {
-    background-color: var(--surface-card);
-    border-radius: 0 var(--control-radius-md) var(--control-radius-md) 0;
-    flex-grow: 1; min-width: 0;
-    padding: 1.5rem;
-
-    .vertical-tabs__pane {
-      background: transparent;
-      border: none;
-      margin: 0;
-      padding: 0;
-
-      > summary {
-        display: none !important;
-      }
-
-      > .details-wrapper {
-        padding: 0;
-      }
-    }
-  }
-
-  @media #{$pad} {
-    &:not(.layout-region-node-secondary *) {
-      display: grid; grid-template-columns: 240px 1fr;
-
-      .vertical-tabs__menu {
-        border-bottom: none; border-right: 1px solid var(--border-color-light);
-
-        .vertical-tabs__menu-item.is-selected {
-          border-right: 1px solid var(--surface-card);
-          margin-right: -1px; width: calc(100% + 1px);
-          position: relative; z-index: 2;
+        .vertical-tabs__menu-item-summary {
+          color: var(--text-muted); font-size: var(--font-size-sm); line-height: var(--line-height-sm);
+          display: block;
+          margin-top: .15rem;
         }
       }
     }
-  }
-}
 
-// --- Кнопки действий формы (Form Actions) -------------------------------------
-.form-actions {
-  display: flex; flex-wrap: wrap; align-items: center; gap: .75rem;
-  margin: 1.5rem 0;
+    .vertical-tabs__panes {
+      background-color: var(--surface-card);
+      border-radius: 0 var(--control-radius-md) var(--control-radius-md) 0;
+      flex-grow: 1; min-width: 0;
+      padding: 1.5rem;
 
-  .button--primary,
-  button[id*="edit-submit"],
-  input[id*="edit-submit"] {
-    order: 1;
-  }
+      .vertical-tabs__pane {
+        background: transparent;
+        border: none;
+        margin: 0; padding: 0;
 
-  .button--secondary,
-  button[id*="edit-preview"],
-  input[id*="edit-preview"] {
-    order: 2;
-  }
+        > summary { display: none !important; }
+        > .details-wrapper { padding: 0; }
+      }
+    }
 
-  .button--danger,
-  a[id*="edit-delete"],
-  button[id*="edit-delete"],
-  input[id*="edit-delete"] {
-    margin-left: auto;
-    order: 3;
+    @media #{$pad} {
+      &:not(.layout-region-node-secondary *) {
+        display: grid; grid-template-columns: 240px 1fr;
+
+        .vertical-tabs__menu {
+          border-bottom: none; border-right: 1px solid var(--border-color-light);
+
+          .vertical-tabs__menu-item.is-selected {
+            border-right: 1px solid var(--surface-card);
+            margin-right: -1px;
+            position: relative; z-index: 2;
+            width: calc(100% + 1px);
+          }
+        }
+      }
+    }
   }
 }

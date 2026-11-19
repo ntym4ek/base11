@@ -1,0 +1,259 @@
+// ==========================================================================
+// Базовые стили контента редактора CKEditor 5 Base11 (опциональный модуль)
+// ==========================================================================
+// Подключается в файле ckeditor5.scss дочерней темы:
+// @use "../../base11/css/supplies/b11-ckeditor5";
+// Не входит в фронтенд-бандл _styles.scss, так как в админке отсутствует :root из темы.
+
+// --- 1. Основная область редактирования (.ck-content) ---------------------
+.ck.ck-content,
+.ck-content {
+  // Значения токенов по умолчанию (переопределяются в ckeditor5.scss подтемы)
+  --border-color: #cccccc;
+  --border-color-light: #e9e9e9;
+  --brand-primary: #213a6e;
+  --brand-primary-hover: color-mix(in srgb, var(--brand-primary), #000000 12%);
+  --control-radius-sm: .25rem;
+  --font-family-base: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-heading: var(--font-family-base);
+  --font-family-mono: ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-size-base: 1rem;
+  --font-size-h1: 2.33rem;
+  --font-size-h2: 1.667rem;
+  --font-size-h3: 1.333rem;
+  --font-size-h4: 1.222rem;
+  --font-size-h5: 1rem;
+  --font-size-h6: .889rem;
+  --font-size-sm: .889rem;
+  --line-height-base: 1.6;
+  --line-height-sm: 1.2;
+  --page-bg: #f8f7f4;
+  --surface-card: #ffffff;
+  --surface-subtle: color-mix(in srgb, var(--page-bg) 60%, var(--surface-card));
+  --text-color: #333333;
+  --text-muted: #7d7c7c;
+  --transition-fast: 150ms ease-in-out;
+
+  color: var(--text-color);
+  font-family: var(--font-family-base); font-size: var(--font-size-base); line-height: var(--line-height-base);
+  min-height: 200px;
+
+  // Заголовки
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color); font-family: var(--font-family-heading); font-weight: 700;
+  }
+
+  h1 { font-size: var(--font-size-h1); line-height: var(--line-height-sm); margin: 2rem 0 1rem; }
+  h2 { font-size: var(--font-size-h2); line-height: var(--line-height-sm); margin: 2rem 0 1rem; }
+  h3 { font-size: var(--font-size-h3); line-height: var(--line-height-sm); margin: 1.75rem 0 .75rem; }
+  h4 { font-size: var(--font-size-h4); line-height: var(--line-height-sm); margin: 1.5rem 0 .5rem; }
+  h5 { font-size: var(--font-size-h5); line-height: var(--line-height-base); margin: 1.25rem 0 .5rem; }
+  h6 { font-size: var(--font-size-h6); line-height: var(--line-height-base); margin: 1rem 0 .5rem; }
+
+  // Текст, цитаты и код
+  p {
+    color: var(--text-color); font-size: var(--font-size-base); line-height: var(--line-height-base);
+    margin: 0 0 1.25rem;
+  }
+
+  strong,
+  b { font-weight: 700; }
+
+  em,
+  i { font-style: italic; }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--font-family-mono);
+  }
+
+  code {
+    background-color: var(--surface-subtle);
+    border-radius: var(--control-radius-sm);
+    font-size: .9em;
+    padding: .125rem .35rem;
+  }
+
+  pre {
+    background-color: var(--surface-subtle);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-sm);
+    margin: 1.25rem 0;
+    overflow-x: auto;
+    padding: 1rem 1.25rem;
+
+    code {
+      background: transparent;
+      padding: 0;
+    }
+  }
+
+  a {
+    color: var(--brand-primary);
+    text-decoration: underline; text-underline-offset: 3px;
+    transition: color var(--transition-fast);
+
+    &:hover { color: var(--brand-primary-hover); }
+  }
+
+  blockquote {
+    border-left: 4px solid var(--brand-primary);
+    color: var(--text-muted); font-style: italic;
+    margin: 1.5rem 0; padding: .5rem 0 .5rem 1.25rem;
+
+    p:last-child { margin-bottom: 0; }
+  }
+
+  // Списки
+  ul,
+  ol {
+    margin: 0 0 1.25rem; padding-left: 2rem;
+
+    li {
+      line-height: var(--line-height-base);
+      margin-bottom: .35rem;
+    }
+  }
+
+  ul { list-style-type: disc; }
+  ol { list-style-type: decimal; }
+
+  // Таблицы
+  table {
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    width: 100%;
+
+    th,
+    td {
+      border: 1px solid var(--border-color);
+      padding: .75rem 1rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--surface-subtle);
+      font-family: var(--font-family-heading); font-weight: 700;
+    }
+  }
+
+  // Медиа и выравнивание (Drupal Core & CKEditor 5)
+  figure {
+    margin-block: 1.5rem; margin-inline: 0;
+    max-width: 100%;
+
+    figcaption {
+      color: var(--text-muted); font-size: var(--font-size-sm);
+      margin-top: .5rem; text-align: center;
+    }
+  }
+
+  img {
+    height: auto; max-width: 100%;
+  }
+
+  .align-center,
+  .drupal-media-style-align-center {
+    clear: both;
+    display: table;
+    margin-block: 1.5rem; margin-inline: auto !important;
+    max-width: 100%;
+    text-align: center;
+
+    article.media,
+    img {
+      display: block;
+      margin-inline: auto;
+    }
+
+    figcaption { text-align: center; }
+  }
+
+  .align-left,
+  .drupal-media-style-align-left {
+    clear: left;
+    display: block; float: left;
+    margin-block: .5rem 1rem; margin-inline: 0 1.5rem;
+    max-width: 50%;
+
+    figcaption { text-align: left; }
+  }
+
+  .align-right,
+  .drupal-media-style-align-right {
+    clear: right;
+    display: block; float: right;
+    margin-block: .5rem 1rem; margin-inline: 1.5rem 0;
+    max-width: 50%;
+
+    figcaption { text-align: right; }
+  }
+
+  // Сброс серверных классов выравнивания внутри превью виджета Drupal Media
+  .drupal-media {
+    [data-drupal-media-preview] {
+      &,
+      article.media,
+      .align-center,
+      .align-left,
+      .align-right {
+        clear: none !important; float: none !important;
+        margin: 0 !important;
+        max-width: 100% !important; width: 100% !important;
+      }
+    }
+
+    &.image_resized { max-width: 100%; }
+  }
+
+  hr {
+    border: none; border-top: 1px solid var(--border-color-light);
+    margin: 2rem 0;
+  }
+}
+
+// --- 2. Полноэкранный режим редактора (Fullscreen) -----------------------
+.ck.ck-fullscreen__main-wrapper {
+  --border-color-light: #e9e9e9;
+  --card-shadow: 0 5px 12px color-mix(in srgb, #000000 7%, transparent);
+  --control-radius-sm: .25rem;
+  --page-bg: #f8f7f4;
+  --page-gap-x: 2rem;
+  --page-max-width: 1440px;
+  --surface-card: #ffffff;
+
+  background: var(--page-bg);
+
+  .ck-fullscreen__editable-wrapper {
+    display: flex; justify-content: center;
+    padding-inline: var(--page-gap-x);
+  }
+
+  .ck-fullscreen__editable {
+    margin-inline: auto;
+    max-width: var(--page-max-width); width: 100%;
+
+    .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color-light); border-radius: var(--control-radius-sm);
+      box-shadow: var(--card-shadow); box-sizing: border-box;
+      margin: 0 auto;
+      max-width: 100% !important; min-height: calc(100vh - 140px); width: 100% !important;
+      padding: 2.5rem var(--page-gap-x) !important;
+    }
+
+    .ck-source-editing-area {
+      box-sizing: border-box;
+      margin: 0 auto;
+      max-width: 100% !important; width: 100% !important;
+
+      textarea {
+        box-sizing: border-box;
+        padding: 1.5rem !important;
+      }
+    }
+  }
+
+  .ck-fullscreen__sidebar.ck-fullscreen__right-sidebar { margin-right: 0; }
+}

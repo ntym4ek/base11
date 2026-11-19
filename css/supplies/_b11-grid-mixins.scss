@@ -1,0 +1,197 @@
+// ==========================================================================
+// Семантические миксины адаптивной сетки Base11 (чистый Sass без CSS)
+// ==========================================================================
+// Позволяют задавать свойства строки и колонок произвольным селекторам
+// (например, .view-content и .views-row) и генерировать классы сетки по брейкпоинтам.
+
+@use "sass:map";
+@use "sass:string";
+@use "b11-grid-variables" as *;
+
+// --- Миксины строки (Row) -----------------------------------------------
+
+@mixin row($no-gutter: false) {
+  box-sizing: border-box;
+  display: flex; flex-wrap: wrap;
+
+  @if $no-gutter {
+    margin-left: 0; margin-right: 0;
+  } @else {
+    margin-left: calc(var(--grid-gap-x) / -2); margin-right: calc(var(--grid-gap-x) / -2);
+  }
+}
+
+@mixin row-reverse()        { flex-direction: row-reverse; }
+@mixin row-natural-height() { align-items: flex-start; }
+@mixin row-flex-column()    { flex-direction: column; }
+@mixin row-no-wrap()        { flex-wrap: nowrap; }
+@mixin row-no-gutter()      { @include row(true); }
+
+// Выравнивание внутри строки
+@mixin row-justify($value)  { justify-content: $value; }
+@mixin row-align($value)    { align-items: $value; }
+@mixin row-start()          { justify-content: flex-start; text-align: left; }
+@mixin row-center()         { justify-content: center; text-align: center; }
+@mixin row-end()            { justify-content: flex-end; text-align: right; }
+@mixin row-top()            { align-items: flex-start; }
+@mixin row-middle()         { align-items: center; }
+@mixin row-bottom()         { align-items: flex-end; }
+@mixin row-around()         { justify-content: space-around; }
+@mixin row-between()        { justify-content: space-between; }
+
+// --- Миксины колонок (Col) ----------------------------------------------
+
+// Базовые свойства колонки (отступы, box-sizing, защита от переполнения)
+@mixin col-base() {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  max-width: 100%;
+  padding-left: calc(var(--grid-gap-x) / 2); padding-right: calc(var(--grid-gap-x) / 2);
+}
+
+@mixin col-no-gutter() {
+  padding-left: 0; padding-right: 0;
+}
+
+@mixin col-reverse() {
+  flex-direction: column-reverse;
+}
+
+// Расчёт ширины и flex-свойств для колонки
+@mixin col-size($col, $columns: $grid-columns) {
+  @if $col == "auto" {
+    flex-basis: auto; flex-grow: 0;
+    max-width: 100%; width: auto;
+  } @else if $col == "fill" {
+    flex-basis: 0; flex-grow: 1;
+    max-width: 100%;
+  } @else if $col != null {
+    flex: 0 0 calc(#{$col} / #{$columns} * 100%);
+    max-width: calc(#{$col} / #{$columns} * 100%);
+  }
+}
+
+// Универсальный миксин col:
+// 1) @include col();             -> базовая колонка (padding, box-sizing, max-width: 100%)
+// 2) @include col(12);           -> 12 колонок на всех экранах (включает col-base)
+// 3) @include col("tb", 6);      -> 6 колонок от брейкпоинта tb (>= 1024px)
+// 4) @include col("col-tb-6");   -> альтернативная запись с префиксом класса
+// 5) @include col("auto");       -> автоматическая ширина по контенту
+// 6) @include col("fill");       -> растягивание на свободное место
+// 7) @include col("tb", "fill"); -> растягивание начиная с планшета
+@mixin col($arg1: null, $arg2: null) {
+  $str-arg1: if($arg1 != null, "#{$arg1}", null);
+
+  // Поддержка формата вида "tb-6", "col-tb-6", "pd-12"
+  @if $arg2 == null and $str-arg1 != null {
+    @if string.index($str-arg1, "col-") == 1 {
+      $str-arg1: string.slice($str-arg1, 5);
+    }
+    $dash-idx: string.index($str-arg1, "-");
+    @if $dash-idx {
+      $prefix: string.slice($str-arg1, 1, $dash-idx - 1);
+      $suffix: string.slice($str-arg1, $dash-idx + 1);
+      $str-arg1: $prefix;
+      $arg2: $suffix;
+    }
+  }
+
+  // Преобразование устаревших алиасов base9 (xs, md, lg, xl) в брейкпоинты base11
+  @if $str-arg1 != null and map.has-key($grid-breakpoint-aliases, $str-arg1) {
+    $str-arg1: map.get($grid-breakpoint-aliases, $str-arg1);
+  }
+
+  // Если первый аргумент — имя брейкпоинта (sm, pd, tb, lp, dt, wd)
+  @if $str-arg1 != null and map.has-key($grid-breakpoints, $str-arg1) {
+    $min-width: map.get($grid-breakpoints, $str-arg1);
+    $size: if($arg2 != null, $arg2, "auto");
+
+    @if $min-width == 0 {
+      @include col-base();
+      @include col-size($size);
+    } @else {
+      @media (min-width: #{$min-width}) {
+        @include col-size($size);
+      }
+    }
+  } @else {
+    // Первый аргумент — число колонок, auto/fill или пустой вызов
+    @include col-base();
+    @if $arg1 != null {
+      @include col-size($arg1);
+    }
+  }
+}
+
+// Смещение колонки (Offset): @include col-offset(2) или @include col-offset("tb", 3)
+@mixin col-offset($arg1, $arg2: null) {
+  $str-arg1: "#{$arg1}";
+  @if map.has-key($grid-breakpoint-aliases, $str-arg1) {
+    $str-arg1: map.get($grid-breakpoint-aliases, $str-arg1);
+  }
+
+  @if map.has-key($grid-breakpoints, $str-arg1) {
+    $min-width: map.get($grid-breakpoints, $str-arg1);
+    $offset: if($arg2 != null, $arg2, 0);
+    @if $min-width == 0 {
+      margin-left: calc(#{$offset} / #{$grid-columns} * 100%);
+    } @else {
+      @media (min-width: #{$min-width}) {
+        margin-left: calc(#{$offset} / #{$grid-columns} * 100%);
+      }
+    }
+  } @else {
+    margin-left: calc(#{$arg1} / #{$grid-columns} * 100%);
+  }
+}
+
+// Хелперы порядка и выравнивания колонок
+@mixin col-first()            { order: -1; }
+@mixin col-last()             { order: 1; }
+@mixin col-initial()          { order: 0; }
+@mixin col-order($order)      { order: $order; }
+@mixin col-align-self($align) { align-self: $align; }
+
+// --- Генератор классов сетки для конкретного брейкпоинта ---------------
+@mixin make-grid-columns($prefix) {
+  // Автоматическая ширина по контенту
+  .col-#{$prefix} {
+    @include col-size("auto");
+  }
+
+  // Заполнение всего свободного пространства строки
+  .col-#{$prefix}-fill {
+    @include col-size("fill");
+  }
+
+  // Колонки от 1 до $grid-columns (по умолчанию 12; в подтемах может быть переопределено, например 10)
+  @for $i from 1 through $grid-columns {
+    .col-#{$prefix}-#{$i} {
+      @include col-size($i);
+    }
+  }
+
+  // Смещения (Offset)
+  @for $i from 0 through ($grid-columns - 1) {
+    .col-#{$prefix}-offset-#{$i} {
+      margin-left: calc(#{$i} / #{$grid-columns} * 100%);
+    }
+  }
+
+  // Выравнивание по горизонтали, вертикали и порядок внутри строки
+  .start-#{$prefix}   { justify-content: flex-start; text-align: left; }
+  .center-#{$prefix}  { justify-content: center; text-align: center; }
+  .end-#{$prefix}    { justify-content: flex-end; text-align: right; }
+  .top-#{$prefix}     { align-items: flex-start; }
+  .middle-#{$prefix}  { align-items: center; }
+  .bottom-#{$prefix}  { align-items: flex-end; }
+  .around-#{$prefix}  { justify-content: space-around; }
+  .between-#{$prefix} { justify-content: space-between; }
+  .first-#{$prefix}   { order: -1; }
+  .last-#{$prefix}    { order: 1; }
+  .initial-#{$prefix} { order: 0; }
+
+  // Классы видимости от указанного брейкпоинта и выше
+  .show-#{$prefix}    { display: block !important; }
+  .hide-#{$prefix}    { display: none !important; }
+}

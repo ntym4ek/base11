@@ -1,27 +1,34 @@
 # Основные метаданные базовой темы Base11 (автономная тема без наследования ядра)
 name: Base11
 type: theme
-version: 2.0.0-alpha1
+version: 2.0.0-alpha2
 description: 'Базовая каркасная тема для проектов группы компаний на Drupal 11'
 base theme: false
 core_version_requirement: ^11
 
 # Базовые библиотеки, подключаемые глобально на всех страницах:
 # - font-montserrat подключается опционально подтемой при необходимости;
-# - file-upload подключается через libraries-extend (file/drupal.file) и base11_form_alter();
-# - password-toggle подключается динамически в base11_preprocess_input() для полей password.
+# - file-upload подключается через libraries-extend (file/drupal.file) и Base11Hooks::formAlter();
+# - password-toggle подключается динамически в Base11Hooks::preprocessInput() для полей password;
+# - сброс браузерных стилей встроен в @layer b11.reset (_b11-reset.scss) вместо core/normalize.
 libraries:
   - base11/messages
   - base11/ajax-spinner
-  - core/normalize
 
 # Расширение модульных библиотек ядра функционалом темы
 libraries-extend:
   file/drupal.file:
     - base11/file-upload
 
-# Отключение устаревших/конфликтующих стилей jQuery UI, ядра и сторонних модулей
+# Отключение устаревших и неслоёных стилей ядра / сторонних модулей,
+# чтобы они не перекрывали стили темы внутри каскадных слоёв @layer b11.*
 libraries-override:
+  core/normalize: false
+  system/base:
+    css:
+      component:
+        css/components/align.module.css: false
+        css/components/container-inline.module.css: false
   core/internal.jquery_ui:
     css:
       theme:
@@ -31,13 +38,24 @@ libraries-override:
       component:
         assets/vendor/jquery.ui/themes/base/dialog.css: false
         assets/vendor/jquery.ui/themes/base/button.css: false
+  core/drupal.dropbutton:
+    css:
+      component:
+        misc/dropbutton/dropbutton.css: false
+  core/drupal.progress:
+    css:
+      component:
+        misc/components/progress.module.css: false
   core/drupal.vertical-tabs:
     css:
       component:
         misc/vertical-tabs.css: false
-  # Отключаем глобальные стили модуля Webform, которые вызывают утечку стилей (CSS leak)
-  # и некорректно меняют поведение базовых элементов Form API ядра (.form-item .container-inline,
-  # .form-radios, .form-composite и др.) на всех сторонних формах сайта.
+  field_group/element.horizontal_tabs:
+    css:
+      component:
+        formatters/tabs/horizontal-tabs.css: false
+  # Отключаем глобальные стили модуля Webform, вызывающие утечку стилей (CSS leak)
+  # на базовые элементы Form API ядра (.form-item, .container-inline, .form-radios и др.).
   webform/webform.form:
     css:
       component:

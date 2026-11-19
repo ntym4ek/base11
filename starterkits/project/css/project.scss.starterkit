@@ -1,12 +1,15 @@
-// === Project Theme Styles ===
+// === Стили подтемы Project ===
 
-// Базовые стили темы base11 (сетка, миксины, сбросы, компоненты)
-@import "../../base11/css/supplies/styles";
+// Базовые стили темы Base11 (слои, сброс, токены, сетка, контролы и компоненты)
+// Для переопределения числа колонок (например, 10) используйте: with ($grid-columns: 10)
+@use "../../base11/css/supplies/styles";
 
-// Дизайн-токены проекта (переопределения :root)
-@import "tokens";
+// Переопределения дизайн-токенов проекта (:root)
+@use "tokens";
 
 // Специфичные стили текущей темы
-@import "base";
-@import "blocks";
-@import "pages";
+// В _base.scss глобальные правила тегов (html, body, h1..h6, a) оборачивайте
+// в @layer b11.base, чтобы не перебивать компоненты Base11 (.button, .pager, .menu).
+@use "base";
+@use "blocks";
+@use "pages";
