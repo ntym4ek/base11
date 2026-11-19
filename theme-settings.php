@@ -12,7 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
  * Implements hook_form_FORM_ID_alter() for system_theme_settings.
  *
  * Добавляет параметры мобильной навигации, которые затем передаются в разметку
- * и JS через base11_preprocess_html() (класс .page-offside-* и drupalSettings.theme).
+ * и JS через Base11Hooks::preprocessHtml() (класс .page-offside-* и drupalSettings.theme).
  */
 function base11_form_system_theme_settings_alter(&$form, FormStateInterface $form_state): void
 {

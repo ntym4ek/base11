@@ -266,9 +266,9 @@
   - в паршалах, использующих переменные брейкпоинтов или миксины `base11`, добавить в начало `@use "../../base11/css/supplies/api" as *;` (строго выше CSS `@import url(...)`);
   - при вызове локальных миксинов (например `padding-side()` / `padding-block()` в `jp.local`) подключить `@use "helper" as *;`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-22] Каскадные слои CSS (`@layer b11.*`)
 - **Этап:** 2 | **Тип:** BREAKING / ADDED
@@ -282,9 +282,9 @@
   - **Критично:** неразвёрнутые (unlayered) глобальные селекторы тегов (`a { color: inherit; }`, `html`, `body`, `h1..h4` в `_base.scss` или `details { ... }` в `_file.scss`) перебьют слоёные компоненты `base11` (`.button`, `.pager`, `.breadcrumb`, `.horizontal-tabs`);
   - обернуть глобальные правила тегов в `_base.scss` в `@layer b11.base { ... }`, а переопределение `details` (например в `ff.local/_file.scss`) в `@layer b11.elements { ... }`, оставив классы компонентов (`.button`, `.button--default`, ...) вне слоёв.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-23] Замена `core/normalize` на `@layer b11.reset` и расширение `libraries-override`
 - **Этап:** 2 | **Тип:** CHANGED
@@ -292,12 +292,12 @@
 - **Стало:**
   - `core/normalize` исключён из `libraries:` и отключён через `libraries-override: core/normalize: false`; вместо него добавлен компактный `css/supplies/_b11-reset.scss` в `@layer b11.reset`;
   - в `base11.info.yml` через `libraries-override` отключены конфликтующие неслоёные CSS: `system/base` (`align.module.css`, `container-inline.module.css` с сохранением `clearfix`/`hidden`/`js`), `core/drupal.dropbutton` (`dropbutton.css`), `core/drupal.progress` (`progress.module.css`), `field_group/element.horizontal_tabs` (`horizontal-tabs.css`); `core/drupal.checkbox` (JS) не затронут.
-- **Как найти в подтеме (regex):** `core/normalize`
+- **Как найти в подтеме (regex):** `-\s*core/normalize\b`
 - **Что сделать в `project`:** правки в подтемах не требуются (если подтема не подключала `core/normalize` вручную).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-24] Расширение дизайн-токенов и устранение `mixed-decls` в `_b11-tokens.scss`
 - **Этап:** 2 | **Тип:** ADDED / FIXED
@@ -312,9 +312,9 @@
 - **Как найти в подтеме (regex):** `--font-family-mono|--surface-subtle|--status-|--on-primary`
 - **Что сделать в `project`:** при необходимости переопределить `--link-color`/`--on-*`/`--surface-*` в `_tokens.scss` и использовать новые токены при разработке компонентов.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-25] Фиксированный `html { font-size: 100%; }` и `text-wrap: balance` для заголовков
 - **Этап:** 2 | **Тип:** BREAKING
@@ -325,9 +325,9 @@
   - в `ff.local` и `lubr.local` явно перенести масштабирование `html` (`106.25%` на `$tablet`, `112.5%` на `$laptop`) в `_base.scss` внутри `@layer b11.base` для сохранения текущего дизайна;
   - в `jp.local` удалить избыточные 5 `@media` в `html { ... }`, оставив `font-size: 16px;`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-26] Оптимизация `_b11-buttons.scss` и `_b11-forms.scss`
 - **Этап:** 2 | **Тип:** CHANGED
@@ -339,9 +339,9 @@
 - **Как найти в подтеме (regex):** `--btn-bg|--btn-color`
 - **Что сделать в `project`:** проверить пользовательские правила `mixed-decls` в паршалах подтемы (`ff.local`: `_blocks.scss`, `_product.scss`, `_views.scss`) и поднять свойства выше вложенных селекторов/`@include`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-27] Базовый модуль стилей CKEditor 5 (`_b11-ckeditor5.scss`)
 - **Этап:** 2 | **Тип:** ADDED
@@ -350,9 +350,9 @@
 - **Как найти в подтеме (regex):** `\.ck-content`
 - **Что сделать в `project`:** существующие `ckeditor5.scss` перевести с `@import` на `@use`; использовать `_b11-ckeditor5.scss` в новых и рефакторируемых проектах.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-28] Файл брейкпоинтов `base11.breakpoints.yml`
 - **Этап:** 2 | **Тип:** ADDED
@@ -361,9 +361,9 @@
 - **Как найти в подтеме (regex):** `breakpoints\.yml`
 - **Что сделать в `project`:** правки не требуются.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-29] Перевод хуков темы на ООП (`src/Hook/Base11Hooks.php`)
 - **Этап:** 2 | **Тип:** CHANGED / REMOVED
@@ -372,9 +372,9 @@
 - **Как найти в подтеме (regex):** `base11_preprocess_|_base11_wrap_single_managed_files`
 - **Что сделать в `project`:** убедиться, что подтема не вызывает удалённые внутренние функции `base11.theme`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-30] Удаление 22 дублирующих шаблонов и синхронизация с Drupal 11.4
 - **Этап:** 2 | **Тип:** REMOVED / CHANGED
@@ -383,9 +383,9 @@
 - **Как найти в подтеме (regex):** `role="(navigation|banner|main|complementary|contentinfo)"|not page\b`
 - **Что сделать в `project`:** при наличии скопированных шаблонов таксономии/форм в подтеме — учитывать актуальный синтаксис Drupal 11.4.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-31] Возврат атрибутов `width` / `height` в `templates/field/image.html.twig`
 - **Этап:** 2 | **Тип:** BREAKING / FIXED
@@ -394,6 +394,6 @@
 - **Как найти в подтеме (regex):** `img\s*\{[^}]*height\s*:`
 - **Что сделать в `project`:** во всех правилах `img` дочерней темы, где заданы фиксированные `height` или `max-height` без указания `width` (или `aspect-ratio`), явно добавить `width: auto;` (либо убедиться, что пропорции заданы корректно), чтобы браузер не растягивал картинку по HTML-атрибуту `width`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
