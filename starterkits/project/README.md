@@ -6,7 +6,7 @@
 
 1. Скопируйте каталог `themes/base11/starterkits/project` в `themes/project` (или под машинным именем вашей темы).
 2. Переименуйте `project.info.yml.starterkit` → `project.info.yml` (при смене имени темы также обновите ключи в `*.info.yml`, `*.libraries.yml` и namespace в `src/Hook/`).
-3. Переименуйте `css/project.scss.starterkit` → `css/project.scss`.
+3. Переименуйте `css/project.scss.starterkit` → `css/project.scss` (и при использовании CKEditor 5: `css/ckeditor5.scss.starterkit` → `css/ckeditor5.scss`).
    - Если проекту нужно нестандартное число колонок сетки (например, 10 вместо 12), замените в `project.scss` строку подключения на:
      ```scss
      @use "../../base11/css/supplies/styles" with ($grid-columns: 10);

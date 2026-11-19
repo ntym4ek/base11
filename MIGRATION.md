@@ -565,7 +565,7 @@
 ### [CHG-45] Актуализация `starterkits/project/` и удаление лишнего `StarterKit.php`
 - **Этап:** 4 | **Тип:** CHANGED / REMOVED
 - **Было:** в стартерките оставались `README.txt` (с упоминанием Base9), пустой `_variables.scss`, процедурный `project.theme` и устаревший `.info.yml`; в `base11/src/` лежал неиспользуемый `StarterKit.php`.
-- **Стало:** удалены `src/StarterKit.php`, `README.txt`, `_variables.scss`, `project.theme`; стартеркит обновлён на ООП `src/Hook/ProjectHooks.php`, `css/ckeditor5.scss`, `@layer b11.base` в `_base.scss`, актуальный `_tokens.scss`, `README.md` и `project.info.yml.starterkit`; добавлен полный справочник `base11/README.md`.
+- **Стало:** удалены `src/StarterKit.php`, `README.txt`, `_variables.scss`, `project.theme`; стартеркит обновлён на ООП `src/Hook/ProjectHooks.php`, `css/ckeditor5.scss.starterkit`, `@layer b11.base` в `_base.scss`, актуальный `_tokens.scss`, `README.md` и `project.info.yml.starterkit`; добавлен полный справочник `base11/README.md`.
 - **Как найти в подтеме (regex):** `Base9|_variables\.scss`
 - **Что сделать в `project`:** использовать обновлённый стартеркит для новых проектов; в существующих темах правок не требуется.
 - **Статус миграции:**
