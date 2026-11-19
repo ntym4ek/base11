@@ -12,12 +12,12 @@
 - **Этап:** 1 | **Тип:** BREAKING
 - **Было:** `--shadow-base`
 - **Стало:** `--shadow-md` (шкала теней приведена к `-sm` / `-md` / `-lg`; `--shadow-base-color` не изменён)
-- **Как найти в подтеме (regex):** `--shadow-base\b`
+- **Как найти в подтеме (regex):** `--shadow-base(?![a-zA-Z0-9_-])`
 - **Что сделать в `project`:** заменить все вхождения `--shadow-base` на `--shadow-md` и перекомпилировать SCSS.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-02] Добавление токена `--font-size-xs`
 - **Этап:** 1 | **Тип:** ADDED
@@ -26,9 +26,9 @@
 - **Как найти в подтеме (regex):** `--font-size-xs\s*:`
 - **Что сделать в `project`:** удалить дублирующее объявление `--font-size-xs: .75rem;` из `css/_tokens.scss`, если оно совпадает с базовым (`jp.local`).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-03] Удаление `.button--xs` и `--btn-font-size-xs`
 - **Этап:** 1 | **Тип:** REMOVED
@@ -37,9 +37,9 @@
 - **Как найти в подтеме (regex):** `button--xs|--btn-font-size-xs`
 - **Что сделать в `project`:** заменить на `button--sm`, если встретится.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-04] Исправление `backdrop-filter` в диалогах
 - **Этап:** 1 | **Тип:** FIXED
@@ -48,9 +48,9 @@
 - **Как найти в подтеме (regex):** `--modal-backdrop-blur`
 - **Что сделать в `project`:** убедиться, что токен `--modal-backdrop-blur` при переопределении задаётся как длина (например, `4px`), а не `blur(...)`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-05] Замена `overflow: hidden` на `overflow-x: clip` в `.page-wrapper`
 - **Этап:** 1 | **Тип:** FIXED
@@ -59,9 +59,9 @@
 - **Как найти в подтеме (regex):** `\.page-wrapper`
 - **Что сделать в `project`:** правки не требуются, проверить визуально работу `sticky`-элементов при наличии.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-06] Исправление токена скругления в `messages.scss`
 - **Этап:** 1 | **Тип:** FIXED
@@ -70,9 +70,9 @@
 - **Как найти в подтеме (regex):** `var\(--control-radius\b(?![-])`
 - **Что сделать в `project`:** при обнаружении заменить на `--control-radius-sm` / `-md` / `-lg`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-07] Динамический цвет активной радиокнопки
 - **Этап:** 1 | **Тип:** FIXED
@@ -81,9 +81,9 @@
 - **Как найти в подтеме (regex):** `form-type-radio`
 - **Что сделать в `project`:** правки не требуются; радиокнопки автоматически берут `--brand-primary`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-08] Исправление активного состояния и разметки пагинации
 - **Этап:** 1 | **Тип:** FIXED
@@ -92,9 +92,9 @@
 - **Как найти в подтеме (regex):** `\.pager__item`
 - **Что сделать в `project`:** правки не требуются (если пагинация не переопределена вручную).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-09] Консолидация мобильных размеров заголовков
 - **Этап:** 1 | **Тип:** FIXED
@@ -103,9 +103,9 @@
 - **Как найти в подтеме (regex):** `--font-size-h[1-6]`
 - **Что сделать в `project`:** при переопределении в подтемах перепроверить, что значения соответствуют дизайн-макету.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-10] Удаление повреждающего `.visually-hidden { inset: 0; }`
 - **Этап:** 1 | **Тип:** FIXED
@@ -114,9 +114,9 @@
 - **Как найти в подтеме (regex):** `visually-hidden\s*\{\s*inset`
 - **Что сделать в `project`:** правки не требуются.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-11] Добавление `@keyframes fadeInOverlay` в `facet-extension.scss`
 - **Этап:** 1 | **Тип:** FIXED
@@ -125,9 +125,9 @@
 - **Как найти в подтеме (regex):** `fadeInOverlay`
 - **Что сделать в `project`:** правки не требуются.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-12] Сохранение контейнера `[data-drupal-messages]` в DOM
 - **Этап:** 1 | **Тип:** FIXED
@@ -136,9 +136,9 @@
 - **Как найти в подтеме (regex):** `data-drupal-messages`
 - **Что сделать в `project`:** правки не требуются (в `jp.local` уже используется свой `js/messages.js`).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-13] Доступность кнопки показа пароля с клавиатуры
 - **Этап:** 1 | **Тип:** FIXED
@@ -147,9 +147,9 @@
 - **Как найти в подтеме (regex):** `password-toggle`
 - **Что сделать в `project`:** правки не требуются.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-14] Пассивные touch-обработчики и очистка `swipe-events.js`
 - **Этап:** 1 | **Тип:** FIXED
@@ -158,9 +158,9 @@
 - **Как найти в подтеме (regex):** `swipe-events`
 - **Что сделать в `project`:** правки не требуются.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-15] Безопасная обработка ошибок в `base11_preprocess_status_messages()`
 - **Этап:** 1 | **Тип:** FIXED
@@ -169,23 +169,23 @@
 - **Как найти в подтеме (regex):** `preprocess_status_messages`
 - **Что сделать в `project`:** правки не требуются.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-16] Очистка шаблонов от фантомных библиотек и Twig-депрекаций
 - **Этап:** 1 | **Тип:** REMOVED / FIXED
 - **Было:**
-  - 7 несуществующих `attach_library('base11/node|indented|search-results|file|progress')` в шаблонах;
+  - 7 несуществующих `attach_library('base11/node|indented|search-results|file|progress')` в шаблонах `base11` и скопированные `attach_library('base11/node')` в дочерних шаблонах `node--*`;
   - `node.html.twig` использовал `not page` вместо `view_mode != 'full'`;
-  - присутствовал проектный `templates/form/input-dropdown-filter.html.twig` с deprecated `{% apply spaceless %}`.
-- **Стало:** фантомные `attach_library` удалены; `node.html.twig` синхронизирован с ядром; `input-dropdown-filter.html.twig` удалён из `base11`.
+  - присутствовал проектный `templates/form/input-dropdown-filter.html.twig` и шаблоны `swiper-formatter` с deprecated `{% apply spaceless %}`.
+- **Стало:** фантомные `attach_library` удалены в `base11` и дочерних темах (`ff.local` — 5 шаблонов `node--*`, `lubr.local` — 3 шаблона `node--*`); `node.html.twig` синхронизирован с ядром; `input-dropdown-filter.html.twig` удалён из `base11`; теги `{% apply spaceless %}` / `{% endapply %}` удалены в `jp.local` (`input-dropdown-filter.html.twig` и 2 шаблона `swiper-formatter`) и `lubr.local` (`swiper-formatter--product-images.html.twig`).
 - **Как найти в подтеме (regex):** `attach_library\('base11/(node|indented|search-results|file|progress)'\)|apply spaceless`
-- **Что сделать в `project`:** удалить `{% apply spaceless %}` / `{% endapply %}` в `jp.local/web/themes/project/templates/form/input-dropdown-filter.html.twig`.
+- **Что сделать в `project`:** удалить фантомные `attach_library('base11/node')` и устаревшие `{% apply spaceless %}` / `{% endapply %}`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-17] Актуализация `theme-settings.php` и добавление `config/install` + `config/schema`
 - **Этап:** 1 | **Тип:** ADDED / FIXED
@@ -194,9 +194,9 @@
 - **Как найти в подтеме (regex):** `nav-mobile-hide-width`
 - **Что сделать в `project`:** правки не требуются (если в подтеме не использовался ошибочный ключ `nav-mobile-hide-width`).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-18] Оптимизация `base11.info.yml`, `base11.libraries.yml` и шрифта Montserrat
 - **Этап:** 1 | **Тип:** BREAKING
@@ -214,9 +214,9 @@
   - Если проект использует **Montserrat из base11** (`lubr.local`) — явно добавить `- base11/font-montserrat` в `libraries:` файла `project.info.yml`.
   - Удалить избыточное явное подключение `- base11/password-toggle` из `libraries:` в `project.info.yml`.
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
 
 ### [CHG-19] Вынос устаревшего KCCC-механизма и модернизация `page.html.twig`
 - **Этап:** 1 | **Тип:** BREAKING / REMOVED
@@ -231,6 +231,6 @@
 - **Что сделать в `project`:**
   - Убедиться, что все переменные, используемые в собственном `page.html.twig` проекта (`is_header_on`, `banner`, `site.logo.*`), задаются в `project_preprocess_page()` самого проекта (`ff.local`: задать `$vars['is_header_on'] = true;`; `lubr.local`: задать `$vars['is_header_on'] = true;` и перенести поиск `page-banners` без автосоздания `ImageStyle` на лету).
 - **Статус миграции:**
-  - [ ] `ff.local`
-  - [ ] `jp.local`
-  - [ ] `lubr.local`
+  - [x] `ff.local`
+  - [x] `jp.local`
+  - [x] `lubr.local`
