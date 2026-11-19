@@ -68,6 +68,15 @@
   background: var(--footer-bg);
   color: var(--footer-color);
 
+  a:not(.button) {
+    color: var(--footer-color);
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--footer-hover-color);
+    }
+  }
+
   .container,
   .container-fluid {
     height: 100%;

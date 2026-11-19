@@ -177,25 +177,14 @@
   }
 }
 
-.page-footer {
-  a {
-    color: var(--footer-color);
-    transition: color var(--transition-fast);
-
-    &:hover {
-      color: var(--footer-hover-color);
+.page-footer .menu {
+  > .menu-item {
+    > a:not(.button) {
+      color: var(--footer-color);
     }
-  }
 
-  .menu {
-    > .menu-item {
-      > a {
-        color: var(--footer-color);
-      }
-
-      &:hover > a {
-        color: var(--footer-hover-color);
-      }
+    &:hover > a:not(.button) {
+      color: var(--footer-hover-color);
     }
   }
 }
