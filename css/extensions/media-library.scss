@@ -1,0 +1,876 @@
+// ==========================================================================
+// Библиотека оформления Media Library (модальное окно и виджет формы) Base11
+// ==========================================================================
+// Подключается автоматически через libraries-extend (media_library/widget и media_library/ui).
+//
+// Как стилизовать под проект в дочерней теме (project):
+// 1. Быстрая настройка через CSS-переменные --ml-* в _tokens.scss (:root) или
+//    непосредственно на .ui-dialog.media-library-widget-modal / .field--widget-media-library-widget:
+//      --ml-accent, --ml-bg, --ml-sidebar-bg, --ml-panel-bg, --ml-card-bg,
+//      --ml-border-color, --ml-radius, --ml-control-radius, --ml-grid-min,
+//      --ml-heading-transform (например, uppercase), --ml-heading-weight, --ml-width, --ml-height.
+// 2. Любые точечные правила в паршале подтемы (_media-library.scss) без @layer
+//    гарантированно перекрывают стили внутри @layer b11.components.
+// 3. При необходимости полного переписывания библиотеку можно отключить в project.info.yml
+//    через libraries-override: base11/media-library: false.
+
+@use "../supplies/b11-layers";
+@use "../supplies/b11-grid-variables" as *;
+
+// --- 1. Токены кастомизации Media Library ---------------------------------
+@layer b11.tokens {
+  :root {
+    --ml-width: min(1280px, 94vw);
+    --ml-max-width: min(1280px, calc(100vw - 2rem));
+    --ml-height: min(860px, calc(100dvh - 3rem));
+    --ml-sidebar-width: 15rem;
+
+    --ml-bg: var(--surface-card);
+    --ml-sidebar-bg: var(--page-bg);
+    --ml-panel-bg: var(--page-bg);
+    --ml-card-bg: var(--surface-card);
+    --ml-border-color: var(--border-color-light);
+    --ml-accent: var(--brand-primary);
+    --ml-accent-text: var(--on-primary);
+
+    --ml-radius: var(--control-radius-md);
+    --ml-control-radius: var(--control-radius-sm);
+    --ml-grid-min: 180px;
+
+    --ml-heading-transform: none;
+    --ml-heading-weight: 600;
+    --ml-focus-ring: 0 0 0 3px color-mix(in srgb, var(--ml-accent) 15%, transparent);
+  }
+}
+
+@layer b11.components {
+  // --- 2. Диалоговое окно Media Library (.ui-dialog.media-library-widget-modal) ---
+  .ui-dialog.media-library-widget-modal {
+    // Габариты оставлены с !important для перекрытия inline-стилей jQuery UI Dialog
+    height: var(--ml-height) !important; max-width: var(--ml-max-width) !important; width: var(--ml-width) !important;
+
+    // Компактные контролы (-sm) внутри модального окна
+    .button,
+    button,
+    input[type="submit"],
+    input[type="button"] {
+      border-radius: var(--ml-control-radius);
+      font-size: var(--control-font-size-sm);
+      height: var(--control-height-sm); min-height: var(--control-height-sm);
+      padding: 0 1.25rem;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    select {
+      background-color: var(--ml-card-bg);
+      border: 1px solid var(--border-color); border-radius: var(--ml-control-radius);
+      color: var(--text-color); font-size: var(--control-font-size-sm);
+      height: var(--control-height-sm); min-height: var(--control-height-sm); width: 100%;
+      padding: 0 .75rem;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+      &:hover { border-color: var(--text-muted); }
+
+      &:focus {
+        border-color: var(--ml-accent);
+        box-shadow: var(--ml-focus-ring);
+        outline: none;
+      }
+
+      &.error { border-color: var(--input-border-error); }
+    }
+
+    // Шапка диалога
+    .ui-dialog-titlebar {
+      border-bottom: 1px solid var(--ml-border-color);
+      padding: 1rem 1.5rem;
+
+      .ui-dialog-title {
+        font-family: var(--font-family-heading); font-size: var(--font-size-base); font-weight: var(--ml-heading-weight);
+        letter-spacing: .02em; text-align: left; text-transform: var(--ml-heading-transform);
+        margin: 0;
+      }
+
+      .ui-dialog-titlebar-close { right: 1.25rem; top: 1rem; }
+    }
+
+    // Контейнер содержимого (перекрытие inline-стилей jQuery UI)
+    .ui-dialog-content {
+      display: flex !important; flex-direction: column !important; flex-grow: 1 !important;
+      height: 100% !important; min-height: 0 !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+
+      // Шаг заполнения метаданных после загрузки новых файлов
+      > #media-library-add-form-wrapper {
+        background-color: var(--ml-bg);
+        display: flex; flex-direction: column; flex-grow: 1;
+        height: 100%; min-height: 0; width: 100%;
+        overflow-x: hidden; overflow-y: auto;
+        padding: 1.5rem;
+        position: relative; z-index: 1;
+      }
+    }
+
+    .media-library-wrapper {
+      background-color: var(--ml-panel-bg);
+      display: flex; align-items: stretch; flex-grow: 1;
+      height: 100%; min-height: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    // Левое вертикальное меню типов медиа
+    .media-library-menu {
+      background-color: var(--ml-sidebar-bg);
+      border: none; border-right: 1px solid var(--ml-border-color);
+      display: flex; align-self: stretch; flex-direction: column; flex-shrink: 0;
+      list-style: none;
+      margin: 0; padding: 0;
+      position: relative; z-index: 1;
+      width: var(--ml-sidebar-width);
+
+      &__item {
+        background: transparent;
+        border: none; border-bottom: 1px solid var(--ml-border-color);
+        margin: 0; overflow: visible; padding: 0;
+        position: relative;
+        transition: background-color var(--transition-fast);
+
+        &::before { content: none; display: none; }
+        &:last-child { border-bottom: none; }
+
+        &:has(.active) {
+          border-right: 1px solid var(--ml-bg);
+          margin-right: -1px; width: calc(100% + 1px);
+          position: relative; z-index: 2;
+        }
+      }
+
+      &__link {
+        background-color: transparent;
+        border: none; border-left: 3px solid transparent; border-radius: 0;
+        box-shadow: none;
+        color: var(--text-color); font-family: var(--font-family-heading); font-size: var(--font-size-base); font-weight: 500; text-decoration: none;
+        display: block;
+        margin: 0; padding: .875rem 1.25rem;
+        position: relative;
+        transition: background-color var(--transition-fast), color var(--transition-fast);
+        width: 100%;
+
+        &::before,
+        &::after {
+          content: none;
+          display: none;
+        }
+
+        &:hover {
+          background-color: color-mix(in srgb, var(--ml-accent) 4%, transparent);
+          color: var(--ml-accent);
+        }
+
+        &.active {
+          background-color: var(--ml-bg);
+          border-left-color: var(--ml-accent); border-right: 1px solid var(--ml-bg);
+          color: var(--ml-accent); font-weight: 700;
+          margin-right: -1px; width: calc(100% + 1px);
+          position: relative; z-index: 2;
+
+          &:hover {
+            background-color: var(--ml-bg);
+            color: var(--ml-accent);
+          }
+        }
+      }
+    }
+
+    // Правая рабочая область каталога и формы добавления
+    :is(.media-library-content, #media-library-content) {
+      background-color: var(--ml-bg);
+      border: none;
+      box-shadow: none;
+      display: flex; flex-direction: column; flex-grow: 1;
+      height: 100%; min-height: 0; min-width: 0; width: 100%;
+      overflow-x: hidden; overflow-y: auto;
+      padding: 1.5rem;
+      position: relative; z-index: 1;
+
+      .views-element-container {
+        display: flex; flex-direction: column; flex-grow: 1;
+        min-height: 0; width: 100%;
+      }
+    }
+
+    // Форма загрузки новых медиа и ввода oEmbed-ссылок
+    .media-library-add-form {
+      margin-bottom: 1.5rem;
+
+      > p { margin: 0 0 1.25rem; }
+
+      .form-item--upload {
+        margin-bottom: 0;
+
+        label {
+          font-size: var(--control-font-size-sm); font-weight: 600;
+          height: var(--control-height-sm); min-height: var(--control-height-sm);
+          padding: 0 1.25rem;
+        }
+
+        :is(.form-item__description, .file-upload-help, .description) {
+          color: var(--text-muted); font-size: var(--font-size-sm); text-align: center;
+          margin-top: .5rem;
+          pointer-events: none;
+        }
+      }
+
+      .media-library-add-form__added-media {
+        display: flex; flex-direction: column; gap: 1rem;
+        list-style: none;
+        margin: 0 0 1.5rem; outline: none; padding: 0;
+
+        .media-library-add-form__media {
+          background-color: var(--ml-panel-bg);
+          border: 1px solid var(--ml-border-color); border-radius: var(--ml-radius);
+          box-shadow: var(--shadow-sm);
+          display: grid; align-items: start; gap: 1.25rem; grid-template-columns: 160px 1fr auto;
+          padding: 1.25rem;
+          position: relative;
+          transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+          &:hover {
+            border-color: var(--border-color);
+            box-shadow: var(--shadow-md);
+          }
+
+          .media-library-add-form__preview {
+            aspect-ratio: 16 / 10;
+            background-color: var(--ml-card-bg);
+            border: 1px solid var(--ml-border-color); border-radius: var(--ml-control-radius);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            width: 160px;
+
+            .field,
+            .field--name-thumbnail,
+            .field__item,
+            img {
+              display: block;
+              height: 100%; width: 100%;
+              object-fit: cover;
+            }
+          }
+
+          .media-library-add-form__fields {
+            display: flex; flex-direction: column; gap: .875rem;
+            min-width: 0;
+            text-align: left;
+
+            :is(.image-widget, .form-managed-file, [class*="form-type--managed-file"]) {
+              background: transparent;
+              border: none;
+              box-shadow: none;
+              display: flex; flex-direction: column; gap: .875rem;
+              margin: 0; padding: 0; text-align: left; width: 100%;
+            }
+
+            .form-item {
+              display: flex; align-items: flex-start; flex-direction: column;
+              margin: 0; text-align: left; width: 100%;
+
+              :is(label, .form-item__label) {
+                font-family: var(--font-family-heading); font-weight: var(--ml-heading-weight); text-transform: var(--ml-heading-transform);
+              }
+            }
+          }
+
+          .media-library-add-form__remove-button {
+            align-self: start;
+            background: transparent;
+            border: 1px solid var(--brand-danger); border-radius: var(--ml-control-radius);
+            box-shadow: none;
+            color: var(--brand-danger); cursor: pointer; font-size: var(--font-size-xs); font-weight: 600;
+            display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
+            height: 1.75rem; min-height: 0;
+            margin: 0; padding: 0 .75rem;
+            position: static;
+            transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+            white-space: nowrap;
+
+            &::before {
+              background-color: currentColor;
+              content: '';
+              display: inline-block; flex-shrink: 0;
+              height: 11px; width: 11px;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") no-repeat center / contain;
+              -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") no-repeat center / contain;
+            }
+
+            &:hover {
+              background-color: var(--brand-danger);
+              color: var(--on-danger);
+            }
+          }
+        }
+      }
+
+      .media-library-add-form__selected-media {
+        background-color: var(--ml-panel-bg);
+        border: 1px solid var(--ml-border-color); border-radius: var(--ml-radius);
+        margin: 1.5rem 0; padding: 1rem 1.25rem;
+
+        summary {
+          color: var(--text-color); font-family: var(--font-family-heading); font-size: var(--font-size-sm); font-weight: var(--ml-heading-weight); text-transform: var(--ml-heading-transform);
+        }
+      }
+
+      > .form-actions {
+        display: flex; align-items: center; justify-content: flex-end; gap: .75rem;
+        margin-top: 1.5rem; padding: 0;
+
+        .button { margin: 0; }
+
+        .button--primary {
+          background-color: var(--ml-accent);
+          border-color: var(--ml-accent);
+          color: var(--ml-accent-text);
+
+          &:hover {
+            background-color: color-mix(in srgb, var(--ml-accent), black 12%);
+            border-color: color-mix(in srgb, var(--ml-accent), black 12%);
+          }
+        }
+      }
+
+      // Форма внешнего видео oEmbed
+      &--oembed {
+        .media-library-add-form__input-wrapper {
+          background-color: var(--ml-panel-bg);
+          border: 1px solid var(--ml-border-color); border-radius: var(--ml-radius);
+          display: grid; align-items: start; gap: .75rem 1rem; grid-template-columns: 1fr auto;
+          padding: 1.25rem;
+
+          .form-item--url {
+            display: contents;
+
+            label {
+              color: var(--text-muted); font-family: var(--font-family-heading); font-size: var(--font-size-sm); font-weight: var(--ml-heading-weight); text-transform: var(--ml-heading-transform);
+              display: block;
+              grid-column: 1 / -1; grid-row: 1;
+              height: auto; min-height: 0;
+              margin-bottom: 0; padding: 0;
+            }
+
+            input[type="url"] {
+              grid-column: 1; grid-row: 2;
+            }
+
+            :is(.form-item--error-message, .form-item__error-message, [class*="error-message"]) {
+              color: var(--brand-danger); font-size: var(--font-size-sm); font-weight: 500; line-height: var(--line-height-sm); text-align: left;
+              grid-column: 1 / -1;
+              margin-top: .15rem;
+            }
+
+            :is(.form-item__description, .description) {
+              color: var(--text-muted); font-size: var(--font-size-sm); text-align: left;
+              grid-column: 1 / -1;
+              margin-top: .15rem;
+            }
+          }
+
+          .media-library-add-form-oembed-submit {
+            grid-column: 2; grid-row: 2;
+            margin: 0; white-space: nowrap;
+          }
+        }
+      }
+    }
+
+    // Панель фильтров, сетка и таблица каталога медиа
+    :is(.media-library-view, .view-media-library, [class*="view-media-library"], .media-library-content) {
+      .views-exposed-form {
+        background-color: var(--ml-panel-bg);
+        border: 1px solid var(--ml-border-color); border-radius: var(--ml-radius);
+        box-shadow: var(--shadow-sm);
+        display: flex; align-items: flex-end; flex-wrap: wrap; gap: .75rem 1rem;
+        margin-bottom: 1.25rem; padding: 1rem 1.25rem;
+        width: 100%;
+
+        .views-exposed-form__item {
+          flex: 1 1 12rem;
+          margin: 0; min-width: 10rem;
+
+          &--actions {
+            flex: 0 0 auto;
+            margin-left: auto;
+
+            .button { white-space: nowrap; }
+          }
+        }
+      }
+
+      // Переключатели вида Сетка / Таблица
+      .view-header {
+        margin-bottom: 1rem;
+
+        .views-display-links { display: flex; align-items: center; gap: .5rem; }
+
+        .views-display-link {
+          background-color: var(--ml-panel-bg); background-position: .5rem center; background-repeat: no-repeat; background-size: 12px 12px;
+          border: 1px solid var(--ml-border-color); border-radius: var(--ml-control-radius);
+          color: var(--text-muted); font-size: var(--font-size-xs); font-weight: 600; text-decoration: none;
+          display: inline-flex; align-items: center;
+          height: 1.75rem; min-height: 1.75rem;
+          padding: 0 .625rem 0 1.5rem;
+          transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+
+          &:hover {
+            border-color: var(--border-color);
+            color: var(--text-color);
+          }
+
+          &.is-active {
+            background-color: var(--ml-card-bg);
+            border-color: var(--ml-accent);
+            color: var(--ml-accent);
+          }
+        }
+      }
+
+      .media-library-views-form {
+        display: block;
+        width: 100%;
+      }
+
+      // Сетка карточек медиа
+      .media-library-views-form__rows {
+        display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(var(--ml-grid-min), 1fr));
+        margin: 0; width: 100%;
+      }
+
+      .media-library-item--grid {
+        background-color: var(--ml-card-bg);
+        border: 1px solid var(--ml-border-color); border-radius: var(--ml-control-radius);
+        cursor: pointer;
+        display: flex; flex-direction: column;
+        margin: 0; overflow: hidden; padding: 0; width: 100%;
+        position: relative;
+        transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+
+        &::before {
+          content: none;
+          display: none;
+        }
+
+        &:hover {
+          border-color: var(--border-color);
+          box-shadow: var(--shadow-md);
+          transform: translateY(-2px);
+        }
+
+        &.checked,
+        &[aria-selected="true"] {
+          border-color: var(--ml-accent);
+          box-shadow: 0 0 0 2px var(--ml-accent);
+        }
+
+        .views-field-rendered-entity,
+        article,
+        .media-library-item__preview-wrapper {
+          display: flex; flex-direction: column; flex-grow: 1;
+          height: 100%; width: 100%;
+        }
+
+        .media-library-item__preview,
+        .js-media-library-item-preview {
+          aspect-ratio: 16 / 10;
+          background-color: var(--ml-panel-bg);
+          display: flex; align-items: center; justify-content: center;
+          height: auto; max-height: none; overflow: hidden; padding: 0; width: 100%;
+          position: relative;
+
+          .field,
+          .field--name-thumbnail,
+          .field__item {
+            background-color: transparent;
+            display: block;
+            height: 100%; margin: 0; overflow: hidden; padding: 0; width: 100%;
+          }
+
+          img {
+            display: block;
+            height: 100%; max-height: none; width: 100%;
+            object-fit: cover; object-position: center;
+          }
+        }
+
+        .media-library-item__attributes {
+          background-color: var(--ml-card-bg);
+          border-top: 1px solid var(--ml-border-color);
+          display: flex; align-items: center;
+          margin-top: auto; max-width: 100%; min-height: 2.25rem; padding: .35rem .625rem; width: 100%;
+          position: relative;
+
+          .media-library-item__name {
+            color: var(--text-color); font-size: var(--font-size-xs); font-weight: 500; line-height: var(--line-height-sm);
+            display: block;
+            margin: 0; overflow: hidden; text-align: left; text-overflow: ellipsis; white-space: nowrap; width: 100%;
+          }
+        }
+
+        .media-library-item__click-to-select-checkbox {
+          left: .5rem; margin: 0; position: absolute; top: .5rem; z-index: 2;
+
+          .form-item { margin: 0; }
+
+          input[type="checkbox"] {
+            cursor: pointer;
+            height: 1.125rem; width: 1.125rem;
+          }
+        }
+      }
+
+      // Табличный вид каталога медиа
+      .views-table {
+        background-color: var(--ml-card-bg);
+        border: 1px solid var(--ml-border-color); border-collapse: separate; border-radius: var(--ml-control-radius); border-spacing: 0;
+        margin: 0 0 1.25rem; overflow: hidden; width: 100%;
+
+        thead {
+          background-color: var(--ml-panel-bg);
+
+          tr { border-bottom: 1px solid var(--border-color); }
+
+          th {
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color); font-family: var(--font-family-heading); font-size: var(--font-size-sm); font-weight: var(--ml-heading-weight);
+            letter-spacing: .03em; text-align: left; text-transform: var(--ml-heading-transform); white-space: nowrap;
+            padding: .75rem 1rem;
+
+            a {
+              color: inherit; text-decoration: none;
+              display: inline-flex; align-items: center; gap: .35rem;
+
+              &:hover { color: var(--ml-accent); }
+            }
+
+            &.views-field-media-library-select-form {
+              padding: .75rem .5rem; text-align: center; width: 3rem;
+            }
+
+            &.views-field-thumbnail__target-id {
+              padding: .75rem .5rem; text-align: center; width: 5.5rem;
+            }
+
+            &.views-field-changed {
+              white-space: nowrap; width: 11rem;
+            }
+          }
+        }
+
+        tbody {
+          tr {
+            border-bottom: 1px solid var(--ml-border-color);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+
+            &:last-child td { border-bottom: none; }
+
+            &:hover,
+            &.is-hover {
+              background-color: color-mix(in srgb, var(--ml-accent) 4%, var(--ml-panel-bg));
+            }
+
+            &.is-active,
+            &.checked,
+            &[aria-selected="true"] {
+              background-color: color-mix(in srgb, var(--ml-accent) 8%, var(--ml-card-bg));
+            }
+          }
+
+          td {
+            border-top: 1px solid var(--ml-border-color);
+            font-size: var(--font-size-sm);
+            padding: .75rem 1rem; vertical-align: middle;
+
+            &.views-field-media-library-select-form {
+              padding: .75rem .5rem; text-align: center;
+
+              .form-item {
+                display: flex; align-items: center; justify-content: center;
+                margin: 0;
+              }
+
+              input[type="checkbox"] {
+                cursor: pointer;
+                height: 1.125rem; width: 1.125rem;
+              }
+            }
+
+            &.views-field-thumbnail__target-id {
+              padding: .5rem; text-align: center;
+
+              img {
+                background-color: var(--ml-panel-bg);
+                border: 1px solid var(--ml-border-color); border-radius: var(--ml-control-radius);
+                display: inline-block; vertical-align: middle;
+                height: 48px; width: 64px;
+                object-fit: cover;
+              }
+            }
+
+            &.views-field-name { font-weight: 600; word-break: break-word; }
+            &.views-field-changed { color: var(--text-muted); font-size: var(--font-size-sm); white-space: nowrap; }
+
+            &.views-field-uid {
+              color: var(--text-muted);
+
+              a {
+                color: var(--text-color); font-weight: 500; text-decoration: none;
+                transition: color var(--transition-fast);
+
+                &:hover {
+                  color: var(--ml-accent);
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Подвал диалога с счётчиком и кнопкой вставки
+    .ui-dialog-buttonpane {
+      background-color: var(--ml-bg);
+      border-top: 1px solid var(--ml-border-color);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .875rem 1.5rem; width: 100%;
+
+      .media-library-selected-count {
+        color: var(--text-muted); font-size: var(--font-size-sm); font-weight: 500;
+        margin-right: auto; order: 1;
+      }
+
+      :is(.ui-dialog-buttonset, .form-actions) {
+        display: flex; justify-content: flex-end;
+        margin: 0 0 0 auto; order: 2;
+      }
+    }
+
+    // Единая точка адаптивности модального окна на смартфонах
+    @media #{$smart-only} {
+      .media-library-wrapper { flex-direction: column; }
+
+      .media-library-menu {
+        border-bottom: 1px solid var(--ml-border-color); border-right: none;
+        flex-direction: row;
+        overflow-x: auto; padding: 0; width: 100%;
+
+        &__item {
+          border-bottom: none; border-right: 1px solid var(--ml-border-color);
+
+          &:has(.active) {
+            border-bottom: 1px solid var(--ml-bg); border-right: 1px solid var(--ml-border-color);
+            margin-bottom: -1px; margin-right: 0; width: auto;
+          }
+        }
+
+        &__link {
+          border-bottom: 3px solid transparent; border-left: none;
+          padding: .5rem .75rem; white-space: nowrap;
+
+          &.active {
+            border-bottom: 3px solid var(--ml-accent); border-left: none; border-right: none;
+            margin-bottom: -1px; margin-right: 0; width: auto;
+          }
+        }
+      }
+
+      .media-library-add-form {
+        .media-library-add-form__media {
+          grid-template-columns: 1fr; justify-items: center;
+          text-align: center;
+
+          .media-library-add-form__preview { max-width: 240px; width: 100%; }
+          .media-library-add-form__fields  { text-align: left; width: 100%; }
+          .media-library-add-form__remove-button { justify-self: center; width: 100%; }
+        }
+
+        &--oembed .media-library-add-form__input-wrapper {
+          grid-template-columns: 1fr;
+
+          .form-item--url input[type="url"],
+          .media-library-add-form-oembed-submit {
+            grid-column: 1; grid-row: auto;
+            width: 100%;
+          }
+        }
+      }
+
+      :is(.media-library-content, #media-library-content),
+      .ui-dialog-content > #media-library-add-form-wrapper {
+        padding: 1rem;
+      }
+
+      .media-library-view .views-exposed-form .views-exposed-form__item--actions {
+        margin-left: 0; width: 100%;
+
+        .button { width: 100%; }
+      }
+
+      .ui-dialog-buttonpane {
+        align-items: stretch; flex-direction: column; gap: .75rem;
+
+        .media-library-selected-count { margin: 0; order: 1; text-align: center; }
+
+        :is(.ui-dialog-buttonset, .form-actions) {
+          margin: 0; order: 2; width: 100%;
+
+          .button { width: 100%; }
+        }
+      }
+    }
+  }
+
+  // --- 3. Встроенный виджет Media Library на форме сущности -------------
+  .field--widget-media-library-widget,
+  .js-media-library-widget {
+    .field-prefix {
+      color: var(--text-muted); font-size: var(--font-size-sm);
+
+      &:empty,
+      &:not(:has(> :not(.js-media-library-widget-toggle-weight))) {
+        display: none;
+        margin: 0;
+      }
+    }
+
+    // Скрываем ручной переключатель веса строк (при активном drag & drop)
+    .js-media-library-widget-toggle-weight { display: none !important; }
+
+    .media-library-selection,
+    .js-media-library-selection {
+      display: flex; flex-direction: column; gap: .75rem;
+      margin: 0; width: 100%;
+
+      &:empty {
+        display: none;
+        margin: 0;
+      }
+    }
+
+    .media-library-item,
+    .media-library-item--grid,
+    .js-media-library-item {
+      background-color: var(--ml-card-bg);
+      border: 1px solid var(--ml-border-color); border-radius: var(--ml-radius);
+      box-shadow: var(--shadow-sm); box-sizing: border-box;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.25rem;
+      margin: 0; padding: .875rem 1.25rem; width: 100%;
+      position: relative;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+      &:hover {
+        border-color: var(--border-color);
+        box-shadow: var(--shadow-md);
+      }
+
+      article {
+        background: transparent;
+        border: none;
+        display: flex; align-items: center; flex-direction: row; flex-grow: 1; gap: 1.25rem;
+        height: auto; margin: 0; min-width: 0; order: 1; padding: 0;
+      }
+
+      .media-library-item__preview,
+      .js-media-library-item-preview {
+        background-color: var(--ml-panel-bg);
+        border: 1px solid var(--ml-border-color); border-radius: var(--ml-control-radius);
+        cursor: grab;
+        flex-shrink: 0;
+        height: 60px; margin: 0; overflow: hidden; padding: 0; width: 90px;
+        position: relative;
+
+        .field,
+        .field--name-thumbnail,
+        .field__item,
+        img {
+          display: block;
+          height: 100%; width: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .media-library-item__attributes,
+      article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) {
+        background: transparent;
+        color: var(--text-color); font-family: var(--font-family-base); font-size: var(--control-font-size-sm); font-weight: 600; line-height: var(--line-height-sm);
+        display: flex; align-items: center; flex-grow: 1; gap: .5rem;
+        margin: 0; min-width: 0; overflow: hidden; padding: 0; text-align: left; text-overflow: ellipsis; white-space: nowrap; width: auto;
+
+        .media-library-item__name,
+        div {
+          color: inherit; font-size: inherit; font-weight: inherit; line-height: inherit;
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+      }
+
+      :is(button, input)[name*="remove-button"],
+      :is(button, input)[data-drupal-selector*="remove-button"],
+      .media-library-item__remove {
+        flex-shrink: 0;
+        margin-left: auto; order: 2;
+      }
+
+      .js-media-library-item-weight,
+      .form-item:has(.js-media-library-item-weight) {
+        display: none !important;
+      }
+    }
+
+    // Кнопка открытия медиа-библиотеки на форме сущности
+    .js-media-library-open-button {
+      --btn-spinner-color: var(--ml-accent);
+
+      background-color: var(--ml-card-bg);
+      border: 1px solid var(--border-color); border-radius: var(--ml-control-radius);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-color); cursor: pointer; font-size: var(--control-font-size-sm); font-weight: 600;
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      height: var(--control-height-md); min-height: var(--control-height-md);
+      padding: 0 1.25rem;
+      position: relative;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+
+      &::before {
+        background-color: currentColor;
+        content: '';
+        display: inline-block; flex-shrink: 0;
+        height: 14px; width: 14px;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E") no-repeat center / contain;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E") no-repeat center / contain;
+      }
+
+      &:hover {
+        background-color: color-mix(in srgb, var(--ml-accent) 6%, var(--ml-card-bg));
+        border-color: var(--ml-accent);
+        color: var(--ml-accent);
+      }
+
+      &:active {
+        background-color: color-mix(in srgb, var(--ml-accent) 12%, var(--ml-card-bg));
+        border-color: var(--ml-accent);
+        color: var(--ml-accent);
+      }
+
+      &:has(+ .ajax-progress),
+      &:has(.ajax-progress),
+      &.is-loading {
+        color: transparent;
+
+        &::before { opacity: 0; }
+      }
+    }
+  }
+}

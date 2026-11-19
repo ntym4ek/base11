@@ -277,4 +277,60 @@
       margin: 0 0 1rem 1.25rem; padding: 0;
     }
   }
+
+  // --- 10. Локальные вкладки Drupal (Primary / Secondary Tabs) ------------
+  .tabs.primary {
+    border-bottom: 1px solid var(--border-color);
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: flex-end; gap: .25rem;
+    list-style: none;
+    margin: 1rem 0; padding: 0;
+
+    li { margin: 0; }
+
+    a {
+      background-color: var(--surface-subtle);
+      border: 1px solid var(--border-color); border-bottom: none; border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
+      color: var(--text-color); font-size: var(--font-size-sm); text-decoration: none;
+      display: inline-block;
+      padding: .5rem 1rem;
+      transition: background-color var(--transition-fast);
+
+      &:hover {
+        background-color: var(--surface-hover);
+        color: var(--text-color);
+      }
+    }
+
+    li.is-active a,
+    li a.is-active {
+      background-color: var(--page-bg);
+      border-color: var(--border-color); border-bottom: 1px solid var(--page-bg);
+      color: var(--text-color); font-weight: 600;
+      margin-bottom: -1px;
+    }
+  }
+
+  .tabs.secondary {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+    list-style: none;
+    margin: .75rem 0 1.25rem; padding: 0;
+
+    a {
+      border-radius: var(--control-radius-sm);
+      color: var(--text-muted); font-size: var(--font-size-sm); text-decoration: none;
+      display: inline-block;
+      padding: .35rem .75rem;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+
+      &:hover {
+        background-color: var(--surface-hover);
+        color: var(--text-color);
+      }
+
+      &.is-active {
+        background-color: var(--surface-subtle);
+        color: var(--text-color); font-weight: 600;
+      }
+    }
+  }
 }

@@ -1,36 +1,33 @@
 /**
  * @file
- * Живой поиск/фильтрация элементов списка в блоке Facet.
+ * Живой поиск и фильтрация элементов списка внутри длинных блоков Facets.
  */
-(function (Drupal, once) {
+((Drupal, once) => {
   'use strict';
 
   Drupal.behaviors.facetExposedListFilter = {
-    attach: function (context) {
-      // Ищем списки фасетов (подойдет для List of links, Checkboxes и т.д.)
-      const facetWrappers = once('facet-list-filter-once', 'fieldset.facet-list-filter', context);
-
-      facetWrappers.forEach(function (wrapper) {
+    attach(context) {
+      once('facet-list-filter-once', 'fieldset.facet-list-filter', context).forEach((wrapper) => {
         const list = wrapper.querySelector('.form-checkboxes');
         if (!list) {
           return;
         }
 
-        // 1. Создаем поле ввода для фильтра
+        // 1. Создаём поле быстрого поиска (type="search" даёт встроенную кнопку очистки)
         const inputWrapper = document.createElement('div');
         inputWrapper.className = 'facet-list-filter-search-wrapper';
 
         const searchInput = document.createElement('input');
-        searchInput.type = 'text';
+        searchInput.type = 'search';
         searchInput.autocomplete = 'off';
-        searchInput.className = 'form-control facet-list-filter-search-input';
-        searchInput.placeholder = 'Поиск по списку...';
-        searchInput.setAttribute('aria-label', 'поиск по списку');
+        searchInput.className = 'facet-list-filter-search-input';
+        searchInput.placeholder = Drupal.t('Search in list...');
+        searchInput.setAttribute('aria-label', Drupal.t('Search in list'));
 
-        // Блокируем передачу событий в AJAX-обработчики Views
-        const blockViewsAjax = function (e) {
+        // Блокируем всплытие событий к обработчикам авто-отправки Views AJAX
+        const blockViewsAjax = (e) => {
           e.stopPropagation();
-          if (e.key === 'Enter' || e.keyCode === 13) {
+          if (e.type === 'keydown' && e.key === 'Enter') {
             e.preventDefault();
           }
         };
@@ -39,29 +36,23 @@
         searchInput.addEventListener('keydown', blockViewsAjax);
         searchInput.addEventListener('keyup', blockViewsAjax);
 
-        // 2. Обработчик фильтрации
-        searchInput.addEventListener('input', function (e) {
-          e.stopPropagation(); // Не даем событию input всплывать к форме Views
+        // 2. Живая фильтрация элементов списка
+        const applyFilter = (e) => {
+          e.stopPropagation();
 
           const query = searchInput.value.trim().toLowerCase();
-          const items = list.querySelectorAll('.form-type-checkbox');
-
-          items.forEach(function (item) {
-            // Ищем текст внутри ссылки или метки чекбокса
+          list.querySelectorAll('.form-type-checkbox').forEach((item) => {
             const text = item.textContent.toLowerCase();
-
-            // Если элемент уже выбран/активен, можно не скрывать его, либо фильтровать на общих основаниях:
-            if (text.includes(query)) {
-              item.style.display = '';
-            } else {
-              item.style.display = 'none';
-            }
+            item.style.display = text.includes(query) ? '' : 'none';
           });
-        });
+        };
+
+        searchInput.addEventListener('input', applyFilter);
+        searchInput.addEventListener('search', applyFilter);
 
         inputWrapper.appendChild(searchInput);
         list.parentNode.insertBefore(inputWrapper, list);
       });
-    }
+    },
   };
 })(Drupal, once);

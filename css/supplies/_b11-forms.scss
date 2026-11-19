@@ -319,7 +319,26 @@
     }
   }
 
-  // --- 7. Раскрывающиеся блоки (Details) ----------------------------------
+  // --- 7. Раскрывающиеся блоки и группировки (Details & Fieldset) ---------
+  fieldset {
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+    margin: 1.25rem 0; padding: 1rem 1.25rem 1.25rem;
+
+    > legend {
+      color: var(--text-color); font-size: var(--font-size-base); font-weight: 600;
+      padding: 0 .35rem;
+    }
+
+    > .fieldset-wrapper {
+      > :is(.description, .form-item__description) {
+        color: var(--text-muted); font-size: var(--font-size-sm);
+        margin-bottom: .75rem;
+      }
+
+      > :last-child { margin-bottom: 0; }
+    }
+  }
+
   details {
     border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
     margin: 1.25rem 0;

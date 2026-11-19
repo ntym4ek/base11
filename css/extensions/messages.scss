@@ -1,78 +1,124 @@
-// === Messages Extension (base11) ===
+// ==========================================================================
+// Расширение системных сообщений (Toast / Inline + статусные цвета) Base11
+// ==========================================================================
 
-// --- Базовая структура сообщения ----------------------------------------------
-div.messages,
-.messages {
-  border-radius: var(--control-radius-md);
-  font-size: var(--font-size-sm); font-weight: 500;
-  padding: .875rem 2.5rem .875rem 1rem;
-  position: relative;
+@use "../supplies/b11-layers";
 
-  // Внутренний контейнер
-  .container {
-    margin: 0; max-width: 100%;
-    padding: 0;
-  }
+@layer b11.components {
+  // --- 1. Базовая структура и режимы отображения сообщения ---------------
+  div.messages,
+  .messages {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color-light); border-left: 4px solid var(--brand-primary);
+    border-radius: var(--control-radius-md);
+    color: var(--text-color); font-size: var(--font-size-sm); font-weight: 500;
+    padding: .875rem 2.5rem .875rem 1rem;
+    position: relative;
 
-  // --- Режим всплывающего уведомления (Toast) на страницах --------------------
-  &:not(.inline) {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, .12), 0 2px 8px rgba(0, 0, 0, .06);
-    left: 50%; top: 1.25rem; z-index: var(--z-toast);
-    max-width: 520px; width: calc(100% - 2rem);
-    position: fixed;
-    transform: translate(-50%, -150%);
-    transition: transform var(--transition-base), visibility var(--transition-base);
-    visibility: hidden;
-
-    &.visible {
-      transform: translate(-50%, 0);
-      visibility: visible;
+    // Внутренний контейнер
+    .container {
+      margin: 0; max-width: 100%;
+      padding: 0;
     }
 
-    body.toolbar-tray-open &,
-    .admin-menu & {
-      top: 4.5rem;
+    // Режим всплывающего уведомления (Toast) на страницах
+    &:not(.inline) {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, .12), 0 2px 8px rgba(0, 0, 0, .06);
+      left: 50%; max-width: 520px; position: fixed; top: 1.25rem; width: calc(100% - 2rem); z-index: var(--z-toast);
+      transform: translate(-50%, -150%);
+      transition: transform var(--transition-base), visibility var(--transition-base);
+      visibility: hidden;
+
+      &.visible {
+        transform: translate(-50%, 0);
+        visibility: visible;
+      }
+
+      body.toolbar-tray-open &,
+      .admin-menu & {
+        top: 4.5rem;
+      }
     }
-  }
 
-  // --- Режим встроенного сообщения (в формах и внутри .ui-dialog) -------------
-  &.inline,
-  .ui-dialog & {
-    box-shadow: none;
-    margin: 0 0 1.25rem 0; width: 100%;
-    position: relative !important;
-    transform: none !important;
-    visibility: visible !important;
-  }
+    // Режим встроенного сообщения (в формах и внутри .ui-dialog)
+    &.inline,
+    .ui-dialog & {
+      box-shadow: none;
+      margin: 0 0 1.25rem;
+      position: relative !important;
+      transform: none !important;
+      visibility: visible !important;
+      width: 100%;
+    }
 
-  // --- Списки сообщений -------------------------------------------------------
-  .messages__list {
-    list-style: none;
-    margin: 0; padding: 0;
-  }
+    // Списки сообщений
+    .messages__list {
+      list-style: none;
+      margin: 0; padding: 0;
+    }
 
-  .messages__item + .messages__item {
-    margin-top: .35rem;
-  }
+    .messages__item + .messages__item { margin-top: .35rem; }
 
-  // --- Ссылки внутри сообщений ------------------------------------------------
-  a {
-    font-weight: 600;
-    text-decoration: underline; text-underline-offset: 2px;
-    transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-  }
+    // Ссылки внутри сообщений
+    a {
+      font-weight: 600; text-decoration: underline; text-underline-offset: 2px;
+      transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+    }
 
-  // --- Кнопка закрытия --------------------------------------------------------
-  .close {
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    position: absolute; top: .65rem; right: .65rem;
-    width: 22px; height: 22px;
-
-    span {
-      display: inline-block;
-      font-size: 1.15rem; font-weight: 400; line-height: 1;
+    // Семантическая кнопка закрытия (<button class="close">)
+    .close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0; padding: 0;
+      position: absolute; right: .65rem; top: .65rem;
       transition: color var(--transition-fast);
+      width: 22px; height: 22px;
+
+      span {
+        display: inline-block;
+        font-size: 1.15rem; font-weight: 400; line-height: 1;
+      }
+
+      &:hover { color: var(--text-color); }
+    }
+
+    // --- 2. Базовая палитра по типам сообщений (на токенах --status-*) ----
+    &.messages--error,
+    &.error {
+      background-color: var(--status-danger-bg);
+      border-color: var(--status-danger-border); border-left: 4px solid var(--brand-danger);
+      color: var(--status-danger-text);
+
+      a { color: var(--status-danger-text); }
+    }
+
+    &.messages--info,
+    &.info {
+      background-color: var(--status-info-bg);
+      border-color: var(--status-info-border); border-left: 4px solid var(--brand-info);
+      color: var(--status-info-text);
+
+      a { color: var(--status-info-text); }
+    }
+
+    &.messages--status,
+    &.status {
+      background-color: var(--status-success-bg);
+      border-color: var(--status-success-border); border-left: 4px solid var(--brand-success);
+      color: var(--status-success-text);
+
+      a { color: var(--status-success-text); }
+    }
+
+    &.messages--warning,
+    &.warning {
+      background-color: var(--status-warning-bg);
+      border-color: var(--status-warning-border); border-left: 4px solid var(--brand-warning);
+      color: var(--status-warning-text);
+
+      a { color: var(--status-warning-text); }
     }
   }
 }

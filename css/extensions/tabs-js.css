@@ -1,46 +1,49 @@
-.tabs-js {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.tabs-js__nav {
-  display: grid;
-  grid-template-columns: min-content;
-  grid-auto-flow: column;
-  gap: 1rem;
-  justify-content: start;
-}
-.tabs-js__link {
-  display: block;
-  cursor: pointer;
-}
-.tabs-js__content {
-  display: none;
-}
-.tabs-js__content--visible {
-  display: block;
-}
-.tabs-js--equal-height {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
-}
-.tabs-js--equal-height .tabs-js__nav {
-  grid-row: 1;
-  grid-column: 1;
-}
-.tabs-js--equal-height .tabs-js__content {
-  grid-row: 2;
-  grid-column: 1;
-  display: block;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
-.tabs-js--equal-height .tabs-js__content--visible {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.components {
+  .tabs-js {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .tabs-js__nav {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: min-content;
+    gap: 1rem;
+    justify-content: start;
+  }
+  .tabs-js__link {
+    cursor: pointer;
+    display: block;
+  }
+  .tabs-js__content {
+    display: none;
+  }
+  .tabs-js__content--visible {
+    display: block;
+  }
+  .tabs-js--equal-height {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  .tabs-js--equal-height .tabs-js__nav {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .tabs-js--equal-height .tabs-js__content {
+    display: block;
+    grid-column: 1;
+    grid-row: 2;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .tabs-js--equal-height .tabs-js__content--visible {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22tabs-js.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AACA;EACE;EAAe;EACf;;AAEA;EACE;EAAe;EAAoC;EACnD;EACA;;AAGF;EACE;EACA;;AAIF;EACE;;AACA;EAAa;;AAIf;EACE;EAAe;EACf;;AAEA;EACE;EAAa;;AAGf;EAEE;EAAa;EAEb;EACA;EAAoB;EACpB;;AAEA;EACE;EAAqB;EACrB%22,%22file%22:%22tabs-js.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22tabs-js.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EACE;IACE;IAAe;IACf;;EAGA;IACE;IAAe;IAAwB;IAAoC;IAAW;;EAGxF;IACE;IACA;;EAIF;IACE;;EAEA;IAAa;;EAIf;IACE;IAAe;IAA4B;;EAE3C;IAAgB;IAAgB;;EAEhC;IACE;IACA;IAAgB;IAChB;IAAY;IAAsB;;EAElC;IACE;IAAY;IAAsB%22,%22file%22:%22tabs-js.css%22%7D */

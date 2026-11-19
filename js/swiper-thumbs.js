@@ -1,45 +1,41 @@
 /**
  * @file
- * Добавить модулю swiper_formatter возможность вывода пагинатора в виде thumbs
+ * Двусторонняя синхронизация миниатюр (thumbs) с основным слайдером Swiper (модуль swiper_formatter).
  */
 
 ((Drupal, settings, once) => {
+  'use strict';
+
   /**
-   * @type {Drupal~behavior}
+   * Подключает блок .swiper-thumbs как пагинатор-миниатюры к родительскому Swiper
+   * с идентификатором из атрибута data-parent-swiper-id.
    *
-   * @prop {Drupal~behaviorAttach} attach
-   * Инициализировать свайперы с классом swiper-thumbs
-   * и задать их в свойстве thumbs для родительских свайперов с id,
-   * указанном в атрибуте data-parent-swiper-id
+   * @type {Drupal~behavior}
    */
   Drupal.behaviors.swiperThumbs = {
     attach(context) {
-      once('swiper-thumbs-once', '.swiper-thumbs', context).forEach(
-        (element) => {
-          let parentId = element.dataset.parentSwiperId;
+      once('swiper-thumbs-once', '.swiper-thumbs', context).forEach((element) => {
+        const parentId = element.dataset.parentSwiperId;
+        if (!parentId) return;
 
-          if (parentId) {
-            const swiper = typeof Swiper !== 'undefined' ? Swiper : (window.SwiperFormatter ?? null);
-            if (swiper) {
-              let sw = new swiper(element, {
-                direction: 'vertical',
-                spaceBetween: 20,
-                slidesPerView: 'auto',
-                watchSlidesProgress: true,
-                mousewheel: true,
-              });
+        const SwiperCtor = typeof Swiper !== 'undefined' ? Swiper : (window.SwiperFormatter ?? null);
+        if (!SwiperCtor) return;
 
-              let parentSwiper = drupalSettings.swipers[parentId];
-              if (parentSwiper) {
-                parentSwiper.thumbs.swiper = sw;
-                parentSwiper.thumbs.init();
-                parentSwiper.update();
-              }
-            }
-          }
+        const thumbsSwiper = new SwiperCtor(element, {
+          direction: 'vertical',
+          spaceBetween: 20,
+          slidesPerView: 'auto',
+          watchSlidesProgress: true,
+          mousewheel: true,
+        });
+
+        const parentSwiper = settings.swipers?.[parentId];
+        if (parentSwiper?.thumbs) {
+          parentSwiper.thumbs.swiper = thumbsSwiper;
+          parentSwiper.thumbs.init();
+          parentSwiper.update();
         }
-      );
+      });
     },
   };
-
 })(Drupal, drupalSettings, once);

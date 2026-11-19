@@ -1,45 +1,45 @@
+// ==========================================================================
+// Стили интерактивных закладок (tabs-js) Base11
+// ==========================================================================
 
-.tabs-js {
-  display: flex; flex-direction: column;
-  width: 100%;
+@use "../supplies/b11-layers";
 
-  &__nav {
-    display: grid; grid-template-columns: min-content; grid-auto-flow: column;
-    gap: 1rem;
-    justify-content: start;
-  }
+@layer b11.components {
+  .tabs-js {
+    display: flex; flex-direction: column;
+    width: 100%;
 
-  &__link {
-    display: block;
-    cursor: pointer;
-  }
-
-  // Обычный режим
-  &__content {
-    display: none;
-    &--visible { display: block; }
-  }
-
-  // Режим одинаковой высоты (плоский HTML)
-  &--equal-height {
-    display: grid; grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr; // 1-я строка: меню, 2-я строка: вкладки
-
-    .tabs-js__nav {
-      grid-row: 1; grid-column: 1;
+    // --- Навигация вкладок ------------------------------------------------
+    &__nav {
+      display: grid; grid-auto-flow: column; grid-template-columns: min-content; gap: 1rem; justify-content: start;
     }
 
-    .tabs-js__content {
-      // Все вкладки принудительно сажаются во вторую строку и первую колонку
-      grid-row: 2; grid-column: 1;
-
+    &__link {
+      cursor: pointer;
       display: block;
-      visibility: hidden; opacity: 0;
-      pointer-events: none;
+    }
 
-      &--visible {
-        visibility: visible; opacity: 1;
-        pointer-events: auto;
+    // --- Обычный режим отображения контента -------------------------------
+    &__content {
+      display: none;
+
+      &--visible { display: block; }
+    }
+
+    // --- Режим выровненной высоты панелей (Equal Height) ------------------
+    &--equal-height {
+      display: grid; grid-template-columns: 1fr; grid-template-rows: auto 1fr;
+
+      .tabs-js__nav { grid-column: 1; grid-row: 1; }
+
+      .tabs-js__content {
+        display: block;
+        grid-column: 1; grid-row: 2;
+        opacity: 0; pointer-events: none; visibility: hidden;
+
+        &--visible {
+          opacity: 1; pointer-events: auto; visibility: visible;
+        }
       }
     }
   }

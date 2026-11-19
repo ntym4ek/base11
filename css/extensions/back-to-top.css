@@ -1,54 +1,58 @@
-.back-to-top {
-  background-color: rgba(51, 51, 51, 0.5215686275);
-  border-radius: 50%;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  bottom: 30px;
-  right: 6%;
-  z-index: 999;
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease, background-color 0.2s ease;
-}
-.back-to-top::before {
-  content: "";
-  background-color: #333333;
-  border-radius: 50%;
-  position: absolute;
-  width: 70%;
-  height: 70%;
-  transition: background-color 0.2s ease;
-}
-.back-to-top__icon {
-  display: block;
-  position: relative;
-  z-index: 1;
-  width: 55%;
-  height: 55%;
-  fill: none;
-  stroke: #ffffff;
-  stroke-width: 2.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transform: translateY(-1px);
-}
-.back-to-top:hover {
-  transform: translateY(-2px);
-}
-.back-to-top:active {
-  transform: translateY(0);
-}
-.back-to-top.is-visible {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.components {
+  .back-to-top {
+    background-color: color-mix(in srgb, var(--text-color) 52%, transparent);
+    border: none;
+    border-radius: 50%;
+    bottom: 30px;
+    position: fixed;
+    right: 6%;
+    z-index: var(--z-fixed);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    padding: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease, background-color 0.2s ease;
+    width: 3rem;
+    height: 3rem;
+  }
+  .back-to-top::before {
+    background-color: var(--text-color);
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+    transition: background-color 0.2s ease;
+    width: 70%;
+    height: 70%;
+  }
+  .back-to-top__icon {
+    display: block;
+    fill: none;
+    position: relative;
+    z-index: 1;
+    stroke: var(--surface-card);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.6;
+    transform: translateY(-1px);
+    width: 55%;
+    height: 55%;
+  }
+  .back-to-top:hover {
+    transform: translateY(-2px);
+  }
+  .back-to-top:active {
+    transform: translateY(0);
+  }
+  .back-to-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22back-to-top.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AACA;EACE;EACA;EAAoB;EACpB;EAAe;EAAqB;EACpC;EAAiB;EAAc;EAAW;EAE1C;EAAa;EACb;EACA;EAAY;EACZ;EACA;;AAEA;EACE;EACA;EAA2B;EAC3B;EACA;EAAY;EACZ;;AAGF;EACE;EACA;EAAoB;EACpB;EAAY;EACZ;EACA;EAAiB;EAAmB;EAAuB;EAC3D;;AAGF;EAAU;;AACV;EAAW;;AAEX;EACE;EAAY;EACZ%22,%22file%22:%22back-to-top.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22back-to-top.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EACE;IACE;IACA;IAAc;IACd;IAAc;IAAiB;IAAW;IAC1C;IACA;IAAe;IAAqB;IACpC;IAAY;IAAsB;IAClC;IACA;IACA;IAAa;;EAGb;IACE;IAAqC;IACrC;IACA;IACA;IACA;IAAY;;EAGd;IACE;IACA;IACA;IAAoB;IACpB;IAA6B;IAAuB;IAAwB;IAC5E;IACA;IAAY;;EAGd;IAAW;;EACX;IAAW;;EAEX;IACE;IAAY;IAAsB%22,%22file%22:%22back-to-top.css%22%7D */

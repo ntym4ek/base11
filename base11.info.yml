@@ -1,7 +1,7 @@
 # Основные метаданные базовой темы Base11 (автономная тема без наследования ядра)
 name: Base11
 type: theme
-version: 2.0.0-alpha2
+version: 2.0.0-alpha3
 description: 'Базовая каркасная тема для проектов группы компаний на Drupal 11'
 base theme: false
 core_version_requirement: ^11
@@ -19,6 +19,10 @@ libraries:
 libraries-extend:
   file/drupal.file:
     - base11/file-upload
+  media_library/widget:
+    - base11/media-library
+  media_library/ui:
+    - base11/media-library
 
 # Отключение устаревших и неслоёных стилей ядра / сторонних модулей,
 # чтобы они не перекрывали стили темы внутри каскадных слоёв @layer b11.*

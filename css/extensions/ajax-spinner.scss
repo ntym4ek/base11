@@ -1,110 +1,110 @@
-// --- Ajax & Form Submit Spinner ---------------------------------------------
+// ==========================================================================
+// Встроенный спиннер кнопок при отправке форм, переходах и AJAX Base11
+// ==========================================================================
 
-.ajax-progress,
-.ajax-progress-throbber {
-  display: none !important;
-}
+@use "../supplies/b11-layers";
 
-// Общие стили для активных кнопок (<button>, <input> и <a class="button">)
-.button:has(+ .ajax-progress),
-.button:has(.ajax-progress),
-.button.is-loading,
-.btn.is-loading,
-button.is-loading,
-input[type="submit"].is-loading {
-  color: transparent !important;
-  pointer-events: none; position: relative;
-
-  &:active {
-    transform: scale(.98);
+@layer b11.components {
+  // --- 1. Адресное скрытие стандартного .ajax-progress у кнопок ------------
+  // Остальные элементы (select, фильтры Views) продолжают показывать throbber из _b11-ajax.scss.
+  .button:not(.button--link) + .ajax-progress,
+  .btn:not(.button--link) + .ajax-progress,
+  .button:not(.button--link) .ajax-progress,
+  .btn:not(.button--link) .ajax-progress,
+  input[type="submit"]:not(.button--link) + .ajax-progress,
+  input[type="button"]:not(.button--link) + .ajax-progress {
+    display: none !important;
   }
-}
 
-// Скрытие вложенных элементов (иконки, подписи в <span>) при отображении спиннера
-.button:not(.button--link).is-loading,
-.btn:not(.button--link).is-loading,
-.button:not(.button--link):has(+ .ajax-progress),
-.button:not(.button--link):has(.ajax-progress) {
-  > * {
+  // --- 2. Активное состояние загрузки на кнопках (<button>, <input>, <a>) -
+  .button:has(+ .ajax-progress),
+  .button:has(.ajax-progress),
+  .button.is-loading,
+  .btn.is-loading,
+  button.is-loading,
+  input[type="submit"].is-loading {
+    color: transparent !important;
+    pointer-events: none; position: relative;
+
+    &:active { transform: scale(.98); }
+  }
+
+  // Скрытие вложенных элементов (иконки, подписи в <span>) на время спиннера
+  .button:not(.button--link).is-loading > *,
+  .btn:not(.button--link).is-loading > *,
+  .button:not(.button--link):has(+ .ajax-progress) > *,
+  .button:not(.button--link):has(.ajax-progress) > * {
     opacity: 0;
   }
-}
 
-// Для <button> (поддерживает псевдоэлементы)
-.button:not(input):has(+ .ajax-progress),
-.button:not(input):has(.ajax-progress),
-button.is-loading,
-.button:not(input).is-loading,
-.btn:not(input).is-loading {
-  &::after {
+  // Для <button> и <a class="button"> (псевдоэлемент ::after)
+  .button:not(input):has(+ .ajax-progress)::after,
+  .button:not(input):has(.ajax-progress)::after,
+  button.is-loading::after,
+  .button:not(input).is-loading::after,
+  .btn:not(input).is-loading::after {
     animation: btnSpin .6s linear infinite;
     background: transparent !important;
-    border: 2px solid color-mix(in srgb, var(--btn-spinner-color, #ffffff) 35%, transparent);
-    border-top-color: var(--btn-spinner-color, #ffffff);
-    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--btn-spinner-color, var(--on-primary)) 35%, transparent);
+    border-radius: 50%; border-top-color: var(--btn-spinner-color, var(--on-primary));
     box-sizing: border-box;
     content: '';
-    margin-top: -8px; margin-left: -8px;
+    left: 50%; margin-left: -8px; margin-top: -8px; position: absolute; top: 50%;
     mask: none !important; -webkit-mask: none !important;
-    position: absolute; top: 50%; left: 50%;
     transition: none !important;
     width: 16px; height: 16px;
   }
-}
 
-// Для <input> (void-элемент, псевдоэлементы не работают — выводим SVG-спиннер через background)
-input.button:has(+ .ajax-progress),
-input[type="submit"]:has(+ .ajax-progress),
-input[type="button"]:has(+ .ajax-progress),
-input.is-loading,
-input[type="submit"].is-loading {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(255,255,255,.35)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
-  background-position: center; background-repeat: no-repeat; background-size: 16px 16px;
-}
-
-// Исключение для кнопок-ссылок (.button--link):
-// Текст не должен скрываться в прозрачность, а белый спиннер не должен подставляться
-.button--link.is-loading,
-input[type="submit"].button--link.is-loading,
-input[type="button"].button--link.is-loading,
-.button--link:has(.ajax-progress) {
-  background-image: none !important;
-  color: inherit !important;
-  cursor: wait;
-  opacity: .5;
-
-  &::after {
-    display: none !important;
+  // Для void-элементов <input> (псевдоэлементы не поддерживаются — SVG-фон)
+  input.button:has(+ .ajax-progress),
+  input[type="submit"]:has(+ .ajax-progress),
+  input[type="button"]:has(+ .ajax-progress),
+  input.is-loading,
+  input[type="submit"].is-loading {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(255,255,255,.35)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
+    background-position: center; background-repeat: no-repeat; background-size: 16px 16px;
   }
-}
 
-// Для кнопок со светлым фоном (.button--white, .button--default, .button--outline) спиннер должен быть темным
-.button--white,
-.button--default,
-.button--outline {
-  --btn-spinner-color: var(--text-color);
-}
+  // Исключение для кнопок-ссылок (.button--link): текст сохраняется
+  .button--link.is-loading,
+  input[type="submit"].button--link.is-loading,
+  input[type="button"].button--link.is-loading,
+  .button--link:has(.ajax-progress) {
+    background-image: none !important;
+    color: inherit !important; cursor: wait;
+    opacity: .5;
 
-.button--white.is-loading::after,
-.button--white:has(+ .ajax-progress)::after,
-.button--white:has(.ajax-progress)::after,
-.button--default.is-loading::after,
-.button--default:has(+ .ajax-progress)::after,
-.button--default:has(.ajax-progress)::after,
-.button--outline.is-loading::after,
-.button--outline:has(+ .ajax-progress)::after,
-.button--outline:has(.ajax-progress)::after {
-  border-color: color-mix(in srgb, var(--btn-spinner-color, var(--text-color)) 35%, transparent);
-  border-top-color: var(--btn-spinner-color, var(--text-color));
-}
+    &::after { display: none !important; }
+  }
 
-input.button--white.is-loading,
-input[type="submit"].button--white.is-loading,
-input.button--default.is-loading,
-input[type="submit"].button--default.is-loading,
-input.button--outline.is-loading,
-input[type="submit"].button--outline.is-loading {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(0,0,0,.15)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23333333' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
+  // --- 3. Тёмный спиннер для кнопок на светлом фоне -----------------------
+  .button--white,
+  .button--default,
+  .button--outline {
+    --btn-spinner-color: var(--text-color);
+  }
+
+  .button--white.is-loading::after,
+  .button--white:has(+ .ajax-progress)::after,
+  .button--white:has(.ajax-progress)::after,
+  .button--default.is-loading::after,
+  .button--default:has(+ .ajax-progress)::after,
+  .button--default:has(.ajax-progress)::after,
+  .button--outline.is-loading::after,
+  .button--outline:has(+ .ajax-progress)::after,
+  .button--outline:has(.ajax-progress)::after {
+    border-color: color-mix(in srgb, var(--btn-spinner-color, var(--text-color)) 35%, transparent);
+    border-top-color: var(--btn-spinner-color, var(--text-color));
+  }
+
+  input.button--white.is-loading,
+  input[type="submit"].button--white.is-loading,
+  input.button--default.is-loading,
+  input[type="submit"].button--default.is-loading,
+  input.button--outline.is-loading,
+  input[type="submit"].button--outline.is-loading {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(0,0,0,.15)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23333333' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
+  }
 }
 
 @keyframes btnSpin {

@@ -1,83 +1,86 @@
-.click-to-copy {
-  display: inline;
-  position: relative;
-}
-.click-to-copy:hover ~ .click-to-copy__tooltip, .click-to-copy:focus-within ~ .click-to-copy__tooltip {
-  opacity: 1;
-  visibility: visible;
-}
-.click-to-copy__tooltip {
-  display: inline-flex;
-  align-items: center;
-  margin-left: 0.25rem;
-  opacity: 0;
-  visibility: hidden;
-  padding: 0.25rem;
-  position: relative;
-  transition: opacity var(--transition-fast), visibility var(--transition-fast);
-  vertical-align: middle;
-}
-.click-to-copy__tooltip:hover, .click-to-copy__tooltip:focus-within {
-  opacity: 1;
-  visibility: visible;
-}
-.click-to-copy__tooltip:hover .click-to-copy__tooltiptext, .click-to-copy__tooltip:focus-within .click-to-copy__tooltiptext {
-  opacity: 1;
-  visibility: visible;
-}
-.click-to-copy__btn {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  padding: 0;
-  transition: color var(--transition-fast);
-}
-.click-to-copy__btn:hover {
-  color: var(--brand-primary);
-}
-.click-to-copy__btn.click-to-copy-copied {
-  color: var(--brand-success);
-}
-.click-to-copy__icon {
-  display: block;
-  width: 18px;
-  height: 18px;
-}
-.click-to-copy__tooltiptext {
-  background: var(--text-color);
-  border-radius: var(--control-radius-sm);
-  box-shadow: var(--shadow-md);
-  color: var(--surface-card);
-  display: inline-block;
-  font-size: var(--font-size-xs);
-  text-align: center;
-  white-space: nowrap;
-  line-height: 1.2;
-  min-width: 100px;
-  opacity: 0;
-  visibility: hidden;
-  padding: 0.375rem 0.625rem;
-  position: absolute;
-  z-index: var(--z-dropdown);
-  bottom: 130%;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: opacity var(--transition-fast), visibility var(--transition-fast);
-}
-.click-to-copy__tooltiptext::after {
-  border-color: var(--text-color) transparent transparent transparent;
-  border-style: solid;
-  border-width: 5px;
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.components {
+  .click-to-copy {
+    display: inline;
+    position: relative;
+  }
+  .click-to-copy:hover ~ .click-to-copy__tooltip, .click-to-copy:focus-within ~ .click-to-copy__tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+  .click-to-copy__tooltip {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.25rem;
+    opacity: 0;
+    visibility: hidden;
+    padding: 0.25rem;
+    position: relative;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    vertical-align: middle;
+  }
+  .click-to-copy__tooltip:hover, .click-to-copy__tooltip:focus-within {
+    opacity: 1;
+    visibility: visible;
+  }
+  .click-to-copy__tooltip:hover .click-to-copy__tooltiptext, .click-to-copy__tooltip:focus-within .click-to-copy__tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+  .click-to-copy__btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    transition: color var(--transition-fast);
+  }
+  .click-to-copy__btn:hover {
+    color: var(--brand-primary);
+  }
+  .click-to-copy__btn.click-to-copy-copied {
+    color: var(--brand-success);
+  }
+  .click-to-copy__icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+  .click-to-copy__tooltiptext {
+    background: var(--text-color);
+    border-radius: var(--control-radius-sm);
+    box-shadow: var(--shadow-md);
+    color: var(--surface-card);
+    font-size: var(--font-size-xs);
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    display: inline-block;
+    min-width: 100px;
+    opacity: 0;
+    visibility: hidden;
+    padding: 0.375rem 0.625rem;
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    z-index: var(--z-dropdown);
+    transform: translateX(-50%);
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+  }
+  .click-to-copy__tooltiptext::after {
+    border-color: var(--text-color) transparent transparent transparent;
+    border-style: solid;
+    border-width: 5px;
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+  }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22click-to-copy.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AACA;EACE;EACA;;AAEA;EAEE;EAAY;;AAGd;EACE;EAAsB;EACtB;EACA;EAAY;EACZ;EACA;EACA;EACA;;AAEA;EAEE;EAAY;;AAEZ;EACE;EAAY;;AAKlB;EACE;EACA;EACA;EACA;EACA;EAAsB;EAAqB;EAC3C;EACA;EACA;;AAEA;EACE;;AAGF;EACE;;AAIJ;EACE;EACA;EAAa;;AAGf;EACE;EACA;EACA;EACA;EACA;EACA;EAAgC;EAAoB;EACpD;EACA;EACA;EAAY;EACZ;EACA;EAAoB;EAA4B;EAAc;EAC9D;EACA;;AAEA;EACE;EACA;EAAqB;EACrB;EACA;EAAoB;EAAW;EAC/B%22,%22file%22:%22click-to-copy.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22click-to-copy.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EACE;IACE;IACA;;EAEA;IAEE;IAAY;;EAGd;IACE;IAAsB;IACtB;IACA;IAAY;IACZ;IACA;IACA;IACA;;EAEA;IAEE;IAAY;;EAEZ;IACE;IAAY;;EAKlB;IACE;IACA;IACA;IAA0B;IAC1B;IAAsB;IAAqB;IAC3C;IACA;IACA;;EAEA;IAAU;;EACV;IAAyB;;EAG3B;IACE;IACA;IAAa;;EAGf;IACE;IAA+B;IAC/B;IACA;IAA4B;IAAgC;IAAkB;IAAoB;IAClG;IACA;IACA;IAAY;IACZ;IACA;IAAoB;IAAc;IAAW;IAC7C;IACA;;EAEA;IACE;IAAqE;IAAqB;IAC1F;IACA;IAAoB;IAAW;IAC/B%22,%22file%22:%22click-to-copy.css%22%7D */

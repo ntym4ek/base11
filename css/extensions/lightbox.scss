@@ -1,65 +1,68 @@
-// --- Стилизация GLightbox для темы Base11 ---------------------------------
+// ==========================================================================
+// Стилизация полноэкранного лайтбокса (GLightbox) Base11
+// ==========================================================================
 
-.glightbox-clean {
-  // Блок подписи под фото
-  .gslide-description {
-    background: rgba(18, 18, 18, .88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, .1); border-top: none; border-radius: 0 0 .5rem .5rem;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, .6);
-    transition: opacity .3s ease;
-  }
+@use "../supplies/b11-layers";
 
-  .gdesc-inner {
-    padding: .75rem 1.25rem;
-    text-align: center;
-  }
+@layer b11.components {
+  .glightbox-clean {
+    // --- Подпись под фотографией ------------------------------------------
+    .gslide-description {
+      background: rgba(18, 18, 18, .88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, .1); border-top: none; border-radius: 0 0 .5rem .5rem;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, .6);
+      transition: opacity .3s ease;
+    }
 
-  .gslide-title {
-    color: #ffffff;
-    font-family: inherit; font-size: .95rem; font-weight: 600; line-height: var(--line-height-sm); letter-spacing: -.01em;
-    margin-bottom: .25rem;
-  }
+    .gdesc-inner {
+      padding: .75rem 1.25rem;
+      text-align: center;
+    }
 
-  .gslide-desc {
-    color: rgba(255, 255, 255, .88);
-    font-family: inherit; font-size: .84rem; font-weight: 400;
-    margin-bottom: 0;
-  }
+    .gslide-title {
+      color: #ffffff;
+      font-family: inherit; font-size: .95rem; font-weight: 600; letter-spacing: -.01em; line-height: var(--line-height-sm);
+      margin-bottom: .25rem;
+    }
 
-  // Скругление фотографии
-  .gslide-image img {
-    border-radius: .5rem .5rem 0 0;
-  }
+    .gslide-desc {
+      color: rgba(255, 255, 255, .88);
+      font-family: inherit; font-size: .84rem; font-weight: 400;
+      margin-bottom: 0;
+    }
 
-  // Кнопки навигации и закрытия
-  .gprev,
-  .gnext,
-  .gclose {
-    background-color: rgba(255, 255, 255, .1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, .15);
-    transition: all .25s cubic-bezier(.4, 0, .2, 1);
+    .gslide-image img { border-radius: .5rem .5rem 0 0; }
 
-    &:hover {
-      background-color: rgba(255, 255, 255, .22);
-      border-color: rgba(255, 255, 255, .35);
-      transform: scale(1.08);
+    // --- Кнопки навигации и закрытия --------------------------------------
+    .gprev,
+    .gnext,
+    .gclose {
+      background-color: rgba(255, 255, 255, .1);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, .15);
+      transition: all .25s cubic-bezier(.4, 0, .2, 1);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, .22);
+        border-color: rgba(255, 255, 255, .35);
+        transform: scale(1.08);
+      }
+    }
+
+    .gprev,
+    .gnext {
+      border-radius: 50%;
+      width: 46px; height: 46px;
+    }
+
+    .gclose {
+      border-radius: 50%;
+      position: absolute; right: 18px; top: 18px;
+      width: 38px; height: 38px;
     }
   }
 
-  .gprev,
-  .gnext {
-    border-radius: 50%;
-    width: 46px; height: 46px;
-  }
-
-  .gclose {
-    border-radius: 50%;
-    position: absolute; top: 18px; right: 18px;
-    width: 38px; height: 38px;
-  }
-}
-
-// Если у слайда нет описания, скругляем все 4 угла фотографии
-.ginner-container:not(:has(.gslide-description)) .gslide-image img {
-  border-radius: .5rem;
+  // Если подписи нет — скругляем все 4 угла изображения
+  .ginner-container:not(:has(.gslide-description)) .gslide-image img { border-radius: .5rem; }
 }

@@ -155,3 +155,11 @@ password-toggle:
   dependencies:
     - core/drupal
     - core/once
+
+# Токенизированное оформление модального окна и виджета Drupal Media Library
+media-library:
+  css:
+    component:
+      css/extensions/media-library.css: {}
+  dependencies:
+    - core/drupal.dialog

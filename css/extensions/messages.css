@@ -1,86 +1,154 @@
-div.messages,
-.messages {
-  border-radius: var(--control-radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  padding: 0.875rem 2.5rem 0.875rem 1rem;
-  position: relative;
-}
-div.messages .container,
-.messages .container {
-  margin: 0;
-  max-width: 100%;
-  padding: 0;
-}
-div.messages:not(.inline),
-.messages:not(.inline) {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
-  left: 50%;
-  top: 1.25rem;
-  z-index: var(--z-toast);
-  max-width: 520px;
-  width: calc(100% - 2rem);
-  position: fixed;
-  transform: translate(-50%, -150%);
-  transition: transform var(--transition-base), visibility var(--transition-base);
-  visibility: hidden;
-}
-div.messages:not(.inline).visible,
-.messages:not(.inline).visible {
-  transform: translate(-50%, 0);
-  visibility: visible;
-}
-body.toolbar-tray-open div.messages:not(.inline), .admin-menu div.messages:not(.inline),
-body.toolbar-tray-open .messages:not(.inline),
-.admin-menu .messages:not(.inline) {
-  top: 4.5rem;
-}
-div.messages.inline, .ui-dialog div.messages,
-.messages.inline,
-.ui-dialog .messages {
-  box-shadow: none;
-  margin: 0 0 1.25rem 0;
-  width: 100%;
-  position: relative !important;
-  transform: none !important;
-  visibility: visible !important;
-}
-div.messages .messages__list,
-.messages .messages__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-div.messages .messages__item + .messages__item,
-.messages .messages__item + .messages__item {
-  margin-top: 0.35rem;
-}
-div.messages a,
-.messages a {
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-}
-div.messages .close,
-.messages .close {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0.65rem;
-  right: 0.65rem;
-  width: 22px;
-  height: 22px;
-}
-div.messages .close span,
-.messages .close span {
-  display: inline-block;
-  font-size: 1.15rem;
-  font-weight: 400;
-  line-height: 1;
-  transition: color var(--transition-fast);
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.components {
+  div.messages,
+  .messages {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color-light);
+    border-left: 4px solid var(--brand-primary);
+    border-radius: var(--control-radius-md);
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    padding: 0.875rem 2.5rem 0.875rem 1rem;
+    position: relative;
+  }
+  div.messages .container,
+  .messages .container {
+    margin: 0;
+    max-width: 100%;
+    padding: 0;
+  }
+  div.messages:not(.inline),
+  .messages:not(.inline) {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+    left: 50%;
+    max-width: 520px;
+    position: fixed;
+    top: 1.25rem;
+    width: calc(100% - 2rem);
+    z-index: var(--z-toast);
+    transform: translate(-50%, -150%);
+    transition: transform var(--transition-base), visibility var(--transition-base);
+    visibility: hidden;
+  }
+  div.messages:not(.inline).visible,
+  .messages:not(.inline).visible {
+    transform: translate(-50%, 0);
+    visibility: visible;
+  }
+  body.toolbar-tray-open div.messages:not(.inline), .admin-menu div.messages:not(.inline),
+  body.toolbar-tray-open .messages:not(.inline),
+  .admin-menu .messages:not(.inline) {
+    top: 4.5rem;
+  }
+  div.messages.inline, .ui-dialog div.messages,
+  .messages.inline,
+  .ui-dialog .messages {
+    box-shadow: none;
+    margin: 0 0 1.25rem;
+    position: relative !important;
+    transform: none !important;
+    visibility: visible !important;
+    width: 100%;
+  }
+  div.messages .messages__list,
+  .messages .messages__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  div.messages .messages__item + .messages__item,
+  .messages .messages__item + .messages__item {
+    margin-top: 0.35rem;
+  }
+  div.messages a,
+  .messages a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+  }
+  div.messages .close,
+  .messages .close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0.65rem;
+    top: 0.65rem;
+    transition: color var(--transition-fast);
+    width: 22px;
+    height: 22px;
+  }
+  div.messages .close span,
+  .messages .close span {
+    display: inline-block;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1;
+  }
+  div.messages .close:hover,
+  .messages .close:hover {
+    color: var(--text-color);
+  }
+  div.messages.messages--error, div.messages.error,
+  .messages.messages--error,
+  .messages.error {
+    background-color: var(--status-danger-bg);
+    border-color: var(--status-danger-border);
+    border-left: 4px solid var(--brand-danger);
+    color: var(--status-danger-text);
+  }
+  div.messages.messages--error a, div.messages.error a,
+  .messages.messages--error a,
+  .messages.error a {
+    color: var(--status-danger-text);
+  }
+  div.messages.messages--info, div.messages.info,
+  .messages.messages--info,
+  .messages.info {
+    background-color: var(--status-info-bg);
+    border-color: var(--status-info-border);
+    border-left: 4px solid var(--brand-info);
+    color: var(--status-info-text);
+  }
+  div.messages.messages--info a, div.messages.info a,
+  .messages.messages--info a,
+  .messages.info a {
+    color: var(--status-info-text);
+  }
+  div.messages.messages--status, div.messages.status,
+  .messages.messages--status,
+  .messages.status {
+    background-color: var(--status-success-bg);
+    border-color: var(--status-success-border);
+    border-left: 4px solid var(--brand-success);
+    color: var(--status-success-text);
+  }
+  div.messages.messages--status a, div.messages.status a,
+  .messages.messages--status a,
+  .messages.status a {
+    color: var(--status-success-text);
+  }
+  div.messages.messages--warning, div.messages.warning,
+  .messages.messages--warning,
+  .messages.warning {
+    background-color: var(--status-warning-bg);
+    border-color: var(--status-warning-border);
+    border-left: 4px solid var(--brand-warning);
+    color: var(--status-warning-text);
+  }
+  div.messages.messages--warning a, div.messages.warning a,
+  .messages.messages--warning a,
+  .messages.warning a {
+    color: var(--status-warning-text);
+  }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22messages.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAGA;AAAA;EAEE;EACA;EAAgC;EAChC;EACA;;AAGA;AAAA;EACE;EAAW;EACX;;AAIF;AAAA;EACE;EACA;EAAW;EAAc;EACzB;EAAkB;EAClB;EACA;EACA;EACA;;AAEA;AAAA;EACE;EACA;;AAGF;AAAA;AAAA;EAEE;;AAKJ;AAAA;AAAA;EAEE;EACA;EAAuB;EACvB;EACA;EACA;;AAIF;AAAA;EACE;EACA;EAAW;;AAGb;AAAA;EACE;;AAIF;AAAA;EACE;EACA;EAA4B;EAC5B;;AAIF;AAAA;EACE;EACA;EAAe;EAAqB;EACpC;EAAoB;EAAa;EACjC;EAAa;;AAEb;AAAA;EACE;EACA;EAAoB;EAAkB;EACtC%22,%22file%22:%22messages.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22messages.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EAEE;AAAA;IAEE;IACA;IAA6C;IAC7C;IACA;IAA0B;IAAgC;IAC1D;IACA;;EAGA;AAAA;IACE;IAAW;IACX;;EAIF;AAAA;IACE;IACA;IAAW;IAAkB;IAAiB;IAAc;IAA0B;IACtF;IACA;IACA;;EAEA;AAAA;IACE;IACA;;EAGF;AAAA;AAAA;IAEE;;EAKJ;AAAA;AAAA;IAEE;IACA;IACA;IACA;IACA;IACA;;EAIF;AAAA;IACE;IACA;IAAW;;EAGb;AAAA;IAAoC;;EAGpC;AAAA;IACE;IAAkB;IAA4B;IAC9C;;EAIF;AAAA;IACE;IACA;IACA;IAA0B;IAC1B;IAAe;IAAqB;IACpC;IAAW;IACX;IAAoB;IAAe;IACnC;IACA;IAAa;;EAEb;AAAA;IACE;IACA;IAAoB;IAAkB;;EAGxC;AAAA;IAAU;;EAIZ;AAAA;AAAA;IAEE;IACA;IAA2C;IAC3C;;EAEA;AAAA;AAAA;IAAI;;EAGN;AAAA;AAAA;IAEE;IACA;IAAyC;IACzC;;EAEA;AAAA;AAAA;IAAI;;EAGN;AAAA;AAAA;IAEE;IACA;IAA4C;IAC5C;;EAEA;AAAA;AAAA;IAAI;;EAGN;AAAA;AAAA;IAEE;IACA;IAA4C;IAC5C;;EAEA;AAAA;AAAA;IAAI%22,%22file%22:%22messages.css%22%7D */

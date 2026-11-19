@@ -397,3 +397,100 @@
   - [x] `ff.local`
   - [x] `jp.local`
   - [x] `lubr.local`
+
+
+---
+
+## Этап 3 — A11y, JS-расширения и общие компоненты
+
+### [CHG-32] Доступность (A11y) и клавиатурное управление в `menu-mobile.js`
+- **Этап:** 3 | **Тип:** ADDED / FIXED
+- **Было:** шторка `.page-offside` не закрывалась по `Escape`, не управляла `aria-expanded` и `inert` (клавиатурный фокус проваливался в скрытое меню), а `<div class="page-offside-label">` в старых подтемах не работал с клавиатуры.
+- **Стало:** добавлены синхронизация `aria-expanded` на кнопках и пунктах подменю `.menu-item--expanded > a`, атрибут `inert` на скрытой/десктопной `.page-offside`, закрытие по `Escape` с возвратом фокуса на триггер, а также `role="button"`/`tabindex="0"` + `Enter`/`Space` при отсутствии нативного `<button>`.
+- **Как найти в подтеме (regex):** `<div[^>]*class="[^"]*page-offside-label`
+- **Что сделать в `project`:** заменить `<div class="page-offside-label">` на семантический `<button type="button" class="page-offside-label" aria-label="{{ 'Menu'|t }}" aria-expanded="false">` в `page.html.twig` (выполнено во всех 3 подтемах).
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-33] Паттерн WAI-ARIA Tabs и троттлинг `ResizeObserver` в `tabs-js`
+- **Этап:** 3 | **Тип:** FIXED
+- **Было:** в `tabs-js.js` отсутствовал `role="tablist"`, `aria-controls` указывал на `data-id` вместо реального HTML `id`, у всех вкладок стоял `tabindex="0"`, отсутствовали `Home`/`End`/`Enter`/`Space`, а `ResizeObserver` мог вызывать цикл измерений.
+- **Стало:** назначаются уникальные префиксированные `id` вкладкам и панелям (`aria-controls`/`aria-labelledby`), реализован roving `tabindex` (`0` / `-1`), клавиши `Home`/`End`/`Enter`/`Space`, троттлинг `ResizeObserver` через `requestAnimationFrame`; `tabs-js.scss` обёрнут в `@layer b11.components`.
+- **Как найти в подтеме (regex):** `\.tabs-js\s*\{`
+- **Что сделать в `project`:** удалить дублирующие базовые стили `.tabs-js` в подтемах (например в `jp.local/_tabs.scss`).
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-34] Безопасность (XSS), доступность и локализация `facet-extension` и `facet-list-filter`
+- **Этап:** 3 | **Тип:** FIXED
+- **Было:** `facet-extension.js` вставлял заголовок через `innerHTML`, `legend` не управлялся с клавиатуры, модальное окно фильтра не имело `role="dialog"`/`aria-modal` и не закрывалось по `Escape`; в `facet-extension.scss` использовались хардкодные цвета; в `facet-list-filter.js` строки были без `Drupal.t()`, с Bootstrap-классом `.form-control` и `e.keyCode`.
+- **Стало:** шапка и кнопки модалки создаются через DOM API + `textContent` + `Drupal.t()`; добавлены `role="button"`/`aria-expanded` на `legend`, `role="dialog"`/`aria-modal="true"` и закрытие по `Escape`; `facet-extension.scss` переведён на токены `base11` и `@layer b11.components`; в `facet-list-filter.js` — `type="search"`, `Drupal.t()`, `e.key === 'Enter'` без `form-control`.
+- **Как найти в подтеме (regex):** `facet-list-filter|bef-exposed-form`
+- **Что сделать в `project`:** правки не требуются.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-35] Доступность `back-to-top` и поддержка `prefers-reduced-motion`
+- **Этап:** 3 | **Тип:** FIXED
+- **Было:** `back-to-top.js` слушал `scroll` без `requestAnimationFrame`, не синхронизировал `aria-hidden`/`tabindex`, не проверял `prefers-reduced-motion` и начальную позицию прокрутки; `back-to-top.scss` содержал хардкодные цвета.
+- **Стало:** добавлен rAF-троттлинг, учёт `prefers-reduced-motion: reduce`, `aria-hidden` + `tabindex`, клавиатурный фоллбэк и токены в `back-to-top.scss` внутри `@layer b11.components`.
+- **Как найти в подтеме (regex):** `id="back-to-top".*display:\s*none|<div[^>]*id="back-to-top"`
+- **Что сделать в `project`:** перевести `#back-to-top` в `page.html.twig` на `<button type="button" id="back-to-top" class="back-to-top" data-drupal-selector="back-to-top" aria-label="{{ 'Back to top'|t }}">`; в `jp.local` убрать `style="display: none;"` и сохранить квадратную форму кнопки в `_layout.scss`.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-36] Семантика закрытия и дефолтные цвета сообщений (`status-messages` / `base11/messages`)
+- **Этап:** 3 | **Тип:** CHANGED / ADDED
+- **Было:** кнопка закрытия в `status-messages.html.twig` была `<div class="close">`, автозакрытие не ставилось на паузу при клавиатурном фокусе (`focusin`), а в `messages.scss` не было цветов типов сообщений по умолчанию.
+- **Стало:** `<button type="button" class="close" aria-label="{{ 'Close'|t }}">`; в `messages.js` добавлена пауза по `focusin`; в `messages.scss` (`@layer b11.components`) добавлена базовая палитра `.messages--error/info/status/warning` на дизайн-токенах `--status-*`.
+- **Как найти в подтеме (regex):** `@use\s+"messages"`
+- **Что сделать в `project`:** удалить дублирующий паршал `_messages.scss` в подтемах со стандартной палитрой (`ff.local`); темы с полностью кастомными тостами (`jp.local`) не затрагиваются.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-37] A11y, надёжность JS (`click-to-copy`, `swiper-thumbs`) и единый порядок слоёв в расширениях
+- **Этап:** 3 | **Тип:** FIXED
+- **Было:** `click-to-copy.js` озвучивал тултип при монтировании и не сбрасывал таймер; `swiper-thumbs.js` обращался к `drupalSettings.swipers[parentId]` без проверки; расширения `css/extensions/*.scss` находились вне `@layer`.
+- **Стало:** добавлен отдельный `aria-live="polite"`, сброс таймера и валидация `strokeWidth` в `click-to-copy.js`; безопасная проверка `settings.swipers?.[parentId]` в `swiper-thumbs.js`; все standalone-расширения `css/extensions/*.scss` подключили `@use "../supplies/b11-layers";` и обёрнуты в `@layer b11.components`.
+- **Как найти в подтеме (regex):** `click-to-copy|swiper-thumbs`
+- **Что сделать в `project`:** правки не требуются.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-38] Адресное скрытие системного `.ajax-progress` в `ajax-spinner`
+- **Этап:** 3 | **Тип:** FIXED
+- **Было:** `css/extensions/ajax-spinner.scss` глобально скрывал `.ajax-progress, .ajax-progress-throbber { display: none !important; }`, отключая индикацию загрузки для `select`, чекбоксов и AJAX-фильтров.
+- **Стало:** системный throbber скрывается только рядом/внутри кнопок (`.button`, `.btn`, `input[type="submit|button"]` без `.button--link`), а не-кнопочные AJAX-элементы отображают индикатор из `_b11-ajax.scss`. Из `project.info.yml` можно убрать дублирующее подключение `base11/ajax-spinner` (подключён в `base11`).
+- **Как найти в подтеме (regex):** `base11/ajax-spinner`
+- **Что сделать в `project`:** удалить избыточные подключения `base11/ajax-spinner` в `project.info.yml` (`ff.local`).
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-39] Общие компоненты `.tabs.primary`, `.prose`, `<fieldset>` и библиотека `base11/media-library`
+- **Этап:** 3 | **Тип:** ADDED
+- **Было:** стили вкладок `.tabs.primary` дублировались в `ff.local` и `lubr.local`, оформление Media Library (~880 строк) жило только в `ff.local`, базовые `fieldset` и `.prose` не были оформлены в `base11`.
+- **Стало:**
+  - в `_b11-drupal-core.scss` добавлены `.tabs.primary` и `.tabs.secondary`;
+  - в `_b11-base.scss` добавлен класс редакционной типографики `.prose`;
+  - в `_b11-forms.scss` добавлен чистый каркас `<fieldset>`;
+  - создана библиотека `base11/media-library` (`css/extensions/media-library.scss` в `@layer b11.components` с переменными `--ml-*`, подключена через `libraries-extend: media_library/widget`, `media_library/ui`; версия `base11.info.yml` — `2.0.0-alpha3`).
+- **Как найти в подтеме (regex):** `@use\s+"tabs"|\.tabs\.primary|\.ui-dialog\.media-library-widget-modal`
+- **Что сделать в `project`:** удалить дубликат `_tabs.scss` в `ff.local` и `lubr.local`; в `ff.local/_media-library.scss` оставить только компактную проектную настройку поверх `base11/media-library` (через токены `--ml-*` и точечные оверрайды без копирования базы).
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`

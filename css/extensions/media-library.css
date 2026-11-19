@@ -1,0 +1,1185 @@
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.tokens {
+  :root {
+    --ml-width: min(1280px, 94vw);
+    --ml-max-width: min(1280px, calc(100vw - 2rem));
+    --ml-height: min(860px, calc(100dvh - 3rem));
+    --ml-sidebar-width: 15rem;
+    --ml-bg: var(--surface-card);
+    --ml-sidebar-bg: var(--page-bg);
+    --ml-panel-bg: var(--page-bg);
+    --ml-card-bg: var(--surface-card);
+    --ml-border-color: var(--border-color-light);
+    --ml-accent: var(--brand-primary);
+    --ml-accent-text: var(--on-primary);
+    --ml-radius: var(--control-radius-md);
+    --ml-control-radius: var(--control-radius-sm);
+    --ml-grid-min: 180px;
+    --ml-heading-transform: none;
+    --ml-heading-weight: 600;
+    --ml-focus-ring: 0 0 0 3px color-mix(in srgb, var(--ml-accent) 15%, transparent);
+  }
+}
+@layer b11.components {
+  .ui-dialog.media-library-widget-modal {
+    height: var(--ml-height) !important;
+    max-width: var(--ml-max-width) !important;
+    width: var(--ml-width) !important;
+  }
+  .ui-dialog.media-library-widget-modal .button,
+  .ui-dialog.media-library-widget-modal button,
+  .ui-dialog.media-library-widget-modal input[type=submit],
+  .ui-dialog.media-library-widget-modal input[type=button] {
+    border-radius: var(--ml-control-radius);
+    font-size: var(--control-font-size-sm);
+    height: var(--control-height-sm);
+    min-height: var(--control-height-sm);
+    padding: 0 1.25rem;
+  }
+  .ui-dialog.media-library-widget-modal input[type=text],
+  .ui-dialog.media-library-widget-modal input[type=url],
+  .ui-dialog.media-library-widget-modal select {
+    background-color: var(--ml-card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--ml-control-radius);
+    color: var(--text-color);
+    font-size: var(--control-font-size-sm);
+    height: var(--control-height-sm);
+    min-height: var(--control-height-sm);
+    width: 100%;
+    padding: 0 0.75rem;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .ui-dialog.media-library-widget-modal input[type=text]:hover,
+  .ui-dialog.media-library-widget-modal input[type=url]:hover,
+  .ui-dialog.media-library-widget-modal select:hover {
+    border-color: var(--text-muted);
+  }
+  .ui-dialog.media-library-widget-modal input[type=text]:focus,
+  .ui-dialog.media-library-widget-modal input[type=url]:focus,
+  .ui-dialog.media-library-widget-modal select:focus {
+    border-color: var(--ml-accent);
+    box-shadow: var(--ml-focus-ring);
+    outline: none;
+  }
+  .ui-dialog.media-library-widget-modal input[type=text].error,
+  .ui-dialog.media-library-widget-modal input[type=url].error,
+  .ui-dialog.media-library-widget-modal select.error {
+    border-color: var(--input-border-error);
+  }
+  .ui-dialog.media-library-widget-modal .ui-dialog-titlebar {
+    border-bottom: 1px solid var(--ml-border-color);
+    padding: 1rem 1.5rem;
+  }
+  .ui-dialog.media-library-widget-modal .ui-dialog-titlebar .ui-dialog-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-base);
+    font-weight: var(--ml-heading-weight);
+    letter-spacing: 0.02em;
+    text-align: left;
+    text-transform: var(--ml-heading-transform);
+    margin: 0;
+  }
+  .ui-dialog.media-library-widget-modal .ui-dialog-titlebar .ui-dialog-titlebar-close {
+    right: 1.25rem;
+    top: 1rem;
+  }
+  .ui-dialog.media-library-widget-modal .ui-dialog-content {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+  .ui-dialog.media-library-widget-modal .ui-dialog-content > #media-library-add-form-wrapper {
+    background-color: var(--ml-bg);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-wrapper {
+    background-color: var(--ml-panel-bg);
+    display: flex;
+    align-items: stretch;
+    flex-grow: 1;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu {
+    background-color: var(--ml-sidebar-bg);
+    border: none;
+    border-right: 1px solid var(--ml-border-color);
+    display: flex;
+    align-self: stretch;
+    flex-direction: column;
+    flex-shrink: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+    width: var(--ml-sidebar-width);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu__item {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--ml-border-color);
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+    position: relative;
+    transition: background-color var(--transition-fast);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu__item::before {
+    content: none;
+    display: none;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu__item:last-child {
+    border-bottom: none;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu__item:has(.active) {
+    border-right: 1px solid var(--ml-bg);
+    margin-right: -1px;
+    width: calc(100% + 1px);
+    position: relative;
+    z-index: 2;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu__link {
+    background-color: transparent;
+    border: none;
+    border-left: 3px solid transparent;
+    border-radius: 0;
+    box-shadow: none;
+    color: var(--text-color);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    text-decoration: none;
+    display: block;
+    margin: 0;
+    padding: 0.875rem 1.25rem;
+    position: relative;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu__link::before, .ui-dialog.media-library-widget-modal .media-library-menu__link::after {
+    content: none;
+    display: none;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu__link:hover {
+    background-color: color-mix(in srgb, var(--ml-accent) 4%, transparent);
+    color: var(--ml-accent);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu__link.active {
+    background-color: var(--ml-bg);
+    border-left-color: var(--ml-accent);
+    border-right: 1px solid var(--ml-bg);
+    color: var(--ml-accent);
+    font-weight: 700;
+    margin-right: -1px;
+    width: calc(100% + 1px);
+    position: relative;
+    z-index: 2;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-menu__link.active:hover {
+    background-color: var(--ml-bg);
+    color: var(--ml-accent);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-content, #media-library-content) {
+    background-color: var(--ml-bg);
+    border: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-content, #media-library-content) .views-element-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form {
+    margin-bottom: 1.5rem;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form > p {
+    margin: 0 0 1.25rem;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .form-item--upload {
+    margin-bottom: 0;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .form-item--upload label {
+    font-size: var(--control-font-size-sm);
+    font-weight: 600;
+    height: var(--control-height-sm);
+    min-height: var(--control-height-sm);
+    padding: 0 1.25rem;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .form-item--upload :is(.form-item__description, .file-upload-help, .description) {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    margin-top: 0.5rem;
+    pointer-events: none;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style: none;
+    margin: 0 0 1.5rem;
+    outline: none;
+    padding: 0;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media {
+    background-color: var(--ml-panel-bg);
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-radius);
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    align-items: start;
+    gap: 1.25rem;
+    grid-template-columns: 160px 1fr auto;
+    padding: 1.25rem;
+    position: relative;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media:hover {
+    border-color: var(--border-color);
+    box-shadow: var(--shadow-md);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__preview {
+    aspect-ratio: 16/10;
+    background-color: var(--ml-card-bg);
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-control-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 160px;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__preview .field,
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__preview .field--name-thumbnail,
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__preview .field__item,
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__preview img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    min-width: 0;
+    text-align: left;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__fields :is(.image-widget, .form-managed-file, [class*=form-type--managed-file]) {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__fields .form-item {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 0;
+    text-align: left;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__fields .form-item :is(label, .form-item__label) {
+    font-family: var(--font-family-heading);
+    font-weight: var(--ml-heading-weight);
+    text-transform: var(--ml-heading-transform);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__remove-button {
+    align-self: start;
+    background: transparent;
+    border: 1px solid var(--brand-danger);
+    border-radius: var(--ml-control-radius);
+    box-shadow: none;
+    color: var(--brand-danger);
+    cursor: pointer;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    height: 1.75rem;
+    min-height: 0;
+    margin: 0;
+    padding: 0 0.75rem;
+    position: static;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+    white-space: nowrap;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__remove-button::before {
+    background-color: currentColor;
+    content: "";
+    display: inline-block;
+    flex-shrink: 0;
+    height: 11px;
+    width: 11px;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") no-repeat center/contain;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") no-repeat center/contain;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__added-media .media-library-add-form__media .media-library-add-form__remove-button:hover {
+    background-color: var(--brand-danger);
+    color: var(--on-danger);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__selected-media {
+    background-color: var(--ml-panel-bg);
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-radius);
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__selected-media summary {
+    color: var(--text-color);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-sm);
+    font-weight: var(--ml-heading-weight);
+    text-transform: var(--ml-heading-transform);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form > .form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding: 0;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form > .form-actions .button {
+    margin: 0;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form > .form-actions .button--primary {
+    background-color: var(--ml-accent);
+    border-color: var(--ml-accent);
+    color: var(--ml-accent-text);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form > .form-actions .button--primary:hover {
+    background-color: color-mix(in srgb, var(--ml-accent), black 12%);
+    border-color: color-mix(in srgb, var(--ml-accent), black 12%);
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper {
+    background-color: var(--ml-panel-bg);
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-radius);
+    display: grid;
+    align-items: start;
+    gap: 0.75rem 1rem;
+    grid-template-columns: 1fr auto;
+    padding: 1.25rem;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper .form-item--url {
+    display: contents;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper .form-item--url label {
+    color: var(--text-muted);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-sm);
+    font-weight: var(--ml-heading-weight);
+    text-transform: var(--ml-heading-transform);
+    display: block;
+    grid-column: 1/-1;
+    grid-row: 1;
+    height: auto;
+    min-height: 0;
+    margin-bottom: 0;
+    padding: 0;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper .form-item--url input[type=url] {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper .form-item--url :is(.form-item--error-message, .form-item__error-message, [class*=error-message]) {
+    color: var(--brand-danger);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    line-height: var(--line-height-sm);
+    text-align: left;
+    grid-column: 1/-1;
+    margin-top: 0.15rem;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper .form-item--url :is(.form-item__description, .description) {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    text-align: left;
+    grid-column: 1/-1;
+    margin-top: 0.15rem;
+  }
+  .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper .media-library-add-form-oembed-submit {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+    white-space: nowrap;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-exposed-form {
+    background-color: var(--ml-panel-bg);
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-radius);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    padding: 1rem 1.25rem;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-exposed-form .views-exposed-form__item {
+    flex: 1 1 12rem;
+    margin: 0;
+    min-width: 10rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-exposed-form .views-exposed-form__item--actions {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-exposed-form .views-exposed-form__item--actions .button {
+    white-space: nowrap;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .view-header {
+    margin-bottom: 1rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .view-header .views-display-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .view-header .views-display-link {
+    background-color: var(--ml-panel-bg);
+    background-position: 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-control-radius);
+    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    height: 1.75rem;
+    min-height: 1.75rem;
+    padding: 0 0.625rem 0 1.5rem;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .view-header .views-display-link:hover {
+    border-color: var(--border-color);
+    color: var(--text-color);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .view-header .views-display-link.is-active {
+    background-color: var(--ml-card-bg);
+    border-color: var(--ml-accent);
+    color: var(--ml-accent);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-views-form {
+    display: block;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-views-form__rows {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(var(--ml-grid-min), 1fr));
+    margin: 0;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid {
+    background-color: var(--ml-card-bg);
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-control-radius);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid::before {
+    content: none;
+    display: none;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid:hover {
+    border-color: var(--border-color);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid.checked, .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid[aria-selected=true] {
+    border-color: var(--ml-accent);
+    box-shadow: 0 0 0 2px var(--ml-accent);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .views-field-rendered-entity,
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid article,
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__preview,
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .js-media-library-item-preview {
+    aspect-ratio: 16/10;
+    background-color: var(--ml-panel-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    max-height: none;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    position: relative;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__preview .field,
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__preview .field--name-thumbnail,
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__preview .field__item,
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .js-media-library-item-preview .field,
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .js-media-library-item-preview .field--name-thumbnail,
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .js-media-library-item-preview .field__item {
+    background-color: transparent;
+    display: block;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__preview img,
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .js-media-library-item-preview img {
+    display: block;
+    height: 100%;
+    max-height: none;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__attributes {
+    background-color: var(--ml-card-bg);
+    border-top: 1px solid var(--ml-border-color);
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    max-width: 100%;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.625rem;
+    width: 100%;
+    position: relative;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__attributes .media-library-item__name {
+    color: var(--text-color);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    line-height: var(--line-height-sm);
+    display: block;
+    margin: 0;
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__click-to-select-checkbox {
+    left: 0.5rem;
+    margin: 0;
+    position: absolute;
+    top: 0.5rem;
+    z-index: 2;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__click-to-select-checkbox .form-item {
+    margin: 0;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .media-library-item--grid .media-library-item__click-to-select-checkbox input[type=checkbox] {
+    cursor: pointer;
+    height: 1.125rem;
+    width: 1.125rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table {
+    background-color: var(--ml-card-bg);
+    border: 1px solid var(--ml-border-color);
+    border-collapse: separate;
+    border-radius: var(--ml-control-radius);
+    border-spacing: 0;
+    margin: 0 0 1.25rem;
+    overflow: hidden;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table thead {
+    background-color: var(--ml-panel-bg);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table thead tr {
+    border-bottom: 1px solid var(--border-color);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table thead th {
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-sm);
+    font-weight: var(--ml-heading-weight);
+    letter-spacing: 0.03em;
+    text-align: left;
+    text-transform: var(--ml-heading-transform);
+    white-space: nowrap;
+    padding: 0.75rem 1rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table thead th a {
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table thead th a:hover {
+    color: var(--ml-accent);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table thead th.views-field-media-library-select-form {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    width: 3rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table thead th.views-field-thumbnail__target-id {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    width: 5.5rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table thead th.views-field-changed {
+    white-space: nowrap;
+    width: 11rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody tr {
+    border-bottom: 1px solid var(--ml-border-color);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody tr:hover, .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody tr.is-hover {
+    background-color: color-mix(in srgb, var(--ml-accent) 4%, var(--ml-panel-bg));
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody tr.is-active, .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody tr.checked, .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody tr[aria-selected=true] {
+    background-color: color-mix(in srgb, var(--ml-accent) 8%, var(--ml-card-bg));
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td {
+    border-top: 1px solid var(--ml-border-color);
+    font-size: var(--font-size-sm);
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-media-library-select-form {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-media-library-select-form .form-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-media-library-select-form input[type=checkbox] {
+    cursor: pointer;
+    height: 1.125rem;
+    width: 1.125rem;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-thumbnail__target-id {
+    padding: 0.5rem;
+    text-align: center;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-thumbnail__target-id img {
+    background-color: var(--ml-panel-bg);
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-control-radius);
+    display: inline-block;
+    vertical-align: middle;
+    height: 48px;
+    width: 64px;
+    object-fit: cover;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-name {
+    font-weight: 600;
+    word-break: break-word;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-changed {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-uid {
+    color: var(--text-muted);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-uid a {
+    color: var(--text-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  .ui-dialog.media-library-widget-modal :is(.media-library-view, .view-media-library, [class*=view-media-library], .media-library-content) .views-table tbody td.views-field-uid a:hover {
+    color: var(--ml-accent);
+    text-decoration: underline;
+  }
+  .ui-dialog.media-library-widget-modal .ui-dialog-buttonpane {
+    background-color: var(--ml-bg);
+    border-top: 1px solid var(--ml-border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875rem 1.5rem;
+    width: 100%;
+  }
+  .ui-dialog.media-library-widget-modal .ui-dialog-buttonpane .media-library-selected-count {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    margin-right: auto;
+    order: 1;
+  }
+  .ui-dialog.media-library-widget-modal .ui-dialog-buttonpane :is(.ui-dialog-buttonset, .form-actions) {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 0 0 auto;
+    order: 2;
+  }
+  @media (max-width: 767px) {
+    .ui-dialog.media-library-widget-modal .media-library-wrapper {
+      flex-direction: column;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-menu {
+      border-bottom: 1px solid var(--ml-border-color);
+      border-right: none;
+      flex-direction: row;
+      overflow-x: auto;
+      padding: 0;
+      width: 100%;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-menu__item {
+      border-bottom: none;
+      border-right: 1px solid var(--ml-border-color);
+    }
+    .ui-dialog.media-library-widget-modal .media-library-menu__item:has(.active) {
+      border-bottom: 1px solid var(--ml-bg);
+      border-right: 1px solid var(--ml-border-color);
+      margin-bottom: -1px;
+      margin-right: 0;
+      width: auto;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-menu__link {
+      border-bottom: 3px solid transparent;
+      border-left: none;
+      padding: 0.5rem 0.75rem;
+      white-space: nowrap;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-menu__link.active {
+      border-bottom: 3px solid var(--ml-accent);
+      border-left: none;
+      border-right: none;
+      margin-bottom: -1px;
+      margin-right: 0;
+      width: auto;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__media {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__media .media-library-add-form__preview {
+      max-width: 240px;
+      width: 100%;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__media .media-library-add-form__fields {
+      text-align: left;
+      width: 100%;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-add-form .media-library-add-form__media .media-library-add-form__remove-button {
+      justify-self: center;
+      width: 100%;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper {
+      grid-template-columns: 1fr;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper .form-item--url input[type=url],
+    .ui-dialog.media-library-widget-modal .media-library-add-form--oembed .media-library-add-form__input-wrapper .media-library-add-form-oembed-submit {
+      grid-column: 1;
+      grid-row: auto;
+      width: 100%;
+    }
+    .ui-dialog.media-library-widget-modal :is(.media-library-content, #media-library-content),
+    .ui-dialog.media-library-widget-modal .ui-dialog-content > #media-library-add-form-wrapper {
+      padding: 1rem;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-view .views-exposed-form .views-exposed-form__item--actions {
+      margin-left: 0;
+      width: 100%;
+    }
+    .ui-dialog.media-library-widget-modal .media-library-view .views-exposed-form .views-exposed-form__item--actions .button {
+      width: 100%;
+    }
+    .ui-dialog.media-library-widget-modal .ui-dialog-buttonpane {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .ui-dialog.media-library-widget-modal .ui-dialog-buttonpane .media-library-selected-count {
+      margin: 0;
+      order: 1;
+      text-align: center;
+    }
+    .ui-dialog.media-library-widget-modal .ui-dialog-buttonpane :is(.ui-dialog-buttonset, .form-actions) {
+      margin: 0;
+      order: 2;
+      width: 100%;
+    }
+    .ui-dialog.media-library-widget-modal .ui-dialog-buttonpane :is(.ui-dialog-buttonset, .form-actions) .button {
+      width: 100%;
+    }
+  }
+  .field--widget-media-library-widget .field-prefix,
+  .js-media-library-widget .field-prefix {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+  }
+  .field--widget-media-library-widget .field-prefix:empty, .field--widget-media-library-widget .field-prefix:not(:has(> :not(.js-media-library-widget-toggle-weight))),
+  .js-media-library-widget .field-prefix:empty,
+  .js-media-library-widget .field-prefix:not(:has(> :not(.js-media-library-widget-toggle-weight))) {
+    display: none;
+    margin: 0;
+  }
+  .field--widget-media-library-widget .js-media-library-widget-toggle-weight,
+  .js-media-library-widget .js-media-library-widget-toggle-weight {
+    display: none !important;
+  }
+  .field--widget-media-library-widget .media-library-selection,
+  .field--widget-media-library-widget .js-media-library-selection,
+  .js-media-library-widget .media-library-selection,
+  .js-media-library-widget .js-media-library-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    width: 100%;
+  }
+  .field--widget-media-library-widget .media-library-selection:empty,
+  .field--widget-media-library-widget .js-media-library-selection:empty,
+  .js-media-library-widget .media-library-selection:empty,
+  .js-media-library-widget .js-media-library-selection:empty {
+    display: none;
+    margin: 0;
+  }
+  .field--widget-media-library-widget .media-library-item,
+  .field--widget-media-library-widget .media-library-item--grid,
+  .field--widget-media-library-widget .js-media-library-item,
+  .js-media-library-widget .media-library-item,
+  .js-media-library-widget .media-library-item--grid,
+  .js-media-library-widget .js-media-library-item {
+    background-color: var(--ml-card-bg);
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-radius);
+    box-shadow: var(--shadow-sm);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0.875rem 1.25rem;
+    width: 100%;
+    position: relative;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .field--widget-media-library-widget .media-library-item:hover,
+  .field--widget-media-library-widget .media-library-item--grid:hover,
+  .field--widget-media-library-widget .js-media-library-item:hover,
+  .js-media-library-widget .media-library-item:hover,
+  .js-media-library-widget .media-library-item--grid:hover,
+  .js-media-library-widget .js-media-library-item:hover {
+    border-color: var(--border-color);
+    box-shadow: var(--shadow-md);
+  }
+  .field--widget-media-library-widget .media-library-item article,
+  .field--widget-media-library-widget .media-library-item--grid article,
+  .field--widget-media-library-widget .js-media-library-item article,
+  .js-media-library-widget .media-library-item article,
+  .js-media-library-widget .media-library-item--grid article,
+  .js-media-library-widget .js-media-library-item article {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-grow: 1;
+    gap: 1.25rem;
+    height: auto;
+    margin: 0;
+    min-width: 0;
+    order: 1;
+    padding: 0;
+  }
+  .field--widget-media-library-widget .media-library-item .media-library-item__preview,
+  .field--widget-media-library-widget .media-library-item .js-media-library-item-preview,
+  .field--widget-media-library-widget .media-library-item--grid .media-library-item__preview,
+  .field--widget-media-library-widget .media-library-item--grid .js-media-library-item-preview,
+  .field--widget-media-library-widget .js-media-library-item .media-library-item__preview,
+  .field--widget-media-library-widget .js-media-library-item .js-media-library-item-preview,
+  .js-media-library-widget .media-library-item .media-library-item__preview,
+  .js-media-library-widget .media-library-item .js-media-library-item-preview,
+  .js-media-library-widget .media-library-item--grid .media-library-item__preview,
+  .js-media-library-widget .media-library-item--grid .js-media-library-item-preview,
+  .js-media-library-widget .js-media-library-item .media-library-item__preview,
+  .js-media-library-widget .js-media-library-item .js-media-library-item-preview {
+    background-color: var(--ml-panel-bg);
+    border: 1px solid var(--ml-border-color);
+    border-radius: var(--ml-control-radius);
+    cursor: grab;
+    flex-shrink: 0;
+    height: 60px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 90px;
+    position: relative;
+  }
+  .field--widget-media-library-widget .media-library-item .media-library-item__preview .field,
+  .field--widget-media-library-widget .media-library-item .media-library-item__preview .field--name-thumbnail,
+  .field--widget-media-library-widget .media-library-item .media-library-item__preview .field__item,
+  .field--widget-media-library-widget .media-library-item .media-library-item__preview img,
+  .field--widget-media-library-widget .media-library-item .js-media-library-item-preview .field,
+  .field--widget-media-library-widget .media-library-item .js-media-library-item-preview .field--name-thumbnail,
+  .field--widget-media-library-widget .media-library-item .js-media-library-item-preview .field__item,
+  .field--widget-media-library-widget .media-library-item .js-media-library-item-preview img,
+  .field--widget-media-library-widget .media-library-item--grid .media-library-item__preview .field,
+  .field--widget-media-library-widget .media-library-item--grid .media-library-item__preview .field--name-thumbnail,
+  .field--widget-media-library-widget .media-library-item--grid .media-library-item__preview .field__item,
+  .field--widget-media-library-widget .media-library-item--grid .media-library-item__preview img,
+  .field--widget-media-library-widget .media-library-item--grid .js-media-library-item-preview .field,
+  .field--widget-media-library-widget .media-library-item--grid .js-media-library-item-preview .field--name-thumbnail,
+  .field--widget-media-library-widget .media-library-item--grid .js-media-library-item-preview .field__item,
+  .field--widget-media-library-widget .media-library-item--grid .js-media-library-item-preview img,
+  .field--widget-media-library-widget .js-media-library-item .media-library-item__preview .field,
+  .field--widget-media-library-widget .js-media-library-item .media-library-item__preview .field--name-thumbnail,
+  .field--widget-media-library-widget .js-media-library-item .media-library-item__preview .field__item,
+  .field--widget-media-library-widget .js-media-library-item .media-library-item__preview img,
+  .field--widget-media-library-widget .js-media-library-item .js-media-library-item-preview .field,
+  .field--widget-media-library-widget .js-media-library-item .js-media-library-item-preview .field--name-thumbnail,
+  .field--widget-media-library-widget .js-media-library-item .js-media-library-item-preview .field__item,
+  .field--widget-media-library-widget .js-media-library-item .js-media-library-item-preview img,
+  .js-media-library-widget .media-library-item .media-library-item__preview .field,
+  .js-media-library-widget .media-library-item .media-library-item__preview .field--name-thumbnail,
+  .js-media-library-widget .media-library-item .media-library-item__preview .field__item,
+  .js-media-library-widget .media-library-item .media-library-item__preview img,
+  .js-media-library-widget .media-library-item .js-media-library-item-preview .field,
+  .js-media-library-widget .media-library-item .js-media-library-item-preview .field--name-thumbnail,
+  .js-media-library-widget .media-library-item .js-media-library-item-preview .field__item,
+  .js-media-library-widget .media-library-item .js-media-library-item-preview img,
+  .js-media-library-widget .media-library-item--grid .media-library-item__preview .field,
+  .js-media-library-widget .media-library-item--grid .media-library-item__preview .field--name-thumbnail,
+  .js-media-library-widget .media-library-item--grid .media-library-item__preview .field__item,
+  .js-media-library-widget .media-library-item--grid .media-library-item__preview img,
+  .js-media-library-widget .media-library-item--grid .js-media-library-item-preview .field,
+  .js-media-library-widget .media-library-item--grid .js-media-library-item-preview .field--name-thumbnail,
+  .js-media-library-widget .media-library-item--grid .js-media-library-item-preview .field__item,
+  .js-media-library-widget .media-library-item--grid .js-media-library-item-preview img,
+  .js-media-library-widget .js-media-library-item .media-library-item__preview .field,
+  .js-media-library-widget .js-media-library-item .media-library-item__preview .field--name-thumbnail,
+  .js-media-library-widget .js-media-library-item .media-library-item__preview .field__item,
+  .js-media-library-widget .js-media-library-item .media-library-item__preview img,
+  .js-media-library-widget .js-media-library-item .js-media-library-item-preview .field,
+  .js-media-library-widget .js-media-library-item .js-media-library-item-preview .field--name-thumbnail,
+  .js-media-library-widget .js-media-library-item .js-media-library-item-preview .field__item,
+  .js-media-library-widget .js-media-library-item .js-media-library-item-preview img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  .field--widget-media-library-widget .media-library-item .media-library-item__attributes,
+  .field--widget-media-library-widget .media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview),
+  .field--widget-media-library-widget .media-library-item--grid .media-library-item__attributes,
+  .field--widget-media-library-widget .media-library-item--grid article > div:not(.js-media-library-item-preview):not(.media-library-item__preview),
+  .field--widget-media-library-widget .js-media-library-item .media-library-item__attributes,
+  .field--widget-media-library-widget .js-media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview),
+  .js-media-library-widget .media-library-item .media-library-item__attributes,
+  .js-media-library-widget .media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview),
+  .js-media-library-widget .media-library-item--grid .media-library-item__attributes,
+  .js-media-library-widget .media-library-item--grid article > div:not(.js-media-library-item-preview):not(.media-library-item__preview),
+  .js-media-library-widget .js-media-library-item .media-library-item__attributes,
+  .js-media-library-widget .js-media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) {
+    background: transparent;
+    color: var(--text-color);
+    font-family: var(--font-family-base);
+    font-size: var(--control-font-size-sm);
+    font-weight: 600;
+    line-height: var(--line-height-sm);
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 0.5rem;
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: auto;
+  }
+  .field--widget-media-library-widget .media-library-item .media-library-item__attributes .media-library-item__name,
+  .field--widget-media-library-widget .media-library-item .media-library-item__attributes div,
+  .field--widget-media-library-widget .media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) .media-library-item__name,
+  .field--widget-media-library-widget .media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) div,
+  .field--widget-media-library-widget .media-library-item--grid .media-library-item__attributes .media-library-item__name,
+  .field--widget-media-library-widget .media-library-item--grid .media-library-item__attributes div,
+  .field--widget-media-library-widget .media-library-item--grid article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) .media-library-item__name,
+  .field--widget-media-library-widget .media-library-item--grid article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) div,
+  .field--widget-media-library-widget .js-media-library-item .media-library-item__attributes .media-library-item__name,
+  .field--widget-media-library-widget .js-media-library-item .media-library-item__attributes div,
+  .field--widget-media-library-widget .js-media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) .media-library-item__name,
+  .field--widget-media-library-widget .js-media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) div,
+  .js-media-library-widget .media-library-item .media-library-item__attributes .media-library-item__name,
+  .js-media-library-widget .media-library-item .media-library-item__attributes div,
+  .js-media-library-widget .media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) .media-library-item__name,
+  .js-media-library-widget .media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) div,
+  .js-media-library-widget .media-library-item--grid .media-library-item__attributes .media-library-item__name,
+  .js-media-library-widget .media-library-item--grid .media-library-item__attributes div,
+  .js-media-library-widget .media-library-item--grid article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) .media-library-item__name,
+  .js-media-library-widget .media-library-item--grid article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) div,
+  .js-media-library-widget .js-media-library-item .media-library-item__attributes .media-library-item__name,
+  .js-media-library-widget .js-media-library-item .media-library-item__attributes div,
+  .js-media-library-widget .js-media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) .media-library-item__name,
+  .js-media-library-widget .js-media-library-item article > div:not(.js-media-library-item-preview):not(.media-library-item__preview) div {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .field--widget-media-library-widget .media-library-item :is(button, input)[name*=remove-button],
+  .field--widget-media-library-widget .media-library-item :is(button, input)[data-drupal-selector*=remove-button],
+  .field--widget-media-library-widget .media-library-item .media-library-item__remove,
+  .field--widget-media-library-widget .media-library-item--grid :is(button, input)[name*=remove-button],
+  .field--widget-media-library-widget .media-library-item--grid :is(button, input)[data-drupal-selector*=remove-button],
+  .field--widget-media-library-widget .media-library-item--grid .media-library-item__remove,
+  .field--widget-media-library-widget .js-media-library-item :is(button, input)[name*=remove-button],
+  .field--widget-media-library-widget .js-media-library-item :is(button, input)[data-drupal-selector*=remove-button],
+  .field--widget-media-library-widget .js-media-library-item .media-library-item__remove,
+  .js-media-library-widget .media-library-item :is(button, input)[name*=remove-button],
+  .js-media-library-widget .media-library-item :is(button, input)[data-drupal-selector*=remove-button],
+  .js-media-library-widget .media-library-item .media-library-item__remove,
+  .js-media-library-widget .media-library-item--grid :is(button, input)[name*=remove-button],
+  .js-media-library-widget .media-library-item--grid :is(button, input)[data-drupal-selector*=remove-button],
+  .js-media-library-widget .media-library-item--grid .media-library-item__remove,
+  .js-media-library-widget .js-media-library-item :is(button, input)[name*=remove-button],
+  .js-media-library-widget .js-media-library-item :is(button, input)[data-drupal-selector*=remove-button],
+  .js-media-library-widget .js-media-library-item .media-library-item__remove {
+    flex-shrink: 0;
+    margin-left: auto;
+    order: 2;
+  }
+  .field--widget-media-library-widget .media-library-item .js-media-library-item-weight,
+  .field--widget-media-library-widget .media-library-item .form-item:has(.js-media-library-item-weight),
+  .field--widget-media-library-widget .media-library-item--grid .js-media-library-item-weight,
+  .field--widget-media-library-widget .media-library-item--grid .form-item:has(.js-media-library-item-weight),
+  .field--widget-media-library-widget .js-media-library-item .js-media-library-item-weight,
+  .field--widget-media-library-widget .js-media-library-item .form-item:has(.js-media-library-item-weight),
+  .js-media-library-widget .media-library-item .js-media-library-item-weight,
+  .js-media-library-widget .media-library-item .form-item:has(.js-media-library-item-weight),
+  .js-media-library-widget .media-library-item--grid .js-media-library-item-weight,
+  .js-media-library-widget .media-library-item--grid .form-item:has(.js-media-library-item-weight),
+  .js-media-library-widget .js-media-library-item .js-media-library-item-weight,
+  .js-media-library-widget .js-media-library-item .form-item:has(.js-media-library-item-weight) {
+    display: none !important;
+  }
+  .field--widget-media-library-widget .js-media-library-open-button,
+  .js-media-library-widget .js-media-library-open-button {
+    --btn-spinner-color: var(--ml-accent);
+    background-color: var(--ml-card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--ml-control-radius);
+    box-shadow: var(--shadow-sm);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: var(--control-font-size-sm);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: var(--control-height-md);
+    min-height: var(--control-height-md);
+    padding: 0 1.25rem;
+    position: relative;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  }
+  .field--widget-media-library-widget .js-media-library-open-button::before,
+  .js-media-library-widget .js-media-library-open-button::before {
+    background-color: currentColor;
+    content: "";
+    display: inline-block;
+    flex-shrink: 0;
+    height: 14px;
+    width: 14px;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E") no-repeat center/contain;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E") no-repeat center/contain;
+  }
+  .field--widget-media-library-widget .js-media-library-open-button:hover,
+  .js-media-library-widget .js-media-library-open-button:hover {
+    background-color: color-mix(in srgb, var(--ml-accent) 6%, var(--ml-card-bg));
+    border-color: var(--ml-accent);
+    color: var(--ml-accent);
+  }
+  .field--widget-media-library-widget .js-media-library-open-button:active,
+  .js-media-library-widget .js-media-library-open-button:active {
+    background-color: color-mix(in srgb, var(--ml-accent) 12%, var(--ml-card-bg));
+    border-color: var(--ml-accent);
+    color: var(--ml-accent);
+  }
+  .field--widget-media-library-widget .js-media-library-open-button:has(+ .ajax-progress), .field--widget-media-library-widget .js-media-library-open-button:has(.ajax-progress), .field--widget-media-library-widget .js-media-library-open-button.is-loading,
+  .js-media-library-widget .js-media-library-open-button:has(+ .ajax-progress),
+  .js-media-library-widget .js-media-library-open-button:has(.ajax-progress),
+  .js-media-library-widget .js-media-library-open-button.is-loading {
+    color: transparent;
+  }
+  .field--widget-media-library-widget .js-media-library-open-button:has(+ .ajax-progress)::before, .field--widget-media-library-widget .js-media-library-open-button:has(.ajax-progress)::before, .field--widget-media-library-widget .js-media-library-open-button.is-loading::before,
+  .js-media-library-widget .js-media-library-open-button:has(+ .ajax-progress)::before,
+  .js-media-library-widget .js-media-library-open-button:has(.ajax-progress)::before,
+  .js-media-library-widget .js-media-library-open-button.is-loading::before {
+    opacity: 0;
+  }
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22media-library.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%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%22,%22file%22:%22media-library.css%22%7D */

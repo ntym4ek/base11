@@ -1,77 +1,74 @@
-// --- Кнопка «Копировать в буфер» ----------------------------------
-.click-to-copy {
-  display: inline;
-  position: relative;
+// ==========================================================================
+// Кнопка «Копировать в буфер» Base11
+// ==========================================================================
 
-  &:hover ~ .click-to-copy__tooltip,
-  &:focus-within ~ .click-to-copy__tooltip {
-    opacity: 1; visibility: visible;
-  }
+@use "../supplies/b11-layers";
 
-  &__tooltip {
-    display: inline-flex; align-items: center;
-    margin-left: .25rem;
-    opacity: 0; visibility: hidden;
-    padding: .25rem;
+@layer b11.components {
+  .click-to-copy {
+    display: inline;
     position: relative;
-    transition: opacity var(--transition-fast), visibility var(--transition-fast);
-    vertical-align: middle;
 
-    &:hover,
-    &:focus-within {
+    &:hover ~ .click-to-copy__tooltip,
+    &:focus-within ~ .click-to-copy__tooltip {
       opacity: 1; visibility: visible;
+    }
 
-      .click-to-copy__tooltiptext {
+    &__tooltip {
+      display: inline-flex; align-items: center;
+      margin-left: .25rem;
+      opacity: 0; visibility: hidden;
+      padding: .25rem;
+      position: relative;
+      transition: opacity var(--transition-fast), visibility var(--transition-fast);
+      vertical-align: middle;
+
+      &:hover,
+      &:focus-within {
         opacity: 1; visibility: visible;
+
+        .click-to-copy__tooltiptext {
+          opacity: 1; visibility: visible;
+        }
       }
     }
-  }
 
-  &__btn {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center;
-    line-height: 1;
-    padding: 0;
-    transition: color var(--transition-fast);
+    &__btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      line-height: 1;
+      padding: 0;
+      transition: color var(--transition-fast);
 
-    &:hover {
-      color: var(--brand-primary);
+      &:hover { color: var(--brand-primary); }
+      &.click-to-copy-copied { color: var(--brand-success); }
     }
 
-    &.click-to-copy-copied {
-      color: var(--brand-success);
+    &__icon {
+      display: block;
+      width: 18px; height: 18px;
     }
-  }
 
-  &__icon {
-    display: block;
-    width: 18px; height: 18px;
-  }
-
-  &__tooltiptext {
-    background: var(--text-color);
-    border-radius: var(--control-radius-sm);
-    box-shadow: var(--shadow-md);
-    color: var(--surface-card);
-    display: inline-block;
-    font-size: var(--font-size-xs); text-align: center; white-space: nowrap;
-    line-height: 1.2;
-    min-width: 100px;
-    opacity: 0; visibility: hidden;
-    padding: .375rem .625rem;
-    position: absolute; z-index: var(--z-dropdown); bottom: 130%; left: 50%;
-    transform: translateX(-50%);
-    transition: opacity var(--transition-fast), visibility var(--transition-fast);
-
-    &::after {
-      border-color: var(--text-color) transparent transparent transparent;
-      border-style: solid; border-width: 5px;
-      content: "";
-      position: absolute; top: 100%; left: 50%;
+    &__tooltiptext {
+      background: var(--text-color); border-radius: var(--control-radius-sm);
+      box-shadow: var(--shadow-md);
+      color: var(--surface-card); font-size: var(--font-size-xs); line-height: 1.2; text-align: center; white-space: nowrap;
+      display: inline-block;
+      min-width: 100px;
+      opacity: 0; visibility: hidden;
+      padding: .375rem .625rem;
+      position: absolute; bottom: 130%; left: 50%; z-index: var(--z-dropdown);
       transform: translateX(-50%);
+      transition: opacity var(--transition-fast), visibility var(--transition-fast);
+
+      &::after {
+        border-color: var(--text-color) transparent transparent transparent; border-style: solid; border-width: 5px;
+        content: "";
+        position: absolute; left: 50%; top: 100%;
+        transform: translateX(-50%);
+      }
     }
   }
 }
