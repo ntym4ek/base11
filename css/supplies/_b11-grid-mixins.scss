@@ -8,7 +8,7 @@
 @use "sass:string";
 @use "b11-grid-variables" as *;
 
-//#region Миксины современной сетки CSS Grid (grid, grid-subgrid)
+//<editor-fold defaultstate="collapsed" desc="Миксины современной сетки CSS Grid (grid, grid-subgrid)">
 // Назначение: семантическая раскладка на CSS Grid и Subgrid для существующих Drupal-селекторов
 // (.view-content, .views-row, карточки тизеров) без добавления лишних обёрток и классов в Twig.
 // Подключаются в паршалах подтемы через: @use "../../base11/css/supplies/api" as *;
@@ -33,9 +33,9 @@
     row-gap: $row-gap;
   }
 }
-//#endregion
+//</editor-fold>
 
-//#region Устаревшие миксины Flexbox-сетки (.row / .col-*)
+//<editor-fold defaultstate="collapsed" desc="Устаревшие миксины Flexbox-сетки (.row / .col-*)">
 // --- Миксины строки (Row) -----------------------------------------------
 
 @mixin row($no-gutter: false) {
@@ -219,9 +219,9 @@
   .last-#{$prefix}    { order: 1; }
   .initial-#{$prefix} { order: 0; }
 }
-//#endregion
+//</editor-fold>
 
-//#region Примеры использования миксинов CSS Grid (SCSS)
+//<editor-fold defaultstate="collapsed" desc="Примеры использования миксинов CSS Grid (SCSS)">
 //
 // 1. Сетка представлений Drupal Views через @include grid() и --grid-cols:
 //    .view-catalog {
@@ -246,4 +246,4 @@
 //      @include grid-subgrid(4, .75rem);
 //      // Ожидает 4 прямых дочерних элемента: media, title, body, footer.
 //    }
-//#endregion
+//</editor-fold>
