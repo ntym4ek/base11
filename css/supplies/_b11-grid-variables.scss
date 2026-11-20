@@ -2,20 +2,21 @@
 // Переменные сетки и адаптивных брейкпоинтов темы Base11 (чистый Sass)
 // ==========================================================================
 
-//<editor-fold defaultstate="collapsed" desc="Настройки сетки и флаг отключения Flexbox-сетки">
+// --- Настройки сетки и флаг отключения Flexbox-сетки -------------------
+//<editor-fold defaultstate="collapsed" desc="Описание: настройка $grid-columns и $enable-flex-grid">
 // Назначение: конфигурация legacy-сетки до инициализации стилей в project.scss.
 // По умолчанию $enable-flex-grid: true (обратная совместимость для существующих проектов).
 // Для перехода на CSS Grid без генерации .row / .col-* используйте:
 //   @use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);
+//</editor-fold>
 
 // Количество колонок legacy-сетки (переопределяется через with ($grid-columns: N))
 $grid-columns: 12 !default;
 
 // Флаг генерации устаревшей 12-колоночной Flexbox-сетки (.row / .col-*)
 $enable-flex-grid: true !default;
-//</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Карта брейкпоинтов и медиавыражения (Mobile First и -only)">
+// --- Карта брейкпоинтов и медиавыражения (Mobile First и -only) --------
 // Назначение: единая шкала адаптивности Base11 (синхронизирована с base11.breakpoints.yml).
 $grid-breakpoints: (
   "sm": 0,
@@ -47,7 +48,6 @@ $pad-only:     "(min-width: 768px) and (max-width: 1023px)";
 $tablet-only:  "(min-width: 1024px) and (max-width: 1365px)";
 $laptop-only:  "(min-width: 1366px) and (max-width: 1599px)";
 $desktop-only: "(min-width: 1600px) and (max-width: 1919px)";
-//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Примеры настройки $enable-flex-grid, $grid-columns и использования брейкпоинтов">
 //

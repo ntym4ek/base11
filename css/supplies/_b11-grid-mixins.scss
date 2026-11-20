@@ -8,24 +8,30 @@
 @use "sass:string";
 @use "b11-grid-variables" as *;
 
-//<editor-fold defaultstate="collapsed" desc="Миксины современной сетки CSS Grid (grid, grid-subgrid)">
+// --- Миксины современной сетки CSS Grid (grid, grid-subgrid) -----------
+//<editor-fold defaultstate="collapsed" desc="Описание: подключение и назначение CSS Grid-миксинов">
 // Назначение: семантическая раскладка на CSS Grid и Subgrid для существующих Drupal-селекторов
 // (.view-content, .views-row, карточки тизеров) без добавления лишних обёрток и классов в Twig.
 // Подключаются в паршалах подтемы через: @use "../../base11/css/supplies/api" as *;
+//</editor-fold>
 
+//<editor-fold defaultstate="collapsed" desc="@mixin grid($cols, $gap-x, $gap-y) — семантическая CSS Grid-сетка">
 // Семантическая CSS Grid-сетка для произвольного контейнера (например, .view-content):
 // - $cols: начальное число колонок (для адаптации меняйте --grid-cols в @media родителя);
 // - $gap-x / $gap-y: горизонтальный и вертикальный зазоры (по умолчанию токены темы).
+//</editor-fold>
 @mixin grid($cols: 1, $gap-x: var(--grid-gap-x), $gap-y: var(--grid-gap-y)) {
   --grid-cols: #{$cols};
   display: grid; gap: #{$gap-y} #{$gap-x};
   grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
 }
 
+//<editor-fold defaultstate="collapsed" desc="@mixin grid-subgrid($rows, $row-gap) — выравнивание слотов (CSS Subgrid)">
 // Выравнивание внутренних секций карточек в ряду по строкам родительской сетки (CSS Subgrid):
 // - $rows: число внутренних слотов (рядов) карточки, по умолчанию 3;
 // - $row-gap: внутренний зазор между слотами (передавайте явно, например .75rem, чтобы карточка
 //   не наследовала крупный row-gap родительской сетки).
+//</editor-fold>
 @mixin grid-subgrid($rows: 3, $row-gap: null) {
   display: grid; grid-row: span #{$rows}; grid-template-rows: subgrid;
 
@@ -33,9 +39,8 @@
     row-gap: $row-gap;
   }
 }
-//</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Устаревшие миксины Flexbox-сетки (.row / .col-*)">
+// --- Устаревшие миксины Flexbox-сетки (.row / .col-*) ------------------
 // --- Миксины строки (Row) -----------------------------------------------
 
 @mixin row($no-gutter: false) {
@@ -219,7 +224,6 @@
   .last-#{$prefix}    { order: 1; }
   .initial-#{$prefix} { order: 0; }
 }
-//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Примеры использования миксинов CSS Grid (SCSS)">
 //

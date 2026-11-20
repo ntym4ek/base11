@@ -10,9 +10,11 @@
 @use "b11-grid-mixins" as *;
 
 @layer b11.layout {
-  //<editor-fold defaultstate="collapsed" desc="1. Контейнеры страницы (.container, .container-fluid)">
+  // --- 1. Контейнеры страницы (.container, .container-fluid) --------------
+  //<editor-fold defaultstate="collapsed" desc="Описание: контейнеры .container и .container-fluid">
   // Назначение: центрирование контента по ширине --page-max-width с боковыми полями --page-gap-x.
   // Работают всегда, в том числе при отключённой Flexbox-сетке ($enable-flex-grid: false).
+  //</editor-fold>
   .container,
   .container-fluid {
     box-sizing: border-box;
@@ -22,12 +24,13 @@
   }
 
   .container { max-width: var(--page-max-width); }
-  //</editor-fold>
 
-  //<editor-fold defaultstate="collapsed" desc="2. Утилиты адаптивной видимости (.show-*, .hide-*, *-only)">
+  // --- 2. Утилиты адаптивной видимости (.show-*, .hide-*, *-only) -------
+  //<editor-fold defaultstate="collapsed" desc="Описание: утилиты видимости .show-* / .hide-*">
   // Назначение: быстрое скрытие/показ блоков по брейкпоинтам (sm..wd) и в точных диапазонах (-only).
   // Важно: классы .show-* задают display: block !important — для flex/grid-блоков управляйте
   // видимостью в SCSS компонента либо вешайте утилиту на внешнюю обёртку.
+  //</editor-fold>
   @each $prefix, $min-width in $grid-breakpoints {
     @if $min-width == 0 {
       .show-#{$prefix} { display: block !important; }
@@ -65,14 +68,14 @@
     .show-dt-only { display: block !important; }
     .hide-dt-only { display: none !important; }
   }
-  //</editor-fold>
 
-  //<editor-fold defaultstate="collapsed" desc="3. Современные примитивы CSS Grid, Flex-ритм и Container Queries">
+  // --- 3. Современные примитивы CSS Grid, Flex-ритм и Container Queries ---
   //<editor-fold defaultstate="collapsed" desc=".grid — управляемая сетка колонок (--grid-cols)">
   // Назначение: фиксированное или адаптивное число равных колонок repeat(var(--grid-cols), minmax(0, 1fr))
   // с двухосевым gap (--grid-gap-y / --grid-gap-x). По умолчанию --grid-cols: 1 (задано локально
   // на элементе, чтобы вложенные сетки не наследовали число колонок родителя).
   // Модификаторы: --2 / --3 / --4 (колонки), --flush (gap: 0), --tight (0.5x gap), --center / --start.
+  //</editor-fold>
   .grid {
     --grid-cols: 1;
     display: grid; gap: var(--grid-gap-y) var(--grid-gap-x);
@@ -87,12 +90,12 @@
     &--start  { align-items: start; }
     &--tight  { gap: calc(var(--grid-gap-y) * .5) calc(var(--grid-gap-x) * .5); }
   }
-  //</editor-fold>
 
   //<editor-fold defaultstate="collapsed" desc=".grid-auto — авто-адаптивная сетка (--grid-min, auto-fit / auto-fill)">
   // Назначение: карточки автоматически перестраиваются по доступной ширине без ручных @media.
   // По умолчанию --grid-min: 17rem и режим auto-fit (заполнение ширины при малом числе карточек).
   // Модификаторы: --sm (13rem), --lg (22rem), --fill (auto-fill — сохраняет ширину колонок при 1-2 карточках).
+  //</editor-fold>
   .grid-auto {
     --grid-min: 17rem;
     display: grid; gap: var(--grid-gap-y) var(--grid-gap-x);
@@ -102,13 +105,13 @@
     &--lg   { --grid-min: 22rem; }
     &--sm   { --grid-min: 13rem; }
   }
-  //</editor-fold>
 
   //<editor-fold defaultstate="collapsed" desc=".grid-sidebar — сайдбар + гибкий контент (--sidebar-width)">
   // Назначение: макет «боковая колонка шириной --sidebar-width + контент minmax(0, 1fr)» с одной колонкой
   // на мобильных и автоматическим переходом в 2/3 колонки от $tablet (1024px) по умолчанию.
   // Модификаторы: --end (сайдбар справа), --both (два сайдбара), --start (align-items: start),
   // --pd (переход с 768px), --lp (переход с 1366px).
+  //</editor-fold>
   .grid-sidebar {
     display: grid; gap: var(--grid-gap-y) var(--grid-gap-x);
     grid-template-columns: minmax(0, 1fr);
@@ -136,12 +139,12 @@
       &--lp.grid-sidebar--both { grid-template-columns: var(--sidebar-width) minmax(0, 1fr) var(--sidebar-width); }
     }
   }
-  //</editor-fold>
 
   //<editor-fold defaultstate="collapsed" desc=".grid-subgrid — выравнивание слотов карточек в ряду (CSS Subgrid)">
   // Назначение: синхронизирует высоты заголовков, описаний и подвалов карточек внутри одного ряда .grid / .grid-auto.
   // Локальные переменные: --subgrid-rows (число слотов, по умолчанию 3), --subgrid-gap (.75rem — защищает
   // карточку от наследования крупного row-gap родительской сетки). Модификаторы: --2, --3, --4, --5.
+  //</editor-fold>
   .grid-subgrid {
     --subgrid-gap: .75rem;
     --subgrid-rows: 3;
@@ -153,12 +156,12 @@
     &--4 { --subgrid-rows: 4; }
     &--5 { --subgrid-rows: 5; }
   }
-  //</editor-fold>
 
   //<editor-fold defaultstate="collapsed" desc=".stack — вертикальный ритм элементов (--stack-gap)">
   // Назначение: вертикальная колонка на flex + gap вместо ручных margin-bottom; последний элемент
   // можно прижать к низу через margin-top: auto. Модификаторы: --xs (.25rem), --sm (.5rem),
   // --md (1.5rem), --lg (2rem), --section (var(--block-gap-y)).
+  //</editor-fold>
   .stack {
     display: flex; flex-direction: column; gap: var(--stack-gap);
 
@@ -168,11 +171,11 @@
     &--sm      { --stack-gap: .5rem; }
     &--xs      { --stack-gap: .25rem; }
   }
-  //</editor-fold>
 
   //<editor-fold defaultstate="collapsed" desc=".cluster — горизонтальные группы с переносом (--cluster-gap)">
   // Назначение: строчное расположение кнопок, тегов, бейджей, метаданных и элементов шапки.
   // Модификаторы: --sm (.5rem), --lg (1.5rem), --between, --center, --end, --start, --nowrap.
+  //</editor-fold>
   .cluster {
     display: flex; flex-wrap: wrap; align-items: center; gap: var(--cluster-gap);
 
@@ -184,15 +187,15 @@
     &--sm      { --cluster-gap: .5rem; }
     &--start   { align-items: flex-start; }
   }
-  //</editor-fold>
 
   //<editor-fold defaultstate="collapsed" desc=".cq-container — контекст Container Queries">
   // Назначение: задаёт container-type: inline-size для адаптации вложенных компонентов через @container.
+  // Применение: добавляется на обёртку карточки или секции для работы правил @container (min-width: ...).
+  //</editor-fold>
   .cq-container { container-type: inline-size; }
-  //</editor-fold>
-  //</editor-fold>
 
-  //<editor-fold defaultstate="collapsed" desc="4. Устаревшая 12-колоночная Flexbox-сетка (.row / .col-*)">
+  // --- 4. Устаревшая 12-колоночная Flexbox-сетка (.row / .col-*) --------
+  // Отключается через @use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);
   @if $enable-flex-grid {
     // Классы строк (Row)
     .row {
@@ -251,7 +254,6 @@
       }
     }
   }
-  //</editor-fold>
 }
 
 //<editor-fold defaultstate="collapsed" desc="Примеры использования CSS Grid-примитивов (Twig / HTML + SCSS)">
