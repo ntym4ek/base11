@@ -34,3 +34,18 @@
 @use "b11-ajax";
 @use "b11-helper";
 @use "b11-print";
+
+//#region Примеры подключения базовых стилей Base11 в project.scss
+//
+// 1. Современный режим на CSS Grid (рекомендуется; без генерации .row / .col-*):
+//    @use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);
+//
+// 2. Режим обратной совместимости (по умолчанию $enable-flex-grid: true):
+//    @use "../../base11/css/supplies/styles";
+//
+// 3. Нестандартное число колонок legacy-сетки (например, 10 вместо 12):
+//    @use "../../base11/css/supplies/styles" with ($grid-columns: 10);
+//
+// Примечание: директива @use ... with (...) должна выполняться до подключения
+// любых других паршалов, использующих b11-grid-variables.
+//#endregion

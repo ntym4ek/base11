@@ -8,16 +8,24 @@
 @use "sass:string";
 @use "b11-grid-variables" as *;
 
-// --- Миксины современной сетки CSS Grid ---------------------------------
+//#region Миксины современной сетки CSS Grid (grid, grid-subgrid)
+// Назначение: семантическая раскладка на CSS Grid и Subgrid для существующих Drupal-селекторов
+// (.view-content, .views-row, карточки тизеров) без добавления лишних обёрток и классов в Twig.
+// Подключаются в паршалах подтемы через: @use "../../base11/css/supplies/api" as *;
 
-// Семантическая CSS Grid-сетка для произвольного контейнера (например, .view-content)
+// Семантическая CSS Grid-сетка для произвольного контейнера (например, .view-content):
+// - $cols: начальное число колонок (для адаптации меняйте --grid-cols в @media родителя);
+// - $gap-x / $gap-y: горизонтальный и вертикальный зазоры (по умолчанию токены темы).
 @mixin grid($cols: 1, $gap-x: var(--grid-gap-x), $gap-y: var(--grid-gap-y)) {
   --grid-cols: #{$cols};
   display: grid; gap: #{$gap-y} #{$gap-x};
   grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
 }
 
-// Выравнивание внутренних секций карточек в ряду по строкам родительской сетки (CSS Subgrid)
+// Выравнивание внутренних секций карточек в ряду по строкам родительской сетки (CSS Subgrid):
+// - $rows: число внутренних слотов (рядов) карточки, по умолчанию 3;
+// - $row-gap: внутренний зазор между слотами (передавайте явно, например .75rem, чтобы карточка
+//   не наследовала крупный row-gap родительской сетки).
 @mixin grid-subgrid($rows: 3, $row-gap: null) {
   display: grid; grid-row: span #{$rows}; grid-template-rows: subgrid;
 
@@ -25,7 +33,9 @@
     row-gap: $row-gap;
   }
 }
+//#endregion
 
+//#region Устаревшие миксины Flexbox-сетки (.row / .col-*)
 // --- Миксины строки (Row) -----------------------------------------------
 
 @mixin row($no-gutter: false) {
@@ -209,3 +219,31 @@
   .last-#{$prefix}    { order: 1; }
   .initial-#{$prefix} { order: 0; }
 }
+//#endregion
+
+//#region Примеры использования миксинов CSS Grid (SCSS)
+//
+// 1. Сетка представлений Drupal Views через @include grid() и --grid-cols:
+//    .view-catalog {
+//      .view-content { @include grid(1); }
+//
+//      @media #{$pad}     { .view-content { --grid-cols: 2; } }
+//      @media #{$tablet}  { .view-content { --grid-cols: 3; } }
+//      @media #{$desktop} { .view-content { --grid-cols: 4; } }
+//    }
+//
+// 2. Явные зазоры по горизонтали и вертикали ($gap-x, $gap-y):
+//    .promo__grid {
+//      @include grid(1, 2rem, 1.5rem);
+//
+//      @media #{$tablet} { --grid-cols: 2; }
+//    }
+//
+// 3. Выравнивание слотов карточек в ряду через @include grid-subgrid():
+//    .cards-list { @include grid(3); }
+//
+//    .card-teaser {
+//      @include grid-subgrid(4, .75rem);
+//      // Ожидает 4 прямых дочерних элемента: media, title, body, footer.
+//    }
+//#endregion

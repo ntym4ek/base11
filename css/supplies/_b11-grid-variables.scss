@@ -2,15 +2,21 @@
 // Переменные сетки и адаптивных брейкпоинтов темы Base11 (чистый Sass)
 // ==========================================================================
 
-// --- Количество колонок сетки (может переопределяться через with ($grid-columns: N)) ---
+//#region Настройки сетки и флаг отключения Flexbox-сетки
+// Назначение: конфигурация legacy-сетки до инициализации стилей в project.scss.
+// По умолчанию $enable-flex-grid: true (обратная совместимость для существующих проектов).
+// Для перехода на CSS Grid без генерации .row / .col-* используйте:
+//   @use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);
+
+// Количество колонок legacy-сетки (переопределяется через with ($grid-columns: N))
 $grid-columns: 12 !default;
 
-// --- Флаг генерации устаревшей 12-колоночной Flexbox-сетки (.row / .col-*) ---
-// По умолчанию true для обратной совместимости существующих подтем.
-// Отключается через: @use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);
+// Флаг генерации устаревшей 12-колоночной Flexbox-сетки (.row / .col-*)
 $enable-flex-grid: true !default;
+//#endregion
 
-// --- Карта брейкпоинтов (синхронизирована с base11.breakpoints.yml) ------
+//#region Карта брейкпоинтов и медиавыражения (Mobile First и -only)
+// Назначение: единая шкала адаптивности Base11 (синхронизирована с base11.breakpoints.yml).
 $grid-breakpoints: (
   "sm": 0,
   "pd": 768px,
@@ -20,7 +26,7 @@ $grid-breakpoints: (
   "wd": 1920px
 ) !default;
 
-// --- Алиасы брейкпоинтов для совместимости с миксинами col("md", 6) -----
+// Алиасы брейкпоинтов для совместимости с миксинами col("md", 6)
 $grid-breakpoint-aliases: (
   "xs": "sm",
   "md": "tb",
@@ -28,16 +34,38 @@ $grid-breakpoint-aliases: (
   "xl": "wd"
 ) !default;
 
-// --- Основные адаптивные медиавыражения (Mobile First) -------------------
+// Основные адаптивные медиавыражения (Mobile First)
 $pad:     "(min-width: 768px)";
 $tablet:  "(min-width: 1024px)";
 $laptop:  "(min-width: 1366px)";
 $desktop: "(min-width: 1600px)";
 $wide:    "(min-width: 1920px)";
 
-// --- Изолированные диапазоны устройств (-only) ---------------------------
+// Изолированные диапазоны устройств (-only)
 $smart-only:   "(max-width: 767px)";
 $pad-only:     "(min-width: 768px) and (max-width: 1023px)";
 $tablet-only:  "(min-width: 1024px) and (max-width: 1365px)";
 $laptop-only:  "(min-width: 1366px) and (max-width: 1599px)";
 $desktop-only: "(min-width: 1600px) and (max-width: 1919px)";
+//#endregion
+
+//#region Примеры настройки $enable-flex-grid, $grid-columns и использования брейкпоинтов
+//
+// 1. Отключение legacy Flexbox-сетки в project.scss нового проекта:
+//    @use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);
+//
+// 2. Сохранение 10-колоночной legacy-сетки в старом проекте:
+//    @use "../../base11/css/supplies/styles" with ($grid-columns: 10);
+//
+// 3. Импорт переменных брейкпоинтов и миксинов в паршалах подтемы (0 байт лишнего CSS):
+//    @use "../../base11/css/supplies/api" as *;
+//
+// 4. Использование в корне компонента (Mobile First: $pad -> $tablet -> $laptop -> $desktop):
+//    .cards-grid {
+//      --grid-cols: 1;
+//
+//      @media #{$pad}     { --grid-cols: 2; }
+//      @media #{$tablet}  { --grid-cols: 3; }
+//      @media #{$laptop}  { --grid-cols: 4; }
+//    }
+//#endregion
