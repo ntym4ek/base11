@@ -5,6 +5,11 @@
 // --- Количество колонок сетки (может переопределяться через with ($grid-columns: N)) ---
 $grid-columns: 12 !default;
 
+// --- Флаг генерации устаревшей 12-колоночной Flexbox-сетки (.row / .col-*) ---
+// По умолчанию true для обратной совместимости существующих подтем.
+// Отключается через: @use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);
+$enable-flex-grid: true !default;
+
 // --- Карта брейкпоинтов (синхронизирована с base11.breakpoints.yml) ------
 $grid-breakpoints: (
   "sm": 0,

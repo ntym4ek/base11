@@ -1,4 +1,4 @@
-# Base11 (v2.0) — Базовая тема для проектов на Drupal 11.4+
+# Base11 (v2.1) — Базовая тема для проектов на Drupal 11.4+
 
 `base11` — автономная каркасная тема (`base theme: false`) для лендингов, корпоративных сайтов, интернет-магазинов (Drupal Commerce 3) и внутренних дашбордов/порталов отчётности.
 
@@ -12,15 +12,19 @@
 
 - **Точка входа базовых стилей (подключается один раз в `project.scss`):**
   ```scss
-  @use "../../base11/css/supplies/styles";
-  // При нестандартном числе колонок (например, 10):
+  // Рекомендуемый режим (CSS Grid без устаревшей Flexbox-сетки .row / .col-*):
+  @use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);
+
+  // Режим обратной совместимости (по умолчанию $enable-flex-grid: true):
+  // @use "../../base11/css/supplies/styles";
+  // При нестандартном числе колонок legacy-сетки (например, 10):
   // @use "../../base11/css/supplies/styles" with ($grid-columns: 10);
   ```
 - **Публичный API для дочерних паршалов (0 байт дублированного CSS):**
   ```scss
   @use "../../base11/css/supplies/api" as *;
   ```
-  Подключает переменные брейкпоинтов (`$smart-only`, `$pad`, `$tablet`, `$laptop`, `$desktop`, `$wide`, а также `$pad-only`, `$tablet-only`, `$laptop-only`, `$desktop-only`), карту `$grid-breakpoints` и миксины (`row`, `col`, `responsive-prop`, `font-size`, `gradient`, `button-reset` и др.).
+  Подключает переменные брейкпоинтов (`$smart-only`, `$pad`, `$tablet`, `$laptop`, `$desktop`, `$wide`, а также `$pad-only`, `$tablet-only`, `$laptop-only`, `$desktop-only`), карту `$grid-breakpoints` и миксины (`grid`, `grid-subgrid`, `row`, `col`, `responsive-prop`, `font-size`, `gradient`, `button-reset` и др.).
 - **Опциональные стили для WYSIWYG-редактора CKEditor 5:**
   ```scss
   @use "../../base11/css/supplies/b11-ckeditor5";
@@ -49,20 +53,31 @@
 - **Шрифты и типографика:** `--font-family-base`, `--font-family-heading`, `--font-family-mono`, `--font-size-{xs,sm,base,lg,h1..h6}`, `--line-height-{sm,base,lg}`. Для редакционного контента предусмотрен класс `.prose`.
 - **Цвета и статусные палитры:** `--brand-{primary,info,success,warning,danger}`, `--page-bg`, `--surface-{card,subtle,hover}`, `--text-{color,muted,light}`, `--border-color`, `--border-color-light`, `--on-{primary,info,success,warning,danger}`, `--status-{info,success,warning,danger}-{bg,border,text}`.
 - **Контролы и формы:** `--control-height-{sm,md,lg}`, `--control-font-size-{sm,md,lg}`, `--control-radius-{sm,md,lg}`, `--btn-*`, `--input-*`, `--label-*`.
+- **Сетка, геометрия и ритм:** `--page-max-width`, `--page-gap-x`, `--grid-gap-x`, `--grid-gap-y`, `--block-gap-y`, `--sidebar-width`, `--stack-gap`, `--cluster-gap`.
 - **Таблицы и отступы:** `--table-cell-padding-x`, `--table-cell-padding-y`, `--table-head-padding-y`.
 - **Модалки и слои:** `--modal-*`, `--z-{dropdown,sticky,fixed,modal-backdrop,modal,toast}`, `--shadow-{sm,md,lg}`, `--card-shadow`, `--dropdown-shadow`.
 
 ### Компактный режим (`data-density="compact"`)
-Для дашбордов, отчётных таблиц и плотных форм фильтров достаточно добавить атрибут `data-density="compact"` на `<body>` или отдельный контейнер — автоматически уменьшатся `--control-height-*`, отступы кнопок, полей, таблиц и сетки.
+Для дашбордов, отчётных таблиц и плотных форм фильтров достаточно добавить атрибут `data-density="compact"` на `<body>` или отдельный контейнер — автоматически уменьшатся `--control-height-*`, `--sidebar-width`, `--stack-gap`, `--cluster-gap`, отступы кнопок, полей, таблиц и сетки.
 
 ---
 
 ## 4. Сетка, таблицы и адаптивные брейкпоинты
 
 - **Drupal Breakpoints (`base11.breakpoints.yml`):** группы `base11.sm` (0px), `base11.pd` (768px), `base11.tb` (1024px), `base11.lp` (1366px), `base11.dt` (1600px), `base11.wd` (1920px) — доступны для Responsive Image Styles.
-- **Авто-сетка и Container Queries (`_b11-grid.scss`):**
-  - `.grid-auto` (`.grid-auto--sm`, `.grid-auto--lg`, кастом `--grid-min`) — адаптивная сетка CSS Grid без ручного перечисления брейкпоинтов.
+- **Всегда активные контейнеры и видимость (`_b11-grid.scss`, работают при любом `$enable-flex-grid`):**
+  - `.container`, `.container-fluid` — центрирование и боковые поля `--page-gap-x`.
+  - `.show-{sm,pd,tb,lp,dt,wd}` / `.hide-{sm,pd,tb,lp,dt,wd}` и точные диапазоны `*-only` (`sm-only`, `pd-only`, `tb-only`, `lp-only`, `dt-only`). *Примечание:* `.show-*` задают `display: block !important;`, поэтому для показа/скрытия `flex`/`grid`-контейнеров управляйте `display` напрямую в SCSS компонента либо оборачивайте внутренний `flex`/`grid` во внешний блок.
+- **Система раскладки на CSS Grid (`_b11-grid.scss`, `_b11-grid-mixins.scss`):**
+  - `.grid` (`.grid--2`, `.grid--3`, `.grid--4`, `.grid--flush`, `.grid--tight`, `.grid--center`, `.grid--start`, локальная переменная `--grid-cols`) — управляемая сетка колонок `repeat(var(--grid-cols), minmax(0, 1fr))` с двухосевым `gap: var(--grid-gap-y) var(--grid-gap-x)`; в SCSS доступен миксин `@include grid($cols, $gap-x, $gap-y)`.
+  - `.grid-auto` (`.grid-auto--sm`, `.grid-auto--lg`, `.grid-auto--fill`, кастом `--grid-min`) — авто-адаптивная сетка CSS Grid (`auto-fit` по умолчанию, `auto-fill` через `--fill`) без ручного перечисления брейкпоинтов.
+  - `.grid-sidebar` (`.grid-sidebar--end`, `.grid-sidebar--both`, `.grid-sidebar--start`, `.grid-sidebar--pd`, `.grid-sidebar--lp`, переменная `--sidebar-width`) — раскладка «фиксированный сайдбар + гибкий контент `minmax(0, 1fr)`» с автопереходом в 1 колонку на мобильных (по умолчанию от `$tablet`, опционально от `$pad` или `$laptop`).
+  - `.grid-subgrid` (`.grid-subgrid--2`..`--5`, переменные `--subgrid-rows`, `--subgrid-gap`) и миксин `@include grid-subgrid($rows, $row-gap)` — выравнивание внутренних секций карточек в ряду по строкам родительской сетки (CSS Subgrid).
+  - `.stack` (`.stack--xs`, `--sm`, `--md`, `--lg`, `--section`) — вертикальный ритм на базе `flex-direction: column` и `gap: var(--stack-gap)`.
+  - `.cluster` (`.cluster--sm`, `--lg`, `--between`, `--center`, `--end`, `--start`, `--nowrap`) — горизонтальные переносящиеся группы элементов с `gap: var(--cluster-gap)`.
   - `.cq-container` — задаёт `container-type: inline-size` для адаптации вложенных блоков по ширине родителя.
+- **Отключаемая legacy Flexbox-сетка (`.row` / `.col-*`):**
+  - Управляется флагом `$enable-flex-grid: true !default;` в `_b11-grid-variables.scss`. Для отключения в проекте используйте `@use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);`.
 - **Таблицы (`_b11-tables.scss` и `_b11-helper.scss`):**
   - `.table-responsive` — контейнер горизонтальной прокрутки для широких таблиц.
   - `.table--striped`, `.table--hover`, `.table--sticky-head`, `.table--compact`.

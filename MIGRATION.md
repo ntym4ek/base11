@@ -580,3 +580,43 @@
   - [x] `ff.local`
   - [x] `jp.local`
   - [x] `lubr.local`
+
+---
+
+## Версия 2.1.0 — Система раскладки на CSS Grid и отключаемая Flexbox-сетка
+
+### [CHG-47] Современная система раскладки CSS Grid и флаг `$enable-flex-grid`
+- **Версия:** 2.1.0 | **Тип:** ADDED / CHANGED
+- **Было:**
+  - Контейнеры `.container`/`.container-fluid`, утилиты видимости `.show-*`/`.hide-*` и устаревшая 12-колоночная Flexbox-сетка (`.row` / `.col-*`) были нераздельно связаны в `_b11-grid.scss` и `_b11-grid-mixins.scss`;
+  - из CSS Grid-примитивов существовали только `.grid-auto` и `.cq-container`;
+  - `templates/layout/page.html.twig` и `starterkits/project/` жёстко опирались на `.row`, `.col-*` и `.middle-sm`.
+- **Стало:**
+  - В `_b11-grid-variables.scss` добавлен флаг `$enable-flex-grid: true !default;` (проброшен через `_styles.scss` для отключения в подтеме: `@use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);`). По умолчанию `true` — полная обратная совместимость со старой сеткой.
+  - В `_b11-grid.scss` (внутри `@layer b11.layout`) `.container`/`.container-fluid` и утилиты видимости `.show-{sm,pd,tb,lp,dt,wd}` / `.hide-*` (и `*-only`) выделены отдельно и работают всегда независимо от `$enable-flex-grid`.
+  - В `_b11-tokens.scss` добавлены токены `--grid-gap-y` (по умолчанию `var(--grid-gap-x)`), `--sidebar-width` (`17.5rem`, в `compact` — `15rem`), `--stack-gap` (`1rem` / `.75rem`), `--cluster-gap` (`.75rem` / `.5rem`).
+  - Добавлены CSS Grid-примитивы и утилиты ритма в `_b11-grid.scss`:
+    - `.grid` (`--grid-cols`, модификаторы `--2`, `--3`, `--4`, `--flush`, `--tight`, `--center`, `--start`);
+    - `.grid-auto` доработан двухосевым `gap` и модификатором `--fill` (`auto-fill`);
+    - `.grid-sidebar` (`--end`, `--both`, `--start`, `--pd`, `--lp`, управление шириной через `--sidebar-width`);
+    - `.grid-subgrid` (`--2`..`--5`, управление `--subgrid-gap` и `--subgrid-rows`);
+    - `.stack` (`--xs`, `--sm`, `--md`, `--lg`, `--section`) и `.cluster` (`--sm`, `--lg`, `--between`, `--center`, `--end`, `--start`, `--nowrap`).
+  - В `_b11-grid-mixins.scss` (доступны через `_api.scss`) добавлены семантические миксины `@mixin grid($cols, $gap-x, $gap-y)` и `@mixin grid-subgrid($rows, $row-gap)`.
+  - Шаблоны `templates/layout/page.html.twig` (и стартеркита) переведены на `.cluster` в шапке и `.grid-sidebar` в `.page-main`; добавлены базовые правила `.page-header__inner` / `.page-header__brand` / `.page-header__menu` в `_b11-layout.scss`; обновлён `starterkits/project/css/project.scss.starterkit` (`with ($enable-flex-grid: false)` по умолчанию).
+- **Как найти в подтеме (regex):** `\b(row|col-(sm|pd|tb|lp|dt|wd|xs|md|lg)|show-|hide-|first-|last-|middle-|between-|around-)\b|@include\s+(row|col)\b`
+- **Что сделать в `project` (при переходе на CSS Grid):**
+  1. Заменить `.row` / `.col-*` и `@include row()` / `@include col(...)` в шаблонах и SCSS на `.grid`, `.grid-auto`, `.grid-sidebar`, `.grid-subgrid`, `.stack`, `.cluster` или нативный CSS Grid / `@include grid()`.
+  2. Помнить, что `.show-*` задают `display: block !important;` — при скрытии/показе flex/grid-блоков управлять видимостью в SCSS компонента или оборачивать внутренний flex/grid во внешний контейнер.
+  3. В `project.scss` переключить подключение на `@use "../../base11/css/supplies/styles" with ($enable-flex-grid: false);`.
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`
+
+### [CHG-48] Релиз `base11` версии `2.1.0`
+- **Версия:** 2.1.0 | **Тип:** RELEASE
+- **Стало:** `version: 2.1.0` в `base11.info.yml`.
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`

@@ -1,13 +1,16 @@
 // ==========================================================================
-// Генерация классов адаптивной 12-колоночной (или N-колоночной) сетки Base11
+// Система сеток и адаптивной видимости Base11
 // ==========================================================================
+// Содержит всегда активные контейнеры, утилиты видимости и современные
+// CSS Grid-примитивы, а также опциональную 12-колоночную Flexbox-сетку
+// (управляется флагом $enable-flex-grid в _b11-grid-variables.scss).
 // Миксины сетки вынесены в _b11-grid-mixins.scss и подключаются через _api.scss.
 
 @use "b11-grid-variables" as *;
 @use "b11-grid-mixins" as *;
 
 @layer b11.layout {
-  // --- Контейнеры страницы ------------------------------------------------
+  // --- 1. Контейнеры страницы (всегда активны) ----------------------------
   .container,
   .container-fluid {
     box-sizing: border-box;
@@ -18,65 +21,21 @@
 
   .container { max-width: var(--page-max-width); }
 
-  // --- Классы строк (Row) -------------------------------------------------
-  .row {
-    @include row();
-
-    &.reverse        { @include row-reverse(); }
-    &.natural-height { @include row-natural-height(); }
-    &.flex-column    { @include row-flex-column(); }
-    &.no-wrap        { @include row-no-wrap(); }
-  }
-
-  // Строка без межколоночных отступов
-  .row-no-gutter,
-  .row.no-gutter {
-    @include row-no-gutter();
-
-    > .col,
-    > [class*="col-"] {
-      @include col-no-gutter();
-    }
-  }
-
-  // --- Базовые классы колонок (Col) ---------------------------------------
-  .col,
-  [class*="col-"] {
-    @include col-base();
-
-    &.reverse { @include col-reverse(); }
-  }
-
-  // Колонка без боковых отступов
-  .col-no-gutter,
-  [class*="col-"].col-no-gutter {
-    @include col-no-gutter();
-  }
-
-  // Порядковые и позиционные классы общего назначения
-  .first          { @include col-first(); }
-  .last           { @include col-last(); }
-  .align-start    { align-self: flex-start; }
-  .align-end      { align-self: flex-end; }
-  .align-baseline { align-self: baseline; }
-  .align-stretch  { align-self: stretch; }
-  .self-center,
-  .row > .align-center { align-self: center; }
-
-  // --- Генерация колонок и утилит сетки по брейкпоинтам ------------------
-  // Базовый мобильный уровень (sm)
-  @include make-grid-columns("sm");
-
-  // Адаптивные уровни pd, tb, lp, dt, wd
+  // --- 2. Утилиты адаптивной видимости (всегда активны) -------------------
+  // Классы видимости от указанного брейкпоинта и выше (sm..wd)
   @each $prefix, $min-width in $grid-breakpoints {
-    @if $min-width > 0 {
+    @if $min-width == 0 {
+      .show-#{$prefix} { display: block !important; }
+      .hide-#{$prefix} { display: none !important; }
+    } @else {
       @media (min-width: #{$min-width}) {
-        @include make-grid-columns($prefix);
+        .show-#{$prefix} { display: block !important; }
+        .hide-#{$prefix} { display: none !important; }
       }
     }
   }
 
-  // --- Хелперы видимости для точных диапазонов (-only) --------------------
+  // Хелперы видимости для точных диапазонов (-only)
   @media #{$smart-only} {
     .show-sm-only { display: block !important; }
     .hide-sm-only { display: none !important; }
@@ -102,14 +61,160 @@
     .hide-dt-only { display: none !important; }
   }
 
-  // --- Современные примитивы CSS Grid и Container Queries -----------------
-  .grid-auto {
-    display: grid; gap: var(--grid-gap-x);
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min, 17rem), 100%), 1fr));
+  // --- 3. Современные примитивы CSS Grid, Flex-ритм и Container Queries ---
+  // Управляемая сетка колонок через локальную CSS-переменную --grid-cols
+  .grid {
+    --grid-cols: 1;
+    display: grid; gap: var(--grid-gap-y) var(--grid-gap-x);
+    grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
 
-    &--sm { --grid-min: 13rem; }
-    &--lg { --grid-min: 22rem; }
+    &--2 { --grid-cols: 2; }
+    &--3 { --grid-cols: 3; }
+    &--4 { --grid-cols: 4; }
+
+    &--center { align-items: center; }
+    &--flush  { gap: 0; }
+    &--start  { align-items: start; }
+    &--tight  { gap: calc(var(--grid-gap-y) * .5) calc(var(--grid-gap-x) * .5); }
   }
 
+  // Авто-адаптивная сетка без ручных брейкпоинтов (auto-fit / auto-fill)
+  .grid-auto {
+    --grid-min: 17rem;
+    display: grid; gap: var(--grid-gap-y) var(--grid-gap-x);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+
+    &--fill { grid-template-columns: repeat(auto-fill, minmax(min(var(--grid-min), 100%), 1fr)); }
+    &--lg   { --grid-min: 22rem; }
+    &--sm   { --grid-min: 13rem; }
+  }
+
+  // Раскладка «фиксированный сайдбар + гибкий контент» с автосхлопыванием в 1 колонку
+  .grid-sidebar {
+    display: grid; gap: var(--grid-gap-y) var(--grid-gap-x);
+    grid-template-columns: minmax(0, 1fr);
+
+    > * { min-width: 0; }
+
+    &--start { align-items: start; }
+
+    // Единая точка адаптивности в корне примитива
+    @media #{$pad} {
+      &--pd                    { grid-template-columns: var(--sidebar-width) minmax(0, 1fr); }
+      &--pd.grid-sidebar--end  { grid-template-columns: minmax(0, 1fr) var(--sidebar-width); }
+      &--pd.grid-sidebar--both { grid-template-columns: var(--sidebar-width) minmax(0, 1fr) var(--sidebar-width); }
+    }
+
+    @media #{$tablet} {
+      &:not(.grid-sidebar--lp)       { grid-template-columns: var(--sidebar-width) minmax(0, 1fr); }
+      &--end:not(.grid-sidebar--lp)  { grid-template-columns: minmax(0, 1fr) var(--sidebar-width); }
+      &--both:not(.grid-sidebar--lp) { grid-template-columns: var(--sidebar-width) minmax(0, 1fr) var(--sidebar-width); }
+    }
+
+    @media #{$laptop} {
+      &--lp                    { grid-template-columns: var(--sidebar-width) minmax(0, 1fr); }
+      &--lp.grid-sidebar--end  { grid-template-columns: minmax(0, 1fr) var(--sidebar-width); }
+      &--lp.grid-sidebar--both { grid-template-columns: var(--sidebar-width) minmax(0, 1fr) var(--sidebar-width); }
+    }
+  }
+
+  // Выравнивание внутренних слотов карточек по строкам родительской сетки (CSS Subgrid)
+  .grid-subgrid {
+    --subgrid-gap: .75rem;
+    --subgrid-rows: 3;
+    display: grid; grid-row: span var(--subgrid-rows); grid-template-rows: subgrid;
+    row-gap: var(--subgrid-gap);
+
+    &--2 { --subgrid-rows: 2; }
+    &--3 { --subgrid-rows: 3; }
+    &--4 { --subgrid-rows: 4; }
+    &--5 { --subgrid-rows: 5; }
+  }
+
+  // Вертикальный ритм элементов на gap
+  .stack {
+    display: flex; flex-direction: column; gap: var(--stack-gap);
+
+    &--lg      { --stack-gap: 2rem; }
+    &--md      { --stack-gap: 1.5rem; }
+    &--section { --stack-gap: var(--block-gap-y); }
+    &--sm      { --stack-gap: .5rem; }
+    &--xs      { --stack-gap: .25rem; }
+  }
+
+  // Горизонтальные переносящиеся группы элементов на gap (теги, кнопки, метаданные)
+  .cluster {
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--cluster-gap);
+
+    &--between { justify-content: space-between; }
+    &--center  { justify-content: center; }
+    &--end     { justify-content: flex-end; }
+    &--lg      { --cluster-gap: 1.5rem; }
+    &--nowrap  { flex-wrap: nowrap; }
+    &--sm      { --cluster-gap: .5rem; }
+    &--start   { align-items: flex-start; }
+  }
+
+  // Контейнер для адаптации вложенных компонентов через Container Queries
   .cq-container { container-type: inline-size; }
+
+  // --- 4. Устаревшая 12-колоночная Flexbox-сетка (.row / .col-*) ----------
+  @if $enable-flex-grid {
+    // Классы строк (Row)
+    .row {
+      @include row();
+
+      &.reverse        { @include row-reverse(); }
+      &.natural-height { @include row-natural-height(); }
+      &.flex-column    { @include row-flex-column(); }
+      &.no-wrap        { @include row-no-wrap(); }
+    }
+
+    // Строка без межколоночных отступов
+    .row-no-gutter,
+    .row.no-gutter {
+      @include row-no-gutter();
+
+      > .col,
+      > [class*="col-"] {
+        @include col-no-gutter();
+      }
+    }
+
+    // Базовые классы колонок (Col)
+    .col,
+    [class*="col-"] {
+      @include col-base();
+
+      &.reverse { @include col-reverse(); }
+    }
+
+    // Колонка без боковых отступов
+    .col-no-gutter,
+    [class*="col-"].col-no-gutter {
+      @include col-no-gutter();
+    }
+
+    // Порядковые и позиционные классы общего назначения
+    .first          { @include col-first(); }
+    .last           { @include col-last(); }
+    .align-start    { align-self: flex-start; }
+    .align-end      { align-self: flex-end; }
+    .align-baseline { align-self: baseline; }
+    .align-stretch  { align-self: stretch; }
+    .self-center,
+    .row > .align-center { align-self: center; }
+
+    // Генерация колонок и утилит сетки по брейкпоинтам (sm)
+    @include make-grid-columns("sm");
+
+    // Адаптивные уровни pd, tb, lp, dt, wd
+    @each $prefix, $min-width in $grid-breakpoints {
+      @if $min-width > 0 {
+        @media (min-width: #{$min-width}) {
+          @include make-grid-columns($prefix);
+        }
+      }
+    }
+  }
 }

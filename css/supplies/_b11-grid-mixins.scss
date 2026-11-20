@@ -1,12 +1,30 @@
 // ==========================================================================
 // Семантические миксины адаптивной сетки Base11 (чистый Sass без CSS)
 // ==========================================================================
-// Позволяют задавать свойства строки и колонок произвольным селекторам
+// Позволяют задавать свойства CSS Grid и legacy Flexbox произвольным селекторам
 // (например, .view-content и .views-row) и генерировать классы сетки по брейкпоинтам.
 
 @use "sass:map";
 @use "sass:string";
 @use "b11-grid-variables" as *;
+
+// --- Миксины современной сетки CSS Grid ---------------------------------
+
+// Семантическая CSS Grid-сетка для произвольного контейнера (например, .view-content)
+@mixin grid($cols: 1, $gap-x: var(--grid-gap-x), $gap-y: var(--grid-gap-y)) {
+  --grid-cols: #{$cols};
+  display: grid; gap: #{$gap-y} #{$gap-x};
+  grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+}
+
+// Выравнивание внутренних секций карточек в ряду по строкам родительской сетки (CSS Subgrid)
+@mixin grid-subgrid($rows: 3, $row-gap: null) {
+  display: grid; grid-row: span #{$rows}; grid-template-rows: subgrid;
+
+  @if $row-gap != null {
+    row-gap: $row-gap;
+  }
+}
 
 // --- Миксины строки (Row) -----------------------------------------------
 
@@ -190,8 +208,4 @@
   .first-#{$prefix}   { order: -1; }
   .last-#{$prefix}    { order: 1; }
   .initial-#{$prefix} { order: 0; }
-
-  // Классы видимости от указанного брейкпоинта и выше
-  .show-#{$prefix}    { display: block !important; }
-  .hide-#{$prefix}    { display: none !important; }
 }

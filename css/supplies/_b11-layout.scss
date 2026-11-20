@@ -19,6 +19,14 @@
 
   .page-title { margin-bottom: 2rem; }
 
+  // --- Шапка страницы (работает без legacy Flexbox-сетки) -----------------
+  .page-header__inner { gap: var(--grid-gap-x); }
+  .page-header__brand { flex-shrink: 0; }
+  .page-header__menu {
+    display: flex; flex: 1 1 auto; align-items: center; justify-content: flex-end;
+    min-width: 0;
+  }
+
   // --- Выдвижное мобильное меню (Offside Drawer) -------------------------
   .page-offside {
     background: var(--menu-mobile-bg);

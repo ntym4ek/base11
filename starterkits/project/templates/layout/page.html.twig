@@ -44,17 +44,17 @@
   <div class="page">
     {# Шапка сайта: брендинг, кнопка открытия мобильного меню и десктопная навигация #}
     {% if page.header or page.primary_menu or page.secondary_menu %}
-    <header class="page-header" role="banner">
+    <header class="page-header">
       <div class="container">
-        <div class="row middle-sm">
+        <div class="page-header__inner cluster cluster--between cluster--nowrap">
           {% if page.header %}
-          <div class="col-sm page-header__brand">
+          <div class="page-header__brand">
             {{ page.header }}
           </div>
           {% endif %}
           {% if page.primary_menu or page.secondary_menu %}
-          <div class="col-sm-fill page-header__menu">
-            <button type="button" class="page-offside-label hide-lp" aria-label="{{ 'Open menu'|t }}">
+          <div class="page-header__menu">
+            <button type="button" class="page-offside-label hide-lp" aria-label="{{ 'Open menu'|t }}" aria-expanded="false">
               <span class="icon" aria-hidden="true"></span>
             </button>
             <div class="hide-sm show-lp">
@@ -83,14 +83,22 @@
         {# Основная сетка контента: сайдбары и центральная колонка (блоки доступны для переопределения в подтемах) #}
         <div class="page-main">
           {% block page_main %}
-          <div class="row">
+          {% set main_grid_classes = ['page-main__grid'] %}
+          {% if page.sidebar_first and page.sidebar_second %}
+            {% set main_grid_classes = main_grid_classes|merge(['grid-sidebar', 'grid-sidebar--both', 'grid-sidebar--pd']) %}
+          {% elseif page.sidebar_first %}
+            {% set main_grid_classes = main_grid_classes|merge(['grid-sidebar', 'grid-sidebar--pd']) %}
+          {% elseif page.sidebar_second %}
+            {% set main_grid_classes = main_grid_classes|merge(['grid-sidebar', 'grid-sidebar--end', 'grid-sidebar--pd']) %}
+          {% endif %}
+          <div class="{{ main_grid_classes|join(' ') }}">
             {% if page.sidebar_first %}
-            <aside class="col-sm-12 col-pd-3" role="complementary">
+            <aside class="page-sidebar page-sidebar--first">
               {{ page.sidebar_first }}
             </aside>
             {% endif %}
 
-            <main class="col-sm-12 col-pd-fill" role="main">
+            <main class="page-main__content">
               {# Якорь доступности для ссылки «Перейти к основному содержимому» из html.html.twig #}
               <a id="main-content" tabindex="-1"></a>
               {% block page_content %}
@@ -99,7 +107,7 @@
             </main>
 
             {% if page.sidebar_second %}
-            <aside class="col-sm-12 col-pd-3" role="complementary">
+            <aside class="page-sidebar page-sidebar--second">
               {{ page.sidebar_second }}
             </aside>
             {% endif %}
@@ -114,7 +122,7 @@
 
     {# Подвал сайта #}
     {% if page.footer %}
-    <footer class="page-footer" role="contentinfo">
+    <footer class="page-footer">
       <div class="container">
         {{ page.footer }}
       </div>
