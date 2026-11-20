@@ -20,13 +20,7 @@
     @media #{$laptop} { display: none; }
   }
 
-  // --- 2. Приоритет системного индикатора AJAX поверх фильтров -------------
-  .ajax-progress,
-  .ajax-progress-throbber,
-  .ajax-progress-fullscreen {
-    z-index: 100000 !important;
-  }
-
+  // --- 2. Сброс ширины контейнеров Views внутри CSS Grid/Flex --------------
   .view {
     .view-filters,
     .view-content {
@@ -38,19 +32,24 @@
   // --- 3. Адаптивная раскладка формы фильтров ------------------------------
   .bef-exposed-form {
     @media #{$smart-only}, #{$pad-only}, #{$tablet-only} {
-      .ajax-progress-throbber {
-        background-color: rgba(0, 0, 0, .75); border-radius: var(--modal-radius);
-        box-shadow: var(--shadow-md);
-        display: flex; align-items: center; justify-content: center;
-        left: 50% !important; position: fixed !important; top: 50% !important;
-        padding: 1rem;
+      .ajax-progress.ajax-progress-throbber {
+        backdrop-filter: blur(var(--ajax-fullscreen-blur)); -webkit-backdrop-filter: blur(var(--ajax-fullscreen-blur));
+        background: var(--ajax-fullscreen-bg);
+        border: 1px solid var(--ajax-fullscreen-border); border-radius: var(--ajax-fullscreen-radius);
+        bottom: auto; left: 50% !important; position: fixed !important; right: auto; top: 50% !important; z-index: calc(var(--z-modal) + 10);
+        box-shadow: var(--ajax-fullscreen-shadow);
+        display: flex; align-items: center; justify-content: center; gap: .75rem;
+        padding: .75rem 1.25rem;
         transform: translate(-50%, -50%) !important;
 
-        .throbber { margin: 0 !important; padding: 0; }
+        .throbber {
+          flex-shrink: 0;
+          margin: 0 !important; padding: 0;
+        }
 
         .message {
-          color: var(--surface-card); font-size: var(--font-size-xs); font-weight: 500;
-          margin-left: 1rem;
+          color: var(--text-color); display: block; font-size: var(--font-size-xs); font-weight: 500;
+          margin: 0;
         }
       }
 

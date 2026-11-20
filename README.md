@@ -56,6 +56,7 @@
 - **Сетка, геометрия и ритм:** `--page-max-width`, `--page-gap-x`, `--grid-gap-x`, `--grid-gap-y`, `--block-gap-y`, `--sidebar-width`, `--stack-gap`, `--cluster-gap`.
 - **Таблицы и отступы:** `--table-cell-padding-x`, `--table-cell-padding-y`, `--table-head-padding-y`.
 - **Модалки и слои:** `--modal-*`, `--z-{dropdown,sticky,fixed,modal-backdrop,modal,toast}`, `--shadow-{sm,md,lg}`, `--card-shadow`, `--dropdown-shadow`.
+- **AJAX-индикаторы:** `--ajax-overlay-{bg,blur}`, `--ajax-spinner-{color,track,size,stroke}`, `--ajax-delay`, `--ajax-fullscreen-{size,bg,blur,border,radius,shadow}`.
 
 ### Компактный режим (`data-density="compact"`)
 Для дашбордов, отчётных таблиц и плотных форм фильтров достаточно добавить атрибут `data-density="compact"` на `<body>` или отдельный контейнер — автоматически уменьшатся `--control-height-*`, `--sidebar-width`, `--stack-gap`, `--cluster-gap`, отступы кнопок, полей, таблиц и сетки.

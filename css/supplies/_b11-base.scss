@@ -25,8 +25,8 @@
     *,
     *::before,
     *::after {
-      animation-duration: .01ms !important;
-      animation-iteration-count: 1 !important;
+      animation-duration: .01ms;
+      animation-iteration-count: 1;
       scroll-behavior: auto !important;
       transition-duration: .01ms !important;
     }

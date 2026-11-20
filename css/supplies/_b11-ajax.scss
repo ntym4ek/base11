@@ -1,15 +1,108 @@
 // ==========================================================================
-// Стили системного AJAX-индикатора (Throbber) Base11
+// Стили системных AJAX-индикаторов (Throbber, Fullscreen, Progress Bar) Base11
 // ==========================================================================
-// Оформляет штатный .ajax-progress-throbber для не-кнопочных элементов
-// (select, чекбоксы, фильтры Views). Для кнопок используется base11/ajax-spinner.
+//<editor-fold defaultstate="collapsed" desc="Описание: архитектура и режимы AJAX-индикаторов Base11">
+// Заменяет отключённый в base11.info.yml системный файл core/misc/components/ajax-progress.module.css.
+// 1. .ajax-progress-throbber — локальный полупрозрачный оверлей (position: absolute; inset: 0)
+//    для полей форм (.form-item), выпадающих списков, чекбоксов и контейнеров с position: relative.
+//    Для видимых кнопок (.button, .btn, input[type='submit']) throbber скрывается библиотекой base11/ajax-spinner.
+// 2. .ajax-progress-fullscreen — фиксированная по центру экрана матовая карточка со спиннером
+//    (используется Views AJAX и глобальными операциями; монтируется ядром в <body>).
+// 3. .ajax-progress-bar — базовая обёртка индикатора прогресса загрузки файлов.
+// 4. Задержка --ajax-delay (120ms) предотвращает мерцание индикаторов при быстрых ответах сервера.
+//</editor-fold>
 
 @layer b11.components {
+  // --- 1. Локальный оверлей (.ajax-progress-throbber) ---------------------
   .ajax-progress.ajax-progress-throbber {
-    background: rgba(204, 204, 204, .6);
-    bottom: 0; left: 0; position: absolute; right: 0; top: 0; z-index: 1;
+    animation: b11AjaxFadeIn var(--transition-base) var(--ajax-delay) both;
+    backdrop-filter: blur(var(--ajax-overlay-blur)); -webkit-backdrop-filter: blur(var(--ajax-overlay-blur));
+    background: var(--ajax-overlay-bg);
+    border-radius: inherit;
+    cursor: wait;
     display: flex; align-items: center; justify-content: center;
+    inset: 0; position: absolute; z-index: 10;
+
+    .throbber {
+      animation: b11AjaxSpin .75s linear infinite;
+      border: var(--ajax-spinner-stroke) solid var(--ajax-spinner-track); border-radius: 50%; border-top-color: var(--ajax-spinner-color);
+      box-sizing: border-box;
+      flex-shrink: 0;
+      font-size: 0; line-height: 0;
+      overflow: hidden;
+      width: var(--ajax-spinner-size); height: var(--ajax-spinner-size);
+    }
 
     .message { display: none; }
   }
+
+  // --- 2. Полноэкранный индикатор Views AJAX (.ajax-progress-fullscreen) --
+  .ajax-progress.ajax-progress-fullscreen {
+    animation: b11AjaxCardIn var(--transition-base) var(--ajax-delay) both;
+    backdrop-filter: blur(var(--ajax-fullscreen-blur)); -webkit-backdrop-filter: blur(var(--ajax-fullscreen-blur));
+    background: var(--ajax-fullscreen-bg);
+    border: 1px solid var(--ajax-fullscreen-border); border-radius: var(--ajax-fullscreen-radius);
+    box-shadow: var(--ajax-fullscreen-shadow);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0; line-height: 0;
+    left: 50%; position: fixed; top: 50%; z-index: calc(var(--z-modal) + 10);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    width: var(--ajax-fullscreen-size); height: var(--ajax-fullscreen-size);
+
+    &::before {
+      animation: b11AjaxSpin .75s linear infinite;
+      border: var(--ajax-spinner-stroke) solid var(--ajax-spinner-track); border-radius: 50%; border-top-color: var(--ajax-spinner-color);
+      box-sizing: border-box;
+      content: '';
+      display: block; flex-shrink: 0;
+      width: var(--ajax-spinner-size); height: var(--ajax-spinner-size);
+    }
+  }
+
+  // --- 3. Контейнер прогресс-бара загрузки файлов -------------------------
+  .ajax-progress-bar { width: 16em; }
+
+  // --- 4. Доступность: снижение интенсивности движения --------------------
+  @media (prefers-reduced-motion: reduce) {
+    .ajax-progress.ajax-progress-throbber,
+    .ajax-progress.ajax-progress-fullscreen {
+      animation: none;
+    }
+
+    .ajax-progress.ajax-progress-throbber .throbber,
+    .ajax-progress.ajax-progress-fullscreen::before {
+      animation-duration: 2.5s;
+      animation-iteration-count: infinite;
+    }
+  }
 }
+
+@keyframes b11AjaxSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes b11AjaxFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes b11AjaxCardIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(.92); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+//<editor-fold defaultstate="collapsed" desc="Примеры кастомизации и использования AJAX-индикаторов в подтеме">
+//
+// 1. Переопределение токенов в css/_tokens.scss подтемы:
+//    :root {
+//      --ajax-spinner-color: var(--brand-primary);
+//      --ajax-fullscreen-radius: .75rem;
+//    }
+//
+// 2. Локальный контейнер для скрытой AJAX-кнопки (.js-hide):
+//    Если в блоке используется скрытая submit-кнопка (например, пересчёт доставки),
+//    задайте родительскому контейнеру position: relative, чтобы .ajax-progress-throbber
+//    накрывал только этот блок, а не всю страницу:
+//    #shipping-information-wrapper { position: relative; }
+//</editor-fold>

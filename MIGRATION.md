@@ -620,3 +620,28 @@
   - [x] `ff.local`
   - [ ] `jp.local`
   - [ ] `lubr.local`
+
+### [CHG-49] Токенизация AJAX-индикаторов, отключение `ajax-progress.module.css` и исправление крайних случаев `ajax-spinner` / `facet-extension`
+- **Версия:** 2.1.x | **Тип:** FIXED / ADDED
+- **Было:**
+  - В `base11.info.yml` не был отключён `core/drupal.ajax` (`misc/components/ajax-progress.module.css`), из-за чего неслоёные стили ядра перебивали слоёные правила `@layer b11.components` в `_b11-ajax.scss` (сбрасывали `display: flex` в `inline-block`, `.message { display: none }` в `inline`, подмешивали `throbber-active.svg` и устаревший `#232323` у `.ajax-progress-fullscreen`).
+  - `_b11-ajax.scss` содержал захардкоженный серый фон `rgba(204, 204, 204, .6)`, не имел дизайн-токенов, собственного CSS-спиннера, стилей `.ajax-progress-fullscreen` и задержки появления.
+  - В `_b11-base.scss` правило `@media (prefers-reduced-motion: reduce)` использовало `animation-duration: .01ms !important;` внутри `@layer b11.base`, что из-за инверсии `!important` в CSS Cascade Layers перебивало анимации в `@layer b11.components`.
+  - В `css/extensions/ajax-spinner.scss` скрытие `.ajax-progress` срабатывало и на скрытые кнопки (`.js-hide` / `.hide`), лишая такие AJAX-действия визуальной обратной связи; у светлых `<input>`-кнопок (`.button--white`, `.button--default`, `.button--outline`) не обрабатывалось состояние `:has(+ .ajax-progress)`; не были покрыты все комбинации `.btn`, `input[type="button"]` и `.button--link:has(+ .ajax-progress)`.
+  - В `css/extensions/facet-extension.scss` стоял глобальный `z-index: 100000 !important;` на `.ajax-progress*`, а мобильная плашка `.bef-exposed-form .ajax-progress-throbber` не сбрасывала `bottom: auto; right: auto;` и не имела приоритета специфичности над `_b11-ajax.scss`.
+- **Стало:**
+  - В `base11.info.yml` через `libraries-override` отключён `core/drupal.ajax` (`misc/components/ajax-progress.module.css: false`).
+  - В `css/supplies/_b11-tokens.scss` добавлена секция токенов `--ajax-overlay-{bg,blur}`, `--ajax-spinner-{color,track,size,stroke}`, `--ajax-delay`, `--ajax-fullscreen-{size,bg,blur,border,radius,shadow}`.
+  - В `css/supplies/_b11-base.scss` у `animation-duration` / `animation-iteration-count` внутри `prefers-reduced-motion: reduce` снят `!important`, чтобы функциональные индикаторы загрузки в `@layer b11.components` могли снижать скорость вращения (`2.5s`).
+  - В `css/supplies/_b11-ajax.scss` реализованы чистый CSS-спиннер `.throbber`, локальный оверлей `.ajax-progress-throbber` с `backdrop-filter` и задержкой `--ajax-delay`, матовая карточка `.ajax-progress-fullscreen` (`z-index: calc(var(--z-modal) + 10)`), ключевые кадры `b11Ajax*` и поддержка `prefers-reduced-motion`.
+  - В `css/extensions/ajax-spinner.scss` исключены скрытые кнопки (`.js-hide`, `.hide`, `.hidden`, `[hidden]`), добавлена поддержка `:has(+ .ajax-progress)` для светлых `<input>`-кнопок, дополнены селекторы `.btn`, `input[type="button"]` и `.button--link:has(+ .ajax-progress)`, добавлен `@media (prefers-reduced-motion: reduce)`.
+  - В `css/extensions/facet-extension.scss` удалён глобальный `z-index: 100000 !important;`, а мобильный `.bef-exposed-form .ajax-progress.ajax-progress-throbber` переведён на токены `--ajax-fullscreen-*` со сбросом `bottom: auto; right: auto;` и явным `.message { display: block; }`.
+- **Как найти в подтеме (regex):** `data-drupal-ajax-container|ajax-progress|--btn-spinner-color`
+- **Что сделать в `project`:**
+  1. **Не вешать `data-drupal-ajax-container` на глобальную обёртку `.page`** (например, в `jp.local/project.theme` на `hook_preprocess_page`): это переносит `.ajax-progress` за пределы `.page`, ломает работу `base11/ajax-spinner` (`+ .ajax-progress` перестаёт совпадать с кнопкой) и растягивает локальный оверлей на весь `body`.
+  2. **Задавать `position: relative;` контейнерам со скрытыми AJAX-кнопками и кастомными throbber-блоками:** если в форме программно вызывается скрытая кнопка с `.js-hide` / `.hide` (например, `#shipping-information-wrapper` для пересчёта доставки, `.form-actions` при скрытой кнопке сабмита или `.input-dropdown-menu` со вставкой `.ajax-progress-throbber`), родительскому контейнеру нужно задать `position: relative;`, чтобы оверлей перекрывал только этот виджет, а не всю страницу.
+  3. **Проверить локальные оверрайды в подтемах:** в `jp.local/_ajax.scss` упростить правила светлых `<input>`-кнопок (при необходимости использовать `--ajax-*` или точечную адаптацию под дефолтную белую `.button`), в `ff.local/_buttons.scss` и `_file.scss` проверить отсутствие конфликтов со скрытыми/кастомными кнопками.
+- **Статус миграции:**
+  - [ ] `ff.local`
+  - [ ] `jp.local`
+  - [ ] `lubr.local`

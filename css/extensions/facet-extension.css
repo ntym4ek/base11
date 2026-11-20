@@ -22,38 +22,42 @@
       display: none;
     }
   }
-  .ajax-progress,
-  .ajax-progress-throbber,
-  .ajax-progress-fullscreen {
-    z-index: 100000 !important;
-  }
   .view .view-filters,
   .view .view-content {
     min-width: 0;
   }
   @media (max-width: 767px), (min-width: 768px) and (max-width: 1023px), (min-width: 1024px) and (max-width: 1365px) {
-    .bef-exposed-form .ajax-progress-throbber {
-      background-color: rgba(0, 0, 0, 0.75);
-      border-radius: var(--modal-radius);
-      box-shadow: var(--shadow-md);
+    .bef-exposed-form .ajax-progress.ajax-progress-throbber {
+      backdrop-filter: blur(var(--ajax-fullscreen-blur));
+      -webkit-backdrop-filter: blur(var(--ajax-fullscreen-blur));
+      background: var(--ajax-fullscreen-bg);
+      border: 1px solid var(--ajax-fullscreen-border);
+      border-radius: var(--ajax-fullscreen-radius);
+      bottom: auto;
+      left: 50% !important;
+      position: fixed !important;
+      right: auto;
+      top: 50% !important;
+      z-index: calc(var(--z-modal) + 10);
+      box-shadow: var(--ajax-fullscreen-shadow);
       display: flex;
       align-items: center;
       justify-content: center;
-      left: 50% !important;
-      position: fixed !important;
-      top: 50% !important;
-      padding: 1rem;
+      gap: 0.75rem;
+      padding: 0.75rem 1.25rem;
       transform: translate(-50%, -50%) !important;
     }
-    .bef-exposed-form .ajax-progress-throbber .throbber {
+    .bef-exposed-form .ajax-progress.ajax-progress-throbber .throbber {
+      flex-shrink: 0;
       margin: 0 !important;
       padding: 0;
     }
-    .bef-exposed-form .ajax-progress-throbber .message {
-      color: var(--surface-card);
+    .bef-exposed-form .ajax-progress.ajax-progress-throbber .message {
+      color: var(--text-color);
+      display: block;
       font-size: var(--font-size-xs);
       font-weight: 500;
-      margin-left: 1rem;
+      margin: 0;
     }
     .bef-exposed-form .form--inline {
       display: flex;
@@ -196,4 +200,4 @@
   }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22facet-extension.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACAA;EAEE;IACE;IACA;IACA;IAAgB;IAChB;IAAS;IAAiB;IAAQ;IAClC;IAAY;IACZ;;EAEA;IAAe;IAAY;;EAE3B;IAVF;MAUsB;;;EAItB;AAAA;AAAA;IAGE;;EAIA;AAAA;IAGE;;EAMF;IACE;MACE;MAAsC;MACtC;MACA;MAAe;MAAqB;MACpC;MAAsB;MAA4B;MAClD;MACA;;IAEA;MAAY;MAAsB;;IAElC;MACE;MAA4B;MAAgC;MAC5D;;IAIJ;MACE;MAAe;MAAmB;MAClC;MACA;MACA;MAA+B;;IAE/B;MAAuB;;IAGzB;MACE;MACA;MACA;MACA;MAAsB;MACtB;;IAEA;MAAoB;;IAEpB;MACE;MACA;;IAGF;MAAgB;MAAsB;MAAqB;;IAG3D;MACE;MAAqC;MACrC;MAA4B;MAAgC;MAC5D;MAAsB;MAAqB;MAC3C;MAAmB;MACnB;;IAGF;MAAwB;;IAExB;MACE;MAA4C;MAC5C;MAA4C;MAC5C;MAA0B;MAC1B;MAAsB;MAA4B;MAAqB;MACvE;MAA8B;MAA6B;MAC3D;MACA;MACA;;IAGF;MACE;MAAe;MAAqB;MACpC;MAAqB;;IAErB;MACE;MACA;MACA;MAAiC;MAAiB;MAAoB;MACtE;;IAEA;MAAU;;;EAOlB;IAEI;MACE;MACA;MACA;MAA4B;MAC5B;MACA;;IAGF;MAAsB;;IACtB;MAAsB;;;EAM5B;AAAA;AAAA;IAGE;IACA;;EAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAGE;;EAIF;AAAA;AAAA;IACE;IACA;IAA4E;IAC5E;IACA;IAAU;IAAqB;IAAoB;;;AAKzD;EACE;IAAO;;EACP;IAAO%22,%22file%22:%22facet-extension.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22facet-extension.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACAA;EAEE;IACE;IACA;IACA;IAAgB;IAChB;IAAS;IAAiB;IAAQ;IAClC;IAAY;IACZ;;EAEA;IAAe;IAAY;;EAE3B;IAVF;MAUsB;;;EAKpB;AAAA;IAGE;;EAMF;IACE;MACE;MAAoD;MACpD;MACA;MAAiD;MACjD;MAAc;MAAsB;MAA4B;MAAa;MAAqB;MAClG;MACA;MAAe;MAAqB;MAAyB;MAC7D;MACA;;IAEA;MACE;MACA;MAAsB;;IAGxB;MACE;MAA0B;MAAgB;MAAgC;MAC1E;;IAIJ;MACE;MAAe;MAAmB;MAClC;MACA;MACA;MAA+B;;IAE/B;MAAuB;;IAGzB;MACE;MACA;MACA;MACA;MAAsB;MACtB;;IAEA;MAAoB;;IAEpB;MACE;MACA;;IAGF;MAAgB;MAAsB;MAAqB;;IAG3D;MACE;MAAqC;MACrC;MAA4B;MAAgC;MAC5D;MAAsB;MAAqB;MAC3C;MAAmB;MACnB;;IAGF;MAAwB;;IAExB;MACE;MAA4C;MAC5C;MAA4C;MAC5C;MAA0B;MAC1B;MAAsB;MAA4B;MAAqB;MACvE;MAA8B;MAA6B;MAC3D;MACA;MACA;;IAGF;MACE;MAAe;MAAqB;MACpC;MAAqB;;IAErB;MACE;MACA;MACA;MAAiC;MAAiB;MAAoB;MACtE;;IAEA;MAAU;;;EAOlB;IAEI;MACE;MACA;MACA;MAA4B;MAC5B;MACA;;IAGF;MAAsB;;IACtB;MAAsB;;;EAM5B;AAAA;AAAA;IAGE;IACA;;EAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAGE;;EAIF;AAAA;AAAA;IACE;IACA;IAA4E;IAC5E;IACA;IAAU;IAAqB;IAAoB;;;AAKzD;EACE;IAAO;;EACP;IAAO%22,%22file%22:%22facet-extension.css%22%7D */

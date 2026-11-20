@@ -50,6 +50,10 @@ libraries-override:
     css:
       component:
         misc/components/progress.module.css: false
+  core/drupal.ajax:
+    css:
+      component:
+        misc/components/ajax-progress.module.css: false
   core/drupal.vertical-tabs:
     css:
       component:
