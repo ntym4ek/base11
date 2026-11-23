@@ -23,7 +23,7 @@
   .page-header__inner { gap: var(--grid-gap-x); }
   .page-header__brand { flex-shrink: 0; }
   .page-header__menu {
-    display: flex; flex: 1 1 auto; align-items: center; justify-content: flex-end;
+    display: flex; flex: 1 1 auto; align-items: center;
     min-width: 0;
   }
 
