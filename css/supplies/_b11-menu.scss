@@ -139,7 +139,7 @@
                 &::before {
                   background-color: var(--brand-primary);
                   content: "";
-                  height: 100%; width: 3px;
+                  height: 100%; width: 2px;
                   position: absolute; left: 0; top: 0;
                 }
               }
@@ -153,7 +153,7 @@
               &::before {
                 background-color: var(--brand-primary);
                 content: "";
-                height: 100%; width: 3px;
+                height: 100%; width: 2px;
                 position: absolute; left: 0; top: 0;
               }
             }
