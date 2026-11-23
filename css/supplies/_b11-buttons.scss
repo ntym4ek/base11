@@ -172,7 +172,7 @@
 
   // --- 4. Контурные кнопки (Outline) --------------------------------------
   .button--outline {
-    @include _btn-outline-vars(var(--brand-primary));
+    @include _btn-outline-vars(var(--text-color));
 
     &.button--white   { @include _btn-outline-vars(var(--surface-card), color-mix(in srgb, var(--surface-card) 90%, transparent), transparent); }
     &.button--primary { @include _btn-outline-vars(var(--brand-primary)); }

@@ -47,7 +47,7 @@
 }
 
 // --- Контурная (пустотелая) кнопка ---------------------------------------
-@mixin button-outline($color: var(--brand-primary), $hover-color: null, $hover-bg: null) {
+@mixin button-outline($color: var(--text-color), $hover-color: null, $hover-bg: null) {
   $resolved-h-bg: if($hover-bg, $hover-bg, color-mix(in srgb, #{$color} 8%, transparent));
   $resolved-h-color: if($hover-color, $hover-color, color-mix(in srgb, #{$color}, black 15%));
 
