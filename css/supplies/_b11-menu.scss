@@ -66,7 +66,10 @@
         &:hover,
         &:focus-within {
           > .menu {
-            opacity: 1; pointer-events: auto; transform: translateY(0); visibility: visible;
+            opacity: 1; visibility: visible;
+            transform: translate(0);
+            transition: opacity var(--transition-fast) 0s, transform var(--transition-fast) 0s, visibility 0s linear 0s;
+            z-index: calc(var(--z-dropdown) + 1);
           }
         }
 
@@ -76,11 +79,11 @@
           box-shadow: var(--shadow-lg);
           display: flex; flex-direction: column;
           min-width: 220px;
-          opacity: 0; pointer-events: none; visibility: hidden;
+          opacity: 0; visibility: hidden;
           padding: 0;
           position: absolute; top: calc(100% + 4px); left: 0; z-index: var(--z-dropdown);
           transform: translateY(6px);
-          transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+          transition: opacity var(--transition-fast) 150ms, transform var(--transition-fast) 150ms, visibility 0s linear 300ms;
 
           // Невидимая зона-мост между ссылкой и выпадающим списком
           &::before {
@@ -165,8 +168,31 @@
         }
 
         // Подменю третьего уровня и глубже
-        .menu-item--expanded > .menu {
-          left: calc(100% + 4px); top: -.375rem;
+        .menu-item--expanded {
+          > .menu {
+            left: calc(100% + 4px); top: .5rem;
+            transform: translateX(-6px);
+
+            // Невидимая зона-мост слева (перекрывает 4px-зазор и смещение top)
+            &::before {
+              height: auto; width: 12px;
+              top: -.75rem; bottom: 0; left: -10px; right: auto;
+            }
+          }
+
+          &:hover > .menu {
+            opacity: 1; visibility: visible;
+            transform: translate(0);
+            transition: opacity var(--transition-fast) 60ms, transform var(--transition-fast) 60ms, visibility 0s linear 60ms;
+            z-index: calc(var(--z-dropdown) + 1);
+          }
+
+          &:focus-within > .menu {
+            opacity: 1; visibility: visible;
+            transform: translate(0);
+            transition: opacity var(--transition-fast) 0s, transform var(--transition-fast) 0s, visibility 0s linear 0s;
+            z-index: calc(var(--z-dropdown) + 1);
+          }
         }
       }
     }
