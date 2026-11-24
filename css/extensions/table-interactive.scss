@@ -1,0 +1,88 @@
+// ==========================================================================
+// Интерактивные, древовидные и сортируемые таблицы Base11 (base11/table-interactive)
+// ==========================================================================
+
+@use "../supplies/b11-layers";
+
+@layer b11.components {
+  //<editor-fold defaultstate="collapsed" desc="Описание: стили древовидных таблиц, сортировки и sticky-колонки">
+  // Назначение: расширяет базовые таблицы _b11-tables.scss для финансовых, складских и
+  // аналитических реестров с многоуровневой вложенностью, поиском, сортировкой и закреплением
+  // первой колонки (.table--sticky-col) внутри .table-responsive.
+  //</editor-fold>
+  .table--sticky-col {
+    th:first-child,
+    td:first-child {
+      background-color: var(--surface-card);
+      box-shadow: 2px 0 6px color-mix(in srgb, var(--shadow-base-color) 6%, transparent);
+      left: 0; position: sticky; z-index: 2;
+    }
+
+    thead th:first-child {
+      background-color: var(--page-bg);
+      z-index: 3;
+    }
+
+    &.table--striped tbody tr:nth-child(even) td:first-child {
+      background-color: var(--surface-subtle);
+    }
+
+    &.table--hover tbody tr:hover td:first-child {
+      background-color: var(--surface-hover);
+    }
+  }
+
+  .b11-tree-toggle {
+    background-color: var(--surface-subtle);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-sm);
+    color: var(--text-color); cursor: pointer; font-family: var(--font-family-mono); font-size: var(--font-size-xs); font-weight: 700; line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    margin-right: .5rem; padding: 0;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+    width: 1.375rem; height: 1.375rem;
+
+    &:hover {
+      background-color: var(--brand-primary); border-color: var(--brand-primary);
+      color: var(--on-primary);
+    }
+  }
+
+  [data-b11-tree-table] {
+    tr.is-tree-hidden { display: none; }
+
+    tr[data-depth="1"] td:first-child {
+      padding-left: calc(var(--table-cell-padding-x) + 1.5rem);
+    }
+
+    tr[data-depth="2"] td:first-child {
+      padding-left: calc(var(--table-cell-padding-x) + 3rem);
+    }
+
+    tr[data-depth="3"] td:first-child {
+      padding-left: calc(var(--table-cell-padding-x) + 4.5rem);
+    }
+  }
+
+  th[data-sort] {
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+
+    &::after {
+      color: var(--text-light); content: ' ⇅'; font-size: var(--font-size-xs);
+    }
+
+    &[data-sort-dir="asc"]::after {
+      color: var(--brand-primary); content: ' ▲';
+    }
+
+    &[data-sort-dir="desc"]::after {
+      color: var(--brand-primary); content: ' ▼';
+    }
+  }
+
+  tr.b11-table-empty td {
+    color: var(--text-muted); text-align: center;
+    padding: 2rem 1rem;
+  }
+}

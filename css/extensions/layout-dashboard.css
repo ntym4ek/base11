@@ -3,6 +3,7 @@
   .b11-dashboard {
     --dash-gap: 1.5rem;
     --dash-sidebar-bg: var(--surface-card);
+    --dash-sidebar-collapsed-width: 4.5rem;
     --dash-sidebar-width: 260px;
     --dash-topbar-bg: var(--surface-card);
     --dash-topbar-height: 3.75rem;
@@ -32,6 +33,92 @@
   .b11-dashboard.is-sidebar-open .b11-dashboard__sidebar {
     box-shadow: var(--shadow-lg);
     transform: translateX(0);
+  }
+  .b11-dashboard__brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .b11-dashboard__brand-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .b11-dashboard__rail-toggle {
+    display: none;
+  }
+  .b11-dashboard__nav {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 1.25rem;
+    min-height: 0;
+  }
+  .b11-dashboard__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  .b11-dashboard__group-title {
+    color: var(--text-light);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0 0.625rem;
+  }
+  .b11-dashboard__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .b11-dashboard__link {
+    border-radius: var(--control-radius-md);
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.625rem;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+  .b11-dashboard__link:hover {
+    background-color: var(--surface-hover);
+    color: var(--brand-primary);
+  }
+  .b11-dashboard__link.is-active {
+    background-color: color-mix(in srgb, var(--brand-primary) 10%, var(--surface-card));
+    color: var(--brand-primary);
+    font-weight: 600;
+  }
+  .b11-dashboard__link-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .b11-dashboard__link-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .b11-dashboard__sidebar-footer {
+    border-top: 1px solid var(--border-color-light);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: auto;
+    padding-top: 0.875rem;
   }
   .b11-dashboard__backdrop {
     background-color: var(--modal-backdrop-bg);
@@ -80,6 +167,7 @@
   @media (min-width: 1366px) {
     .b11-dashboard {
       grid-template-columns: var(--dash-sidebar-width) minmax(0, 1fr);
+      transition: grid-template-columns var(--transition-base);
     }
     .b11-dashboard__sidebar {
       height: 100dvh;
@@ -90,10 +178,50 @@
       z-index: auto;
       transform: none;
     }
+    .b11-dashboard__rail-toggle {
+      background: transparent;
+      border: 1px solid var(--border-color-light);
+      border-radius: var(--control-radius-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 0;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+      width: 2rem;
+      height: 2rem;
+    }
+    .b11-dashboard__rail-toggle:hover {
+      background-color: var(--surface-hover);
+      color: var(--brand-primary);
+    }
     .b11-dashboard__backdrop, .b11-dashboard__toggle {
       display: none;
+    }
+    .b11-dashboard.is-sidebar-collapsed {
+      grid-template-columns: var(--dash-sidebar-collapsed-width) minmax(0, 1fr);
+    }
+    .b11-dashboard.is-sidebar-collapsed .b11-dashboard__sidebar {
+      align-items: center;
+      padding: 1.25rem 0.625rem;
+    }
+    .b11-dashboard.is-sidebar-collapsed .b11-dashboard__brand {
+      justify-content: center;
+    }
+    .b11-dashboard.is-sidebar-collapsed .b11-dashboard__brand-text, .b11-dashboard.is-sidebar-collapsed .b11-dashboard__group-title, .b11-dashboard.is-sidebar-collapsed .b11-dashboard__link-text {
+      display: none;
+    }
+    .b11-dashboard.is-sidebar-collapsed .b11-dashboard__link {
+      justify-content: center;
+      padding: 0.625rem;
+    }
+    .b11-dashboard.is-sidebar-collapsed .b11-dashboard__sidebar-footer {
+      align-items: center;
+      width: 100%;
     }
   }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22layout-dashboard.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACAA;EACE;IACE;IACA;IACA;IACA;IACA;IAEA;IAAe;IACf;IACA;;EAGA;IACE;IACA;IACA;IACA;IAAe;IACf;IAAgB;IAAkC;IAClD;IAAS;IAAiB;IAAQ;IAClC;IACA;IACA;IACA;;EAGF;IACE;IACA;;EAIF;IACE;IACA;IAAU;IAAiB;IAC3B;IAAY;IAAsB;IAClC;;EAGF;IACE;IAAY;IAAsB;;EAIpC;IACE;IAAe;IACf;;EAIF;IACE;IACA;IACA;IAAe;IAAqB;IAAgC;IACpE;IACA;IACA;IAAkB;IAAQ;;EAG5B;IACE;IAAsB;IAAqB;IAAyB;;EAItE;IACE;IACA;IACA;;EAIF;IAtEF;MAuEI;;IAEA;MACE;MAAgB;MAAiB;MACjC;MAAkB;MAAQ;MAC1B;;IAGF;MAEE%22,%22file%22:%22layout-dashboard.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22layout-dashboard.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACAA;EAME;IACE;IACA;IACA;IACA;IACA;IACA;IAEA;IAAe;IACf;IACA;;EAGA;IACE;IACA;IACA;IACA;IAAe;IACf;IAAgB;IAAkC;IAClD;IAAS;IAAiB;IAAQ;IAClC;IACA;IACA;IACA;;EAGF;IACE;IACA;;EAIF;IACE;IAAe;IAAqB;IAAgC;IACpE;;EAGF;IACE;IACA;IAAkB;IAAyB;;EAG7C;IAAiB;;EAGjB;IACE;IAAe;IAAwB;IAAc;IACrD;;EAGF;IACE;IAAe;IAAwB;;EAGzC;IACE;IAA0B;IAAgC;IAAkB;IAAuB;IACnG;;EAGF;IACE;IAAe;IAAwB;IACvC;IACA;IAAW;;EAGb;IACE;IACA;IAA0B;IAAgC;IAC1D;IAAe;IAAqB;IACpC;IACA;;EAEA;IACE;IACA;;EAGF;IACE;IACA;IAA6B;;EAIjC;IACE;IAAsB;IAAqB;IAAyB;IACpE;IAAgB;;EAGlB;IACE;IACA;IAAkB;IAAyB;;EAG7C;IACE;IACA;IAAe;IAAwB;IACvC;IAAkB;;EAIpB;IACE;IACA;IAAU;IAAiB;IAC3B;IAAY;IAAsB;IAClC;;EAGF;IACE;IAAY;IAAsB;;EAIpC;IACE;IAAe;IACf;;EAIF;IACE;IACA;IACA;IAAe;IAAqB;IAAgC;IACpE;IACA;IACA;IAAkB;IAAQ;;EAG5B;IACE;IAAsB;IAAqB;IAAyB;;EAItE;IACE;IACA;IACA;;EAIF;IA3IF;MA4II;MACA;;IAEA;MACE;MAAgB;MAAiB;MACjC;MAAkB;MAAQ;MAC1B;;IAGF;MACE;MACA;MAA6C;MAC7C;MAA0B;MAC1B;MAAsB;MAAqB;MAAyB;MACpE;MACA;MACA;MAAa;;IAEb;MACE;MACA;;IAIJ;MAEE;;IAIF;MACE;;IAGF;MACE;MACA;;IAGF;MAAkC;;IAElC;MAGE;;IAGF;MACE;MACA;;IAGF;MACE;MACA%22,%22file%22:%22layout-dashboard.css%22%7D */

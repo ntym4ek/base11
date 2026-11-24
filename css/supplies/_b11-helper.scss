@@ -41,4 +41,46 @@
       object-fit: cover;
     }
   }
+
+  // --- Скелетоны загрузки виджетов и карточек ---------------------------
+  //<editor-fold defaultstate="collapsed" desc="Описание: утилитарные классы .b11-skeleton">
+  // Назначение: плавная заглушка при асинхронной подгрузке карточек, текста и графиков.
+  // Отключает анимацию при системной настройке prefers-reduced-motion: reduce.
+  //</editor-fold>
+  .b11-skeleton {
+    animation: b11SkeletonShimmer 1.4s ease-in-out infinite;
+    background: linear-gradient(90deg, var(--surface-subtle) 25%, var(--border-color-light) 50%, var(--surface-subtle) 75%);
+    background-size: 200% 100%;
+    border-radius: var(--control-radius-sm);
+    display: block;
+    min-height: 1rem; width: 100%;
+
+    &--text {
+      height: .875rem; min-height: .875rem;
+    }
+
+    &--title {
+      height: 1.375rem; min-height: 1.375rem; width: 45%;
+    }
+
+    &--card {
+      border-radius: var(--control-radius-md);
+      height: 8.5rem;
+    }
+
+    &--chart {
+      border-radius: var(--control-radius-md);
+      height: var(--chart-height-md);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+      background: var(--surface-subtle);
+    }
+  }
+}
+
+@keyframes b11SkeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }

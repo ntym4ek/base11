@@ -279,6 +279,34 @@
     --ajax-fullscreen-border: var(--border-color-light);
     --ajax-fullscreen-radius: var(--modal-radius);
     --ajax-fullscreen-shadow: var(--shadow-lg);
+
+    // --- 12. Графики и визуализация (ECharts & SDC base11:chart) ----------
+    //<editor-fold defaultstate="collapsed" desc="Описание: дизайн-токены графиков и аналитических виджетов">
+    // Назначение: единая цветовая и геометрическая палитра для Apache ECharts и компонента base11:chart.
+    // JS-контроллер base11/echarts разрешает выражения var(...) из getComputedStyle, поэтому
+    // переопределение --brand-* или --chart-* в _tokens.scss подтемы автоматически меняет цвета графиков.
+    //</editor-fold>
+    --chart-plan: color-mix(in srgb, var(--text-muted) 80%, var(--border-color));
+    --chart-fact: var(--brand-primary);
+    --chart-deal: var(--brand-info);
+    --chart-positive: var(--brand-success);
+    --chart-negative: var(--brand-danger);
+    --chart-warning: var(--brand-warning);
+    --chart-series-1: var(--brand-primary);
+    --chart-series-2: var(--brand-info);
+    --chart-series-3: var(--brand-success);
+    --chart-series-4: var(--brand-warning);
+    --chart-series-5: var(--brand-danger);
+    --chart-series-6: #6366f1;
+    --chart-series-7: #0d9488;
+    --chart-series-8: #8b5cf6;
+    --chart-grid-color: var(--border-color-light);
+    --chart-axis-color: var(--text-muted);
+    --chart-tooltip-bg: var(--surface-card);
+    --chart-tooltip-border: var(--border-color-light);
+    --chart-height-sm: 240px;
+    --chart-height-md: 340px;
+    --chart-height-lg: 440px;
   }
 
   // --- Адаптивные размеры заголовков на смартфонах -------------------------

@@ -645,3 +645,27 @@
   - [ ] `ff.local`
   - [ ] `jp.local`
   - [ ] `lubr.local`
+
+
+---
+
+## Версия 2.2.0 — Инструментарий для аналитических дашбордов и ТВ-панелей
+
+### [CHG-50] Расширения дашбордов, таблиц, графиков ECharts и киоск-режима
+- **Версия:** 2.2.0 | **Тип:** ADDED / CHANGED
+- **Что добавлено (строго опционально, без влияния на контентные сайты):**
+  - **Токены и скелетоны:** в `css/supplies/_b11-tokens.scss` добавлены токены визуализации `--chart-{plan,fact,deal,positive,negative,warning}`, `--chart-series-1..8`, `--chart-{grid-color,axis-color,tooltip-bg,tooltip-border}` и `--chart-height-{sm,md,lg}`; в `css/supplies/_b11-helper.scss` добавлен класс `.b11-skeleton` (`--text`, `--title`, `--card`, `--chart`).
+  - **Desktop Rail Mode в `base11/layout-dashboard`:** сворачивание закреплённого левого сайдбара в узкую иконочную рельсу (`.is-sidebar-collapsed`, `4.5rem`) с сохранением в `localStorage`, подсказками и событием `b11:layout-change`, а также базовые слоты навигационных групп и нижнего футера сайдбара.
+  - **Библиотека `base11/echarts` и SDC `base11:chart`:** инициализатор Apache ECharts (`/libraries/echarts/dist/echarts.min.js`) с разрешением CSS-токенов темы (`var(--...)`, `color-mix(...)`), ленивой подгрузкой по `IntersectionObserver`, `ResizeObserver`, экспортом в PNG и JS API `Drupal.base11Charts`.
+  - **Библиотека `base11/table-interactive`:** древовидные таблицы (`[data-b11-tree-table]`, `[data-b11-row-toggle]`, сохранение открытых веток в `sessionStorage`), живой поиск `[data-b11-table-search]`, иерархическая сортировка `th[data-sort]` и модификатор закреплённого столбца `.table--sticky-col`.
+  - **Библиотека `base11/filter-bar`:** липкая панель фильтров `.b11-filter-bar` и сегментированные переключатели `.b11-segmented`.
+  - **Библиотека `base11/layout-kiosk`:** полноэкранный макет ТВ-панелей `.b11-kiosk` с тёмной высококонтрастной темой `[data-theme="dark"]`, живыми часами и кнопкой полноэкранного режима.
+  - **Новые иконки (`base11.icons.yml` v2.2.0):** `sidebar.svg`, `maximize.svg`, `tv.svg`, `bar-chart.svg`, `refresh.svg`.
+- **Совместимость:** все изменения полностью обратно совместимы — существующие подтемы на `base11` не требуют правок, но при пересборке SCSS получают новые CSS-переменные графиков и утилиту `.b11-skeleton`.
+
+### [CHG-51] Релиз `base11` версии `2.2.0`
+- **Версия:** 2.2.0 | **Тип:** RELEASE
+- **Стало:** `version: 2.2.0` в `base11.info.yml`.
+- **Статус миграции:**
+  - [x] `ff.local`
+  - [x] `puls.local`

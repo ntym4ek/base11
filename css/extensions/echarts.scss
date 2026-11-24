@@ -1,0 +1,41 @@
+// ==========================================================================
+// Стили контейнеров графиков Apache ECharts (base11/echarts)
+// ==========================================================================
+
+@use "../supplies/b11-layers";
+
+@layer b11.components {
+  //<editor-fold defaultstate="collapsed" desc="Описание: обёртка и скелетон графика base11/echarts">
+  // Назначение: задаёт предсказуемую высоту контейнера графика до и во время загрузки данных,
+  // а также единое оформление состояния ошибки загрузки без скачков вёрстки (CLS = 0).
+  //</editor-fold>
+  .b11-chart {
+    --b11-chart-height: var(--chart-height-md);
+
+    position: relative; width: 100%;
+
+    &__canvas {
+      height: var(--b11-chart-height); width: 100%;
+      transition: opacity var(--transition-fast);
+    }
+
+    &__skeleton {
+      height: 100%; width: 100%;
+      inset: 0; position: absolute; z-index: 1;
+    }
+
+    &.is-loading &__canvas { opacity: 0; }
+    &:not(.is-loading) &__skeleton { display: none; }
+
+    &__error {
+      background-color: var(--status-danger-bg);
+      border: 1px solid var(--status-danger-border); border-radius: var(--control-radius-md);
+      color: var(--status-danger-text); font-size: var(--font-size-sm); text-align: center;
+      padding: 1rem;
+    }
+
+    &--sm { --b11-chart-height: var(--chart-height-sm); }
+    &--md { --b11-chart-height: var(--chart-height-md); }
+    &--lg { --b11-chart-height: var(--chart-height-lg); }
+  }
+}

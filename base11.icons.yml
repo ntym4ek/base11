@@ -6,7 +6,7 @@ base11:
   enabled: true
   label: "Иконки Base11"
   description: "Базовый набор векторных UI-иконок темы Base11."
-  version: "2.0.0"
+  version: "2.2.0"
   extractor: svg
   config:
     sources:

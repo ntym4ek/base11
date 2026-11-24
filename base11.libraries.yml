@@ -185,3 +185,49 @@ native-dialog:
   dependencies:
     - core/drupal
     - core/once
+
+# Графики Apache ECharts с разрешением CSS-токенов, экспортом PNG и ленивой подгрузкой
+echarts:
+  version: 5.x
+  css:
+    component:
+      css/extensions/echarts.css: {}
+  js:
+    /libraries/echarts/dist/echarts.min.js: { minified: true }
+    js/extensions/echarts.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+# Интерактивные древовидные таблицы, живой поиск, сортировка и sticky-колонка
+table-interactive:
+  css:
+    component:
+      css/extensions/table-interactive.css: {}
+  js:
+    js/extensions/table-interactive.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+# Панель контекстных фильтров и сегментированные переключатели (.b11-filter-bar / .b11-segmented)
+filter-bar:
+  css:
+    component:
+      css/extensions/filter-bar.css: {}
+  js:
+    js/extensions/filter-bar.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+# Полноэкранный макет инфоэкранов и ТВ-панелей (.b11-kiosk с поддержкой тёмной темы)
+layout-kiosk:
+  css:
+    layout:
+      css/extensions/layout-kiosk.css: {}
+  js:
+    js/extensions/layout-kiosk.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

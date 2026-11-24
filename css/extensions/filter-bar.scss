@@ -1,0 +1,57 @@
+// ==========================================================================
+// Панель фильтров и сегментированные переключатели Base11 (base11/filter-bar)
+// ==========================================================================
+
+@use "../supplies/b11-layers";
+
+@layer b11.components {
+  //<editor-fold defaultstate="collapsed" desc="Описание: липкая панель фильтров и сегментные переключатели">
+  // Назначение: компактное размещение контекстных фильтров (предприятие, период, режим учёта)
+  // и быстрых сегментированных переключателей (.b11-segmented) над дашбордом или реестром.
+  //</editor-fold>
+  .b11-filter-bar {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+    box-shadow: var(--shadow-sm);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.25rem;
+    margin-bottom: var(--stack-gap); padding: .75rem 1rem;
+
+    &__group {
+      display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem;
+    }
+
+    &__label {
+      color: var(--text-muted); font-size: var(--font-size-xs); font-weight: 600; letter-spacing: .02em; text-transform: uppercase;
+    }
+
+    &__meta {
+      color: var(--text-muted); font-size: var(--font-size-xs);
+      display: flex; align-items: center; gap: .5rem;
+      margin-left: auto;
+    }
+  }
+
+  .b11-segmented {
+    background-color: var(--surface-subtle);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+    display: inline-flex; flex-wrap: wrap; gap: .25rem;
+    padding: .25rem;
+
+    &__item {
+      background: transparent;
+      border: 0; border-radius: var(--control-radius-sm);
+      color: var(--text-muted); cursor: pointer; font-family: var(--font-family-base); font-size: var(--font-size-sm); font-weight: 500; line-height: 1.25; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .375rem;
+      padding: .375rem .75rem;
+      transition: background-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
+
+      &:hover { color: var(--text-color); }
+
+      &.is-active {
+        background-color: var(--surface-card);
+        box-shadow: var(--shadow-sm);
+        color: var(--brand-primary); font-weight: 600;
+      }
+    }
+  }
+}

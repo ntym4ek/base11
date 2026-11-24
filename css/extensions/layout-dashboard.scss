@@ -6,9 +6,15 @@
 @use "../supplies/b11-grid-variables" as *;
 
 @layer b11.layout {
+  //<editor-fold defaultstate="collapsed" desc="Описание: двухколоночный каркас дашбордов и отчётов">
+  // Назначение: фиксированный боковой сайдбар с навигационными группами и липкая верхняя панель
+  // фильтров (.b11-dashboard__topbar). На экранах < 1366px сайдбар работает как выдвижная шторка,
+  // на десктопах поддерживает сворачивание в компактную иконочную рельсу (.is-sidebar-collapsed).
+  //</editor-fold>
   .b11-dashboard {
     --dash-gap: 1.5rem;
     --dash-sidebar-bg: var(--surface-card);
+    --dash-sidebar-collapsed-width: 4.5rem;
     --dash-sidebar-width: 260px;
     --dash-topbar-bg: var(--surface-card);
     --dash-topbar-height: 3.75rem;
@@ -34,6 +40,74 @@
     &.is-sidebar-open &__sidebar {
       box-shadow: var(--shadow-lg);
       transform: translateX(0);
+    }
+
+    // --- Шапка сайдбара и кнопка сворачивания на десктопе -----------------
+    &__brand {
+      display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    &__brand-text {
+      min-width: 0;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    &__rail-toggle { display: none; }
+
+    // --- Навигационные группы сайдбара ------------------------------------
+    &__nav {
+      display: flex; flex-direction: column; flex-grow: 1; gap: 1.25rem;
+      min-height: 0;
+    }
+
+    &__group {
+      display: flex; flex-direction: column; gap: .375rem;
+    }
+
+    &__group-title {
+      color: var(--text-light); font-size: var(--font-size-xs); font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+      padding: 0 .625rem;
+    }
+
+    &__list {
+      display: flex; flex-direction: column; gap: .25rem;
+      list-style: none;
+      margin: 0; padding: 0;
+    }
+
+    &__link {
+      border-radius: var(--control-radius-md);
+      color: var(--text-color); font-size: var(--font-size-sm); font-weight: 500;
+      display: flex; align-items: center; gap: .75rem;
+      padding: .5rem .625rem;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+
+      &:hover {
+        background-color: var(--surface-hover);
+        color: var(--brand-primary);
+      }
+
+      &.is-active {
+        background-color: color-mix(in srgb, var(--brand-primary) 10%, var(--surface-card));
+        color: var(--brand-primary); font-weight: 600;
+      }
+    }
+
+    &__link-icon {
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      width: 1.25rem; height: 1.25rem;
+    }
+
+    &__link-text {
+      min-width: 0;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    &__sidebar-footer {
+      border-top: 1px solid var(--border-color-light);
+      display: flex; flex-direction: column; gap: .25rem;
+      margin-top: auto; padding-top: .875rem;
     }
 
     // --- Подложка затемнения для мобильного режима ------------------------
@@ -78,6 +152,7 @@
     // --- Единая точка адаптивности: на ноутбуках сайдбар закреплён --------
     @media #{$laptop} {
       grid-template-columns: var(--dash-sidebar-width) minmax(0, 1fr);
+      transition: grid-template-columns var(--transition-base);
 
       &__sidebar {
         height: 100dvh; max-width: none; width: 100%;
@@ -85,9 +160,52 @@
         transform: none;
       }
 
+      &__rail-toggle {
+        background: transparent;
+        border: 1px solid var(--border-color-light); border-radius: var(--control-radius-sm);
+        color: var(--text-muted); cursor: pointer;
+        display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+        padding: 0;
+        transition: background-color var(--transition-fast), color var(--transition-fast);
+        width: 2rem; height: 2rem;
+
+        &:hover {
+          background-color: var(--surface-hover);
+          color: var(--brand-primary);
+        }
+      }
+
       &__backdrop,
       &__toggle {
         display: none;
+      }
+
+      // Свёрнутая иконочная рельса на десктопах (Desktop Rail Mode)
+      &.is-sidebar-collapsed {
+        grid-template-columns: var(--dash-sidebar-collapsed-width) minmax(0, 1fr);
+      }
+
+      &.is-sidebar-collapsed &__sidebar {
+        align-items: center;
+        padding: 1.25rem .625rem;
+      }
+
+      &.is-sidebar-collapsed &__brand { justify-content: center; }
+
+      &.is-sidebar-collapsed &__brand-text,
+      &.is-sidebar-collapsed &__group-title,
+      &.is-sidebar-collapsed &__link-text {
+        display: none;
+      }
+
+      &.is-sidebar-collapsed &__link {
+        justify-content: center;
+        padding: .625rem;
+      }
+
+      &.is-sidebar-collapsed &__sidebar-footer {
+        align-items: center;
+        width: 100%;
       }
     }
   }

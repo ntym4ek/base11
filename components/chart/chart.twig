@@ -1,0 +1,89 @@
+{#
+/**
+ * @file
+ * SDC-компонент «График» (base11:chart) на базе Apache ECharts.
+ *
+ * Пример использования в Twig:
+ *   {% embed 'base11:chart' with {
+ *     chart_id: 'debt-dynamics',
+ *     title: 'Динамика дебиторской задолженности',
+ *     subtitle: 'млн руб. с НДС',
+ *     badge_text: 'БУХ',
+ *     badge_variant: 'info',
+ *     endpoint: '/api/charts/debt',
+ *   } only %}
+ *     {% block actions %}
+ *       <button type="button" class="button button--outline button--sm">Данные</button>
+ *     {% endblock %}
+ *   {% endembed %}
+ */
+#}
+{% set chart_dom_id = chart_id|default('b11-chart-' ~ random()) %}
+{% set height_val = height|default('md') %}
+{% set badge_variant_val = badge_variant|default('neutral') %}
+{% set exportable_val = exportable is defined ? exportable : true %}
+{% set actions_slot %}{% block actions %}{% endblock %}{% endset %}
+{% set note_slot %}{% block note %}{% endblock %}{% endset %}
+{% set config_json = config ? (config is iterable ? config|json_encode : config) : '' %}
+{% set is_loading = loading is defined ? loading : (endpoint is not empty and config_json is empty) %}
+
+{% embed 'base11:card' with {
+  variant: 'default',
+  attributes: attributes.addClass('b11-chart-card'),
+} %}
+  {% block header %}
+    <div class="b11-chart-card__header">
+      <div class="b11-chart-card__titles">
+        <div class="b11-chart-card__heading">
+          <h3 class="b11-chart-card__title">{{ title }}</h3>
+          {% if badge_text %}
+            {% include 'base11:badge' with {
+              text: badge_text,
+              variant: badge_variant_val,
+              size: 'sm',
+            } only %}
+          {% endif %}
+        </div>
+        {% if subtitle %}
+          <p class="b11-chart-card__subtitle">{{ subtitle }}</p>
+        {% endif %}
+      </div>
+
+      {% if exportable_val or actions_slot|trim is not empty %}
+        <div class="b11-chart-card__toolbar">
+          {{ actions_slot }}
+          {% if exportable_val %}
+            <button
+              type="button"
+              class="b11-chart-card__export"
+              data-b11-chart-export="{{ chart_dom_id }}"
+              data-b11-chart-filename="{{ chart_dom_id }}"
+              aria-label="{{ 'Download chart PNG'|t }}"
+              title="{{ 'Download chart PNG'|t }}"
+            >
+              {{ icon('base11', 'download', { size: 16 }) }}
+            </button>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  {% endblock %}
+
+  {% block body %}
+    <div
+      id="{{ chart_dom_id }}"
+      class="b11-chart b11-chart--{{ height_val }}{{ is_loading ? ' is-loading' : '' }}"
+      {% if config_json %}data-b11-chart-config="{{ config_json|e('html_attr') }}"{% endif %}
+      {% if endpoint %}data-b11-chart-url="{{ endpoint|e('html_attr') }}"{% endif %}
+    >
+      <div class="b11-chart__skeleton b11-skeleton b11-skeleton--chart" aria-hidden="true"></div>
+      <div class="b11-chart__canvas"></div>
+    </div>
+  {% endblock %}
+
+  {% block footer %}
+    {% if note_slot|trim is not empty %}
+      <div class="b11-chart-card__note prose">{{ note_slot }}</div>
+    {% endif %}
+  {% endblock %}
+{% endembed %}

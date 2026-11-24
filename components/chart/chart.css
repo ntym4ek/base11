@@ -1,0 +1,68 @@
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.components {
+  .b11-chart-card__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+  }
+  .b11-chart-card__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .b11-chart-card__heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .b11-chart-card__title {
+    color: var(--text-color);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h4);
+    font-weight: 700;
+    line-height: var(--line-height-sm);
+    margin: 0;
+  }
+  .b11-chart-card__subtitle {
+    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+    margin: 0;
+  }
+  .b11-chart-card__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 0.5rem;
+  }
+  .b11-chart-card__export {
+    background: transparent;
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--control-radius-sm);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+    width: 2rem;
+    height: 2rem;
+  }
+  .b11-chart-card__export:hover {
+    background-color: var(--surface-hover);
+    border-color: var(--border-color);
+    color: var(--brand-primary);
+  }
+  .b11-chart-card__note {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-base);
+  }
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../../css/supplies/_b11-layers.scss%22,%22chart.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EAEI;IACE;IAAe;IAAiB;IAAyB;IAAgC;;EAG3F;IACE;IAAe;IAAwB;IACvC;;EAGF;IACE;IAAe;IAAiB;IAAqB;;EAGvD;IACE;IAA0B;IAAyC;IAAgC;IAAkB;IACrH;;EAGF;IACE;IAA0B;IAC1B;;EAGF;IACE;IAAe;IAAiB;IAAqB;IAAgB;;EAGvE;IACE;IACA;IAA6C;IAC7C;IAA0B;IAC1B;IAAsB;IAAqB;IAC3C;IACA;IACA;IAAa;;EAEb;IACE;IAAwC;IACxC;;EAIJ;IACE;IAA0B;IAAgC%22,%22file%22:%22chart.css%22%7D */

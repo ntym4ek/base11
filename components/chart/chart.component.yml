@@ -1,0 +1,70 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: График (Chart)
+status: stable
+description: Универсальная карточка аналитического графика на базе Apache ECharts с экспортом PNG и ленивой подгрузкой.
+libraryOverrides:
+  dependencies:
+    - base11/echarts
+props:
+  type: object
+  required:
+    - title
+  properties:
+    chart_id:
+      type: string
+      title: Идентификатор графика
+    title:
+      type: string
+      title: Заголовок графика
+    subtitle:
+      type: string
+      title: Подзаголовок / единицы измерения
+    badge_text:
+      type: string
+      title: Текст бейджа источника (например, ERP или БУХ)
+    badge_variant:
+      type: string
+      title: Вариант бейджа
+      default: neutral
+      enum:
+        - neutral
+        - primary
+        - info
+        - success
+        - warning
+        - danger
+    height:
+      type: string
+      title: Размер высоты контейнера
+      default: md
+      enum:
+        - sm
+        - md
+        - lg
+    config:
+      type:
+        - string
+        - object
+        - array
+      title: Конфигурация ECharts (массив или JSON-строка)
+    endpoint:
+      type: string
+      title: URL для асинхронной загрузки JSON-конфигурации
+    exportable:
+      type: boolean
+      title: Кнопка скачивания графика в PNG
+      default: true
+    loading:
+      type: boolean
+      title: Принудительный режим состояния загрузки
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Атрибуты
+      description: Дополнительные HTML-атрибуты корневой карточки.
+slots:
+  actions:
+    title: Действия в шапке
+    description: Дополнительные кнопки управления графиком (например, редактирование данных).
+  note:
+    title: Комментарий аналитика
+    description: Текстовое пояснение или выводы под графиком.

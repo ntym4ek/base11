@@ -1,0 +1,46 @@
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.components {
+  .b11-chart {
+    --b11-chart-height: var(--chart-height-md);
+    position: relative;
+    width: 100%;
+  }
+  .b11-chart__canvas {
+    height: var(--b11-chart-height);
+    width: 100%;
+    transition: opacity var(--transition-fast);
+  }
+  .b11-chart__skeleton {
+    height: 100%;
+    width: 100%;
+    inset: 0;
+    position: absolute;
+    z-index: 1;
+  }
+  .b11-chart.is-loading .b11-chart__canvas {
+    opacity: 0;
+  }
+  .b11-chart:not(.is-loading) .b11-chart__skeleton {
+    display: none;
+  }
+  .b11-chart__error {
+    background-color: var(--status-danger-bg);
+    border: 1px solid var(--status-danger-border);
+    border-radius: var(--control-radius-md);
+    color: var(--status-danger-text);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    padding: 1rem;
+  }
+  .b11-chart--sm {
+    --b11-chart-height: var(--chart-height-sm);
+  }
+  .b11-chart--md {
+    --b11-chart-height: var(--chart-height-md);
+  }
+  .b11-chart--lg {
+    --b11-chart-height: var(--chart-height-lg);
+  }
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22echarts.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EAKE;IACE;IAEA;IAAoB;;EAEpB;IACE;IAAiC;IACjC;;EAGF;IACE;IAAc;IACd;IAAU;IAAoB;;EAGhC;IAAyB;;EACzB;IAAiC;;EAEjC;IACE;IACA;IAA+C;IAC/C;IAAkC;IAAgC;IAClE;;EAGF;IAAQ;;EACR;IAAQ;;EACR;IAAQ%22,%22file%22:%22echarts.css%22%7D */

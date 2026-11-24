@@ -1,0 +1,82 @@
+// ==========================================================================
+// Полноэкранный макет инфоэкранов и ТВ-панелей Base11 (base11/layout-kiosk)
+// ==========================================================================
+
+@use "../supplies/b11-layers";
+
+@layer b11.layout {
+  //<editor-fold defaultstate="collapsed" desc="Описание: каркас ТВ-панелей с поддержкой тёмной темы">
+  // Назначение: полноэкранная обёртка .b11-kiosk без навигационного меню для вывода
+  // производственных и офисных KPI на большие экраны с высококонтрастной темой [data-theme='dark'].
+  //</editor-fold>
+  .b11-kiosk {
+    background-color: var(--page-bg);
+    box-sizing: border-box;
+    color: var(--text-color);
+    display: flex; flex-direction: column; gap: 1.25rem;
+    min-height: 100dvh;
+    padding: 1.5rem 2rem;
+
+    &[data-theme="dark"] {
+      --border-color: #334155;
+      --border-color-light: #1e293b;
+      --brand-primary: #60a5fa;
+      --chart-axis-color: #94a3b8;
+      --chart-grid-color: #1e293b;
+      --chart-tooltip-bg: #1e293b;
+      --chart-tooltip-border: #334155;
+      --page-bg: #0b1120;
+      --surface-card: #111827;
+      --surface-hover: #1e293b;
+      --surface-subtle: #1e293b;
+      --text-color: #f8fafc;
+      --text-light: #64748b;
+      --text-muted: #94a3b8;
+    }
+
+    &__header {
+      border-bottom: 1px solid var(--border-color-light);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    &__title {
+      color: var(--text-color); font-family: var(--font-family-heading); font-size: var(--font-size-h1); font-weight: 700; line-height: var(--line-height-sm);
+      margin: 0;
+    }
+
+    &__status {
+      display: flex; align-items: center; gap: 1rem;
+    }
+
+    &__clock {
+      color: var(--text-color); font-family: var(--font-family-mono); font-size: var(--font-size-h3); font-variant-numeric: tabular-nums; font-weight: 700;
+    }
+
+    &__fullscreen {
+      background: transparent;
+      border: 1px solid var(--border-color-light); border-radius: var(--control-radius-sm);
+      color: var(--text-muted); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+      width: 2.5rem; height: 2.5rem;
+
+      &:hover {
+        background-color: var(--surface-hover);
+        color: var(--brand-primary);
+      }
+    }
+
+    &__body {
+      display: flex; flex-direction: column; flex-grow: 1; gap: 1.25rem;
+      min-height: 0;
+    }
+
+    &__footer {
+      color: var(--text-muted); font-size: var(--font-size-sm);
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      margin-top: auto;
+    }
+  }
+}
