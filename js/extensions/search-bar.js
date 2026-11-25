@@ -191,7 +191,7 @@
 
       const items = Array.isArray(data.items) ? data.items : [];
       if (!items.length) {
-        renderStatus(Drupal.t('Ничего не найдено'));
+        renderStatus(Drupal.t('Nothing found'));
         return;
       }
 
@@ -255,7 +255,7 @@
         allLink.id = `${listboxId}-all`;
         allLink.href = data.all_url;
         allLink.tabIndex = -1;
-        allLink.textContent = Drupal.t('Показать все результаты (@count)', { '@count': total });
+        allLink.textContent = Drupal.t('Show all results (@count)', { '@count': total });
 
         footer.appendChild(allLink);
         dropdown.appendChild(footer);
@@ -280,7 +280,7 @@
       }
       abortController = new AbortController();
 
-      renderStatus(Drupal.t('Поиск...'));
+      renderStatus(Drupal.t('Searching...'));
 
       try {
         const separator = endpoint.includes('?') ? '&' : '?';
