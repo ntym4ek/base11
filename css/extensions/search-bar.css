@@ -5,7 +5,7 @@
     --search-border-color: var(--input-border-color);
     --search-border-focus: var(--input-border-focus);
     --search-dropdown-bg: var(--surface-card);
-    --search-dropdown-max-height: 24rem;
+    --search-dropdown-max-height: none;
     --search-dropdown-min-width: 100%;
     --search-dropdown-shadow: var(--dropdown-shadow);
     --search-height: var(--control-height-sm);
@@ -95,7 +95,7 @@
     max-height: var(--search-dropdown-max-height);
     min-width: var(--search-dropdown-min-width);
     max-width: calc(100vw - var(--page-gap-x));
-    overflow-y: auto;
+    overflow: clip;
     position: absolute;
     top: calc(100% + 0.25rem);
     right: 0;
@@ -170,9 +170,6 @@
   .b11-search__footer {
     background-color: var(--search-dropdown-bg);
     border-top: 1px solid var(--border-color-light);
-    bottom: 0;
-    position: sticky;
-    z-index: 1;
   }
   .b11-search__all {
     color: var(--brand-primary);
@@ -209,4 +206,4 @@
   }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22search-bar.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EAUE;IACE;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IAEA;IACA;;EAEA;IACE;IAAe;IACf;IACA;;EAGF;IACE;IACA;IACA;IAAoE;IACpE;IAA2B;IAAsB;IAAsC;IAAuC;IAC9H;IAA8B;IAC9B;IACA;IACA;;EAEA;IAEE;;EAGF;IACE;IACA;;EAGF;IAAqC;;EAErC;IAEE;IACA;;EAIJ;IAEE;IACA;IAAW;IACX;IAA0B;IAC1B;IAAsB;IAAqB;IAC3C;IAAc;IACd;IACA;IAAoB;IAAQ;IAC5B;;EAEA;IACkB;;EAElB;IACE;IAAgE;;EAIpE;IACE;IAAY;IAAsB;IAClC;;EAEA;IAAe;IAAY;IAAsB;;EAGnD;IAAY;;EAEZ;IACE;IACA;IAA6C;IAC7C;IACA;IAA+C;IAA6C;IAC5F;IACA;IAAoB;IAA0B;IAAU;;EAExD;IAAY;;EAGd;IACE;IACA;IAAW;;EAGb;IACE;IACA;IAAW;;EAEX;IAAe;;EAEf;IACE;IACA;;EAIJ;IACE;IAA0B;IAC1B;IAAe;IAAqB;IACpC;IACA;;EAEA;IAEE;IACA;IACA;;EAIJ;IACE;IACA;IACA;IACA;IAAgB;IAChB;;EAGF;IACE;IAAe;IAAwB;IACvC;;EAGF;IACE;IAAgC;IAAkB;IAClD;;EAEA;IACE;IACA;IACA;IAA6B;IAC7B;;EAIJ;IACE;IAA0B;IAAgC;;EAG5D;IACE;IACA;IACA;IAAW;IAAkB;;EAG/B;IACE;IAA6B;IAAgC;IAAkB;IAC/E;IAAe;IAAqB;IACpC;IACA;;EAEA;IAGE;IACA;;EAIJ;IACE;IAA0B;IAAgC;IAC1D;;EAIF;IACE;IACA;;EAEA;IACE;IAAW;IACX;;EAKJ;IAAU%22,%22file%22:%22search-bar.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22search-bar.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EAUE;IACE;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IACA;IAEA;IACA;;EAEA;IACE;IAAe;IACf;IACA;;EAGF;IACE;IACA;IACA;IAAoE;IACpE;IAA2B;IAAsB;IAAsC;IAAuC;IAC9H;IAA8B;IAC9B;IACA;IACA;;EAEA;IAEE;;EAGF;IACE;IACA;;EAGF;IAAqC;;EAErC;IAEE;IACA;;EAIJ;IAEE;IACA;IAAW;IACX;IAA0B;IAC1B;IAAsB;IAAqB;IAC3C;IAAc;IACd;IACA;IAAoB;IAAQ;IAC5B;;EAEA;IACkB;;EAElB;IACE;IAAgE;;EAIpE;IACE;IAAY;IAAsB;IAClC;;EAEA;IAAe;IAAY;IAAsB;;EAGnD;IAAY;;EAEZ;IACE;IACA;IAA6C;IAC7C;IACA;IAA+C;IAA6C;IAC5F;IACA;IAAoB;IAA0B;IAAU;;EAExD;IAAY;;EAGd;IACE;IACA;IAAW;;EAGb;IACE;IACA;IAAW;;EAEX;IAAe;;EAEf;IACE;IACA;;EAIJ;IACE;IAA0B;IAC1B;IAAe;IAAqB;IACpC;IACA;;EAEA;IAEE;IACA;IACA;;EAIJ;IACE;IACA;IACA;IACA;IAAgB;IAChB;;EAGF;IACE;IAAe;IAAwB;IACvC;;EAGF;IACE;IAAgC;IAAkB;IAClD;;EAEA;IACE;IACA;IACA;IAA6B;IAC7B;;EAIJ;IACE;IAA0B;IAAgC;;EAG5D;IACE;IACA;;EAGF;IACE;IAA6B;IAAgC;IAAkB;IAC/E;IAAe;IAAqB;IACpC;IACA;;EAEA;IAGE;IACA;;EAIJ;IACE;IAA0B;IAAgC;IAC1D;;EAIF;IACE;IACA;;EAEA;IACE;IAAW;IACX;;EAKJ;IAAU%22,%22file%22:%22search-bar.css%22%7D */

@@ -19,7 +19,7 @@
     --search-border-color: var(--input-border-color);
     --search-border-focus: var(--input-border-focus);
     --search-dropdown-bg: var(--surface-card);
-    --search-dropdown-max-height: 24rem;
+    --search-dropdown-max-height: none;
     --search-dropdown-min-width: 100%;
     --search-dropdown-shadow: var(--dropdown-shadow);
     --search-height: var(--control-height-sm);
@@ -96,7 +96,7 @@
       border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
       box-shadow: var(--search-dropdown-shadow);
       max-height: var(--search-dropdown-max-height); min-width: var(--search-dropdown-min-width); max-width: calc(100vw - var(--page-gap-x));
-      overflow-y: auto;
+      overflow: clip;
       position: absolute; top: calc(100% + .25rem); right: 0; z-index: var(--z-dropdown);
 
       &[hidden] { display: none; }
@@ -165,7 +165,6 @@
     &__footer {
       background-color: var(--search-dropdown-bg);
       border-top: 1px solid var(--border-color-light);
-      bottom: 0; position: sticky; z-index: 1;
     }
 
     &__all {

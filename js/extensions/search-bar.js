@@ -3,7 +3,8 @@
  * Интерактивное поведение компактной строки поиска с автокомплитом (base11/search-bar).
  *
  * Атрибуты контейнера [data-b11-search]:
- * - data-b11-search-url   — URL JSON-эндпоинта (принимает ?q=...). Если не задан, работают очистка и отправка формы.
+ * - data-b11-search-url   — URL JSON-эндпоинта. Если не задан, работают очистка и отправка формы.
+ * - data-b11-search-param — имя GET-параметра запроса (по умолчанию берётся из name поля или 'q').
  * - data-b11-search-min   — минимальная длина запроса для автокомплита (по умолчанию 2).
  * - data-b11-search-delay — задержка debounce в мс (по умолчанию 250).
  */
@@ -75,6 +76,7 @@
     }
 
     const endpoint = root.getAttribute('data-b11-search-url') || '';
+    const paramName = root.getAttribute('data-b11-search-param') || input.getAttribute('name') || 'q';
     const minChars = Math.max(1, parseInt(root.getAttribute('data-b11-search-min') || '2', 10) || 2);
     const delay = Math.max(0, parseInt(root.getAttribute('data-b11-search-delay') || '250', 10) || 250);
 
@@ -189,7 +191,7 @@
 
       const items = Array.isArray(data.items) ? data.items : [];
       if (!items.length) {
-        renderStatus(Drupal.t('Nothing found'));
+        renderStatus(Drupal.t('Ничего не найдено'));
         return;
       }
 
@@ -243,7 +245,8 @@
 
       dropdown.appendChild(list);
 
-      if (data.all_url) {
+      const total = typeof data.total === 'number' ? data.total : items.length;
+      if (data.all_url && total > items.length) {
         const footer = document.createElement('div');
         footer.className = 'b11-search__footer';
 
@@ -252,9 +255,7 @@
         allLink.id = `${listboxId}-all`;
         allLink.href = data.all_url;
         allLink.tabIndex = -1;
-
-        const total = typeof data.total === 'number' ? data.total : items.length;
-        allLink.textContent = Drupal.t('Show all results (@count)', { '@count': total });
+        allLink.textContent = Drupal.t('Показать все результаты (@count)', { '@count': total });
 
         footer.appendChild(allLink);
         dropdown.appendChild(footer);
@@ -279,11 +280,11 @@
       }
       abortController = new AbortController();
 
-      renderStatus(Drupal.t('Searching...'));
+      renderStatus(Drupal.t('Поиск...'));
 
       try {
         const separator = endpoint.includes('?') ? '&' : '?';
-        const url = `${endpoint}${separator}q=${encodeURIComponent(query)}`;
+        const url = `${endpoint}${separator}${encodeURIComponent(paramName)}=${encodeURIComponent(query)}`;
         const response = await fetch(url, {
           signal: abortController.signal,
           headers: { Accept: 'application/json' },
