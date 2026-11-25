@@ -68,6 +68,7 @@
    */
   function initSearchBar(root) {
     const input = root.querySelector('.b11-search__input');
+    const form = input ? (input.form || root.querySelector('.b11-search__form')) : null;
     const clearBtn = root.querySelector('.b11-search__clear');
     const dropdown = root.querySelector('.b11-search__dropdown');
 
@@ -369,6 +370,21 @@
           abortController.abort();
         }
         closeDropdown();
+
+        // Если очистка выполнена на странице результатов с активным параметром поиска — сбрасываем его в URL
+        const currentUrl = new URL(window.location.href);
+        const actionAttr = form ? form.getAttribute('action') : '';
+        const formUrl = actionAttr ? new URL(actionAttr, window.location.origin) : null;
+        const normalizePath = (path) => path.replace(/\/+$/, '') || '/';
+        const isOnSearchPage = formUrl && normalizePath(currentUrl.pathname) === normalizePath(formUrl.pathname);
+
+        if (isOnSearchPage && currentUrl.searchParams.has(paramName) && currentUrl.searchParams.get(paramName) !== '') {
+          currentUrl.searchParams.delete(paramName);
+          currentUrl.searchParams.delete('page');
+          window.location.assign(currentUrl.toString());
+          return;
+        }
+
         input.focus();
       });
     }
