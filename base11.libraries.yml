@@ -231,3 +231,14 @@ layout-kiosk:
   dependencies:
     - core/drupal
     - core/once
+
+# Компактная строка поиска с очисткой и живым автокомплитом (.b11-search)
+search-bar:
+  css:
+    component:
+      css/extensions/search-bar.css: {}
+  js:
+    js/extensions/search-bar.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

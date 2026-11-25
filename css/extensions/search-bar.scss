@@ -1,0 +1,238 @@
+// ==========================================================================
+// Компактная строка поиска с очисткой и живым автокомплитом (base11/search-bar)
+// ==========================================================================
+
+@use "../supplies/b11-layers";
+
+@layer b11.components {
+  //<editor-fold defaultstate="collapsed" desc="Описание: компактная строка поиска с выпадающим автокомплитом">
+  // Назначение: универсальная строка поиска для шапки сайта или панелей фильтров
+  // с кнопкой мгновенной очистки и выпадающим списком подсказок.
+  // Локальные переменные кастомизации:
+  // --search-bg, --search-border-color, --search-border-focus, --search-height,
+  // --search-radius, --search-dropdown-bg, --search-dropdown-max-height,
+  // --search-dropdown-min-width, --search-dropdown-shadow.
+  // Модификаторы: .b11-search--underline (только нижняя рамка), .b11-search--pill.
+  //</editor-fold>
+  .b11-search {
+    --search-bg: var(--input-bg);
+    --search-border-color: var(--input-border-color);
+    --search-border-focus: var(--input-border-focus);
+    --search-dropdown-bg: var(--surface-card);
+    --search-dropdown-max-height: 24rem;
+    --search-dropdown-min-width: 100%;
+    --search-dropdown-shadow: var(--dropdown-shadow);
+    --search-height: var(--control-height-sm);
+    --search-radius: var(--control-radius-md);
+
+    position: relative;
+    width: 100%;
+
+    &__form {
+      display: flex; align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    &__input {
+      appearance: none;
+      background-color: var(--search-bg);
+      border: var(--input-border-width) solid var(--search-border-color); border-radius: var(--search-radius);
+      color: var(--input-color); font-family: inherit; font-size: var(--input-font-size-sm); font-weight: var(--input-font-weight); line-height: var(--control-line-height);
+      height: var(--search-height); width: 100%;
+      outline: none;
+      padding: var(--input-padding-y-sm) 4.25rem var(--input-padding-y-sm) var(--input-padding-x-md);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+      &::-webkit-search-cancel-button,
+      &::-webkit-search-decoration {
+        appearance: none;
+      }
+
+      &::placeholder {
+        color: var(--input-placeholder-color);
+        opacity: 1;
+      }
+
+      &:hover:not(:focus):not(:disabled) { border-color: var(--input-border-hover); }
+
+      &:focus,
+      &:focus-visible {
+        border-color: var(--search-border-focus);
+        outline: none;
+      }
+    }
+
+    &__clear,
+    &__submit {
+      background: transparent;
+      border: 0; border-radius: var(--control-radius-sm);
+      color: var(--text-muted); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 100%; width: 2rem;
+      padding: 0;
+      position: absolute; top: 0; z-index: 2;
+      transition: color var(--transition-fast), opacity var(--transition-fast), visibility 0s linear;
+
+      &:hover,
+      &:focus-visible { color: var(--brand-primary); }
+
+      &:focus-visible {
+        outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: -2px;
+      }
+    }
+
+    &__clear {
+      opacity: 0; pointer-events: none; visibility: hidden;
+      right: 2rem;
+
+      &.is-visible { opacity: 1; pointer-events: auto; visibility: visible; }
+    }
+
+    &__submit { right: 0; }
+
+    &__dropdown {
+      background-color: var(--search-dropdown-bg);
+      border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+      box-shadow: var(--search-dropdown-shadow);
+      max-height: var(--search-dropdown-max-height); min-width: var(--search-dropdown-min-width); max-width: calc(100vw - var(--page-gap-x));
+      overflow-y: auto;
+      position: absolute; top: calc(100% + .25rem); right: 0; z-index: var(--z-dropdown);
+
+      &[hidden] { display: none; }
+    }
+
+    &__list {
+      list-style: none;
+      margin: 0; padding: .25rem 0;
+    }
+
+    &__item {
+      border-bottom: 1px solid var(--border-color-light);
+      margin: 0; padding: 0;
+
+      &:last-child { border-bottom: 0; }
+
+      &.is-active > .b11-search__link {
+        background-color: var(--surface-hover);
+        color: var(--brand-primary);
+      }
+    }
+
+    &__link {
+      color: var(--text-color); text-decoration: none;
+      display: flex; align-items: center; gap: .75rem;
+      padding: .625rem .875rem;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--surface-hover);
+        color: var(--brand-primary);
+        outline: none;
+      }
+    }
+
+    &__thumb {
+      background-color: var(--surface-subtle);
+      border-radius: var(--control-radius-sm);
+      flex: 0 0 2.5rem;
+      height: 2.5rem; width: 2.5rem;
+      object-fit: contain;
+    }
+
+    &__body {
+      display: flex; flex-direction: column; gap: .125rem;
+      min-width: 0;
+    }
+
+    &__title {
+      font-size: var(--font-size-sm); font-weight: 600; line-height: var(--line-height-sm);
+      overflow-wrap: break-word;
+
+      mark {
+        background-color: color-mix(in srgb, var(--brand-primary) 14%, transparent);
+        border-radius: .125rem;
+        color: var(--brand-primary); font-weight: 700;
+        padding: 0 .125rem;
+      }
+    }
+
+    &__meta {
+      color: var(--text-muted); font-size: var(--font-size-xs); line-height: var(--line-height-sm);
+    }
+
+    &__footer {
+      background-color: var(--search-dropdown-bg);
+      border-top: 1px solid var(--border-color-light);
+      bottom: 0; position: sticky; z-index: 1;
+    }
+
+    &__all {
+      color: var(--brand-primary); font-size: var(--font-size-sm); font-weight: 600; text-decoration: none;
+      display: flex; align-items: center; justify-content: center;
+      padding: .625rem .875rem;
+      transition: background-color var(--transition-fast);
+
+      &:hover,
+      &:focus-visible,
+      &.is-active {
+        background-color: var(--surface-hover);
+        outline: none;
+      }
+    }
+
+    &__status {
+      color: var(--text-muted); font-size: var(--font-size-sm); text-align: center;
+      padding: 1rem;
+    }
+
+    // Модификатор: только нижнее подчёркивание (без боковых и верхней границ)
+    &--underline {
+      --search-bg: transparent;
+      --search-radius: 0;
+
+      .b11-search__input {
+        border: 0; border-bottom: var(--input-border-width) solid var(--search-border-color);
+        padding-left: .25rem;
+      }
+    }
+
+    // Модификатор: скруглённая капсула
+    &--pill { --search-radius: 999px; }
+  }
+}
+
+//<editor-fold defaultstate="collapsed" desc="Примеры использования base11/search-bar">
+//
+// 1. Подключение библиотеки в шаблоне или теме:
+//    {{ attach_library('base11/search-bar') }}
+//
+// 2. HTML/Twig-разметка строки поиска с автокомплитом:
+//    <div class="b11-search b11-search--underline"
+//         data-b11-search
+//         data-b11-search-url="/poisk/autocomplete"
+//         data-b11-search-min="2"
+//         data-b11-search-delay="250">
+//      <form class="b11-search__form" action="/poisk" method="get" role="search">
+//        <input type="search" name="q" class="b11-search__input" placeholder="Поиск по продукции..." autocomplete="off">
+//        <button type="button" class="b11-search__clear" aria-label="Очистить поиск">...</button>
+//        <button type="submit" class="b11-search__submit" aria-label="Найти">...</button>
+//      </form>
+//      <div class="b11-search__dropdown" hidden></div>
+//    </div>
+//
+// 3. Ожидаемый формат JSON-ответа от endpoint (?q=...):
+//    {
+//      "items": [
+//        {
+//          "title": "GRANDE SP 5W-30",
+//          "url": "/product/grande-sp-5w-30",
+//          "meta": "MONTEROSSI · Моторные масла · 5W-30",
+//          "image": "/sites/default/files/styles/thumbnail/public/..."
+//        }
+//      ],
+//      "total": 12,
+//      "all_url": "/poisk?q=5W-30"
+//    }
+//</editor-fold>
