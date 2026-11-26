@@ -96,7 +96,8 @@
 - `base11/media-library` (через `media_library/widget`, `media_library/ui`, настраивается токенами `--ml-*`).
 - `base11/password-toggle` (автоматически для `input[type="password"]` в `Base11Hooks::preprocessInput()`).
 
-Подключаются по требованию в `.info.yml` подтемы:
+Подключаются по требованию в `.info.yml` подтемы (или автоматически в системных шаблонах):
+- `base11/maintenance-page` — полноэкранный макет страницы технического обслуживания (подключается автоматически в `maintenance-page.html.twig`).
 - `base11/font-montserrat`, `base11/helper`, `base11/back-to-top`, `base11/menu-mobile`, `base11/swipe-events`, `base11/click-to-copy`, `base11/tabs-js`, `base11/swiper-thumbs`, `base11/lightbox`, `base11/facet-extension`, `base11/facet-list-filter`, `base11/layout-dashboard`, `base11/layout-kiosk`, `base11/filter-bar`, `base11/table-interactive`, `base11/echarts`, `base11/native-dialog`.
 
 ---
@@ -120,14 +121,14 @@ CSS каждого компонента подгружается ядром то
      {% block body %}{{ content.body }}{% endblock %}
    {% endembed %}
    ```
-4. **`base11:empty-state`** (`title`, `description`, `heading_level`: `h1|h2|h3`, `variant`: `card|plain`, `full_height`; слоты `icon`, `badge`, `actions`; кастомизация цветами через `--empty-icon-bg`, `--empty-icon-color`, `--empty-icon-size`, `--empty-max-width`).
+4. **`base11:empty-state`** (`title`, `description`, `heading_level`: `h1|h2|h3`, `variant`: `card|plain`, `full_height`; слоты `icon`, `badge`, `content`, `actions`; кастомизация цветами через `--empty-icon-bg`, `--empty-icon-color`, `--empty-icon-size`, `--empty-max-width`).
 5. **`base11:chart`** (`chart_id`, `title`, `subtitle`, `badge_text`, `badge_variant`, `height`: `sm|md|lg`, `config`, `endpoint`, `exportable`, `loading`; слоты `actions`, `note`) — карточка графика Apache ECharts с ленивой подгрузкой, skeleton-заглушкой и кнопкой экспорта в PNG.
 
 ---
 
 ## 7. Icon API (`base11.icons.yml`) и автоподмена в подтеме
 
-В `images/icons/` хранятся 35 UI-иконок (`arrow-up`, `arrow-down`, `arrow-left`, `arrow-right`, `chevron-down`, `chevron-left`, `chevron-right`, `chevrons-up`, `external-link`, `close`, `menu`, `sidebar`, `maximize`, `tv`, `bar-chart`, `refresh`, `search`, `filter`, `plus`, `minus`, `copy`, `link`, `download`, `check`, `info`, `warning`, `error`, `cart`, `user`, `calendar`, `inbox`, `lock`, `play`, `star`, `star-filled`).
+В `images/icons/` хранятся 36 UI-иконок (`arrow-up`, `arrow-down`, `arrow-left`, `arrow-right`, `chevron-down`, `chevron-left`, `chevron-right`, `chevrons-up`, `external-link`, `close`, `menu`, `sidebar`, `maximize`, `tv`, `bar-chart`, `refresh`, `search`, `filter`, `plus`, `minus`, `copy`, `link`, `download`, `check`, `info`, `warning`, `error`, `cart`, `user`, `calendar`, `inbox`, `lock`, `play`, `star`, `star-filled`, `wrench`).
 
 Вызов в любом шаблоне:
 ```twig

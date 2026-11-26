@@ -60,6 +60,16 @@
       margin: 0; max-width: 44ch;
     }
 
+    &__content {
+      color: var(--text-muted);
+      margin: 0; max-width: 44ch;
+
+      p { margin: 0 0 .75rem; }
+      p:last-child { margin-bottom: 0; }
+    }
+
+    &__description + &__content { margin-top: .75rem; }
+
     &__actions {
       display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem;
       margin-top: 2rem;

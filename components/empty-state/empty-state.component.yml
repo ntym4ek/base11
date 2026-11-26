@@ -1,7 +1,7 @@
 $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
 name: Пустое состояние (Empty State)
 status: stable
-description: Заглушка пустого состояния (пустая корзина, пустые результаты поиска/фильтра, страницы 403/404).
+description: Заглушка пустого состояния (пустая корзина, пустые результаты поиска/фильтра, страницы 403/404 и обслуживания).
 variants:
   card:
     title: Карточка
@@ -41,6 +41,9 @@ slots:
   badge:
     title: Бейдж
     description: Опциональный статус или код ошибки над заголовком.
+  content:
+    title: Произвольный контент
+    description: Рендер-массив или HTML-содержимое под заголовком (альтернатива или дополнение к текстовому description).
   actions:
     title: Кнопки действий
     description: Кнопки перехода или сброса фильтров.

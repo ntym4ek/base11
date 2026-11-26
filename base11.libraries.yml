@@ -242,3 +242,9 @@ search-bar:
   dependencies:
     - core/drupal
     - core/once
+
+# Полноэкранный макет страницы технического обслуживания (maintenance-page.html.twig)
+maintenance-page:
+  css:
+    layout:
+      css/extensions/maintenance-page.css: {}

@@ -21,6 +21,7 @@
 {% set variant_val = variant|default('card') %}
 {% set icon_slot %}{% block icon %}{% endblock %}{% endset %}
 {% set badge_slot %}{% block badge %}{% endblock %}{% endset %}
+{% set content_slot %}{% block content %}{% endblock %}{% endset %}
 {% set actions_slot %}{% block actions %}{% endblock %}{% endset %}
 
 {%
@@ -45,6 +46,10 @@
 
     {% if description %}
       <p class="b11-empty-state__description">{{ description }}</p>
+    {% endif %}
+
+    {% if content_slot|trim is not empty %}
+      <div class="b11-empty-state__content">{{ content_slot }}</div>
     {% endif %}
 
     {% if actions_slot|trim is not empty %}

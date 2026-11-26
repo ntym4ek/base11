@@ -1,65 +1,75 @@
 {#
 /**
  * @file
- * Theme override to display a single Drupal page while offline.
+ * Базовый шаблон страницы технического обслуживания (offline / maintenance).
  *
- * All available variables are mirrored in page.html.twig.
- * Some may be blank but they are provided for consistency.
+ * Подключает библиотеку base11/maintenance-page и отображает карточку
+ * на базе SDC-компонента base11:empty-state. Подтемы могут расширять шаблон
+ * через {% extends '@base11/layout/maintenance-page.html.twig' %} и блоки:
+ * - maintenance_brand
+ * - maintenance_content
+ * - maintenance_footer
  *
  * @see \Drupal\Core\Theme\ThemePreprocess::preprocessMaintenancePage()
  */
 #}
-<div class="layout-container">
+{{ attach_library('base11/maintenance-page') }}
 
-  <header>
-    {% if logo %}
-      <a href="{{ front_page }}" title="{{ 'Home'|t }}" rel="home">
-        <img src="{{ logo }}" alt="{{ 'Home'|t }}"/>
-      </a>
-    {% endif %}
+<div class="b11-maintenance">
+  {% block maintenance_brand %}
+    {% if logo or site_name or site_slogan %}
+      <header class="b11-maintenance__brand" role="banner">
+        {% if logo %}
+          <a href="{{ front_page }}" class="b11-maintenance__logo" title="{{ 'Home'|t }}" rel="home">
+            <img src="{{ logo }}" alt="{{ site_name|default('Home'|t) }}" />
+          </a>
+        {% endif %}
 
-    {% if site_name or site_slogan %}
-      <div class="name-and-slogan">
         {% if site_name %}
-         <h1 class="site-name">
-           <a href="{{ front_page }}" title="{{ 'Home'|t }}" rel="home">{{ site_name }}</a>
-         </h1>
+          <div class="b11-maintenance__site-name">
+            <a href="{{ front_page }}" title="{{ 'Home'|t }}" rel="home">{{ site_name }}</a>
+          </div>
         {% endif %}
 
         {% if site_slogan %}
-          <div class="site-slogan">{{ site_slogan }}</div>
+          <div class="b11-maintenance__site-slogan">{{ site_slogan }}</div>
         {% endif %}
-      </div>{# /.name-and-slogan #}
+      </header>
+    {% endif %}
+  {% endblock %}
+
+  <main class="b11-maintenance__main" role="main">
+    <a id="main-content" tabindex="-1"></a>
+
+    {% set highlighted_output = page.highlighted|render %}
+    {% if highlighted_output|striptags|trim is not empty %}
+      <div class="b11-maintenance__highlighted">{{ highlighted_output }}</div>
     {% endif %}
 
-  </header>
-
-  <main>
-    {% if title %}
-      <h1>{{ title }}</h1>
-    {% endif %}
-
-    {{ page.highlighted }}
-
-    {{ page.content }}
+    {% block maintenance_content %}
+      {% set maintenance_title = (title ?: 'Site under maintenance'|t)|render|striptags|trim %}
+      {% embed 'base11:empty-state' with {
+        title: maintenance_title,
+        description: '',
+        heading_level: 'h1',
+        full_height: false,
+        attributes: create_attribute(),
+      } %}
+        {% block icon %}
+          {{ icon('base11', 'wrench', { size: 32 }) }}
+        {% endblock %}
+        {% block content %}
+          {{ page.content }}
+        {% endblock %}
+      {% endembed %}
+    {% endblock %}
   </main>
 
-  {% if page.sidebar_first %}
-    <aside class="layout-sidebar-first">
-      {{ page.sidebar_first }}
-    </aside>{# /.layout-sidebar-first #}
-  {% endif %}
-
-  {% if page.sidebar_second %}
-    <aside class="layout-sidebar-second" >
-      {{ page.sidebar_second }}
-    </aside>{# /.layout-sidebar-second #}
-  {% endif %}
-
-  {% if page.footer %}
-    <footer>
-      {{ page.footer }}
-    </footer>
-  {% endif %}
-
-</div>{# /.layout-container #}
+  {% block maintenance_footer %}
+    {% if page.footer %}
+      <footer class="b11-maintenance__footer" role="contentinfo">
+        {{ page.footer }}
+      </footer>
+    {% endif %}
+  {% endblock %}
+</div>

@@ -68,6 +68,20 @@
     margin: 0;
     max-width: 44ch;
   }
+  .b11-empty-state__content {
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 44ch;
+  }
+  .b11-empty-state__content p {
+    margin: 0 0 0.75rem;
+  }
+  .b11-empty-state__content p:last-child {
+    margin-bottom: 0;
+  }
+  .b11-empty-state__description + .b11-empty-state__content {
+    margin-top: 0.75rem;
+  }
   .b11-empty-state__actions {
     display: flex;
     flex-wrap: wrap;
@@ -77,4 +91,4 @@
   }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../../css/supplies/_b11-layers.scss%22,%22empty-state.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EACE;IACE;IACA;IACA;IACA;IAEA;IAAe;IAAqB;IACpC;;EAEA;IACE;IACA;;EAGF;IACE;IACA;IAA6C;IAC7C;IACA;IAAe;IAAwB;IACvC;IAAmC;IACnC;IAAoB;;EAGtB;IACE;IACA;IACA;IACA;;EAGF;IACE;IAAwC;IACxC;IACA;IAAsB;IAAqB;IAC3C;IACA;IAA+B;;EAGjC;IACE;IAAkC;IAClC;IAA0B;IAAgC;IAC1D;IAAsB;IACtB;IAAqB;;EAGvB;IACE;IAA0B;IAAyC;IAAgC;IAAkB;IACrH;;EAGF;IACE;IACA;IAAW;;EAGb;IACE;IAAe;IAAiB;IAAyB;IACzD%22,%22file%22:%22empty-state.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../../css/supplies/_b11-layers.scss%22,%22empty-state.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EACE;IACE;IACA;IACA;IACA;IAEA;IAAe;IAAqB;IACpC;;EAEA;IACE;IACA;;EAGF;IACE;IACA;IAA6C;IAC7C;IACA;IAAe;IAAwB;IACvC;IAAmC;IACnC;IAAoB;;EAGtB;IACE;IACA;IACA;IACA;;EAGF;IACE;IAAwC;IACxC;IACA;IAAsB;IAAqB;IAC3C;IACA;IAA+B;;EAGjC;IACE;IAAkC;IAClC;IAA0B;IAAgC;IAC1D;IAAsB;IACtB;IAAqB;;EAGvB;IACE;IAA0B;IAAyC;IAAgC;IAAkB;IACrH;;EAGF;IACE;IACA;IAAW;;EAGb;IACE;IACA;IAAW;;EAEX;IAAI;;EACJ;IAAe;;EAGjB;IAA8B;;EAE9B;IACE;IAAe;IAAiB;IAAyB;IACzD%22,%22file%22:%22empty-state.css%22%7D */

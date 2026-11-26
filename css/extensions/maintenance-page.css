@@ -1,0 +1,91 @@
+@layer b11.reset, b11.tokens, b11.base, b11.layout, b11.elements, b11.components, b11.utilities;
+@layer b11.layout {
+  .b11-maintenance {
+    background-color: var(--page-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    min-height: 100dvh;
+    padding: 2rem var(--page-gap-x);
+  }
+  .b11-maintenance__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  .b11-maintenance__logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .b11-maintenance__logo img {
+    display: block;
+    height: auto;
+    max-height: 3rem;
+    max-width: 14rem;
+    object-fit: contain;
+  }
+  .b11-maintenance__site-name {
+    color: var(--text-color);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h3);
+    font-weight: 700;
+  }
+  .b11-maintenance__site-name a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .b11-maintenance__site-slogan {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+  }
+  .b11-maintenance__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .b11-maintenance__main .b11-empty-state {
+    padding: 0;
+    width: 100%;
+  }
+  .b11-maintenance__highlighted {
+    margin-bottom: 1.25rem;
+    max-width: 540px;
+    width: 100%;
+  }
+  .b11-maintenance__footer {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  .b11-maintenance__contacts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+  }
+  .b11-maintenance__contact {
+    color: var(--text-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  .b11-maintenance__contact:hover {
+    color: var(--brand-primary);
+  }
+  .b11-maintenance__copyright {
+    color: var(--text-muted);
+  }
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22maintenance-page.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EACE;IACE;IACA;IAAe;IAAwB;IAAqB;IAAyB;IACrF;IACA;;EAEA;IACE;IAAe;IAAwB;IAAqB;IAC5D;;EAGF;IACE;IAAsB;IAAqB;;EAE3C;IACE;IACA;IAAc;IAAkB;IAChC;;EAIJ;IACE;IAA0B;IAAyC;IAAgC;;EAEnG;IAAI;IAAgB;;EAGtB;IAAiB;IAA0B;;EAE3C;IACE;IAAe;IAAwB;IACvC;;EAEA;IAAmB;IAAY;;EAGjC;IAAiB;IAAwB;IAAkB;;EAE3D;IACE;IAA0B;IAC1B;IAAe;IAAwB;IAAqB;IAC5D;;EAGF;IAAc;IAAe;IAAiB;IAAqB;IAAyB;;EAE5F;IACE;IAA0B;IAC1B;IACA;;EAEA;IAAU;;EAGZ;IAAe%22,%22file%22:%22maintenance-page.css%22%7D */
