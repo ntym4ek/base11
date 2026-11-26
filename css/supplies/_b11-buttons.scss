@@ -39,6 +39,23 @@
   --btn-shadow-hover: none;
 }
 
+// Локальный хелпер переопределения переменных мягкой (soft / tinted) кнопки
+@mixin _btn-soft-vars($color) {
+  --btn-bg: color-mix(in srgb, #{$color} 8%, var(--surface-card));
+  --btn-bg-active: color-mix(in srgb, #{$color} 20%, var(--surface-card));
+  --btn-bg-hover: color-mix(in srgb, #{$color} 14%, var(--surface-card));
+  --btn-border-color: color-mix(in srgb, #{$color} 25%, transparent);
+  --btn-border-color-active: color-mix(in srgb, #{$color} 55%, transparent);
+  --btn-border-color-hover: color-mix(in srgb, #{$color} 45%, transparent);
+  --btn-color: #{$color};
+  --btn-color-active: color-mix(in srgb, #{$color}, black 20%);
+  --btn-color-hover: color-mix(in srgb, #{$color}, black 15%);
+  --btn-shadow: none;
+  --btn-shadow-active: none;
+  --btn-shadow-color-hover: color-mix(in srgb, #{$color} 14%, transparent);
+  --btn-shadow-hover: var(--shadow-sm);
+}
+
 @layer b11.elements {
   // --- 1. Базовая кнопка (:where() даёт нулевую специфичность и легко перекрывается) ---
   :where(.button, input[type="submit"], input[type="button"], input[type="reset"]) {
@@ -182,7 +199,23 @@
     &.button--info    { @include _btn-outline-vars(var(--brand-info)); }
   }
 
-  // --- 5. Кнопка в виде ссылки --------------------------------------------
+  // --- 5. Мягкие (soft / tinted) кнопки ---------------------------------
+  //<editor-fold defaultstate="collapsed" desc="Описание: мягкие кнопки .button--soft (вторичные действия)">
+  // Создают приглушённую кнопку с полупрозрачной цветной подложкой поверх --surface-card
+  // и мягкой рамкой — для вторичных действий рядом с основной CTA-кнопкой.
+  // Комбинируются с цветовыми модификаторами (.button--primary, --info, --success, --warning, --danger).
+  //</editor-fold>
+  .button--soft {
+    @include _btn-soft-vars(var(--text-color));
+
+    &.button--primary { @include _btn-soft-vars(var(--brand-primary)); }
+    &.button--success { @include _btn-soft-vars(var(--brand-success)); }
+    &.button--danger  { @include _btn-soft-vars(var(--brand-danger)); }
+    &.button--warning { @include _btn-soft-vars(var(--brand-warning)); }
+    &.button--info    { @include _btn-soft-vars(var(--brand-info)); }
+  }
+
+  // --- 6. Кнопка в виде ссылки --------------------------------------------
   .button--link {
     --btn-bg: transparent;
     --btn-bg-active: transparent;
@@ -212,7 +245,7 @@
     }
   }
 
-  // --- 6. Вспомогательные модификаторы ------------------------------------
+  // --- 7. Вспомогательные модификаторы ------------------------------------
   .button--wide {
     padding-left: calc(var(--btn-padding-x) * var(--btn-wide-ratio)); padding-right: calc(var(--btn-padding-x) * var(--btn-wide-ratio));
   }
@@ -261,3 +294,16 @@
     }
   }
 }
+
+//<editor-fold defaultstate="collapsed" desc="Примеры использования модификаторов кнопок Base11">
+//
+// 1. Вторичная мягкая кнопка (tinted) в фирменном или статусном цвете:
+//    <a href="#question" class="button button--info button--soft">Задать вопрос</a>
+//    <button type="button" class="button button--primary button--soft">Подробнее</button>
+//    <button type="button" class="button button--danger button--soft button--sm">Отмена</button>
+//
+// 2. Применение миксина button-soft() в SCSS дочерней темы для кастомного селектора:
+//    .custom-action-btn {
+//      @include button-soft(var(--brand-blue));
+//    }
+//</editor-fold>

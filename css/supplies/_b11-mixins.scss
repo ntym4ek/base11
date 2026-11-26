@@ -85,6 +85,47 @@
   }
 }
 
+// --- Мягкая (soft / tinted) кнопка ---------------------------------------
+@mixin button-soft($color: var(--text-color)) {
+  --btn-bg: color-mix(in srgb, #{$color} 8%, var(--surface-card));
+  --btn-bg-active: color-mix(in srgb, #{$color} 20%, var(--surface-card));
+  --btn-bg-hover: color-mix(in srgb, #{$color} 14%, var(--surface-card));
+  --btn-border-color: color-mix(in srgb, #{$color} 25%, transparent);
+  --btn-border-color-active: color-mix(in srgb, #{$color} 55%, transparent);
+  --btn-border-color-hover: color-mix(in srgb, #{$color} 45%, transparent);
+  --btn-color: #{$color};
+  --btn-color-active: color-mix(in srgb, #{$color}, black 20%);
+  --btn-color-hover: color-mix(in srgb, #{$color}, black 15%);
+  --btn-shadow: none;
+  --btn-shadow-active: none;
+  --btn-shadow-color-hover: color-mix(in srgb, #{$color} 14%, transparent);
+  --btn-shadow-hover: var(--shadow-sm);
+
+  background-color: var(--btn-bg);
+  border-color: var(--btn-border-color);
+  box-shadow: var(--btn-shadow);
+  color: var(--btn-color);
+
+  &:hover,
+  &.is-hover {
+    --shadow-color: var(--btn-shadow-color-hover);
+    background-color: var(--btn-bg-hover);
+    border-color: var(--btn-border-color-hover);
+    box-shadow: var(--btn-shadow-hover);
+    color: var(--btn-color-hover);
+  }
+
+  &:active,
+  &.is-active,
+  &.active {
+    background-color: var(--btn-bg-active);
+    border-color: var(--btn-border-color-active);
+    box-shadow: var(--btn-shadow-active);
+    color: var(--btn-color-active);
+    transform: var(--btn-transform-active);
+  }
+}
+
 // --- Сплошная цветная кнопка ---------------------------------------------
 @mixin button-solid($bg: var(--brand-primary), $color: var(--on-primary), $border: null) {
   $border-color: if($border, $border, $bg);

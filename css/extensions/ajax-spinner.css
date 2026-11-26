@@ -103,7 +103,8 @@
   }
   .button--white,
   .button--default,
-  .button--outline {
+  .button--outline,
+  .button--soft {
     --btn-spinner-color: var(--text-color);
   }
   .button--white.is-loading::after,
@@ -114,7 +115,10 @@
   .button--default:has(.ajax-progress)::after,
   .button--outline.is-loading::after,
   .button--outline:has(+ .ajax-progress)::after,
-  .button--outline:has(.ajax-progress)::after {
+  .button--outline:has(.ajax-progress)::after,
+  .button--soft.is-loading::after,
+  .button--soft:has(+ .ajax-progress)::after,
+  .button--soft:has(.ajax-progress)::after {
     border-color: color-mix(in srgb, var(--btn-spinner-color, var(--text-color)) 35%, transparent);
     border-top-color: var(--btn-spinner-color, var(--text-color));
   }
@@ -135,7 +139,13 @@
   input[type=submit].button--outline.is-loading,
   input[type=submit].button--outline:has(+ .ajax-progress),
   input[type=button].button--outline.is-loading,
-  input[type=button].button--outline:has(+ .ajax-progress) {
+  input[type=button].button--outline:has(+ .ajax-progress),
+  input.button--soft.is-loading,
+  input.button--soft:has(+ .ajax-progress),
+  input[type=submit].button--soft.is-loading,
+  input[type=submit].button--soft:has(+ .ajax-progress),
+  input[type=button].button--soft.is-loading,
+  input[type=button].button--soft:has(+ .ajax-progress) {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(0,0,0,.15)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23333333' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
   }
   @media (prefers-reduced-motion: reduce) {
@@ -157,4 +167,4 @@
   }
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22ajax-spinner.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EAIE;AAAA;AAAA;AAAA;AAAA;AAAA;IAME;;EAIF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAWE;IACA;IAAsB;;EAEtB;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAAW;;EAIb;AAAA;AAAA;AAAA;AAAA;AAAA;IAME;;EAIF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAOE;IACA;IACA;IACA;IAAoB;IACpB;IACA;IACA;IAAW;IAAmB;IAAkB;IAAoB;IACpE;IAAuB;IACvB;IACA;IAAa;;EAIf;AAAA;AAAA;AAAA;AAAA;AAAA;IAME;IACA;IAA6B;IAA8B;;EAI7D;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAOE;IACA;IAA2B;IAC3B;;EAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAAW;;EAIb;AAAA;AAAA;IAGE;;EAGF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IASE;IACA;;EAGF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAkBE;;EAIF;IACE;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;MAOE;MACA;;;;AAKN;EACE;IAAK%22,%22file%22:%22ajax-spinner.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../supplies/_b11-layers.scss%22,%22ajax-spinner.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAOA;ACDA;EAIE;AAAA;AAAA;AAAA;AAAA;AAAA;IAME;;EAIF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAWE;IACA;IAAsB;;EAEtB;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAAW;;EAIb;AAAA;AAAA;AAAA;AAAA;AAAA;IAME;;EAIF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAOE;IACA;IACA;IACA;IAAoB;IACpB;IACA;IACA;IAAW;IAAmB;IAAkB;IAAoB;IACpE;IAAuB;IACvB;IACA;IAAa;;EAIf;AAAA;AAAA;AAAA;AAAA;AAAA;IAME;IACA;IAA6B;IAA8B;;EAI7D;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAOE;IACA;IAA2B;IAC3B;;EAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAAW;;EAIb;AAAA;AAAA;AAAA;IAIE;;EAGF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAYE;IACA;;EAGF;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;IAwBE;;EAIF;IACE;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;MAOE;MACA;;;;AAKN;EACE;IAAK%22,%22file%22:%22ajax-spinner.css%22%7D */
