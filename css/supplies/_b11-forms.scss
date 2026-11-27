@@ -672,6 +672,8 @@
       --btn-padding-x: var(--btn-padding-x-sm);
       --btn-padding-y: var(--btn-padding-y-sm);
       --btn-shadow: none;
+      --btn-shadow-active: none;
+      --btn-shadow-hover: var(--shadow-sm);
 
       @include control-size(
         var(--control-height-sm),
