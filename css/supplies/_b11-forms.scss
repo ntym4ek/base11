@@ -420,14 +420,6 @@
     margin: 1.5rem 0;
     position: relative;
 
-    // Плейсхолдер шапки закладок до инициализации JS (защита от сдвига CLS)
-    &:has(> ul.horizontal-tabs-list.visually-hidden)::before {
-      border-bottom: 1px solid var(--border-color);
-      content: '';
-      display: block;
-      height: 2.75rem; width: 100%;
-    }
-
     ul.horizontal-tabs-list {
       background: transparent;
       border: none; border-bottom: 1px solid var(--border-color);
@@ -435,47 +427,54 @@
       height: auto; width: 100%;
       list-style: none;
       margin: 0; padding: 0;
+    }
 
-      .horizontal-tab-button {
+    .horizontal-tab-button {
+      background: transparent;
+      border: none;
+      float: none;
+      margin: 0; min-width: 0;
+      padding: 0;
+
+      &.selected {
         background: transparent;
         border: none;
-        float: none;
-        margin: 0; min-width: 0;
-        padding: 0;
-
-        a {
-          background-color: var(--page-bg);
-          border: 1px solid var(--border-color-light); border-bottom: 1px solid transparent;
-          border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
-          color: var(--text-muted); font-size: var(--font-size-base); font-weight: 500; line-height: var(--line-height-sm);
-          display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
-          position: relative;
-          text-decoration: none;
-          transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-
-          &:hover {
-            background-color: var(--surface-hover);
-            color: var(--text-color);
-            outline: none;
-          }
-
-          strong { font-weight: inherit; }
-        }
-
-        &.selected {
-          background: transparent;
-          border: none;
-
-          a {
-            background-color: var(--surface-card);
-            border: 1px solid var(--border-color); border-bottom: 1px solid var(--surface-card);
-            border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
-            color: var(--text-color); font-weight: 600;
-            margin-bottom: -1px;
-            position: relative; z-index: 2;
-          }
-        }
       }
+
+      &.horizontal-tab-hidden { display: none; }
+    }
+
+    .horizontal-tab-button a {
+      background-color: var(--page-bg);
+      border: 1px solid var(--border-color-light); border-bottom: none;
+      border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
+      color: var(--text-muted); font-size: var(--font-size-base); font-weight: 500; line-height: var(--line-height-sm);
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: .75rem 1.25rem;
+      position: relative;
+      text-decoration: none;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+
+      &:hover {
+        background-color: var(--surface-hover);
+        color: var(--text-color);
+      }
+
+      strong { font-weight: inherit; }
+
+      .summary { color: var(--text-muted); font-size: var(--font-size-xs); font-weight: 400; }
+      .summary:empty { display: none; }
+    }
+
+    .horizontal-tab-button.selected a {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-color); border-bottom: 1px solid var(--surface-card);
+      border-radius: var(--control-radius-sm) var(--control-radius-sm) 0 0;
+      color: var(--text-color); font-weight: 600;
+      margin-bottom: -1px;
+      position: relative; z-index: 2;
+
+      &:hover { background-color: var(--surface-card); }
     }
 
     [data-horizontal-tabs-panes],
@@ -484,24 +483,45 @@
       border: none;
       padding: 0;
 
-      // Скрываем summary аккордеонов (названия выводятся в кнопках закладок)
-      > details > summary { display: none !important; }
-
-      // При переходе по якорю показываем целевую вкладку до инициализации JS
-      &:has(> details:target, > details:has(:target)) {
-        > details:not(:target):not(:has(:target)) { display: none; }
-      }
-
-      // До инициализации JS скрываем последующие панели, избегая вертикальной простыни
-      > details:not(.horizontal-tabs-pane):not(:first-of-type) { display: none; }
-
-      > details {
+      // Инициализированные панели вкладок (на мобильных <= 640px JS не запускается, остаются аккордеоны)
+      > details.horizontal-tabs-pane {
         background: transparent;
         border: none; border-radius: 0;
         box-shadow: none;
         margin: 0; padding: 1.25rem 0 0;
+      }
 
-        > .details-wrapper { padding: 0; }
+      > details.horizontal-tabs-pane > summary { display: none !important; }
+      > details.horizontal-tabs-pane > .details-wrapper { padding: 0; }
+      > details.horizontal-tabs-pane.horizontal-tab-hidden { display: none; }
+    }
+
+    // Защита от сдвига CLS и вспышки аккордеонов до инициализации JS (только с $pad и выше)
+    @media #{$pad} {
+      &:has(> ul.horizontal-tabs-list.visually-hidden)::before {
+        border-bottom: 1px solid var(--border-color);
+        content: '';
+        display: block;
+        height: 2.75rem; width: 100%;
+      }
+
+      [data-horizontal-tabs-panes],
+      .horizontal-tabs-panes {
+        > details:not(.horizontal-tabs-pane) {
+          background: transparent;
+          border: none; border-radius: 0;
+          box-shadow: none;
+          margin: 0; padding: 1.25rem 0 0;
+        }
+
+        > details:not(.horizontal-tabs-pane) > summary { display: none !important; }
+        > details:not(.horizontal-tabs-pane) > .details-wrapper { padding: 0; }
+
+        // При переходе по якорю показываем целевую вкладку до инициализации JS
+        &:has(> details:target, > details:has(:target)) > details:not(:target):not(:has(:target)) { display: none; }
+
+        // До инициализации JS скрываем последующие панели, избегая вертикальной простыни
+        > details:not(.horizontal-tabs-pane):not(:first-of-type) { display: none; }
       }
     }
   }
