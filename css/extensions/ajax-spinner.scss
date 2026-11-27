@@ -55,8 +55,8 @@
   .btn:not(input).is-loading::after {
     animation: btnSpin .6s linear infinite;
     background: transparent !important;
-    border: 2px solid color-mix(in srgb, var(--btn-spinner-color, var(--on-primary)) 35%, transparent);
-    border-radius: 50%; border-top-color: var(--btn-spinner-color, var(--on-primary));
+    border: 2px solid color-mix(in srgb, var(--btn-spinner-color, var(--btn-color)) 35%, transparent);
+    border-radius: 50%; border-top-color: var(--btn-spinner-color, var(--btn-color));
     box-sizing: border-box;
     content: '';
     left: 50%; margin-left: -8px; margin-top: -8px; position: absolute; top: 50%;
@@ -72,7 +72,7 @@
   input.is-loading,
   input[type="submit"].is-loading,
   input[type="button"].is-loading {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(255,255,255,.35)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(0,0,0,.15)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23333333' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
     background-position: center; background-repeat: no-repeat; background-size: 16px 16px;
   }
 
@@ -91,55 +91,20 @@
     &::after { display: none !important; }
   }
 
-  // --- 3. Тёмный спиннер для кнопок на светлом фоне -----------------------
-  .button--white,
-  .button--default,
-  .button--outline,
-  .button--soft {
-    --btn-spinner-color: var(--text-color);
-  }
-
-  .button--white.is-loading::after,
-  .button--white:has(+ .ajax-progress)::after,
-  .button--white:has(.ajax-progress)::after,
-  .button--default.is-loading::after,
-  .button--default:has(+ .ajax-progress)::after,
-  .button--default:has(.ajax-progress)::after,
-  .button--outline.is-loading::after,
-  .button--outline:has(+ .ajax-progress)::after,
-  .button--outline:has(.ajax-progress)::after,
-  .button--soft.is-loading::after,
-  .button--soft:has(+ .ajax-progress)::after,
-  .button--soft:has(.ajax-progress)::after {
-    border-color: color-mix(in srgb, var(--btn-spinner-color, var(--text-color)) 35%, transparent);
-    border-top-color: var(--btn-spinner-color, var(--text-color));
-  }
-
-  input.button--white.is-loading,
-  input.button--white:has(+ .ajax-progress),
-  input[type="submit"].button--white.is-loading,
-  input[type="submit"].button--white:has(+ .ajax-progress),
-  input[type="button"].button--white.is-loading,
-  input[type="button"].button--white:has(+ .ajax-progress),
-  input.button--default.is-loading,
-  input.button--default:has(+ .ajax-progress),
-  input[type="submit"].button--default.is-loading,
-  input[type="submit"].button--default:has(+ .ajax-progress),
-  input[type="button"].button--default.is-loading,
-  input[type="button"].button--default:has(+ .ajax-progress),
-  input.button--outline.is-loading,
-  input.button--outline:has(+ .ajax-progress),
-  input[type="submit"].button--outline.is-loading,
-  input[type="submit"].button--outline:has(+ .ajax-progress),
-  input[type="button"].button--outline.is-loading,
-  input[type="button"].button--outline:has(+ .ajax-progress),
-  input.button--soft.is-loading,
-  input.button--soft:has(+ .ajax-progress),
-  input[type="submit"].button--soft.is-loading,
-  input[type="submit"].button--soft:has(+ .ajax-progress),
-  input[type="button"].button--soft.is-loading,
-  input[type="button"].button--soft:has(+ .ajax-progress) {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(0,0,0,.15)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23333333' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
+  // --- 3. Светлый спиннер для сплошных цветных <input>-кнопок -------------
+  // Для <button> и <a> цвет спиннера берётся автоматически из --btn-color (см. ::after выше).
+  // Для void-элементов <input> SVG data-URI не читает CSS-переменные, поэтому для сплошных
+  // цветных модификаторов (без --outline и --soft) переключаем SVG на белый вариант.
+  :is(input.button, input[type="submit"], input[type="button"]):is(
+    .button--primary,
+    .button--success,
+    .button--info,
+    .button--warning,
+    .button--danger,
+    .ief-entity-submit,
+    [name^="ief-remove-confirm-"]
+  ):not(.button--outline, .button--soft):is(.is-loading, :has(+ .ajax-progress)) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(255,255,255,.35)' stroke-width='5'/%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' stroke-dasharray='31.4 94.2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 25 25' to='360 25 25' dur='.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
   }
 
   // --- 4. Доступность: замедление спиннера при reduced-motion ------------

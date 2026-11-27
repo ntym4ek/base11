@@ -640,7 +640,7 @@
     .ief-entity-operations {
       display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: .5rem;
 
-      input[name*="-entity-remove-"] { @include button-soft(var(--brand-danger)); }
+      :is(button, input)[name*="-entity-remove-"] { @include button-soft(var(--brand-danger)); }
     }
 
     tr.ief-row-form > td {
@@ -663,7 +663,7 @@
     }
 
     .ief-entity-submit { @include button-solid(var(--brand-primary), var(--on-primary)); }
-    input[name^="ief-remove-confirm-"] { @include button-solid(var(--brand-danger), var(--on-danger)); }
+    :is(button, input)[name^="ief-remove-confirm-"] { @include button-solid(var(--brand-danger), var(--on-danger)); }
   }
 
   .ief-form-bottom,

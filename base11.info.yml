@@ -1,7 +1,7 @@
 # Основные метаданные базовой темы Base11 (автономная тема без наследования ядра)
 name: Base11
 type: theme
-version: 2.4.0
+version: 2.4.1
 description: 'Базовая каркасная тема для проектов группы компаний на Drupal 11'
 base theme: false
 core_version_requirement: ^11
