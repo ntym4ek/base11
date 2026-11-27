@@ -51,8 +51,8 @@
   height: var(--ml-height) !important; max-width: var(--ml-max-width) !important; width: var(--ml-width) !important;
 
   // Компактные контролы (-sm) внутри модального окна
-  .button,
-  button,
+  .button:not(.ui-dialog-titlebar-close),
+  button:not(.ui-dialog-titlebar-close),
   input[type="submit"],
   input[type="button"] {
     border-radius: var(--ml-control-radius);
@@ -95,7 +95,7 @@
       width: auto;
     }
 
-    .ui-dialog-titlebar-close { right: 1.25rem; top: 1rem; }
+    .ui-dialog-titlebar-close { right: 1.25rem; top: calc(50% - 1.125rem); }
   }
 
   // Контейнер содержимого (перекрытие inline-стилей jQuery UI)
@@ -640,6 +640,11 @@
           }
         }
       }
+    }
+
+    .pager {
+      flex-basis: 100%;
+      margin: 1.25rem 0 0; width: 100%;
     }
   }
 
