@@ -619,4 +619,74 @@
       }
     }
   }
+
+  // --- 11. Встроенные формы сущностей (Inline Entity Form) --------------
+  //<editor-fold defaultstate="collapsed" desc="Описание: структурные стили Inline Entity Form">
+  // Назначение: базовое оформление виджета inline_entity_form без навязывания карточного fieldset.
+  // Покрывает таблицу привязанных сущностей (.ief-entity-table), ряд кнопок операций
+  // (.ief-entity-operations), семантику кнопок удаления/сохранения и раскрытую форму (.ief-form).
+  //</editor-fold>
+  .ief-entity-table {
+    margin: 0;
+
+    thead th:last-child,
+    tbody td:has(> .ief-entity-operations) {
+      text-align: right; white-space: nowrap;
+      width: 1%;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    .ief-entity-operations {
+      display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: .5rem;
+
+      input[name*="-entity-remove-"] { @include button-soft(var(--brand-danger)); }
+    }
+
+    tr.ief-row-form > td {
+      background-color: transparent;
+      padding: 1rem 0;
+    }
+  }
+
+  .ief-form {
+    --input-bg: var(--surface-card);
+    background-color: var(--page-bg);
+    border: 1px solid var(--border-color-light); border-radius: var(--control-radius-md);
+    margin: 0; padding: 1.25rem;
+
+    &.ief-form-bottom { margin-top: 1rem; }
+
+    :is(.form-wrapper, .form-actions):has(> .ief-entity-submit, > [name^="ief-remove-confirm-"]) {
+      display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+      margin-top: 1rem;
+    }
+
+    .ief-entity-submit { @include button-solid(var(--brand-primary), var(--on-primary)); }
+    input[name^="ief-remove-confirm-"] { @include button-solid(var(--brand-danger), var(--on-danger)); }
+  }
+
+  .ief-form-bottom,
+  .ief-entity-table + .container-inline {
+    :where(.button, input[type="submit"], input[type="button"]):not(.button--lg, .button--large) {
+      --btn-padding-x: var(--btn-padding-x-sm);
+      --btn-padding-y: var(--btn-padding-y-sm);
+      --btn-shadow: none;
+
+      @include control-size(
+        var(--control-height-sm),
+        var(--btn-padding-y),
+        var(--btn-padding-x),
+        var(--btn-font-size-sm),
+        var(--btn-radius-sm)
+      );
+    }
+  }
+
+  .ief-entity-table + .container-inline { margin-top: 1rem; }
+
+  .ief-cardinality-count {
+    color: var(--text-muted); font-size: var(--font-size-sm);
+    margin-top: .5rem;
+  }
 }

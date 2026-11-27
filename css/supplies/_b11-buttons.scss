@@ -136,6 +136,21 @@
     transform: none;
   }
 
+  // Компактный размер кнопок внутри ячеек таблиц (нулевая специфичность — легко перекрывается модификаторами)
+  :where(table td :where(.button, input[type="submit"], input[type="button"])) {
+    --btn-padding-x: var(--btn-padding-x-sm);
+    --btn-padding-y: var(--btn-padding-y-sm);
+    --btn-shadow: none;
+
+    @include control-size(
+      var(--control-height-sm),
+      var(--btn-padding-y),
+      var(--btn-padding-x),
+      var(--btn-font-size-sm),
+      var(--btn-radius-sm)
+    );
+  }
+
   // --- 2. Модификаторы размеров -------------------------------------------
   .button--sm,
   .button--small {
